@@ -22,4 +22,5 @@ from Freyja import views
 urlpatterns = [
     #path('admin/', admin.site.urls),
     url(r'^$', views.front_page, name='front_page'),
+    url(r'^keppandi/(\d{1,6})/$', views.competitor, name='competitor'),
 ]

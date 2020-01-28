@@ -90,6 +90,8 @@ DATABASES = {
     },
 }
 
+MIGRATION_MODULES = {None}
+
 
 
 
