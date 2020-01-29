@@ -8,6 +8,29 @@ from django.views.generic.base import RedirectView
 def front_page(requests):
     return render(requests, 'front_page.html')
 
+def Get_Competitor_Data(CompetitorCode):
+        # Búa til Competitor dict með upplýsingum up keppandann
+    Competitor = {'CompetitorCode': CompetitorCode,
+                  'Name': name_str,
+                  'FirstName': name_str.split(' ')[0],
+                  'LastName': name_str.split(' ')[-1],
+                  'URL': URL_str,
+                  'YOB': birth_year,
+                  'Event': '',
+                  'Club': club_str,
+                  'Datetime': datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")}
+
+    # Breytum öllum árangri yfir í rauntölur
+    df['Árangur_float'] = df['Árangur'].map(results_to_float)
+
+    #results_f = []
+    #for i in df['Árangur'].tolist():
+    #    results_f.append(results_to_float(i))
+
+    #df = df.assign(Árangur_float = pd.Series(results_f).values)
+
+    return Competitor, df
+
 #-------------------------------------------------------------------------------
 # View sem skilar til baka síðu með tölfu um greinina sem er valin
 def competitor(request, CompetitorCode=None, Event=None):
