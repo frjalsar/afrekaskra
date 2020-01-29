@@ -33,8 +33,8 @@ ALLOWED_HOSTS = ['fri-afrekaskra.herokuapp.com',]
 
 INSTALLED_APPS = [
     #'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
+    #'django.contrib.auth',
+    #'django.contrib.contenttypes',
     #'django.contrib.sessions',
     #'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -90,8 +90,9 @@ DATABASES = {
     },
 }
 
-MIGRATION_MODULES = {None}
-
+#MIGRATION_MODULES = {
+#    'auth': None
+#}
 
 
 
