@@ -25,7 +25,7 @@ def Get_Competitor_Info(CompetitorCode):
     
     # Look upp the competitor in the table. We want an exact match.
     try:
-        q = AthlCompetitors.objects.get(númer__iexact=CompetitorCode)
+        q = AthlCompetitors.objects.get(pk=CompetitorCode) # pk means primary key which in this case is númer
             # Make a Competitor dict with information about the competitor
         Competitor_Info = {'CompetitorCode': CompetitorCode,
                            'Name': q.nafn,
