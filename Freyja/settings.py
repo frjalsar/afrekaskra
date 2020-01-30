@@ -26,7 +26,7 @@ SECRET_KEY = os.environ['FREYJA_SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['fri-afrekaskra.herokuapp.com',]
+ALLOWED_HOSTS = [] # The django_heroku package takes care of this.
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     #'django.contrib.sessions',
     #'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Freyja',
 ]
 
 MIDDLEWARE = [

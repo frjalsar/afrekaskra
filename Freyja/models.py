@@ -4464,8 +4464,8 @@ class AthlVinnuskrFyrirRun(models.Model):
 
 class AthlWrkTmaseillMeMeti(models.Model):
     timestamp = models.TextField()  # This field type is a guess.
-    lína = models.IntegerField(db_column='Lína', primary_key=True)  # Field name made lowercase.
-    raðsv2 = models.AutoField(db_column='Raðsv2')  # Field name made lowercase.
+    lína = models.IntegerField(db_column='Lína')  # Field name made lowercase.
+    raðsv2 = models.AutoField(db_column='Raðsv2', primary_key=True)  # Field name made lowercase.
     tími = models.CharField(db_column='Tími', max_length=30)  # Field name made lowercase.
     heiti_greinar = models.CharField(db_column='Heiti Greinar', max_length=30)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     aldursflokkur = models.CharField(db_column='Aldursflokkur', max_length=30)  # Field name made lowercase.

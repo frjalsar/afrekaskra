@@ -3,98 +3,43 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.cache import never_cache
 from django.views.generic.base import RedirectView
+#from django.db.models import Q
+
+# Other
+import datetime
+
+# Gagnagrunnur
+from Freyja.models import AthlCompetitors
 
 # Front page
 def front_page(requests):
     return render(requests, 'front_page.html')
 
-def Get_Competitor_Data(CompetitorCode):
-        # Búa til Competitor dict með upplýsingum up keppandann
-    Competitor = {'CompetitorCode': CompetitorCode,
-                  'Name': name_str,
-                  'FirstName': name_str.split(' ')[0],
-                  'LastName': name_str.split(' ')[-1],
-                  'URL': URL_str,
-                  'YOB': birth_year,
-                  'Event': '',
-                  'Club': club_str,
-                  'Datetime': datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")}
+# Get_Competitor_Info
+# Looks upp information about a competitor from the AthlCompetitors table.
+# Inn:
+#  CompetitorCode: Fiffós ID code for the competitor
+# Out:
+#  Competitor_Info: A dictionary containing name, year of birth and club.
+def Get_Competitor_Info(CompetitorCode):
+    
+    # Look upp the competitor in the table. We want an exact match.
+    try:
+        q = AthlCompetitors.objects.get(númer__iexact=CompetitorCode)
+            # Make a Competitor dict with information about the competitor
+        Competitor_Info = {'CompetitorCode': CompetitorCode,
+                           'Name': q.nafn,
+                           'FirstName': q.nafn.split(' ')[0],
+                           'LastName': q.nafn.split(' ')[-1],
+                           'YOB': q.fæðingarár,
+                           'Club': q.félag,
+                           'Datetime': datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")}
+    except AthlCompetitors.DoesNotExist:
+        raise Http404('Gat ekki fundið keppanda.')
 
-    # Breytum öllum árangri yfir í rauntölur
-    df['Árangur_float'] = df['Árangur'].map(results_to_float)
+    return Competitor_Info
 
-    #results_f = []
-    #for i in df['Árangur'].tolist():
-    #    results_f.append(results_to_float(i))
 
-    #df = df.assign(Árangur_float = pd.Series(results_f).values)
-
-    return Competitor, df
-
-#-------------------------------------------------------------------------------
-# View sem skilar til baka síðu með tölfu um greinina sem er valin
 def competitor(request, CompetitorCode=None, Event=None):
-
-    # Ef ekkert CompetitorCode, byrta þá síðu til finna keppanda
-    if (CompetitorCode is None):
-        return render(request, 'competitor_find.html')
-
-    try:
-        CompetitorCode = int(CompetitorCode)
-        #Event = int(Event)
-    except ValueError:
-        raise Http404('Error')
-
-    try:
-        Competitor, df = Scrape_Competitor_Data(CompetitorCode)
-    except:
-        return HttpResponseServerError('Tókst ekki að ná í gögn úr afrekaskrá FRÍ.')
-
-    if (df is None and Competitor is None):
-        return HttpResponseServerError('Tókst ekki að ná í gögn úr afrekaskrá FRÍ.')
-
-    # Ef engin grein er valinn þá finnum við hvaða grein keppandinn hefur
-    # oftast keppt í ( df.mode().iloc[0] ) og veljum hana ( event_list.index(...) )
-    if (Event is None):
-        try:
-            Event = event_list.index( df.mode().iloc[0]['Keppnisgrein'] )
-        except:
-            Event = None
-
-    # Flokka út greinina sem er valin
-    Competitor_events, df_event = Filter_Competitor_Event(Competitor, Event, df)
-
-    if (df_event is None):
-        return HttpResponseServerError('df_event is None')
-
-    # Breyta Panda dataframe í HTML tölfu
-    # Henda út dálknum með keppnisgreininni
-    event_str = Competitor['Event']
-    drop_col = ['Keppnisgrein', 'Árangur_float']
-    if (event_dict[event_str]['TIME_AXIS'] == True):
-        drop_col.append('Árangur_dt')
-        drop_col.append('Sería')
-
-    html_table = df_event.drop(drop_col, 1).to_html(index=False,
-                                                    na_rep='',
-                                                    classes='table table-striped table-bordered table-data',
-                                                    border='0',
-                                                    formatters={'Dagsetn.': lambda x: x.strftime('%-d %b %Y')}
-                                                    )
-
-    # PB Taflan
-    pb_html_table = Stats_Competitor(Competitor, df)
-
-    # Plotta upp árs besta og tíma-raðar gröfin
-    plot_div_year = year_best_graph_div(Competitor, df_event)
-    plot_div_time = time_series_graph_div(Competitor, df_event)
-    plot_div_pb   = progression_graph_div(Competitor, df_event, 'Árangur', 'Heiti móts')
-
-    # Hvernig á að raða töflunni með gögnunum
-    if (event_dict[event_str]['MAX'] == True):
-        TBL_DATA_SORT = 'desc'
-    else:
-        TBL_DATA_SORT = 'asc'
-
-    # Senda til baka gögnin
-    return render(request, 'competitor.html', {'Competitor': Competitor})
+    Competitor_info = Get_Competitor_Info(CompetitorCode)
+    return render(request, 'competitor.html', {'Competitor': Competitor_info})
