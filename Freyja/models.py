@@ -1143,8 +1143,8 @@ class AthlCompetitors(models.Model):
     númer_flögu = models.CharField(db_column='Númer flögu', max_length=10)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     auðkenni_idega = models.CharField(db_column='Auðkenni Idega', max_length=10)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     með_sömu_kennitölu = models.SmallIntegerField(db_column='Með Sömu Kennitölu')  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    dags_síðast_uppfært = models.DateTimeField(db_column='Dags síðast uppfært')  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    tími_síðast_uppfært = models.DateTimeField(db_column='Tími síðast uppfært')  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    #dags_síðast_uppfært = models.DateTimeField(db_column='Dags síðast uppfært')  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    #tími_síðast_uppfært = models.DateTimeField(db_column='Tími síðast uppfært')  # Field name made lowercase. Field renamed to remove unsuitable characters.
     annað_nafn = models.CharField(db_column='Annað nafn', max_length=30)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     #sleppa_í_afrekaskrá = models.SmallIntegerField(db_column='Sleppa í afrekaskrá')  # Field name made lowercase. Field renamed to remove unsuitable characters.
 
