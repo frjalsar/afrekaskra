@@ -75,6 +75,7 @@ WSGI_APPLICATION = 'Freyja.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# Database settings for the MS-SQL server. We use the django-mssql-backend package for this.
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
@@ -85,7 +86,7 @@ DATABASES = {
 
         'OPTIONS': {
             #'driver': '/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.4.so.2.1',
-            'driver': os.path.join(BASE_DIR, 'drv/msodbcsql17/lib64/libmsodbcsql-17.4.so.2.1'),
+            'driver': os.path.join(BASE_DIR, 'drv/msodbcsql17/lib64/libmsodbcsql-17.4.so.2.1'), # The driver is in the GIT repository
             'host_is_server': True,
         },
     },
@@ -138,6 +139,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Activate Django-Heroku.
+# Activate Django-Heroku. We have our own database settings and we set the private key ourselves.
 django_heroku.settings(locals(), databases=False, secret_key=False)
 
