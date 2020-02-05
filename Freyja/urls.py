@@ -14,13 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 #from django.contrib import admin
-#from django.urls import path
+from django.urls import path
 from django.conf.urls import url
 
 from Freyja import views
+from Freyja import api_views
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
-    url(r'^$', views.front_page, name='front_page'),
-    url(r'^keppandi/(\d{1,6})/$', views.competitor, name='competitor'),
+    path(r'', views.front_page, name='front_page'),
+    path(r'keppandi/<int:CompetitorCode>/', views.competitor, name='competitor'),
+    path(r'api/keppandi/<int:CompetitorCode>/', api_views.competitor, name ='api_competitor'),
+    path(r'api/events/', api_views.events, name ='api_events'),
+    path(r'api/events/<int:Event_id>/', api_views.events, name ='api_events'),
 ]

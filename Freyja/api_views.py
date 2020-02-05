@@ -11,24 +11,21 @@ from Freyja import data
 # Other
 import os
 
-# Events
-
-EVENT_LIST_FILENAME = os.path.join(settings.BASE_DIR, 'Freyja/event_list.pickle')
+# Database
+# We only use AthlCompetitors for information about competitors
+# and AthlAfrek for the achievements.
+from Freyja.models import AthlCompetitors, AthlAfrek
 
 def Print_list_vertically(my_list):
     for i in my_list:
         print(i)
     return None
 
-# Front page
-def front_page(requests):
-    return render(requests, 'front_page.html')
-
-
 def competitor(request, CompetitorCode=None, Event=None):
     Competitor_info = data.Get_Competitor_Info(CompetitorCode)
-    #print(Get_List_of_Events_for_Competitor(CompetitorCode))
-    #Print_list_vertically(Get_List_of_Events())
-    #print(Get_List_of_Events())
-    #Get_List_of_Events()
-    return render(request, 'competitor.html', {'Competitor': Competitor_info})
+    return JsonResponse(Competitor_info, safe=False)
+
+def events(request, Event_id=None):
+    event_list = data.Get_List_of_Events(CompetitorCode=None, Event_id=Event_id)
+    #print(event_list)
+    return JsonResponse(event_list, safe=False)
