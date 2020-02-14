@@ -29,3 +29,7 @@ def events(request, Event_id=None):
     event_list = data.Get_List_of_Events(CompetitorCode=None, Event_id=Event_id)
     #print(event_list)
     return JsonResponse(event_list, safe=False)
+
+def competitor_achievements(request, CompetitorCode, Event_id):
+    Achievements_list = data.Get_List_of_Achievements(CompetitorCode, Event_id)
+    return JsonResponse(Achievements_list, safe=False)

@@ -17,6 +17,12 @@ import os
 EVENT_LIST_FILENAME = os.path.join(settings.BASE_DIR, 'Freyja/event_list.pickle')
 df_event_list = pd.read_pickle(EVENT_LIST_FILENAME)
 
+def Get_List_of_Achievements(CompetitorCode, Event_id):
+    THORID_1 = int(df_event_list[df_event_list['THORID_1'] == event].index[0])
+    q = AthlAfrek.objects.filter(keppandanúmer__iexact=CompetitorCode).filter(tákn_greinar__iexact==THORID_1)
+    Achievements_list = list(q)
+    return Achievements_list
+
 # Get_Competitor_Info
 # Looks upp information about a competitor from the AthlCompetitors table.
 # Inn:
