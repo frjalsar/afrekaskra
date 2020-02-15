@@ -119,7 +119,7 @@ def Top_100_List(Event_id, Year, InndoorOutDoor, Gender, AgeStart, AgeEnd):
                                        dagsetning__lte=datetime.date(Year, 12, 31),
                                        löglegt=1,
                                        úti_inni=InndoorOutDoor,
-                                       kyn=Gender).order_by('árangur').distinct()[:100]
+                                       kyn=Gender).order_by('árangur')[:100]
 
     Achievements_list = Convert_Achievements_to_List(q)
 
