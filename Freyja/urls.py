@@ -28,4 +28,5 @@ urlpatterns = [
     path(r'api/events/', api_views.events, name ='api_events'),
     path(r'api/events/<int:Event_id>/', api_views.events, name ='api_events'),
     path(r'api/achievements/<int:CompetitorCode>/<int:Event_id>/', api_views.competitor_achievements, name='api_achievements'),
+    path(r'api/top_list/<int:Event_id>/<int:InndoorOutDoor>/<int:Gender>/<int:Year>/<int:AgeStart>/<int:AgeEnd>/', api_views.Get_Top_100, name='api_top100')
 ]

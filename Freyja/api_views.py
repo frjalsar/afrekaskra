@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.cache import never_cache
 from django.views.generic.base import RedirectView
+from django.core import serializers
 #from django.db.models import Q
 
 from Freyja import settings
@@ -32,4 +33,8 @@ def events(request, Event_id=None):
 
 def competitor_achievements(request, CompetitorCode, Event_id):
     Achievements_list = data.Get_List_of_Achievements(CompetitorCode, Event_id)
+    return JsonResponse(Achievements_list, safe=False)
+
+def Get_Top_100(request, Event_id, InndoorOutDoor, Gender, Year, AgeStart, AgeEnd):
+    Achievements_list = data.Top_100_List(Event_id=Event_id, Year=Year, InndoorOutDoor=InndoorOutDoor, Gender=Gender, AgeStart=AgeStart, AgeEnd=AgeEnd)
     return JsonResponse(Achievements_list, safe=False)

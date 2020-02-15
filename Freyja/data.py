@@ -17,10 +17,45 @@ import os
 EVENT_LIST_FILENAME = os.path.join(settings.BASE_DIR, 'Freyja/event_list.pickle')
 df_event_list = pd.read_pickle(EVENT_LIST_FILENAME)
 
+def Get_Event_ThorID_1(Event_id):
+    try:
+        THORID_1 = df_event_list['THORID_1'].values[Event_id]
+    except:
+        raise Http404('Gat ekki fundið grein.')
+    return THORID_1
+
+def Convert_Achievements_to_List(q):
+    Achievements_list = []
+    for Achievement in q:
+        Achievement_info = {'Name': Achievement.nafn,
+                            'Results': float(Achievement.árangur.replace(',', '.')),
+                            'Wind': float(Achievement.vindur),
+                            'Club': Achievement.félag,
+                            'Age': Achievement.aldur_keppanda,
+                            'Outdoor_Inndoor': Achievement.úti_inni,
+                            'Legal': Achievement.löglegt,
+                            'Competition': Achievement.heiti_móts,
+                            'Date': Achievement.dagsetning,
+                            'Location': Achievement.staður,
+                            }
+        Achievements_list.append(Achievement_info)
+
+    return Achievements_list
+
+
+# Get_List_of_Achievements
+# Looks upp all achievements for a competitor in an given event from the AthlCompetitors table.
+# Inn:
+#  CompetitorCode: Fiffós ID code for the competitor
+#  Event_id: The number of the event. This is our new ID not Fiffós.
+# Out:
+#   A list of dictionaries containing information about each achievement.
 def Get_List_of_Achievements(CompetitorCode, Event_id):
-    THORID_1 = int(df_event_list[df_event_list['THORID_1'] == event].index[0])
-    q = AthlAfrek.objects.filter(keppandanúmer__iexact=CompetitorCode).filter(tákn_greinar__iexact==THORID_1)
-    Achievements_list = list(q)
+    THORID_1 = Get_Event_ThorID_1(Event_id)
+
+    q = AthlAfrek.objects.all().filter(keppandanúmer__iexact=CompetitorCode).filter(tákn_greinar__iexact=THORID_1)
+    Achievements_list = Convert_Achievements_to_List(q)
+
     return Achievements_list
 
 # Get_Competitor_Info
@@ -75,3 +110,17 @@ def Get_List_of_Events(CompetitorCode=None, Event_id=None):
             pass
 
     return Event_list
+
+def Top_100_List(Event_id, Year, InndoorOutDoor, Gender, AgeStart, AgeEnd):
+    THORID_1 = Get_Event_ThorID_1(Event_id)
+    q = AthlAfrek.objects.all().filter(tákn_greinar__iexact=THORID_1,
+                                       aldur_keppanda__range=[AgeStart, AgeEnd],
+                                       dagsetning__gte=datetime.date(Year, 1, 1),
+                                       dagsetning__lte=datetime.date(Year, 12, 31),
+                                       löglegt=1,
+                                       úti_inni=InndoorOutDoor,
+                                       kyn=Gender).order_by('árangur').distinct('keppandanúmer')[:100]
+
+    Achievements_list = Convert_Achievements_to_List(q)
+
+    return Achievements_list
