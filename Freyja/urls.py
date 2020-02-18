@@ -16,6 +16,9 @@ Including another URLconf
 #from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
+from django.conf import settings
+from django.conf.urls.static import static
+import os
 
 from Freyja import views
 from Freyja import api_views
@@ -30,3 +33,9 @@ urlpatterns = [
     path(r'api/achievements/<int:CompetitorCode>/<int:Event_id>/', api_views.competitor_achievements, name='api_achievements'),
     path(r'api/top_list/<int:Event_id>/<int:InndoorOutDoor>/<int:Gender>/<int:Year>/<int:AgeStart>/<int:AgeEnd>/', api_views.Get_Top_100, name='api_top100')
 ]
+
+#if 'FREYJA_LOCAL' in os.environ:
+#    urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT, show_indexes=True)
+
+if (settings.DEBUG == True):
+    urlpatterns += static('staticfiles/', document_root='/home/kristor/FRI/Freyja-site/staticfiles')
