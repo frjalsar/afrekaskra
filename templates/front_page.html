@@ -1,25 +1,26 @@
 {% load static %}
 <!doctype html>
-<html lang="is">
+<html lang="is-IS">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="{% static "fri-logo.png" %}" sizes="32x32" />
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Afrekaskrá FRÍ</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   </head>
   <body>
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-      <a href="/#/"><img alt="Frjálsíþróttasamband Íslands" src="{% static "fri-logo.png" %}" class="logo" width="50">
-      </a> <a href="/#/" class="mr-md-auto title-link"><h5 class="my-0 font-weight-normal"> Afrekaskrá FRÍ </h5></a>
-      <nav class="my-2 my-md-0 mr-md-3"><a href="#/idkendur" class="p-2 text-dark"> Iðkendur </a>
-        <a href="#/felog" class="p-2 text-dark"> Félög </a>
-        <a href="#/herud" class="p-2 text-dark"> Íþróttahéruð </a>
-      </nav> <a href="#/login" class="btn btn-outline-primary"> Innskráning </a> <!----></div>
+      <a href="/"><img alt="Frjálsíþróttasamband Íslands" src="{% static "fri-logo.png" %}" class="logo" width="50">
+      </a> <a href="/" class="mr-md-auto title-link"><h5 class="my-0 font-weight-normal"> Afrekaskrá FRÍ </h5></a>
+      <nav class="my-2 my-md-0 mr-md-3"><a href="/top" class="p-2 text-dark"> Top listar </a>
+        <a href="/islmet" class="p-2 text-dark"> Íslandsmet </a>
+        <a href="/arsbest" class="p-2 text-dark"> Ársbest </a>
+      <!--</nav> <a href="#/login" class="btn btn-outline-primary"> Innskráning </a> </div>-->
   {% verbatim %}
     <div id="app">
       {{ message }}
