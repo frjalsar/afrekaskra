@@ -1,1 +1,1 @@
-web: gunicorn Freyja.wsgi --log-file -
+web: gunicorn Sif.wsgi --log-file -
