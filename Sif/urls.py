@@ -1,4 +1,4 @@
-"""Freyja URL Configuration
+"""Sif URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
@@ -20,8 +20,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 import os
 
-from Freyja import views
-from Freyja import api_views
+from Sif import views
+from Sif import api_views
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
@@ -34,8 +34,8 @@ urlpatterns = [
     path(r'api/top_list/<int:Event_id>/<int:InndoorOutDoor>/<int:Gender>/<int:Year>/<int:AgeStart>/<int:AgeEnd>/', api_views.Get_Top_100, name='api_top100')
 ]
 
-#if 'FREYJA_LOCAL' in os.environ:
+#if 'SIF_LOCAL' in os.environ:
 #    urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT, show_indexes=True)
 
 if (settings.DEBUG == True):
-    urlpatterns += static('staticfiles/', document_root='/home/kristor/FRI/Freyja-site/staticfiles')
+    urlpatterns += static('staticfiles/', document_root='/home/kristor/FRI/Sif-site/staticfiles')

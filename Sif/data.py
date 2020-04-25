@@ -3,10 +3,10 @@ from django.http import Http404
 # Database
 # We only use AthlCompetitors for information about competitors
 # and AthlAfrek for the achievements.
-from Freyja.models import AthlCompetitors, AthlAfrek
+from Sif.models import AthlCompetitors, AthlAfrek
 
 # Settings
-from Freyja import settings
+from Sif import settings
 
 # Other packages
 import datetime
@@ -14,7 +14,7 @@ import pandas as pd
 import os
 
 # Events
-EVENT_LIST_FILENAME = os.path.join(settings.BASE_DIR, 'Freyja/event_list.pickle')
+EVENT_LIST_FILENAME = os.path.join(settings.BASE_DIR, 'Sif/event_list.pickle')
 df_event_list = pd.read_pickle(EVENT_LIST_FILENAME)
 
 def Get_Event_ThorID_1(Event_id):

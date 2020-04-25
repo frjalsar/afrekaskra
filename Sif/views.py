@@ -5,15 +5,15 @@ from django.views.decorators.cache import never_cache
 from django.views.generic.base import RedirectView
 #from django.db.models import Q
 
-from Freyja import settings
-from Freyja import data
+from Sif import settings
+from Sif import data
 
 # Other
 import os
 
 # Events
 
-EVENT_LIST_FILENAME = os.path.join(settings.BASE_DIR, 'Freyja/event_list.pickle')
+EVENT_LIST_FILENAME = os.path.join(settings.BASE_DIR, 'Sif/event_list.pickle')
 
 def Print_list_vertically(my_list):
     for i in my_list:

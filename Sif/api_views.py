@@ -6,8 +6,8 @@ from django.views.generic.base import RedirectView
 from django.core import serializers
 #from django.db.models import Q
 
-from Freyja import settings
-from Freyja import data
+from Sif import settings
+from Sif import data
 
 # Other
 import os
@@ -15,7 +15,7 @@ import os
 # Database
 # We only use AthlCompetitors for information about competitors
 # and AthlAfrek for the achievements.
-from Freyja.models import AthlCompetitors, AthlAfrek
+from Sif.models import AthlCompetitors, AthlAfrek
 
 def Print_list_vertically(my_list):
     for i in my_list:
