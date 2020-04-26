@@ -24,9 +24,13 @@ from Sif import views
 from Sif import api_views
 
 urlpatterns = [
+    # Views
     #path('admin/', admin.site.urls),
     path(r'', views.front_page, name='front_page'),
     path(r'keppandi/<int:CompetitorCode>/', views.competitor, name='competitor'),
+    path(r'top/', views.top_lists, name="top_lists"),
+
+    # API
     path(r'api/keppandi/<int:CompetitorCode>/', api_views.competitor, name ='api_competitor'),
     path(r'api/events/', api_views.events, name ='api_events'),
     path(r'api/events/<int:Event_id>/', api_views.events, name ='api_events'),

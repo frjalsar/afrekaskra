@@ -32,3 +32,6 @@ def competitor(request, CompetitorCode=None, Event=None):
     #print(Get_List_of_Events())
     #Get_List_of_Events()
     return render(request, 'competitor.html', {'Competitor': Competitor_info})
+
+def top_lists(request):
+    return render(request, 'top_lists.html')
