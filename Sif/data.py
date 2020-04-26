@@ -30,8 +30,13 @@ def Convert_Achievements_to_List(q):
     for Achievement in q:
         # Make wind into a string with sign. One decimal after period.
         wind_str = '{:+.1f}'.format(float(Achievement.vindur))
-        # Turn results into string with two decimals after period.
-        result_str = '{:.2f}'.format(float(Achievement.árangur.replace(',', '.')))
+
+        # Turn results into string with two decimals after period or one if hand timing.
+        if (Achievement.rafmagnstímataka == 0):
+            result_str = '{:.1f}'.format(float(Achievement.árangur.replace(',', '.')))
+        else:
+            result_str = '{:.2f}'.format(float(Achievement.árangur.replace(',', '.')))
+
         # Turn the date into a string
         date_str = format_date(Achievement.dagsetning.date(), "d MMM yyyy",locale='is_IS').upper()
 
@@ -43,7 +48,8 @@ def Convert_Achievements_to_List(q):
                             'age': Achievement.aldur_keppanda,
                             'outdoor_indoor': Achievement.úti_inni,
                             'legal': Achievement.löglegt,
-                            'competition': Achievement.heiti_móts,
+                            'competition_name': Achievement.heiti_móts,
+                            'competition_id': Achievement.mót,
                             'date': date_str,
                             'location': Achievement.staður,
                             'competitorcode': Achievement.keppandanúmer
@@ -123,15 +129,23 @@ def Get_List_of_Events(CompetitorCode=None, Event_id=None):
 
     return Event_list
 
-def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd):
+def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal):
     THORID_1 = Get_Event_ThorID_1(Event_id)
-    q = AthlAfrek.objects.all().filter(tákn_greinar__iexact=THORID_1,
-                                       aldur_keppanda__range=[AgeStart, AgeEnd],
-                                       dagsetning__gte=datetime.date(Year, 1, 1),
-                                       dagsetning__lte=datetime.date(Year, 12, 31),
-                                       löglegt=1,
-                                       úti_inni=IndoorOutDoor,
-                                       kyn=Gender).order_by('árangur')[:100]
+
+    if (Year == 0):
+        q = AthlAfrek.objects.all().filter(tákn_greinar__iexact=THORID_1,
+                                           aldur_keppanda__range=[AgeStart, AgeEnd],
+                                           löglegt=Legal,
+                                           úti_inni=IndoorOutDoor,
+                                           kyn=Gender).order_by('árangur')[:100]
+    else:
+        q = AthlAfrek.objects.all().filter(tákn_greinar__iexact=THORID_1,
+                                           aldur_keppanda__range=[AgeStart, AgeEnd],
+                                           dagsetning__gte=datetime.date(Year, 1, 1),
+                                           dagsetning__lte=datetime.date(Year, 12, 31),
+                                           löglegt=Legal,
+                                           úti_inni=IndoorOutDoor,
+                                           kyn=Gender).order_by('árangur')[:100]
 
     Achievements_list = Convert_Achievements_to_List(q)
 

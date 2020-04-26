@@ -7,14 +7,15 @@
 <div class="form-row mb-5 align-items-center">
   <div class="col-md-4 col-lg-3 mb-3">
     <label for="event">Grein</label>
-    <select class="form-control" id="event">
-      <option>100 m</option>
-      <option>Langstökk</option>
+    <select class="form-control" id="event_id" @change="get_data($event)" v-model="event_id"> 
+      <option value="6">100 m</option>
+      <option value="99">Langstökk</option>
     </select>
   </div>
   <div class="col-md-4 col-lg-3 mb-3">
     <label for="year">Ár</label>
-    <select class="form-control" id="year" @change="year_change($event)" v-model="year">
+    <select class="form-control" id="year" @change="get_data($event)" v-model="year">
+      <option value="0">Öll ár</option>
       <option>2020</option>
       <option>2019</option>
       <option>2018</option>
@@ -37,20 +38,20 @@
   </div>
   <div class="col-md-4 col-lg-3 mb-3">
     <div class="btn-group">
-      <button v-on:click="toggle_women" class="btn btn-primary btn-sm btn-active" type="radio">Konur</button>
-      <button v-on:click="toggle_men" class="btn btn-secondary btn-sm" type="radio">Karlar</button>
+      <button v-on:click="toggle_gender($event, 2)" class="btn btn-primary btn-sm btn-active">Konur</button>
+      <button v-on:click="toggle_gender($event, 1)" class="btn btn-secondary btn-sm">Karlar</button>
     </div>
   </div>
   <div class="col-md-4 col-lg-3 mb-3">
     <div class="btn-group">
-      <button class="btn btn-primary btn-sm">Löglegir árangrar</button>
-      <button class="btn btn-secondary btn-sm">Allir árangrar</button>
+      <button v-on:click="toggle_legalresults($event, 1)" class="btn btn-primary btn-sm">Löglegir árangrar</button>
+      <button v-on:click="toggle_legalresults($event, 0)" class="btn btn-secondary btn-sm">Allir árangrar</button>
     </div>
   </div>
   <div class="col-md-4 col-lg-3 mb-3">
     <div class="btn-group">
-      <button v-on:click="toggle_indoor" class="btn btn-secondary btn-sm">Innanhús</button>
-      <button v-on:click="toggle_outdoor" class="btn btn-primary btn-sm">Utanhús</button>
+      <button v-on:click="toggle_outin($event, 1)" class="btn btn-secondary btn-sm">Innanhús</button>
+      <button v-on:click="toggle_outin($event, 0)" class="btn btn-primary btn-sm">Utanhús</button>
     </div>
   </div>
   <div class="col-md-4 col-lg-4 mb-3">
@@ -87,7 +88,7 @@
       <td><a v-bind:href="'/keppandi/' + competitor.competitorcode">{{competitor.name}}</a></td>
       <td>{{competitor.age}}</td>
       <td>{{competitor.club}}</td>
-      <td>{{competitor.competition}}</td>
+      <td><a v-bind:href="'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' + competitor.competition_id">{{competitor.competition_name}}</a></td>
       <td>{{competitor.date}}</td>
     </tr>
   </tbody>
@@ -121,7 +122,8 @@
         year: 2019, // Year
         agegroup: 0,
         agestart: 0, // Start age
-        ageend: 99 // End age
+        ageend: 99, // End age
+        legal: 1 // Only legal = 1, all = 0
       }
     },
     mounted() {
@@ -131,27 +133,22 @@
   methods: {
     get_data: function (event) {
       axios
-        .get('/api/top_list/' + this.event_id + '/' + this.outin + '/' + this.gender + '/' + this.year + '/' + this.agestart + '/' + this.ageend + '/')
+        .get('/api/top_list/' + this.event_id + '/' + this.outin + '/' + this.gender + '/' + this.year + '/' + this.agestart + '/' + this.ageend + '/' + this.legal + '/')
         .then(response => (this.data = response['data']))
     },
-    toggle_women: function (event) {
-      this.gender = 2
+    toggle_gender: function (event, gender) {
+      this.gender = gender
       this.get_data(event)
     },
-    toggle_men: function (event) {
-      this.gender = 1
+    toggle_outin: function (event, outin) {
+      this.outin = outin
       this.get_data(event)
     },
-    toggle_indoor: function (event) {
-      this.outin = 1
-      this.get_data(event)
-    },
-    toggle_outdoor: function (event) {
-      this.outin = 0
+    toggle_legalresults: function (event, legal) {
+      this.legal = legal
       this.get_data(event)
     },
     year_change(event) {
-            this.year = event.target.value
             this.get_data(event)
         },
     age_change(event) {
