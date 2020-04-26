@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html lang="is">
-<head>
-  <meta charset="utf-8">
-</head>
-<body>
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Sif - Afrekaskrá FRÍ{% endblock %}
+
+{% block content %}
     Keppandi - {{ Competitor.Name }} {{ Competitor.Club }} {{ Competitor.YOB }}
-</body>
-</html>
+{% endblock %}

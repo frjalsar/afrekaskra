@@ -1,101 +1,116 @@
+{% extends "base.html" %}
 {% load static %}
-<!doctype html>
-<html lang="is-IS">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="{% static "fri-logo.png" %}" sizes="32x32" />
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-    <title>Sif - Afrekaskrá FRÍ</title>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  </head>
-  <body>
-    <div id="app">
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-      <a href="/"><img alt="Frjálsíþróttasamband Íslands" src="{% static "fri-logo.png" %}" class="logo" width="50">
-      </a> <a href="/" class="mr-md-auto title-link"><h5 class="my-0 font-weight-normal"> Sif - Afrekaskrá FRÍ </h5></a>
-      <nav class="my-2 my-md-0 mr-md-3"><a href="/top" class="p-2 text-dark"> Top listar </a>
-        <a href="/islmet" class="p-2 text-dark"> Íslandsmet </a>
-        <a href="/arsbest" class="p-2 text-dark"> Ársbest </a>
-      <!--</nav> <a href="#/login" class="btn btn-outline-primary"> Innskráning </a>-->
+{% block title %}Sif - Afrekaskrá FRÍ{% endblock %}
+{% block content %}
+{% verbatim %}
+      <div class="form-row mb-5 align-items-center">
+      <div class="col-md-4 col-lg-3 mb-3">
+        <label for="exampleFormControlSelect1">Kyn</label>
+        <select class="form-control" id="exampleFormControlSelect1">
+          <option>Konur</option>
+          <option>Karlar</option>
+        </select>
+      </div>
+      <div class="col-md-4 col-lg-3 mb-3">
+        <label for="exampleFormControlSelect2">Grein</label>
+        <select class="form-control" id="exampleFormControlSelect2">
+          <option>100 m</option>
+          <option>Langstökk</option>
+        </select>
+      </div>
+      <div class="col-md-4 col-lg-3 mb-3">
+        <label for="exampleFormControlSelect3">Ár</label>
+        <select class="form-control" id="exampleFormControlSelect3">
+          <option>2020</option>
+          <option>2019</option>
+          <option>2018</option>
+          <option>2017</option>
+          <option>2016</option>
+        </select>
+      </div>
+      <div class="col-md-4 col-lg-3 mb-3">
+        <label for="exampleFormControlSelect4">Aldursflokkur</label>
+        <select class="form-control" id="exampleFormControlSelect4">
+          <option>Allir</option>
+          <option>20-22 ára</option>
+          <option>18-19 ára</option>
+          <option>16-17 ára</option>
+          <option>15 ára</option>
+          <option>14 ára</option>
+          <option>13 ára</option>
+          <option>12 ára</option>
+        </select>
+      </div>
+      <div class="col-md-4 col-lg-2 mb-3 form-check">
+        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+        <label class="form-check-label" for="defaultCheck1">Löglegur árangur</label>
+      </div>
+      <div class="col-md-4 col-lg-3 mb-3 form-check">
+        <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+        <label class="form-check-label" for="defaultCheck2">Innanhús</label>
+      </div>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Árangur</th>
+            <th scope="col">Vindur</th>
+            <th scope="col">Nafn</th>
+            <th scope="col">Félag</th>
+            <th scope="col">Dags.</th>
+            <th scope="col">Mót</th>
+            <th scope="col">Aldur</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(competitor, index) in data">
+            <th scope="row">{{index+1}}</th>
+            <td>{{competitor.results}}</td>
+            <td>{{competitor.wind}}</td>
+            <td>{{competitor.name}}</td>
+            <td>{{competitor.club}}</td>
+            <td>{{competitor.date}}</td>
+            <td>{{competitor.competition}}</td>
+            <td>{{competitor.age}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-      <div class="container">
-  {% verbatim %}
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Árangur</th>
-        <th scope="col">Vindur</th>
-        <th scope="col">Nafn</th>
-        <th scope="col">Félag</th>
-        <th scope="col">Dags.</th>
-        <th scope="col">Mót</th>
-        <th scope="col">Aldur</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>7.65m</td>
-        <td>+2.3</td>
-        <td>Kiddi</td>
-        <td>FH</td>
-        <td>22.02.2020</td>
-        <td>Kiddi mót</td>
-        <td>13</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>7.65m</td>
-        <td>+2.3</td>
-        <td>Kiddi</td>
-        <td>FH</td>
-        <td>22.02.2020</td>
-        <td>Kiddi mót</td>
-        <td>13</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>7.65m</td>
-        <td>+2.3</td>
-        <td>Kiddi</td>
-        <td>FH</td>
-        <td>22.02.2020</td>
-        <td>Kiddi mót</td>
-        <td>13</td>
-      </tr>
-    </tbody>
-  </table>
-  {{ info }}
-</div>
-</div>
-    <script>
-new Vue({
-  el: '#app',
-  data () {
-    return {
-      info: null
-    }
-  },
-  mounted () {
-    axios
-      .get('/api/top_list/6/0/2/2018/0/99/')
-      .then(response => (this.info = response))
-  }
-})
-    </script>
+{% endverbatim %}
+{% endblock %}
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+{% block scripts %}
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  {% verbatim %}
+  <script>
+    new Vue({
+      el: '#app',
+      data() {
+        return {
+          data: null
+        }
+      },
+      mounted() {
+        axios
+          .get('/api/top_list/6/0/2/2018/0/99/')
+          .then(response => (this.data = response['data']))
+      }
+    })
+  </script>
   {% endverbatim %}
-  </body>
-</html>
+{% endblock %}

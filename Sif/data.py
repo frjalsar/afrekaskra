@@ -27,16 +27,16 @@ def Get_Event_ThorID_1(Event_id):
 def Convert_Achievements_to_List(q):
     Achievements_list = []
     for Achievement in q:
-        Achievement_info = {'Name': Achievement.nafn,
-                            'Results': float(Achievement.árangur.replace(',', '.')),
-                            'Wind': float(Achievement.vindur),
-                            'Club': Achievement.félag,
-                            'Age': Achievement.aldur_keppanda,
-                            'Outdoor_Inndoor': Achievement.úti_inni,
-                            'Legal': Achievement.löglegt,
-                            'Competition': Achievement.heiti_móts,
-                            'Date': Achievement.dagsetning,
-                            'Location': Achievement.staður,
+        Achievement_info = {'name': Achievement.nafn,
+                            'results': float(Achievement.árangur.replace(',', '.')),
+                            'wind': float(Achievement.vindur),
+                            'club': Achievement.félag,
+                            'age': Achievement.aldur_keppanda,
+                            'outdoor_Inndoor': Achievement.úti_inni,
+                            'legal': Achievement.löglegt,
+                            'competition': Achievement.heiti_móts,
+                            'date': Achievement.dagsetning.date(),
+                            'location': Achievement.staður,
                             }
         Achievements_list.append(Achievement_info)
 
