@@ -132,11 +132,11 @@
                 <tr>
                   <th class="d-none d-lg-table-cell" scope="col">#</th>
                   <th scope="col">Árangur</th>
-                  <th class="d-none d-sm-table-cell" scope="col">Vindur</th>
+                  <th class="d-none d-xs-table-cell" scope="col">Vindur</th>
                   <th scope="col">Nafn</th>
                   <th class="d-none d-lg-table-cell" scope="col">Aldur</th>
-                  <th class="d-none d-lg-table-cell" scope="col">Félag</th>
-                  <th class="d-none d-lg-table-cell" scope="col">Mót</th>
+                  <th class="d-none d-md-table-cell" scope="col">Félag</th>
+                  <th class="d-none d-xl-table-cell" scope="col">Mót</th>
                   <th class="d-none d-sm-table-cell" scope="col">Dags.</th>
                 </tr>
               </thead>
@@ -144,11 +144,11 @@
                 <tr v-for="(competitor, index) in men_data">
                   <th class="d-none d-lg-table-cell" scope="row">{{index+1}}</th>
                   <td>{{competitor.results}}</td>
-                  <td class="d-none d-sm-table-cell">{{competitor.wind}}</td>
+                  <td class="d-none d-xs-table-cell">{{competitor.wind}}</td>
                   <td><a v-bind:href="'/keppandi/' + competitor.competitorcode">{{competitor.name}}</a></td>
                   <td class="d-none d-lg-table-cell">{{competitor.age}}</td>
-                  <td class="d-none d-lg-table-cell">{{competitor.club}}</td>
-                  <td class="d-none d-lg-table-cell"><a v-bind:href="'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' + competitor.competition_id">{{competitor.competition_name}}</a></td>
+                  <td class="d-none d-md-table-cell">{{competitor.club}}</td>
+                  <td class="d-none d-xl-table-cell"><a v-bind:href="'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' + competitor.competition_id">{{competitor.competition_name}}</a></td>
                   <td class="d-none d-sm-table-cell" >{{competitor.date}}</td>
                 </tr>
               </tbody>
