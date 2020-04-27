@@ -18,6 +18,9 @@ from babel.dates import format_date, format_datetime, format_time
 EVENT_LIST_FILENAME = os.path.join(settings.BASE_DIR, 'Sif/event_list.pickle')
 df_event_list = pd.read_pickle(EVENT_LIST_FILENAME)
 
+# Units
+Units_symbol = {1: 'm', 2: 's', 3: 'mm:ss', 4: 'hh:mm:ss,dd', 5: 'stig', 6: 'stig'}
+
 def Get_Event_Info(Event_id):
     try:
         THORID_1 = df_event_list['THORID_1'].values[Event_id]
@@ -38,9 +41,10 @@ def Get_Event_Info(Event_id):
 
     return THORID_1, Units, minimize
 
-def Convert_Achievements_to_List(q, minimize_results, best_by_ath):
+def Convert_Achievements_to_List(q, minimize_results, best_by_ath, units):
     Achievements_list = []
     competitorcode_list = []
+
     for Achievement in q:
         # Make wind into a string with sign. One decimal after period.
         wind_str = '{:+.1f}'.format(float(Achievement.vindur))
@@ -83,6 +87,22 @@ def Convert_Achievements_to_List(q, minimize_results, best_by_ath):
                 continue
         
         competitorcode_list.append(Achievement_info['competitorcode'])
+        Achievements_list.append(Achievement_info)
+
+    if not q:
+        Achievement_info = {'name': 'Enginn gögn fundust :(',
+                            'results': '',
+                            'wind': '',
+                            'club': '',
+                            'age': '',
+                            'outdoor_indoor': '',
+                            'legal': '',
+                            'competition_name': '',
+                            'competition_id': '',
+                            'date': '',
+                            'location': '',
+                            'competitorcode': ''
+                            }
         Achievements_list.append(Achievement_info)
 
     return Achievements_list
@@ -157,10 +177,11 @@ def Get_List_of_Events(CompetitorCode=None, Event_id=None):
     return Event_list
 
 def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal, ISL, BestByAth):
-    THORID_1, _, minimize_results = Get_Event_Info(Event_id)
+    THORID_1, Units, minimize_results = Get_Event_Info(Event_id)
     q = AthlAfrek.objects.all().filter(tákn_greinar__iexact=THORID_1,
                                        úti_inni=IndoorOutDoor,
-                                       kyn=Gender)
+                                       kyn=Gender,
+                                       aldur_keppanda__range=[AgeStart, AgeEnd])
 
     if (minimize_results == True):
         order_by_str = 'árangur'
@@ -187,6 +208,6 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
     #                                    dagsetning__lte=datetime.date(Year, 12, 31)).order_by(order_by_str)[:1000]
 
     q = q.order_by(order_by_str)[:1000]
-    Achievements_list = Convert_Achievements_to_List(q, minimize_results, BestByAth)
+    Achievements_list = Convert_Achievements_to_List(q, minimize_results, BestByAth, Units)
 
     return Achievements_list[:100]

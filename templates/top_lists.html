@@ -17,7 +17,7 @@
           <!---->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#outorindoors" role="button" aria-haspopup="true" aria-expanded="false">Úti</a>
-            <div class="dropdown-menu" id="outorindoorsDropdown">
+            <div v-on:click="toggle_outin($event)" class="dropdown-menu" id="outorindoorsDropdown">
               <a class="dropdown-item" id="0">Úti</a>
               <a class="dropdown-item" id="1">Inni</a>
             </div>
@@ -25,7 +25,7 @@
           <!---->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#event" role="button" aria-haspopup="true" aria-expanded="false">100m</a>
-            <div class="dropdown-menu" id="eventDropdown">
+            <div v-on:click="event_change($event)" class="dropdown-menu" id="eventDropdown">
               <a class="dropdown-item" id="6">100m</a>
               <a class="dropdown-item" id="154">Langstökk</a>
             </div>
@@ -33,21 +33,27 @@
           <!---->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#activeyear" role="button" aria-haspopup="true" aria-expanded="false">2019</a>
-            <div class="dropdown-menu" id="activeyearDropdown">
+            <div v-on:click="year_change($event)" class="dropdown-menu" id="activeyearDropdown">
               <a class="dropdown-item" id="0">Öll ár</a>
-              <a class="dropdown-item" id="1">2020</a>
-              <a class="dropdown-item" id="1">2019</a>
-              <a class="dropdown-item" id="1">2018</a>
-              <a class="dropdown-item" id="1">2017</a>
-              <a class="dropdown-item" id="1">2016</a>
+              <a class="dropdown-item" id="2020">2020</a>
+              <a class="dropdown-item" id="2019">2019</a>
+              <a class="dropdown-item" id="2018">2018</a>
+              <a class="dropdown-item" id="2017">2017</a>
+              <a class="dropdown-item" id="2016">2016</a>
             </div>
           </li>
           <!---->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#age" role="button" aria-haspopup="true" aria-expanded="false">Allir aldursflokkar</a>
-            <div class="dropdown-menu" id="ageDropdown">
-              <a class="dropdown-item" id="0">Allir aldursflokkar</a>
-              <a class="dropdown-item" id="1">20-22 ára</a>
+            <div v-on:click="age_change($event)" class="dropdown-menu" id="ageDropdown">
+              <a class="dropdown-item" id="00-99">Allir aldursflokkar</a>
+              <a class="dropdown-item" id="20-22">20-22 ára</a>
+              <a class="dropdown-item" id="18-19">18-19 ára</a>
+              <a class="dropdown-item" id="16-17">16-17 ára</a>
+              <a class="dropdown-item" id="15-15">15 ára</a>
+              <a class="dropdown-item" id="14-14">14 ára</a>
+              <a class="dropdown-item" id="13-13">13 ára</a>
+              <a class="dropdown-item" id="12-12">12 ára</a>
             </div>
           </li>
       </ul>
@@ -80,26 +86,26 @@
             <table class="table table-striped table-responsive-sm">
               <thead>
                 <tr>
-                  <th class="d-none d-lg-table-cell" scope="col">#</th>
+                  <th class="d-none d-sm-table-cell" scope="col">#</th>
                   <th scope="col">Árangur</th>
-                  <th class="d-none d-sm-table-cell" scope="col">Vindur</th>
+                  <th scope="col">Vindur</th>
                   <th scope="col">Nafn</th>
-                  <th class="d-none d-lg-table-cell" scope="col">Aldur</th>
-                  <th class="d-none d-lg-table-cell" scope="col">Félag</th>
-                  <th class="d-none d-lg-table-cell" scope="col">Mót</th>
-                  <th class="d-none d-sm-table-cell" scope="col">Dags.</th>
+                  <th class="d-none d-sm-table-cell" scope="col">Aldur</th>
+                  <th class="d-none d-sm-table-cell" scope="col">Félag</th>
+                  <th class="d-none d-xl-table-cell" scope="col">Mót</th>
+                  <th class="d-none d-md-table-cell" scope="col">Dags.</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(competitor, index) in women_data">
-                  <th class="d-none d-lg-table-cell" scope="row">{{index+1}}</th>
+                  <th class="d-none d-sm-table-cell" scope="row">{{index+1}}</th>
                   <td>{{competitor.results}}</td>
-                  <td class="d-none d-sm-table-cell">{{competitor.wind}}</td>
+                  <td>{{competitor.wind}}</td>
                   <td><a v-bind:href="'/keppandi/' + competitor.competitorcode">{{competitor.name}}</a></td>
-                  <td class="d-none d-lg-table-cell">{{competitor.age}}</td>
-                  <td class="d-none d-lg-table-cell">{{competitor.club}}</td>
-                  <td class="d-none d-lg-table-cell"><a v-bind:href="'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' + competitor.competition_id">{{competitor.competition_name}}</a></td>
-                  <td class="d-none d-sm-table-cell" >{{competitor.date}}</td>
+                  <td class="d-none d-sm-table-cell">{{competitor.age}}</td>
+                  <td class="d-none d-sm-table-cell">{{competitor.club}}</td>
+                  <td class="d-none d-xl-table-cell"><a v-bind:href="'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' + competitor.competition_id">{{competitor.competition_name}}</a></td>
+                  <td class="d-none d-md-table-cell" >{{competitor.date}}</td>
                 </tr>
               </tbody>
             </table>
@@ -130,80 +136,32 @@
             <table class="table table-striped table-responsive-sm">
               <thead>
                 <tr>
-                  <th class="d-none d-lg-table-cell" scope="col">#</th>
+                  <th class="d-none d-sm-table-cell" scope="col">#</th>
                   <th scope="col">Árangur</th>
-                  <th class="" scope="col">Vindur</th>
+                  <th scope="col">Vindur</th>
                   <th scope="col">Nafn</th>
-                  <th class="d-none d-lg-table-cell" scope="col">Aldur</th>
-                  <th class="d-none d-md-table-cell" scope="col">Félag</th>
+                  <th class="d-none d-sm-table-cell" scope="col">Aldur</th>
+                  <th class="d-none d-sm-table-cell" scope="col">Félag</th>
                   <th class="d-none d-xl-table-cell" scope="col">Mót</th>
-                  <th class="d-none d-sm-table-cell" scope="col">Dags.</th>
+                  <th class="d-none d-md-table-cell" scope="col">Dags.</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(competitor, index) in men_data">
-                  <th class="d-none d-lg-table-cell" scope="row">{{index+1}}</th>
+                  <th class="d-none d-sm-table-cell" scope="row">{{index+1}}</th>
                   <td>{{competitor.results}}</td>
                   <td>{{competitor.wind}}</td>
                   <td><a v-bind:href="'/keppandi/' + competitor.competitorcode">{{competitor.name}}</a></td>
-                  <td class="d-none d-lg-table-cell">{{competitor.age}}</td>
-                  <td class="d-none d-md-table-cell">{{competitor.club}}</td>
+                  <td class="d-none d-sm-table-cell">{{competitor.age}}</td>
+                  <td class="d-none d-sm-table-cell">{{competitor.club}}</td>
                   <td class="d-none d-xl-table-cell"><a v-bind:href="'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' + competitor.competition_id">{{competitor.competition_name}}</a></td>
-                  <td class="d-none d-sm-table-cell" >{{competitor.date}}</td>
+                  <td class="d-none d-md-table-cell" >{{competitor.date}}</td>
                 </tr>
               </tbody>
             </table>
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------- -->
           </div>
       </div>
-  </div>
-</div>
-
-<div class="row align-items-center justify-content-md-center">
-  <div class="col">
-    <label for="event">Grein</label>
-    <select class="form-control" id="event_id" @change="get_data($event)" v-model="event_id"> 
-      <option value="6">100 m</option>
-      <option value="154">Langstökk</option>
-    </select>
-  </div>
-  <div class="col">
-    <label for="year">Ár</label>
-    <select class="form-control" id="year" @change="get_data($event)" v-model="year">
-      <option value="0">Öll ár</option>
-      <option>2020</option>
-      <option>2019</option>
-      <option>2018</option>
-      <option>2017</option>
-      <option>2016</option>
-    </select>
-  </div>
-  <div class="col">
-    <label for="agegroup">Aldursflokkur</label>
-    <select class="form-control" id="agegroup" @change="age_change($event)" v-model="agegroup">
-      <option value="0" data-start="0" data-end="999">Allir aldursflokkur</option>
-      <option data-start="20" data-end="22">20-22 ára</option>
-      <option data-start="18" data-end="19">18-19 ára</option>
-      <option data-start="16" data-end="17">16-17 ára</option>
-      <option data-start="15" data-end="15">15 ára</option>
-      <option data-start="14" data-end="14">14 ára</option>
-      <option data-start="13" data-end="13">13 ára</option>
-      <option data-start="12" data-end="12">12 ára</option>
-    </select>
-  </div>
-</div>
-<div class="row align-items-center justify-content-md-center">
-  <div class="col col-lg-2">
-    <div class="btn-group">
-      <button v-bind:class="{ 'btn-primary': isWomenActive, 'btn-secondary': !isWomenActive }" v-on:click="toggle_gender($event, 2)" class="btn">Konur</button>
-      <button v-bind:class="{ 'btn-primary': !isWomenActive, 'btn-secondary': isWomenActive }" v-on:click="toggle_gender($event, 1)" class="btn">Karlar</button>
-    </div>
-  </div>
-  <div class="col col-lg-2">
-    <div class="btn-group">
-      <button v-bind:class="{ 'btn-primary': isIndoorActive, 'btn-secondary': !isIndoorActive }" v-on:click="toggle_outin($event, 1)" class="btn">Innanhús</button>
-      <button v-bind:class="{ 'btn-primary': !isIndoorActive, 'btn-secondary': isIndoorActive }" v-on:click="toggle_outin($event, 0)" class="btn">Utanhús</button>
-    </div>
   </div>
 </div>
 {% endverbatim %}
@@ -230,8 +188,6 @@
         women_data: null,
         men_data: null,
 
-        isWomenActive: true,
-        isIndoorActive: false,
         isBestByAthActive: true,
         isLegalActive: true,
         isISLActive: true,
@@ -242,9 +198,9 @@
         gender_women: 2,
         gender_men: 1,
         year: 2019, // Year
-        agegroup: 0,
-        agestart: 0, // Start age
-        ageend: 99, // End age
+        agegroup: '00-99',
+        ageStart: 0, // Start age
+        ageEnd: 99, // End age
         legal: 1, // Only legal = 1, all = 0
         isl: 0,
         bestbyath: 1,
@@ -262,8 +218,8 @@
       this.women_data = []
       this.men_data = []
 
-      women_url = '/api/top_list/' + this.event_id + '/' + this.outin + '/' + this.gender_women + '/' + this.year + '/' + this.agestart + '/' + this.ageend + '/' + this.legal + '/' + this.isl + '/' + this.bestbyath + '/'
-      men_url = '/api/top_list/' + this.event_id + '/' + this.outin + '/' + this.gender_men + '/' + this.year + '/' + this.agestart + '/' + this.ageend + '/' + this.legal + '/' + this.isl + '/' + this.bestbyath + '/'
+      women_url = '/api/top_list/' + this.event_id + '/' + this.outin + '/' + this.gender_women + '/' + this.year + '/' + this.ageStart + '/' + this.ageEnd + '/' + this.legal + '/' + this.isl + '/' + this.bestbyath + '/'
+      men_url = '/api/top_list/' + this.event_id + '/' + this.outin + '/' + this.gender_men + '/' + this.year + '/' + this.ageStart + '/' + this.ageEnd + '/' + this.legal + '/' + this.isl + '/' + this.bestbyath + '/'
 
       axios
         .all([axios.get(women_url), axios.get(men_url)]).then(axios.spread((...response) => {
@@ -274,7 +230,8 @@
         }))
     },
     test: function(event) {
-      alert(event.target.value)
+      alert(event.target.id)
+      alert(agegroup.value)
       console.log('Hi')
     },
     toggle_gender: function (event, gender) {
@@ -282,9 +239,8 @@
       this.isWomenActive = !this.isWomenActive
       this.get_data(event)
     },
-    toggle_outin: function (event, outin) {
-      this.outin = outin
-      this.isIndoorActive = !this.isIndoorActive
+    toggle_outin: function (event) {
+      this.outin = event.target.id
       this.get_data(event)
     },
     toggle_legalresults: function (event, legal) {
@@ -302,17 +258,23 @@
       this.isBestByAthActive = !this.isBestByAthActive
       this.get_data(event)
     },
-    year_change(event) {
-            this.get_data(event)
-        },
-    age_change(event) {
-      if (event.target.options.selectedIndex > -1) {
-            const theTarget = event.target.options[event.target.options.selectedIndex].dataset;
-            this.agestart = theTarget.start
-            this.ageend = theTarget.end
-            this.get_data(event)
-          }
-        }
+    year_change: function(event) {
+      this.year = event.target.id
+      this.get_data(event)
+    },
+    age_change: function(event) {
+      this.agegroup = event.target.id
+      const split = this.agegroup.split('-')
+      if (split.length === 2) {
+    	  this.ageStart = split[0]
+        this.ageEnd = split[1]
+      }
+      this.get_data(event)
+    },
+    event_change: function(event) {
+      this.event_id = event.target.id
+      this.get_data(event)
+    }
   }
   })
 </script>
