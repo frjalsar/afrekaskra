@@ -18,24 +18,45 @@ from babel.dates import format_date, format_datetime, format_time
 EVENT_LIST_FILENAME = os.path.join(settings.BASE_DIR, 'Sif/event_list.pickle')
 df_event_list = pd.read_pickle(EVENT_LIST_FILENAME)
 
-def Get_Event_ThorID_1(Event_id):
+def Get_Event_Info(Event_id):
     try:
         THORID_1 = df_event_list['THORID_1'].values[Event_id]
+        Units = df_event_list['Units'].values[Event_id]
+        #0, # No units!
+        #'metrar': 1, # Meters
+         #'sek.': 2, # ss,dd
+         #'mín.': 3, # mm:ss
+         #'klst.': 4, # hh:mm:ss,dd
+         #'stig': 5, # Points
+         #'Ungl.stig': 6 # Points junior
+        if (Units in [0, 2, 3, 4]):
+            minimize = True
+        else:
+            minimize = False
     except:
         raise Http404('Gat ekki fundið grein.')
-    return THORID_1
 
-def Convert_Achievements_to_List(q):
+    return THORID_1, Units, minimize
+
+def Convert_Achievements_to_List(q, minimize_results):
     Achievements_list = []
     for Achievement in q:
         # Make wind into a string with sign. One decimal after period.
         wind_str = '{:+.1f}'.format(float(Achievement.vindur))
 
         # Turn results into string with two decimals after period or one if hand timing.
-        if (Achievement.rafmagnstímataka == 0):
-            result_str = '{:.1f}'.format(float(Achievement.árangur.replace(',', '.')))
-        else:
-            result_str = '{:.2f}'.format(float(Achievement.árangur.replace(',', '.')))
+        try:
+            if (Achievement.rafmagnstímataka == 0 and minimize_results == True):
+                result_str = '{:.1f}'.format(float(Achievement.árangur.replace(',', '.')))
+            else:
+                result_str = '{:.2f}'.format(float(Achievement.árangur.replace(',', '.')))
+        except:
+            print('Error')
+            print(Achievement.lína)
+            print(Achievement.nafn)
+            print(Achievement.árangur)
+            print(Achievement.keppandanúmer)
+            print('')
 
         # Turn the date into a string
         date_str = format_date(Achievement.dagsetning.date(), "d MMM yyyy",locale='is_IS').upper()
@@ -69,7 +90,7 @@ def Convert_Achievements_to_List(q):
 # Out:
 #   A list of dictionaries containing information about each achievement.
 def Get_List_of_Achievements(CompetitorCode, Event_id):
-    THORID_1 = Get_Event_ThorID_1(Event_id)
+    THORID_1, _, _ = Get_Event_Info(Event_id)
 
     q = AthlAfrek.objects.all().filter(keppandanúmer__iexact=CompetitorCode).filter(tákn_greinar__iexact=THORID_1)
     Achievements_list = Convert_Achievements_to_List(q)
@@ -129,24 +150,37 @@ def Get_List_of_Events(CompetitorCode=None, Event_id=None):
 
     return Event_list
 
-def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal):
-    THORID_1 = Get_Event_ThorID_1(Event_id)
+def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal, ISL):
+    THORID_1, _, minimize_results = Get_Event_Info(Event_id)
+    q = AthlAfrek.objects.all().filter(tákn_greinar__iexact=THORID_1,
+                                       úti_inni=IndoorOutDoor,
+                                       kyn=Gender)
 
-    if (Year == 0):
-        q = AthlAfrek.objects.all().filter(tákn_greinar__iexact=THORID_1,
-                                           aldur_keppanda__range=[AgeStart, AgeEnd],
-                                           löglegt=Legal,
-                                           úti_inni=IndoorOutDoor,
-                                           kyn=Gender).order_by('árangur')[:100]
+    if (minimize_results == True):
+        order_by_str = 'árangur'
+        if (Legal == 1):
+            electime = 1
+            # The database has a field named löglegt, but it cannot be trusted. So we filter out wind less than 2.0
+            q = q.filter(vindur__lte=2.00, rafmagnstímataka=electime)
     else:
-        q = AthlAfrek.objects.all().filter(tákn_greinar__iexact=THORID_1,
-                                           aldur_keppanda__range=[AgeStart, AgeEnd],
-                                           dagsetning__gte=datetime.date(Year, 1, 1),
-                                           dagsetning__lte=datetime.date(Year, 12, 31),
-                                           löglegt=Legal,
-                                           úti_inni=IndoorOutDoor,
-                                           kyn=Gender).order_by('árangur')[:100]
+        if (Legal == 1):
+             q = q.filter(vindur__lte=2.00)
+        order_by_str = '-árangur'
 
-    Achievements_list = Convert_Achievements_to_List(q)
+    if (Year > 0):
+        q = q.filter(dagsetning__gte=datetime.date(Year, 1, 1),
+                     dagsetning__lte=datetime.date(Year, 12, 31))
 
-    return Achievements_list
+    if (ISL == 0):
+        q = q.filter(erlendur_ríkisborgari=0)
+
+    # q = AthlAfrek.objects.all().filter(tákn_greinar__iexact=THORID_1,
+    #                                    úti_inni=IndoorOutDoor,
+    #                                    kyn=Gender,
+    #                                    dagsetning__gte=datetime.date(Year, 1, 1),
+    #                                    dagsetning__lte=datetime.date(Year, 12, 31)).order_by(order_by_str)[:1000]
+
+    q = q.order_by(order_by_str)[:1000]
+    Achievements_list = Convert_Achievements_to_List(q, minimize_results)
+
+    return Achievements_list[:100]

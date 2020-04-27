@@ -9,7 +9,7 @@
     <label for="event">Grein</label>
     <select class="form-control" id="event_id" @change="get_data($event)" v-model="event_id"> 
       <option value="6">100 m</option>
-      <option value="99">Langstökk</option>
+      <option value="154">Langstökk</option>
     </select>
   </div>
   <div class="col-md-4 col-lg-3 mb-3">
@@ -38,7 +38,7 @@
   </div>
   <div class="col-md-4 col-lg-3 mb-3">
     <div class="btn-group">
-      <button v-on:click="toggle_gender($event, 2)" class="btn btn-primary btn-sm btn-active">Konur</button>
+      <button v-on:click="toggle_gender($event, 2)" class="btn btn-primary btn-sm">Konur</button>
       <button v-on:click="toggle_gender($event, 1)" class="btn btn-secondary btn-sm">Karlar</button>
     </div>
   </div>
@@ -62,8 +62,8 @@
   </div>
   <div class="col-md-4 col-lg-4 mb-3">
     <div class="btn-group">
-      <button class="btn btn-secondary btn-sm">Íslendingar</button>
-      <button class="btn btn-primary btn-sm">Öll þjóðerni</button>
+      <button v-on:click="toggle_isl($event, 0)" class="btn btn-primary btn-sm">Íslendingar</button>
+      <button v-on:click="toggle_isl($event, 1)" class="btn btn-secondary btn-sm">Öll þjóðerni</button>
     </div>
   </div>
 </div>
@@ -123,7 +123,8 @@
         agegroup: 0,
         agestart: 0, // Start age
         ageend: 99, // End age
-        legal: 1 // Only legal = 1, all = 0
+        legal: 1, // Only legal = 1, all = 0
+        isl: 0 // Icelandic = 0, Everybody = 1
       }
     },
     mounted() {
@@ -133,7 +134,7 @@
   methods: {
     get_data: function (event) {
       axios
-        .get('/api/top_list/' + this.event_id + '/' + this.outin + '/' + this.gender + '/' + this.year + '/' + this.agestart + '/' + this.ageend + '/' + this.legal + '/')
+        .get('/api/top_list/' + this.event_id + '/' + this.outin + '/' + this.gender + '/' + this.year + '/' + this.agestart + '/' + this.ageend + '/' + this.legal + '/' + this.isl + '/' )
         .then(response => (this.data = response['data']))
     },
     toggle_gender: function (event, gender) {
@@ -146,6 +147,10 @@
     },
     toggle_legalresults: function (event, legal) {
       this.legal = legal
+      this.get_data(event)
+    },
+    toggle_isl: function (event, isl) {
+      this.isl = isl
       this.get_data(event)
     },
     year_change(event) {
