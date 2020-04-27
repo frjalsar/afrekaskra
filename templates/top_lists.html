@@ -56,8 +56,8 @@
   </div>
   <div class="col-md-4 col-lg-4 mb-3">
     <div class="btn-group">
-      <button class="btn btn-secondary btn-sm">Besta frá íþróttamanni</button>
-      <button class="btn btn-primary btn-sm">Öll afrek íþróttamanns</button>
+      <button v-on:click="toggle_bestbyath($event, 1)" class="btn btn-primary btn-sm">Besta frá íþróttamanni</button>
+      <button v-on:click="toggle_bestbyath($event, 0)"class="btn btn-secondary btn-sm">Öll afrek íþróttamanns</button>
     </div>
   </div>
   <div class="col-md-4 col-lg-4 mb-3">
@@ -124,7 +124,8 @@
         agestart: 0, // Start age
         ageend: 99, // End age
         legal: 1, // Only legal = 1, all = 0
-        isl: 0 // Icelandic = 0, Everybody = 1
+        isl: 0,
+        bestbyath: 1 // Icelandic = 0, Everybody = 1
       }
     },
     mounted() {
@@ -134,7 +135,7 @@
   methods: {
     get_data: function (event) {
       axios
-        .get('/api/top_list/' + this.event_id + '/' + this.outin + '/' + this.gender + '/' + this.year + '/' + this.agestart + '/' + this.ageend + '/' + this.legal + '/' + this.isl + '/' )
+        .get('/api/top_list/' + this.event_id + '/' + this.outin + '/' + this.gender + '/' + this.year + '/' + this.agestart + '/' + this.ageend + '/' + this.legal + '/' + this.isl + '/' + this.bestbyath + '/')
         .then(response => (this.data = response['data']))
     },
     toggle_gender: function (event, gender) {
@@ -151,6 +152,10 @@
     },
     toggle_isl: function (event, isl) {
       this.isl = isl
+      this.get_data(event)
+    },
+    toggle_bestbyath: function (event, bestbyath) {
+      this.bestbyath = bestbyath
       this.get_data(event)
     },
     year_change(event) {

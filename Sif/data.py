@@ -38,8 +38,9 @@ def Get_Event_Info(Event_id):
 
     return THORID_1, Units, minimize
 
-def Convert_Achievements_to_List(q, minimize_results):
+def Convert_Achievements_to_List(q, minimize_results, best_by_ath):
     Achievements_list = []
+    competitorcode_list = []
     for Achievement in q:
         # Make wind into a string with sign. One decimal after period.
         wind_str = '{:+.1f}'.format(float(Achievement.vindur))
@@ -77,6 +78,11 @@ def Convert_Achievements_to_List(q, minimize_results):
                             }
 
         # Append
+        if (best_by_ath == 1):
+            if (Achievement_info['competitorcode'] in competitorcode_list):
+                continue
+        
+        competitorcode_list.append(Achievement_info['competitorcode'])
         Achievements_list.append(Achievement_info)
 
     return Achievements_list
@@ -150,7 +156,7 @@ def Get_List_of_Events(CompetitorCode=None, Event_id=None):
 
     return Event_list
 
-def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal, ISL):
+def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal, ISL, BestByAth):
     THORID_1, _, minimize_results = Get_Event_Info(Event_id)
     q = AthlAfrek.objects.all().filter(tákn_greinar__iexact=THORID_1,
                                        úti_inni=IndoorOutDoor,
@@ -181,6 +187,6 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
     #                                    dagsetning__lte=datetime.date(Year, 12, 31)).order_by(order_by_str)[:1000]
 
     q = q.order_by(order_by_str)[:1000]
-    Achievements_list = Convert_Achievements_to_List(q, minimize_results)
+    Achievements_list = Convert_Achievements_to_List(q, minimize_results, BestByAth)
 
     return Achievements_list[:100]
