@@ -4,6 +4,161 @@
 {% block title %}Sif - Afrekaskrá FRÍ{% endblock %}
 {% block content %}
 {% verbatim %}
+<div class="card ">
+  <div class="card-header"> 
+      <ul class="nav nav-tabs card-header-tabs pull-right"  id="myTab" role="tablist">
+          <li class="nav-item">
+              <a class="nav-link active" id="women-tab" data-toggle="tab" href="#women" role="tab" aria-controls="women" aria-selected="true">Konur</a>
+          </li>
+          <!---->
+          <li class="nav-item">
+              <a class="nav-link" id="men-tab" data-toggle="tab" href="#men" role="tab" aria-controls="men" aria-selected="false">Karlar</a>
+          </li>
+          <!---->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#outorindoors" role="button" aria-haspopup="true" aria-expanded="false">Úti</a>
+            <div class="dropdown-menu" id="outorindoorsDropdown">
+              <a class="dropdown-item" id="0">Úti</a>
+              <a class="dropdown-item" id="1">Inni</a>
+            </div>
+          </li>
+          <!---->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#event" role="button" aria-haspopup="true" aria-expanded="false">100m</a>
+            <div class="dropdown-menu" id="eventDropdown">
+              <a class="dropdown-item" id="6">100m</a>
+              <a class="dropdown-item" id="154">Langstökk</a>
+            </div>
+          </li>
+          <!---->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#activeyear" role="button" aria-haspopup="true" aria-expanded="false">2019</a>
+            <div class="dropdown-menu" id="activeyearDropdown">
+              <a class="dropdown-item" id="0">Öll ár</a>
+              <a class="dropdown-item" id="1">2020</a>
+              <a class="dropdown-item" id="1">2019</a>
+              <a class="dropdown-item" id="1">2018</a>
+              <a class="dropdown-item" id="1">2017</a>
+              <a class="dropdown-item" id="1">2016</a>
+            </div>
+          </li>
+          <!---->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#age" role="button" aria-haspopup="true" aria-expanded="false">Allir aldursflokkar</a>
+            <div class="dropdown-menu" id="ageDropdown">
+              <a class="dropdown-item" id="0">Allir aldursflokkar</a>
+              <a class="dropdown-item" id="1">20-22 ára</a>
+            </div>
+          </li>
+      </ul>
+  </div>
+
+  <div class="card-body">
+      <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="women" role="tabpanel" aria-labelledby="women-tab">
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------- -->
+<div class="row align-items-center justify-content-md-center">
+  <div class="col">
+    <div class="btn-group">
+      <button v-bind:class="{ 'btn-primary': isBestByAthActive, 'btn-secondary': !isBestByAthActive }" v-on:click="toggle_bestbyath($event, 1)" class="btn">Besta frá íþróttamanni</button>
+      <button v-bind:class="{ 'btn-primary': !isBestByAthActive, 'btn-secondary': isBestByAthActive }" v-on:click="toggle_bestbyath($event, 0)" class="btn">Öll afrek íþróttamanns</button>
+    </div>
+  </div>
+  <div class="col">
+    <div class="btn-group">
+      <button v-bind:class="{ 'btn-primary': isLegalActive, 'btn-secondary': !isLegalActive }" v-on:click="toggle_legalresults($event, 1)" class="btn">Löglegir árangrar</button>
+      <button v-bind:class="{ 'btn-primary': !isLegalActive, 'btn-secondary': isLegalActive }" v-on:click="toggle_legalresults($event, 0)" class="btn">Allir árangrar</button>
+    </div>
+  </div>
+  <div class="col">
+    <div class="btn-group">
+      <button v-bind:class="{ 'btn-primary': isISLActive, 'btn-secondary': !isISLActive }" v-on:click="toggle_isl($event, 0)" class="btn">Íslendingar</button>
+      <button v-bind:class="{ 'btn-primary': !isISLActive, 'btn-secondary': isISLActive }" v-on:click="toggle_isl($event, 1)" class="btn">Öll þjóðerni</button>
+    </div>
+  </div>
+</div>
+            <table class="table table-striped table-responsive-sm">
+              <thead>
+                <tr>
+                  <th class="d-none d-lg-table-cell" scope="col">#</th>
+                  <th scope="col">Árangur</th>
+                  <th class="d-none d-sm-table-cell" scope="col">Vindur</th>
+                  <th scope="col">Nafn</th>
+                  <th class="d-none d-lg-table-cell" scope="col">Aldur</th>
+                  <th class="d-none d-lg-table-cell" scope="col">Félag</th>
+                  <th class="d-none d-lg-table-cell" scope="col">Mót</th>
+                  <th class="d-none d-sm-table-cell" scope="col">Dags.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(competitor, index) in women_data">
+                  <th class="d-none d-lg-table-cell" scope="row">{{index+1}}</th>
+                  <td>{{competitor.results}}</td>
+                  <td class="d-none d-sm-table-cell">{{competitor.wind}}</td>
+                  <td><a v-bind:href="'/keppandi/' + competitor.competitorcode">{{competitor.name}}</a></td>
+                  <td class="d-none d-lg-table-cell">{{competitor.age}}</td>
+                  <td class="d-none d-lg-table-cell">{{competitor.club}}</td>
+                  <td class="d-none d-lg-table-cell"><a v-bind:href="'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' + competitor.competition_id">{{competitor.competition_name}}</a></td>
+                  <td class="d-none d-sm-table-cell" >{{competitor.date}}</td>
+                </tr>
+              </tbody>
+            </table>
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------- -->
+          </div>
+          <div class="tab-pane fade" id="men" role="tabpanel" aria-labelledby="men-tab">
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------- -->
+<div class="row align-items-center justify-content-md-center">
+  <div class="col">
+    <div class="btn-group">
+      <button v-bind:class="{ 'btn-primary': isBestByAthActive, 'btn-secondary': !isBestByAthActive }" v-on:click="toggle_bestbyath($event, 1)" class="btn">Besta frá íþróttamanni</button>
+      <button v-bind:class="{ 'btn-primary': !isBestByAthActive, 'btn-secondary': isBestByAthActive }" v-on:click="toggle_bestbyath($event, 0)" class="btn">Öll afrek íþróttamanns</button>
+    </div>
+  </div>
+  <div class="col">
+    <div class="btn-group">
+      <button v-bind:class="{ 'btn-primary': isLegalActive, 'btn-secondary': !isLegalActive }" v-on:click="toggle_legalresults($event, 1)" class="btn">Löglegir árangrar</button>
+      <button v-bind:class="{ 'btn-primary': !isLegalActive, 'btn-secondary': isLegalActive }" v-on:click="toggle_legalresults($event, 0)" class="btn">Allir árangrar</button>
+    </div>
+  </div>
+  <div class="col">
+    <div class="btn-group">
+      <button v-bind:class="{ 'btn-primary': isISLActive, 'btn-secondary': !isISLActive }" v-on:click="toggle_isl($event, 0)" class="btn">Íslendingar</button>
+      <button v-bind:class="{ 'btn-primary': !isISLActive, 'btn-secondary': isISLActive }" v-on:click="toggle_isl($event, 1)" class="btn">Öll þjóðerni</button>
+    </div>
+  </div>
+</div>
+            <table class="table table-striped table-responsive-sm">
+              <thead>
+                <tr>
+                  <th class="d-none d-lg-table-cell" scope="col">#</th>
+                  <th scope="col">Árangur</th>
+                  <th class="d-none d-sm-table-cell" scope="col">Vindur</th>
+                  <th scope="col">Nafn</th>
+                  <th class="d-none d-lg-table-cell" scope="col">Aldur</th>
+                  <th class="d-none d-lg-table-cell" scope="col">Félag</th>
+                  <th class="d-none d-lg-table-cell" scope="col">Mót</th>
+                  <th class="d-none d-sm-table-cell" scope="col">Dags.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(competitor, index) in men_data">
+                  <th class="d-none d-lg-table-cell" scope="row">{{index+1}}</th>
+                  <td>{{competitor.results}}</td>
+                  <td class="d-none d-sm-table-cell">{{competitor.wind}}</td>
+                  <td><a v-bind:href="'/keppandi/' + competitor.competitorcode">{{competitor.name}}</a></td>
+                  <td class="d-none d-lg-table-cell">{{competitor.age}}</td>
+                  <td class="d-none d-lg-table-cell">{{competitor.club}}</td>
+                  <td class="d-none d-lg-table-cell"><a v-bind:href="'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' + competitor.competition_id">{{competitor.competition_name}}</a></td>
+                  <td class="d-none d-sm-table-cell" >{{competitor.date}}</td>
+                </tr>
+              </tbody>
+            </table>
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------- -->
+          </div>
+      </div>
+  </div>
+</div>
+
 <div class="row align-items-center justify-content-md-center">
   <div class="col">
     <label for="event">Grein</label>
@@ -51,53 +206,6 @@
     </div>
   </div>
 </div>
-<div class="row align-items-center justify-content-md-center">
-  <div class="col">
-    <div class="btn-group">
-      <button v-bind:class="{ 'btn-primary': isBestByAthActive, 'btn-secondary': !isBestByAthActive }" v-on:click="toggle_bestbyath($event, 1)" class="btn">Besta frá íþróttamanni</button>
-      <button v-bind:class="{ 'btn-primary': !isBestByAthActive, 'btn-secondary': isBestByAthActive }" v-on:click="toggle_bestbyath($event, 0)" class="btn">Öll afrek íþróttamanns</button>
-    </div>
-  </div>
-  <div class="col">
-    <div class="btn-group">
-      <button v-bind:class="{ 'btn-primary': isLegalActive, 'btn-secondary': !isLegalActive }" v-on:click="toggle_legalresults($event, 1)" class="btn">Löglegir árangrar</button>
-      <button v-bind:class="{ 'btn-primary': !isLegalActive, 'btn-secondary': isLegalActive }" v-on:click="toggle_legalresults($event, 0)" class="btn">Allir árangrar</button>
-    </div>
-  </div>
-  <div class="col">
-    <div class="btn-group">
-      <button v-bind:class="{ 'btn-primary': isISLActive, 'btn-secondary': !isISLActive }" v-on:click="toggle_isl($event, 0)" class="btn">Íslendingar</button>
-      <button v-bind:class="{ 'btn-primary': !isISLActive, 'btn-secondary': isISLActive }" v-on:click="toggle_isl($event, 1)" class="btn">Öll þjóðerni</button>
-    </div>
-  </div>
-</div>
-<table class="table table-striped table-responsive-sm">
-  <thead>
-    <tr>
-      <th class="d-none d-lg-table-cell" scope="col">#</th>
-      <th scope="col">Árangur</th>
-      <th class="d-none d-sm-table-cell" scope="col">Vindur</th>
-      <th scope="col">Nafn</th>
-      <th class="d-none d-lg-table-cell" scope="col">Aldur</th>
-      <th class="d-none d-lg-table-cell" scope="col">Félag</th>
-      <th class="d-none d-lg-table-cell" scope="col">Mót</th>
-      <th class="d-none d-sm-table-cell" scope="col">Dags.</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr v-for="(competitor, index) in data">
-      <th class="d-none d-lg-table-cell" scope="row">{{index+1}}</th>
-      <td>{{competitor.results}}</td>
-      <td class="d-none d-sm-table-cell">{{competitor.wind}}</td>
-      <td><a v-bind:href="'/keppandi/' + competitor.competitorcode">{{competitor.name}}</a></td>
-      <td class="d-none d-lg-table-cell">{{competitor.age}}</td>
-      <td class="d-none d-lg-table-cell">{{competitor.club}}</td>
-      <td class="d-none d-lg-table-cell"><a v-bind:href="'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' + competitor.competition_id">{{competitor.competition_name}}</a></td>
-      <td class="d-none d-sm-table-cell" >{{competitor.date}}</td>
-    </tr>
-  </tbody>
-</table>
-</div>
 {% endverbatim %}
 {% endblock %}
 
@@ -119,7 +227,8 @@
     el: '#app',
     data() {
       return {
-        data: null,
+        women_data: null,
+        men_data: null,
 
         isWomenActive: true,
         isIndoorActive: false,
@@ -130,6 +239,8 @@
         event_id: 6, // Event_id
         outin: 0, // Outdoor = 0, Indoor = 1
         gender: 2, // Women = 2, Men = 1
+        gender_women: 2,
+        gender_men: 1,
         year: 2019, // Year
         agegroup: 0,
         agestart: 0, // Start age
@@ -147,11 +258,24 @@
   methods: {
     get_data: function (event) {
       this.busy = true
-      this.data = []
+
+      this.women_data = []
+      this.men_data = []
+
+      women_url = '/api/top_list/' + this.event_id + '/' + this.outin + '/' + this.gender_women + '/' + this.year + '/' + this.agestart + '/' + this.ageend + '/' + this.legal + '/' + this.isl + '/' + this.bestbyath + '/'
+      men_url = '/api/top_list/' + this.event_id + '/' + this.outin + '/' + this.gender_men + '/' + this.year + '/' + this.agestart + '/' + this.ageend + '/' + this.legal + '/' + this.isl + '/' + this.bestbyath + '/'
+
       axios
-        .get('/api/top_list/' + this.event_id + '/' + this.outin + '/' + this.gender + '/' + this.year + '/' + this.agestart + '/' + this.ageend + '/' + this.legal + '/' + this.isl + '/' + this.bestbyath + '/')
-        .then(response => (this.data = response['data']))
-      this.busy = false
+        .all([axios.get(women_url), axios.get(men_url)]).then(axios.spread((...response) => {
+          this.women_data = response[0]['data']
+          this.men_data = response[1]['data']
+
+          this.busy = false
+        }))
+    },
+    test: function(event) {
+      alert(event.target.value)
+      console.log('Hi')
     },
     toggle_gender: function (event, gender) {
       this.gender = gender
