@@ -16,7 +16,7 @@
           </li>
           <!---->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#outorindoors" role="button" aria-haspopup="true" aria-expanded="false">Úti</a>
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#outorindoors" role="button" aria-haspopup="true" aria-expanded="false">{{outorinText}}</a>
             <div v-on:click="toggle_outin($event)" class="dropdown-menu" id="outorindoorsDropdown">
               <a class="dropdown-item" id="0">Úti</a>
               <a class="dropdown-item" id="1">Inni</a>
@@ -24,7 +24,7 @@
           </li>
           <!---->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#event" role="button" aria-haspopup="true" aria-expanded="false">100m</a>
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#event" role="button" aria-haspopup="true" aria-expanded="false">{{eventText}}</a>
             <div v-on:click="event_change($event)" class="dropdown-menu" id="eventDropdown">
               <a class="dropdown-item" id="6">100m</a>
               <a class="dropdown-item" id="154">Langstökk</a>
@@ -32,7 +32,7 @@
           </li>
           <!---->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#activeyear" role="button" aria-haspopup="true" aria-expanded="false">2019</a>
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#activeyear" role="button" aria-haspopup="true" aria-expanded="false">{{yearText}}</a>
             <div v-on:click="year_change($event)" class="dropdown-menu" id="activeyearDropdown">
               <a class="dropdown-item" id="0">Öll ár</a>
               <a class="dropdown-item" id="2020">2020</a>
@@ -44,7 +44,7 @@
           </li>
           <!---->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#age" role="button" aria-haspopup="true" aria-expanded="false">Allir aldursflokkar</a>
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#age" role="button" aria-haspopup="true" aria-expanded="false">{{ageText}}</a>
             <div v-on:click="age_change($event)" class="dropdown-menu" id="ageDropdown">
               <a class="dropdown-item" id="00-99">Allir aldursflokkar</a>
               <a class="dropdown-item" id="20-22">20-22 ára</a>
@@ -88,7 +88,7 @@
                 <tr>
                   <th class="d-none d-sm-table-cell" scope="col">#</th>
                   <th scope="col">Árangur</th>
-                  <th scope="col">Vindur</th>
+                  <th v-bind:class="{'d-none': !hasWind}" scope="col">Vindur</th>
                   <th scope="col">Nafn</th>
                   <th class="d-none d-sm-table-cell" scope="col">Aldur</th>
                   <th class="d-none d-sm-table-cell" scope="col">Félag</th>
@@ -100,7 +100,7 @@
                 <tr v-for="(competitor, index) in women_data">
                   <th class="d-none d-sm-table-cell" scope="row">{{index+1}}</th>
                   <td>{{competitor.results}}</td>
-                  <td>{{competitor.wind}}</td>
+                  <td v-bind:class="{'d-none': !hasWind}">{{competitor.wind}}</td>
                   <td><a v-bind:href="'/keppandi/' + competitor.competitorcode">{{competitor.name}}</a></td>
                   <td class="d-none d-sm-table-cell">{{competitor.age}}</td>
                   <td class="d-none d-sm-table-cell">{{competitor.club}}</td>
@@ -138,7 +138,7 @@
                 <tr>
                   <th class="d-none d-sm-table-cell" scope="col">#</th>
                   <th scope="col">Árangur</th>
-                  <th scope="col">Vindur</th>
+                  <th v-bind:class="{'d-none': !hasWind}" scope="col">Vindur</th>
                   <th scope="col">Nafn</th>
                   <th class="d-none d-sm-table-cell" scope="col">Aldur</th>
                   <th class="d-none d-sm-table-cell" scope="col">Félag</th>
@@ -150,7 +150,7 @@
                 <tr v-for="(competitor, index) in men_data">
                   <th class="d-none d-sm-table-cell" scope="row">{{index+1}}</th>
                   <td>{{competitor.results}}</td>
-                  <td>{{competitor.wind}}</td>
+                  <td v-bind:class="{'d-none': !hasWind}">{{competitor.wind}}</td>
                   <td><a v-bind:href="'/keppandi/' + competitor.competitorcode">{{competitor.name}}</a></td>
                   <td class="d-none d-sm-table-cell">{{competitor.age}}</td>
                   <td class="d-none d-sm-table-cell">{{competitor.club}}</td>
@@ -191,6 +191,12 @@
         isBestByAthActive: true,
         isLegalActive: true,
         isISLActive: true,
+        hasWind: true,
+
+        outorinText: 'Úti',
+        eventText: '100m',
+        yearText: '2019',
+        ageText: 'Allir aldursflokkar',
 
         event_id: 6, // Event_id
         outin: 0, // Outdoor = 0, Indoor = 1
@@ -241,6 +247,13 @@
     },
     toggle_outin: function (event) {
       this.outin = event.target.id
+      this.outorinText = event.target.textContent
+      
+      if (this.outin === 0) {
+        this.hasWind = true
+      } else {
+        this.hasWind = false
+      }
       this.get_data(event)
     },
     toggle_legalresults: function (event, legal) {
@@ -260,10 +273,12 @@
     },
     year_change: function(event) {
       this.year = event.target.id
+      this.yearText = event.target.textContent
       this.get_data(event)
     },
     age_change: function(event) {
       this.agegroup = event.target.id
+      this.ageText = event.target.textContent
       const split = this.agegroup.split('-')
       if (split.length === 2) {
     	  this.ageStart = split[0]
@@ -273,6 +288,7 @@
     },
     event_change: function(event) {
       this.event_id = event.target.id
+      this.eventText = event.target.textContent
       this.get_data(event)
     }
   }
