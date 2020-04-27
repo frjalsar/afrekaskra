@@ -132,7 +132,7 @@
                 <tr>
                   <th class="d-none d-lg-table-cell" scope="col">#</th>
                   <th scope="col">Árangur</th>
-                  <th class="d-none d-xs-table-cell" scope="col">Vindur</th>
+                  <th class="" scope="col">Vindur</th>
                   <th scope="col">Nafn</th>
                   <th class="d-none d-lg-table-cell" scope="col">Aldur</th>
                   <th class="d-none d-md-table-cell" scope="col">Félag</th>
@@ -144,7 +144,7 @@
                 <tr v-for="(competitor, index) in men_data">
                   <th class="d-none d-lg-table-cell" scope="row">{{index+1}}</th>
                   <td>{{competitor.results}}</td>
-                  <td class="d-none d-xs-table-cell">{{competitor.wind}}</td>
+                  <td>{{competitor.wind}}</td>
                   <td><a v-bind:href="'/keppandi/' + competitor.competitorcode">{{competitor.name}}</a></td>
                   <td class="d-none d-lg-table-cell">{{competitor.age}}</td>
                   <td class="d-none d-md-table-cell">{{competitor.club}}</td>
