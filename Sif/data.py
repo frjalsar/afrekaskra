@@ -22,10 +22,14 @@ df_event_list = pd.read_pickle(EVENT_LIST_FILENAME)
 Units_symbol = {1: 'm', 2: 's', 3: 'mm:ss', 4: 'hh:mm:ss,dd', 5: 'stig', 6: 'stig'}
 
 def Get_List_of_Years():
-    df = pd.DataFrame(list(AthlAfrek.objects.values('dagsetning')))
-    df['year'] = pd.DatetimeIndex(df['dagsetning']).year
-    df = df.sort_values(by=['year'], ascending=False)
-    return list(df.year.unique())
+    #df = pd.DataFrame(list(AthlAfrek.objects.values('dagsetning')))
+    #df['year'] = pd.DatetimeIndex(df['dagsetning']).year
+    #df = df.sort_values(by=['year'], ascending=False)
+    #return list(df.year.unique())
+
+    # It takes a long time to get the list of all dates from the database because the Django drivers for MS-SQL doesn't support distinct.
+    current_year = datetime.datetime.now().year
+    return list(range(current_year, 1909-1, -1))
 
 def Get_Event_Info(Event_id):
     try:
