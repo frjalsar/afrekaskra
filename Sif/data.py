@@ -82,7 +82,8 @@ def Get_Event_Info(Event_id):
                       'Units': Units,
                       'Units_symbol': Units_symbol[Units],
                       'Minimize': minimize,
-                      'ShortName': df_event_list['ShortName'].values[Event_id]}
+                      'ShortName': df_event_list['ShortName'].values[Event_id],
+                      'HasWind': df_event_list['Wind'].values[Event_id]}
     except:
         raise Http404('Gat ekki fundið grein.')
 
@@ -105,9 +106,9 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
 
     # Röðum árangri, fyrst eftir árangri og svo eftir dagsetningu ef árangrar eru jafnir.
     if (Event_Info['Minimize'] == True):
-        df.sort_values(by=['árangur_float', 'dagsetning'], ascending=[True, False], inplace=True)
+        df.sort_values(by=['árangur_float', 'dagsetning'], ascending=[True, True], inplace=True)
     else:
-        df.sort_values(by=['árangur_float', 'dagsetning'], ascending=[False, False], inplace=True)
+        df.sort_values(by=['árangur_float', 'dagsetning'], ascending=[False, True], inplace=True)
 
     # Athuga hvort við viljum bara besta árangur íþróttamanns. Ef svo er hendum við úr endurtekningum en höldum fyrstu línu.
     if (best_by_ath == True):
