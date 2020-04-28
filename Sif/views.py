@@ -38,5 +38,5 @@ def competitor(request, CompetitorCode=None, Event=None):
 
 def top_lists(request):
     years = data.Get_List_of_Years()
-    print(years)
+    
     return render(request, 'top_lists.html', {'YEARS': years})

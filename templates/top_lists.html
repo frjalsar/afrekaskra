@@ -213,7 +213,7 @@
         isBestByAthActive: true,
         isLegalActive: true,
         isISLActive: true,
-        hasWind: false,
+        //hasWind: false,
 
         outorinText: 'Inni',
         eventText: 'Langstökk',
@@ -222,7 +222,7 @@
 
         event_id: 154, // Event_id
         outin: 1, // Outdoor = 0, Indoor = 1
-        gender: 2, // Women = 2, Men = 1
+        //gender: 2, // Women = 2, Men = 1
         gender_women: 2,
         gender_men: 1,
         year: new Date().getFullYear(), // Year
@@ -242,10 +242,18 @@
       } else {
         return this.year.toString()
       }
+    },
+    hasWind: function () {
+      if (this.outin === '0') {
+          // We are outdoor. Does the current selected event have wind?
+          return true
+        } else {
+          return false // We are indoor, no wind
+        }
     }
   },
     mounted() {
-      this.get_data()
+      this.get_data(null)
     },
     // define methods under the `methods` object
     methods: {
@@ -270,20 +278,10 @@
         alert(event.target.id)
         console.log('Hi')
       },
-      toggle_gender: function (event, gender) {
-        this.gender = gender
-        this.isWomenActive = !this.isWomenActive
-        this.get_data(event)
-      },
       toggle_outin: function (event) {
         this.outin = event.target.id
         this.outorinText = event.target.textContent
 
-        if (this.outin === 0) {
-          this.hasWind = true
-        } else {
-          this.hasWind = false
-        }
         this.get_data(event)
       },
       toggle_legalresults: function (event) {
