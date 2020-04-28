@@ -139,6 +139,7 @@
             </tr>
           </tbody>
         </table>
+        <p align="center">{{women_message}}</p>
         <!-- ------------------------------------------------------------------------------------------------------------------------------------------------- -->
       </div>
       <div class="tab-pane fade" id="men" role="tabpanel" aria-labelledby="men-tab">
@@ -171,6 +172,7 @@
             </tr>
           </tbody>
         </table>
+        <p align="center">{{men_message}}</p>
         <!-- ------------------------------------------------------------------------------------------------------------------------------------------------- -->
       </div>
     </div>
@@ -208,6 +210,8 @@
         men_data: null,
         women_event: null,
         men_event: null,
+        women_message: '',
+        men_message: '',
 
         isBestByAthActive: true,
         isLegalActive: true,
@@ -283,9 +287,19 @@
             //'stig': 5, # Points
             //'Ungl.stig': 6 # Points junior
             //alert(this.women_event['Units'])
-            this.women_data = this.convert_to_timeformat(this.women_event['Units'], this.women_data)
+            if (this.women_data.length === 0) {
+              this.women_message = 'Engin gögn fundust :('
+            } else {
+              this.women_message = ''
+              this.women_data = this.convert_to_timeformat(this.women_event['Units'], this.women_data)
+            }
+            if (this.men_data.length === 0) {
+              this.men_message = 'Engin gögn fundust :('
+            } else
+            {
+              this.men_message = ''
             this.men_data = this.convert_to_timeformat(this.men_event['Units'], this.men_data)
-
+            }
             this.busy = false
           }))
       },
