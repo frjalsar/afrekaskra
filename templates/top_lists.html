@@ -220,6 +220,8 @@
       return {
         women_data: null,
         men_data: null,
+        women_event: null,
+        men_event: null,
 
         isBestByAthActive: true,
         isLegalActive: true,
@@ -279,11 +281,70 @@
 
         axios
           .all([axios.get(women_url), axios.get(men_url)]).then(axios.spread((...response) => {
-            this.women_data = response[0]['data']
-            this.men_data = response[1]['data']
+            this.women_data = response[0]['data']['TopList']
+            this.men_data = response[1]['data']['TopList']
+
+            this.women_event = response[0]['data']['EventInfo']
+            this.men_event = response[1]['data']['EventInfo']
+
+            //console.log(this.women_data)
+
+            //0, # No units!
+            //'metrar': 1, # Meters
+            //'sek.': 2, # ss,dd
+            //'mín.': 3, # mm:ss
+            //'klst.': 4, # hh:mm:ss,dd
+            //'stig': 5, # Points
+            //'Ungl.stig': 6 # Points junior
+            //alert(this.women_event['Units'])
+            this.women_data = this.convert_to_timeformat(this.women_event['Units'], this.women_data)
+            this.men_data = this.convert_to_timeformat(this.men_event['Units'], this.men_data)
 
             this.busy = false
           }))
+      },
+      convert_to_timeformat: function (unit, my_data){
+
+        if ((unit === 3) || (unit === 4)) {
+          var dataLen = my_data.length
+          for (i = 0; i < dataLen; i++) {
+            var f = Number(my_data[i]['results'])
+            if (unit === 4) { // This unit has hours
+              var h = Math.floor(f/3600)
+              f = f - h*3600
+            } else {
+              var h = 0
+            }
+            var m = Math.floor(f/60)
+            var s = f - m*60
+
+            if (s < 10) {
+              s_str = '0' + s.toFixed(2)
+            } else {
+              s_str = s.toFixed(2)
+            }
+
+            if (m < 10) {
+              m_str = '0' + m.toFixed(0)
+            } else {
+              m_str = m.toFixed(0)
+            }
+
+            if (h < 10) {
+              h_str = '0' + h.toFixed(0)
+            } else {
+              h_str = h.toFixed(0)
+            }
+
+            if (unit === 3) {
+              my_data[i]['results'] = m_str + ':' + s_str
+            } else {
+              my_data[i]['results'] = h_str + ':' + m_str + ':' + s_str
+            }
+          }
+        }
+
+        return my_data
       },
       test: function (event) {
         alert(event.target.id)

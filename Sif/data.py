@@ -65,7 +65,6 @@ def Get_List_of_Years():
 
 def Get_Event_Info(Event_id):
     try:
-        THORID_1 = df_event_list['THORID_1'].values[Event_id]
         Units = df_event_list['Units'].values[Event_id]
         #0, # No units!
         #'metrar': 1, # Meters
@@ -78,12 +77,18 @@ def Get_Event_Info(Event_id):
             minimize = True
         else:
             minimize = False
+
+        Event_Info = {'THORID_1': df_event_list['THORID_1'].values[Event_id],
+                      'Units': Units,
+                      'Units_symbol': Units_symbol[Units],
+                      'Minimize': minimize,
+                      'ShortName': df_event_list['ShortName'].values[Event_id]}
     except:
         raise Http404('Gat ekki fundið grein.')
 
-    return THORID_1, Units, minimize
+    return Event_Info
 
-def Convert_Achievements_to_List_PD(q, minimize_results, best_by_ath, units):
+def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
     df = pd.DataFrame.from_records(q.values_list('lína', 'nafn', 'keppandanúmer',
                                                  'árangur', 'vindur', 'félag',
                                                  'aldur_keppanda', 'heiti_móts', 'mót',
@@ -99,7 +104,7 @@ def Convert_Achievements_to_List_PD(q, minimize_results, best_by_ath, units):
     df['árangur_float'] = df['árangur'].map(results_to_float)
 
     # Röðum árangri, fyrst eftir árangri og svo eftir dagsetningu ef árangrar eru jafnir.
-    if (minimize_results == True):
+    if (Event_Info['Minimize'] == True):
         df.sort_values(by=['árangur_float', 'dagsetning'], ascending=[True, False], inplace=True)
     else:
         df.sort_values(by=['árangur_float', 'dagsetning'], ascending=[False, False], inplace=True)
@@ -119,7 +124,7 @@ def Convert_Achievements_to_List_PD(q, minimize_results, best_by_ath, units):
         date_str = format_date(row.dagsetning.date(), "d MMM yyyy",locale='is_IS').upper()
         wind_str = '{:+.1f}'.format(row.vindur)
 
-        if (row.rafmagnstímataka == 0 and minimize_results == True):
+        if (row.rafmagnstímataka == 0 and Event_Info['Minimize'] == True):
             result_str = '{:.1f}'.format(row.árangur_float)
         else:
             result_str = '{:.2f}'.format(row.árangur_float)
@@ -132,11 +137,12 @@ def Convert_Achievements_to_List_PD(q, minimize_results, best_by_ath, units):
                             'competition_name': row.heiti_móts,
                             'competition_id': row.mót,
                             'date': date_str,
-                            'competitorcode': row.keppandanúmer
+                            'competitorcode': row.keppandanúmer,
+                            'electronic_timing': row.rafmagnstímataka
                             }
         Achievements_list.append(Achievement_info)
 
-    print(df.head(n=10))
+    #print(df.head(n=10))
     return Achievements_list
 
 def Convert_Achievements_to_List(q, minimize_results, best_by_ath, units):
@@ -277,27 +283,29 @@ def Get_List_of_Events(CompetitorCode=None, Event_id=None):
     return Event_list
 
 def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal, ISL, BestByAth):
-    THORID_1, Units, minimize_results = Get_Event_Info(Event_id)
-    q = AthlAfrek.objects.all().filter(tákn_greinar__iexact=THORID_1,
+    Event_Info = Get_Event_Info(Event_id)
+    q = AthlAfrek.objects.all().filter(tákn_greinar__iexact=Event_Info['THORID_1'],
                                        úti_inni=IndoorOutDoor,
                                        kyn=Gender,
                                        aldur_keppanda__range=[AgeStart, AgeEnd])
 
-    if (minimize_results == True):
-        order_by_str = 'árangur'
+    if (Event_Info['Minimize'] == True):
+        #order_by_str = 'árangur'
         if (Legal == 1):
             electime = 1
-            # The database has a field named löglegt, but it cannot be trusted. So we filter out wind less than 2.0
+            # Gagnagrunurinn er með dálk sem heitir löglegt. En það virðist ekki vera hægt að treysta honum.
             q = q.filter(vindur__lte=2.00, rafmagnstímataka=electime)
-    else:
+    else: # Dálkurinn með rafmagnstímataka getur verið hvað sem er í greinum sem eru ekki með tímatöku.
         if (Legal == 1):
              q = q.filter(vindur__lte=2.00)
-        order_by_str = '-árangur'
+    #    order_by_str = '-árangur'
 
+    # Ef við viljum fá öll gögn þá er Year = 0
     if (Year > 0):
         q = q.filter(dagsetning__gte=datetime.date(Year, 1, 1),
                      dagsetning__lte=datetime.date(Year, 12, 31))
 
+    # Öll þjóðerni eða ekki. ISL = 0 þýðir bara íslendingar.
     if (ISL == 0):
         q = q.filter(erlendur_ríkisborgari=0)
 
@@ -307,8 +315,8 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
     #                                    dagsetning__gte=datetime.date(Year, 1, 1),
     #                                    dagsetning__lte=datetime.date(Year, 12, 31)).order_by(order_by_str)[:1000]
 
-    q = q.order_by(order_by_str)
+    #q = q.order_by(order_by_str)
     #Achievements_list = Convert_Achievements_to_List(q, minimize_results, BestByAth, Units)
-    Achievements_list = Convert_Achievements_to_List_PD(q, minimize_results, BestByAth, Units)
+    Achievements_list = Convert_Achievements_to_List_PD(q, BestByAth, Event_Info)
 
-    return Achievements_list[:100]
+    return Achievements_list[:100], Event_Info
