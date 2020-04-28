@@ -37,4 +37,6 @@ def competitor(request, CompetitorCode=None, Event=None):
         return render(request, 'competitor.html', {'Competitor': Competitor_info})
 
 def top_lists(request):
-    return render(request, 'top_lists.html')
+    years = data.Get_List_of_Years()
+    print(years)
+    return render(request, 'top_lists.html', {'YEARS': years})

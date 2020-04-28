@@ -21,6 +21,12 @@ df_event_list = pd.read_pickle(EVENT_LIST_FILENAME)
 # Units
 Units_symbol = {1: 'm', 2: 's', 3: 'mm:ss', 4: 'hh:mm:ss,dd', 5: 'stig', 6: 'stig'}
 
+def Get_List_of_Years():
+    df = pd.DataFrame(list(AthlAfrek.objects.values('dagsetning')))
+    df['year'] = pd.DatetimeIndex(df['dagsetning']).year
+    df = df.sort_values(by=['year'], ascending=False)
+    return list(df.year.unique())
+
 def Get_Event_Info(Event_id):
     try:
         THORID_1 = df_event_list['THORID_1'].values[Event_id]
