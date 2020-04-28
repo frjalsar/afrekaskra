@@ -21,6 +21,38 @@ df_event_list = pd.read_pickle(EVENT_LIST_FILENAME)
 # Units
 Units_symbol = {1: 'm', 2: 's', 3: 'mm:ss', 4: 'hh:mm:ss,dd', 5: 'stig', 6: 'stig'}
 
+# stuff
+import re
+prog_time = re.compile('^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?(\d+\.?\d*)?$') # Notum regex
+
+#-------------------------------------------------------------------------------
+# Fall sem breytir streng með árangri yfir í rauntölu
+# '65.76' -> 65.76
+# ''      -> NaN
+# 'ABCD'  -> NaN
+# Ef strengurinn er tími á forminu HH:MM:SS.FF þá er honum breytt yfir í sek
+# '02:43.45' -> 2*60 + 43.45 = 163.45
+# '01:02.45' -> 1*60*60 + 2*60 + 43.45 = 3763.45
+def results_to_float(in_str):
+    #prog_time = re.compile('^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?(\d+\.?\d*)?$') # Notum regex
+    m = prog_time.match(str(in_str).replace(',', '.'))
+    if (m): # Athuga hvort við fengum match
+
+        if (m.group(1) is None and m.group(2) is None and m.group(3) is None):
+            return np.nan # Eitthvað skrítið í gagni eða tómur strengur skila NaN
+
+        time_sec = 0.0 # Breytum yfir í sek ef þetta er tími
+        if (m.group(1) is not None):
+            time_sec = float(m.group(1))*3600.0 # 60*60 = 3600
+        if (m.group(2) is not None):
+            time_sec = time_sec + float(m.group(2))*60.0
+        if (m.group(3) is not None):
+            time_sec = time_sec + float(m.group(3))
+
+        return time_sec
+    else:
+        return np.nan # Fengum ekki match skilum NaN
+
 def Get_List_of_Years():
     #df = pd.DataFrame(list(AthlAfrek.objects.values('dagsetning')))
     #df['year'] = pd.DatetimeIndex(df['dagsetning']).year
@@ -51,6 +83,62 @@ def Get_Event_Info(Event_id):
 
     return THORID_1, Units, minimize
 
+def Convert_Achievements_to_List_PD(q, minimize_results, best_by_ath, units):
+    df = pd.DataFrame.from_records(q.values_list('lína', 'nafn', 'keppandanúmer',
+                                                 'árangur', 'vindur', 'félag',
+                                                 'aldur_keppanda', 'heiti_móts', 'mót',
+                                                 'dagsetning', 'rafmagnstímataka'),
+                                                 columns=['lína', 'nafn', 'keppandanúmer',
+                                                          'árangur', 'vindur', 'félag',
+                                                          'aldur_keppanda', 'heiti_móts', 'mót',
+                                                          'dagsetning', 'rafmagnstímataka'])
+
+    df['dagsetning'] = pd.to_datetime(df['dagsetning'], dayfirst=True)
+
+    # Breytum öllum árangri yfir í rauntölur
+    df['árangur_float'] = df['árangur'].map(results_to_float)
+
+    # Röðum árangri, fyrst eftir árangri og svo eftir dagsetningu ef árangrar eru jafnir.
+    if (minimize_results == True):
+        df.sort_values(by=['árangur_float', 'dagsetning'], ascending=[True, False], inplace=True)
+    else:
+        df.sort_values(by=['árangur_float', 'dagsetning'], ascending=[False, False], inplace=True)
+
+    # Athuga hvort við viljum bara besta árangur íþróttamanns. Ef svo er hendum við úr endurtekningum en höldum fyrstu línu.
+    if (best_by_ath == True):
+        df.drop_duplicates(subset=['keppandanúmer'], keep='first', inplace=True, ignore_index=True)
+
+    # Hendum út öllu sem er ekki í top 100
+    df = df.iloc[0:100]
+
+    # Skipta út NaN fyrir 0.0 í vind (Innanhús árangur og árangur þar sem ekki er mældur vindur)
+    df['vindur'].fillna(0.0, inplace=True)
+
+    Achievements_list = []
+    for index, row in df.iterrows():
+        date_str = format_date(row.dagsetning.date(), "d MMM yyyy",locale='is_IS').upper()
+        wind_str = '{:+.1f}'.format(row.vindur)
+
+        if (row.rafmagnstímataka == 0 and minimize_results == True):
+            result_str = '{:.1f}'.format(row.árangur_float)
+        else:
+            result_str = '{:.2f}'.format(row.árangur_float)
+
+        Achievement_info = {'name': row.nafn,
+                            'results': result_str,
+                            'wind': wind_str,
+                            'club': row.félag,
+                            'age': row.aldur_keppanda,
+                            'competition_name': row.heiti_móts,
+                            'competition_id': row.mót,
+                            'date': date_str,
+                            'competitorcode': row.keppandanúmer
+                            }
+        Achievements_list.append(Achievement_info)
+
+    print(df.head(n=10))
+    return Achievements_list
+
 def Convert_Achievements_to_List(q, minimize_results, best_by_ath, units):
     Achievements_list = []
     competitorcode_list = []
@@ -60,11 +148,12 @@ def Convert_Achievements_to_List(q, minimize_results, best_by_ath, units):
         wind_str = '{:+.1f}'.format(float(Achievement.vindur))
 
         # Turn results into string with two decimals after period or one if hand timing.
+        results = results_to_float(Achievement.árangur.replace(',', '.'))
         try:
             if (Achievement.rafmagnstímataka == 0 and minimize_results == True):
-                result_str = '{:.1f}'.format(float(Achievement.árangur.replace(',', '.')))
+                result_str = '{:.1f}'.format(results)
             else:
-                result_str = '{:.2f}'.format(float(Achievement.árangur.replace(',', '.')))
+                result_str = '{:.2f}'.format(results)
         except:
             print('Error')
             print(Achievement.lína)
@@ -72,6 +161,7 @@ def Convert_Achievements_to_List(q, minimize_results, best_by_ath, units):
             print(Achievement.árangur)
             print(Achievement.keppandanúmer)
             print('')
+            result_str = 'ERROR'
 
         # Turn the date into a string
         date_str = format_date(Achievement.dagsetning.date(), "d MMM yyyy",locale='is_IS').upper()
@@ -217,7 +307,8 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
     #                                    dagsetning__gte=datetime.date(Year, 1, 1),
     #                                    dagsetning__lte=datetime.date(Year, 12, 31)).order_by(order_by_str)[:1000]
 
-    q = q.order_by(order_by_str)[:1000]
-    Achievements_list = Convert_Achievements_to_List(q, minimize_results, BestByAth, Units)
+    q = q.order_by(order_by_str)
+    #Achievements_list = Convert_Achievements_to_List(q, minimize_results, BestByAth, Units)
+    Achievements_list = Convert_Achievements_to_List_PD(q, minimize_results, BestByAth, Units)
 
     return Achievements_list[:100]
