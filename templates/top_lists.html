@@ -213,19 +213,19 @@
         isBestByAthActive: true,
         isLegalActive: true,
         isISLActive: true,
-        hasWind: true,
+        hasWind: false,
 
-        outorinText: 'Úti',
-        eventText: '100m',
-        yearText: '2019',
+        outorinText: 'Inni',
+        eventText: 'Langstökk',
+        //yearText: '',
         ageText: 'Allir aldursflokkar',
 
-        event_id: 6, // Event_id
-        outin: 0, // Outdoor = 0, Indoor = 1
+        event_id: 154, // Event_id
+        outin: 1, // Outdoor = 0, Indoor = 1
         gender: 2, // Women = 2, Men = 1
         gender_women: 2,
         gender_men: 1,
-        year: 2019, // Year
+        year: new Date().getFullYear(), // Year
         agegroup: '00-99',
         ageStart: 0, // Start age
         ageEnd: 99, // End age
@@ -235,6 +235,15 @@
         busy: false // Icelandic = 0, Everybody = 1
       }
     },
+    computed: {
+    yearText: function () {
+      if (this.year === '0') {
+        return 'Öll ár'
+      } else {
+        return this.year.toString()
+      }
+    }
+  },
     mounted() {
       this.get_data()
     },
@@ -306,7 +315,7 @@
       },
       year_change: function (event) {
         this.year = event.target.id
-        this.yearText = event.target.textContent
+        //this.yearText = event.target.textContent
         this.get_data(event)
       },
       age_change: function (event) {
