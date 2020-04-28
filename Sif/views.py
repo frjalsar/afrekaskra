@@ -26,12 +26,15 @@ def front_page(requests):
 
 
 def competitor(request, CompetitorCode=None, Event=None):
-    Competitor_info = data.Get_Competitor_Info(CompetitorCode)
     #print(Get_List_of_Events_for_Competitor(CompetitorCode))
     #Print_list_vertically(Get_List_of_Events())
     #print(Get_List_of_Events())
     #Get_List_of_Events()
-    return render(request, 'competitor.html', {'Competitor': Competitor_info})
+    if (CompetitorCode == None):
+        return redirect('front_page')
+    else:
+        Competitor_info = data.Get_Competitor_Info(CompetitorCode)
+        return render(request, 'competitor.html', {'Competitor': Competitor_info})
 
 def top_lists(request):
     return render(request, 'top_lists.html')
