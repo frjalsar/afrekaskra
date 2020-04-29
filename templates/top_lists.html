@@ -8,134 +8,249 @@
   <div class="card-header">
     <div class="row mb-4">
       <div class="col">
-    <ul class="nav nav-pills nav-fill card-header-tabs pull-right" id="myTab" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="women-tab" data-toggle="tab" href="#women" role="tab" aria-controls="women"
-          aria-selected="true">Konur</a>
-      </li>
-      <!---->
-      <li class="nav-item">
-        <a class="nav-link" id="men-tab" data-toggle="tab" href="#men" role="tab" aria-controls="men"
-          aria-selected="false">Karlar</a>
-      </li>
-      <!---->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#outorindoors" role="button"
-          aria-haspopup="true" aria-expanded="false">{{outorinText}}</a>
-        <div v-on:click="toggle_outin($event)" class="dropdown-menu" id="outorindoorsDropdown">
-          <a class="dropdown-item" id="0">Úti</a>
-          <a class="dropdown-item" id="1">Inni</a>
-        </div>
-      </li>
-      <!---->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#event" role="button" aria-haspopup="true"
-          aria-expanded="false">{{eventText}}</a>
-        <div v-on:click="event_change($event)" class="dropdown-menu" id="eventDropdown">
-          <a class="dropdown-item" id="74">60 m</a>
-          <a class="dropdown-item" id="80">60 m gr. (76,2 cm)</a>
-          <a class="dropdown-item" id="82">60 m gr. (84,0 cm)</a>
-          <a class="dropdown-item" id="77">60 m gr. (91,4 cm)</a>
-          <a class="dropdown-item" id="78">60 m gr. (99,1 cm)</a>
-          <a class="dropdown-item" id="75">60 m gr. (106,7cm)</a>
-          <a class="dropdown-item" id="6">100 m</a>
-          <a class="dropdown-item" id="25">200 m</a>
-          <a class="dropdown-item" id="31">300 m</a>
-          <a class="dropdown-item" id="44">400 m</a>
-          <a class="dropdown-item" id="73">600 m</a>
-          <a class="dropdown-item" id="86">800 m</a>
-          <a class="dropdown-item" id="18">1500 m</a>
-          <a class="dropdown-item" id="28">3000 m</a>
-          <a class="dropdown-item" id="57">5000 m</a>
-          <a class="dropdown-item" id="52">4x200 m</a>
-          <a class="dropdown-item" id="54">4x400 m</a>
-          <a class="dropdown-item" id="124">Hástökk</a>
-          <a class="dropdown-item" id="125">Hástökk án atr.</a>
-          <a class="dropdown-item" id="154">Langstökk</a>
-          <a class="dropdown-item" id="155">Langstökk án atr.</a>
-          <a class="dropdown-item" id="197">Stangarstökk</a>
-          <a class="dropdown-item" id="204">Þrístökk</a>
-          <a class="dropdown-item" id="129">Kringlukast (2,0 kg)</a>
-          <a class="dropdown-item" id="135">Kringlukast (1,75kg)</a>
-          <a class="dropdown-item" id="130">Kringlukast (1,5 kg)</a>
-          <a class="dropdown-item" id="131">Kringlukast (1,0 kg)</a>
-          <a class="dropdown-item" id="138">Kúluvarp (7,26 kg)</a>
-          <a class="dropdown-item" id="139">Kúluvarp (6,00 kg)</a>
-          <a class="dropdown-item" id="140">Kúluvarp (5,0 kg)</a>
-          <a class="dropdown-item" id="142">Kúluvarp (4,0 kg)</a>
-          <a class="dropdown-item" id="144">Kúluvarp (3,0 kg)</a>
-          <a class="dropdown-item" id="143">Kúluvarp (2,0 kg)</a>
-          <a class="dropdown-item" id="176">Sleggjukast (7,26 kg)</a>
-          <a class="dropdown-item" id="183">Sleggjukast (6,0 kg)</a>
-          <a class="dropdown-item" id="181">Sleggjukast (5,0 kg)</a>
-          <a class="dropdown-item" id="177">Sleggjukast (4,0 kg)</a>
-          <a class="dropdown-item" id="178">Sleggjukast (2,0 kg)</a>
-          <a class="dropdown-item" id="179">Sleggjukast (3,0 kg)</a>
-          <a class="dropdown-item" id="187">Spjótkast (800 gr)</a>
-          <a class="dropdown-item" id="189">Spjótkast (600 gr)</a>
-          <a class="dropdown-item" id="191">Spjótkast (500 gr)</a>
-          <a class="dropdown-item" id="190">Spjótkast (400 gr)</a>
-        </div>
-      </li>
-      <!---->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#activeyear" role="button" aria-haspopup="true"
-          aria-expanded="false">{{yearText}}</a>
-        <div v-on:click="year_change($event)" class="dropdown-menu" id="activeyearDropdown">
-          <a class="dropdown-item" id="0">Öll ár</a>
-{% endverbatim %}
-          {% for year in YEARS %}
-          <a class="dropdown-item" id="{{ year }}">{{ year }}</a>
-          {% endfor %}
-{% verbatim %}
-        </div>
-      </li>
-      <!---->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#age" role="button" aria-haspopup="true"
-          aria-expanded="false">{{ageText}}</a>
-        <div v-on:click="age_change($event)" class="dropdown-menu" id="ageDropdown">
-          <a class="dropdown-item" id="00-99">Allir aldursflokkar</a>
-          <a class="dropdown-item" id="20-22">20-22 ára</a>
-          <a class="dropdown-item" id="18-19">18-19 ára</a>
-          <a class="dropdown-item" id="16-17">16-17 ára</a>
-          <a class="dropdown-item" id="15-15">15 ára</a>
-          <a class="dropdown-item" id="14-14">14 ára</a>
-          <a class="dropdown-item" id="13-13">13 ára</a>
-          <a class="dropdown-item" id="12-12">12 ára</a>
-        </div>
-      </li>
-      <!---->
-    </ul>
-  </div>
+        <ul class="nav nav-pills nav-fill card-header-tabs pull-right" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="women-tab" data-toggle="tab" href="#women" role="tab" aria-controls="women"
+              aria-selected="true">Konur</a>
+          </li>
+          <!---->
+          <li class="nav-item">
+            <a class="nav-link" id="men-tab" data-toggle="tab" href="#men" role="tab" aria-controls="men"
+              aria-selected="false">Karlar</a>
+          </li>
+          <!---->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#outorindoors" role="button"
+              aria-haspopup="true" aria-expanded="false">{{outorinText}}</a>
+            <div v-on:click="toggle_outin($event)" class="dropdown-menu" id="outorindoorsDropdown">
+              <a class="dropdown-item" id="0">Úti</a>
+              <a class="dropdown-item" id="1">Inni</a>
+            </div>
+          </li>
+          <!--
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#event" role="button" aria-haspopup="true"
+              aria-expanded="false">{{eventText}}</a>
+            <div v-on:click="event_change($event)" class="dropdown-menu" id="eventDropdown">
+              <a class="dropdown-item" id="74">60 m</a>
+              <a class="dropdown-item" id="80">60 m gr. (76,2 cm)</a>
+              <a class="dropdown-item" id="82">60 m gr. (84,0 cm)</a>
+              <a class="dropdown-item" id="77">60 m gr. (91,4 cm)</a>
+              <a class="dropdown-item" id="78">60 m gr. (99,1 cm)</a>
+              <a class="dropdown-item" id="75">60 m gr. (106,7cm)</a>
+              <a class="dropdown-item" id="6">100 m</a>
+              <a class="dropdown-item" id="25">200 m</a>
+              <a class="dropdown-item" id="31">300 m</a>
+              <a class="dropdown-item" id="44">400 m</a>
+              <a class="dropdown-item" id="73">600 m</a>
+              <a class="dropdown-item" id="86">800 m</a>
+              <a class="dropdown-item" id="18">1500 m</a>
+              <a class="dropdown-item" id="28">3000 m</a>
+              <a class="dropdown-item" id="57">5000 m</a>
+              <a class="dropdown-item" id="52">4x200 m</a>
+              <a class="dropdown-item" id="54">4x400 m</a>
+              <a class="dropdown-item" id="124">Hástökk</a>
+              <a class="dropdown-item" id="125">Hástökk án atr.</a>
+              <a class="dropdown-item" id="154">Langstökk</a>
+              <a class="dropdown-item" id="155">Langstökk án atr.</a>
+              <a class="dropdown-item" id="197">Stangarstökk</a>
+              <a class="dropdown-item" id="204">Þrístökk</a>
+              <a class="dropdown-item" id="129">Kringlukast (2,0 kg)</a>
+              <a class="dropdown-item" id="135">Kringlukast (1,75kg)</a>
+              <a class="dropdown-item" id="130">Kringlukast (1,5 kg)</a>
+              <a class="dropdown-item" id="131">Kringlukast (1,0 kg)</a>
+              <a class="dropdown-item" id="138">Kúluvarp (7,26 kg)</a>
+              <a class="dropdown-item" id="139">Kúluvarp (6,00 kg)</a>
+              <a class="dropdown-item" id="140">Kúluvarp (5,0 kg)</a>
+              <a class="dropdown-item" id="142">Kúluvarp (4,0 kg)</a>
+              <a class="dropdown-item" id="144">Kúluvarp (3,0 kg)</a>
+              <a class="dropdown-item" id="143">Kúluvarp (2,0 kg)</a>
+              <a class="dropdown-item" id="176">Sleggjukast (7,26 kg)</a>
+              <a class="dropdown-item" id="183">Sleggjukast (6,0 kg)</a>
+              <a class="dropdown-item" id="181">Sleggjukast (5,0 kg)</a>
+              <a class="dropdown-item" id="177">Sleggjukast (4,0 kg)</a>
+              <a class="dropdown-item" id="178">Sleggjukast (2,0 kg)</a>
+              <a class="dropdown-item" id="179">Sleggjukast (3,0 kg)</a>
+              <a class="dropdown-item" id="187">Spjótkast (800 gr)</a>
+              <a class="dropdown-item" id="189">Spjótkast (600 gr)</a>
+              <a class="dropdown-item" id="191">Spjótkast (500 gr)</a>
+              <a class="dropdown-item" id="190">Spjótkast (400 gr)</a>
+            </div>
+          </li>
+        -->
+          <!-- https://codepen.io/surjithctly/pen/PJqKzQ -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{eventText}}
+            </a>
+            <ul v-on:click="event_change($event)" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Stökkgreinar</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" id="124">Hástökk</a></li>
+                  <li><a class="dropdown-item" id="125">Hástökk án atr.</a></li>
+                  <li><a class="dropdown-item" id="154">Langstökk</a></li>
+                  <li><a class="dropdown-item" id="155">Langstökk án atr.</a></li>
+                  <li><a class="dropdown-item" id="197">Stangarstökk</a></li>
+                  <li><a class="dropdown-item" id="204">Þrístökk</a></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Kastgreinar</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" id="129">Kringlukast (2,0 kg)</a></li>
+                  <li><a class="dropdown-item" id="130">Kringlukast (1,5 kg)</a></li>
+                  <li><a class="dropdown-item" id="131">Kringlukast (1,0 kg)</a></li>
+                  <li><a class="dropdown-item" id="135">Kringlukast (1,75kg)</a></li>
+                  <li><a class="dropdown-item" id="138">Kúluvarp (7,26 kg)</a></li>
+                  <li><a class="dropdown-item" id="139">Kúluvarp (6,00 kg)</a></li>
+                  <li><a class="dropdown-item" id="140">Kúluvarp (5,0 kg)</a></li>
+                  <li><a class="dropdown-item" id="142">Kúluvarp (4,0 kg)</a></li>
+                  <li><a class="dropdown-item" id="143">Kúluvarp (2,0 kg)</a></li>
+                  <li><a class="dropdown-item" id="144">Kúluvarp (3,0 kg)</a></li>
+                  <li><a class="dropdown-item" id="176">Sleggjukast (7,26 kg)</a></li>
+                  <li><a class="dropdown-item" id="177">Sleggjukast (4,0 kg)</a></li>
+                  <li><a class="dropdown-item" id="178">Sleggjukast (2,0 kg)</a></li>
+                  <li><a class="dropdown-item" id="179">Sleggjukast (3,0 kg)</a></li>
+                  <li><a class="dropdown-item" id="181">Sleggjukast (5,0 kg)</a></li>
+                  <li><a class="dropdown-item" id="183">Sleggjukast (6,0 kg)</a></li>
+                  <li><a class="dropdown-item" id="187">Spjótkast (800 gr)</a></li>
+                  <li><a class="dropdown-item" id="189">Spjótkast (600 gr)</a></li>
+                  <li><a class="dropdown-item" id="190">Spjótkast (400 gr)</a></li>
+                  <li><a class="dropdown-item" id="191">Spjótkast (500 gr)</a></li>                  
+                </ul>
+              </li>
+              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Spretthlaup</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" id="5">1000 m boðhlaup</a></li>
+                  <li><a class="dropdown-item" id="6">100 m hlaup</a></li>
+                  <li><a class="dropdown-item" id="25">200 m hlaup</a></li>
+                  <li><a class="dropdown-item" id="31">300 m hlaup</a></li>
+                  <li><a class="dropdown-item" id="44">400 m hlaup</a></li>
+                  <li><a class="dropdown-item" id="50">4x100 m boðhlaup</a></li>
+                  <li><a class="dropdown-item" id="52">4x200 m boðhlaup</a></li>
+                  <li><a class="dropdown-item" id="54">4x400 m boðhlaup</a></li>
+                  <li><a class="dropdown-item" id="74">60 m hlaup</a></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Grindarhlaup</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" id="7">100 m gr. (84 cm)</a></li>
+                  <li><a class="dropdown-item" id="8">100 m gr. (76,2 cm)</a></li>
+                  <li><a class="dropdown-item" id="11">100 m gr. (91,4 cm)</a></li>
+                  <li><a class="dropdown-item" id="15">110 m gr. (106,7 cm)</a></li>
+                  <li><a class="dropdown-item" id="16">110 m gr. (91,4 cm)</a></li>
+                  <li><a class="dropdown-item" id="17">110 m gr. (99,1 cm)</a></li>
+                  <li><a class="dropdown-item" id="45">400 m gr. (91,4 cm)</a></li>
+                  <li><a class="dropdown-item" id="46">400 m gr. (84 cm)</a></li>
+                  <li><a class="dropdown-item" id="47">400 m gr. (76,2 cm)</a></li>
+                  <li><a class="dropdown-item" id="75">60 m gr. (106,7cm)</a></li>
+                  <li><a class="dropdown-item" id="77">60 m gr. (91,4 cm)</a></li>
+                  <li><a class="dropdown-item" id="78">60 m gr. (99,1 cm)</a></li>
+                  <li><a class="dropdown-item" id="80">60 m gr. (76,2 cm)</a></li>
+                  <li><a class="dropdown-item" id="82">60 m gr. (84,0 cm)</a></li>
+                  
+                </ul>
+              </li>
+              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Millivegalengdir</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" id="18">1500 metra hlaup</a></li>
+                  <li><a class="dropdown-item" id="28">3000 metra hlaup</a></li>
+                  <li><a class="dropdown-item" id="30">3000 metra hindrunarhlaup</a></li>
+                  <li><a class="dropdown-item" id="73">600 metra hlaup</a></li>
+                  <li><a class="dropdown-item" id="86">800 metra hlaup</a></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Langhlaup</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" id="3">10.000 metra hlaup</a></li>
+                  <li><a class="dropdown-item" id="12">10 km götuhlaup (flögutímar)</a></li>
+                  <li><a class="dropdown-item" id="13">10 km götuhlaup</a></li>
+                  <li><a class="dropdown-item" id="57">5000 metra hlaup</a></li>
+                  <li><a class="dropdown-item" id="122">Hálft maraþon</a></li>
+                  <li><a class="dropdown-item" id="123">Hálft maraþon (flögutímar)</a></li>
+                  <li><a class="dropdown-item" id="166">Maraþon</a></li>
+                  <li><a class="dropdown-item" id="167">Maraþon (flögutímar)</a></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Þrautagreinar</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">TODO Þraut er mess</a></li>
+                  <li><a class="dropdown-item" href="#">Fimmtarþraut</a></li>
+                  <li><a class="dropdown-item" href="#">Fimmtarþr. unglingastig</a></li>
+                  <li><a class="dropdown-item" href="#">Fimmtarþraut (76cm grind)</a></li>
+                  <li><a class="dropdown-item" href="#">Fimmtarþraut pilta 15 ára</a></li>
+                  <li><a class="dropdown-item" href="#">Fimmtarþraut (76cm grind)</a></li>
+                  <li><a class="dropdown-item" href="#">Sjöþraut (5Kg kúla)</a></li>
+                  <li><a class="dropdown-item" href="#">Sjöþraut (6Kg kúla) </a></li>
+                  <li><a class="dropdown-item" href="#">Sjöþraut meyjaáhöld</a></li>
+                  <li><a class="dropdown-item" href="#">Sjöþraut</a></li>
+                  <li><a class="dropdown-item" href="#">Tugþraut 16-17 ára</a></li>
+                  <li><a class="dropdown-item" href="#">Tugþraut U20 (Norðurlönd)</a></li>
+                  <li><a class="dropdown-item" href="#">Tugþraut</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <!---->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#activeyear" role="button"
+              aria-haspopup="true" aria-expanded="false">{{yearText}}</a>
+            <div v-on:click="year_change($event)" class="dropdown-menu" id="activeyearDropdown">
+              <a class="dropdown-item" id="0">Öll ár</a>
+              {% endverbatim %}
+              {% for year in YEARS %}
+              <a class="dropdown-item" id="{{ year }}">{{ year }}</a>
+              {% endfor %}
+              {% verbatim %}
+            </div>
+          </li>
+          <!---->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#age" role="button" aria-haspopup="true"
+              aria-expanded="false">{{ageText}}</a>
+            <div v-on:click="age_change($event)" class="dropdown-menu" id="ageDropdown">
+              <a class="dropdown-item" id="00-99">Allir aldursflokkar</a>
+              <a class="dropdown-item" id="20-22">20-22 ára</a>
+              <a class="dropdown-item" id="18-19">18-19 ára</a>
+              <a class="dropdown-item" id="16-17">16-17 ára</a>
+              <div class="dropdown-divider" id="ageDivider"></div>
+              <a class="dropdown-item" id="15-15">15 ára</a>
+              <a class="dropdown-item" id="14-14">14 ára</a>
+              <a class="dropdown-item" id="13-13">13 ára</a>
+              <a class="dropdown-item" id="12-12">12 ára</a>
+            </div>
+          </li>
+          <!---->
+        </ul>
+      </div>
     </div>
-  <div class="row">
-  <div class="col">
-    <div class="row justify-content-center">
-      <div class="col-md-4 col-sm-12 mb-3 text-center">
-        <div class="custom-control custom-switch">
-          <input v-on:click="toggle_bestbyath($event)" type="checkbox" class="custom-control-input"
-            id="customSwitch2" checked>
-          <label class="custom-control-label" for="customSwitch2">Birta bara besta afrek íþróttamanns</label>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-12 mb-3 text-center">
-        <div class="custom-control custom-switch">
-          <input v-on:click="toggle_legalresults($event)" type="checkbox" class="custom-control-input"
-            id="customSwitch1">
-          <label class="custom-control-label" for="customSwitch1">Birta ólöglegan árangur</label>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-12 mb-3 text-center">
-        <div class="custom-control custom-switch">
-          <input v-on:click="toggle_isl($event)" type="checkbox" class="custom-control-input" id="customSwitch3">
-          <label class="custom-control-label" for="customSwitch3">Birta öll þjóðerni</label>
+    <div class="row">
+      <div class="col">
+        <div class="row justify-content-center">
+          <div class="col-md-4 col-sm-12 mb-3 text-center">
+            <div class="custom-control custom-switch">
+              <input v-on:click="toggle_bestbyath($event)" type="checkbox" class="custom-control-input"
+                id="customSwitch2" checked>
+              <label class="custom-control-label" for="customSwitch2">Birta bara besta afrek íþróttamanns</label>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-12 mb-3 text-center">
+            <div class="custom-control custom-switch">
+              <input v-on:click="toggle_legalresults($event)" type="checkbox" class="custom-control-input"
+                id="customSwitch1">
+              <label class="custom-control-label" for="customSwitch1">Birta ólöglegan árangur</label>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-12 mb-3 text-center">
+            <div class="custom-control custom-switch">
+              <input v-on:click="toggle_isl($event)" type="checkbox" class="custom-control-input" id="customSwitch3">
+              <label class="custom-control-label" for="customSwitch3">Birta öll þjóðerni</label>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  </div>
-</div>
 
   <div class="card-body">
     <div class="tab-content" id="myTabContent">
@@ -223,11 +338,28 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <style>
-  .dropdown-menu {
+  /* .dropdown-menu {
     max-height: 500px;
     overflow-y: auto;
     overflow-x: hidden;
-}
+}*/
+  .dropdown-submenu {
+    position: relative;
+  }
+
+  .dropdown-submenu a::after {
+    transform: rotate(-90deg);
+    position: absolute;
+    right: 6px;
+    top: .8em;
+  }
+
+  .dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-left: .1rem;
+    margin-right: .1rem;
+  }
 </style>
 
 {% verbatim %}
@@ -269,15 +401,15 @@
       }
     },
     computed: {
-    yearText: function () {
-      if (this.year === '0') {
-        return 'Öll ár'
-      } else {
-        return this.year.toString()
-      }
-    },
-    hasWindWomen: function () {
-      if (this.outin === '0') {
+      yearText: function () {
+        if (this.year === '0') {
+          return 'Öll ár'
+        } else {
+          return this.year.toString()
+        }
+      },
+      hasWindWomen: function () {
+        if (this.outin === '0') {
           // We are outdoor. Does the current selected event have wind?
           if (this.men_event['HasWind'] === 1) {
             return true
@@ -287,10 +419,10 @@
         } else {
           return false // We are indoor, no wind
         }
-    },
-    hasWindMen: function () {
-      if (this.outin === '0') {
-        if (this.women_event['HasWind'] === 1) {
+      },
+      hasWindMen: function () {
+        if (this.outin === '0') {
+          if (this.women_event['HasWind'] === 1) {
             return true
           } else {
             return false
@@ -298,8 +430,8 @@
         } else {
           return false // We are indoor, no wind
         }
-    }
-  },
+      }
+    },
     mounted() {
       this.get_data(null)
     },
@@ -340,28 +472,27 @@
             }
             if (this.men_data.length === 0) {
               this.men_message = 'Engin gögn fundust :('
-            } else
-            {
+            } else {
               this.men_message = ''
-            this.men_data = this.convert_to_timeformat(this.men_event['Units'], this.men_data)
+              this.men_data = this.convert_to_timeformat(this.men_event['Units'], this.men_data)
             }
             this.busy = false
           }))
       },
-      convert_to_timeformat: function (unit, my_data){
+      convert_to_timeformat: function (unit, my_data) {
 
         if ((unit === 3) || (unit === 4)) {
           var dataLen = my_data.length
           for (i = 0; i < dataLen; i++) {
             var f = Number(my_data[i]['results'])
             if (unit === 4) { // This unit has hours
-              var h = Math.floor(f/3600)
-              f = f - h*3600
+              var h = Math.floor(f / 3600)
+              f = f - h * 3600
             } else {
               var h = 0
             }
-            var m = Math.floor(f/60)
-            var s = f - m*60
+            var m = Math.floor(f / 60)
+            var s = f - m * 60
 
             if (s < 10) {
               s_str = '0' + s.toFixed(2)
@@ -434,14 +565,17 @@
         this.get_data(event)
       },
       age_change: function (event) {
-        this.agegroup = event.target.id
-        this.ageText = event.target.textContent
-        const split = this.agegroup.split('-')
-        if (split.length === 2) {
-          this.ageStart = split[0]
-          this.ageEnd = split[1]
+        if ((event.target.id !== "ageDivider") || (event.target.id !== "ageDropdown")) {
+          alert(event.target.id)
+          this.agegroup = event.target.id
+          this.ageText = event.target.textContent
+          const split = this.agegroup.split('-')
+          if (split.length === 2) {
+            this.ageStart = split[0]
+            this.ageEnd = split[1]
+          }
+          this.get_data(event)
         }
-        this.get_data(event)
       },
       event_change: function (event) {
         this.event_id = event.target.id
@@ -450,6 +584,23 @@
       }
     }
   })
+</script>
+<script>
+  $('.dropdown-menu a.dropdown-toggle').on('click', function (e) {
+    if (!$(this).next().hasClass('show')) {
+      $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
+    }
+    var $subMenu = $(this).next(".dropdown-menu");
+    $subMenu.toggleClass('show');
+
+
+    $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function (e) {
+      $('.dropdown-submenu .show').removeClass("show");
+    });
+
+
+    return false;
+  });
 </script>
 {% endverbatim %}
 {% endblock %}
