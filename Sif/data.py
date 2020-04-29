@@ -10,6 +10,7 @@ from Sif import settings
 
 # Other packages
 import datetime
+import pytz
 import pandas as pd
 import os
 from babel.dates import format_date, format_datetime, format_time
@@ -138,7 +139,7 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
                             'competition_name': row.heiti_móts,
                             'competition_id': row.mót,
                             'date': date_str,
-                            'competitorcode': row.keppandanúmer,
+                            'competitor_code': row.keppandanúmer,
                             'electronic_timing': row.rafmagnstímataka
                             }
         Achievements_list.append(Achievement_info)
@@ -295,16 +296,17 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
         if (Legal == 1):
             electime = 1
             # Gagnagrunurinn er með dálk sem heitir löglegt. En það virðist ekki vera hægt að treysta honum.
-            q = q.filter(vindur__lte=2.00, rafmagnstímataka=electime)
+            # Ólögleigir árangrar eru flokkaðir sem vindur > 2.0, vantar vind og/eða handtímataka
+            q = q.filter(vindur__lte=2.00, rafmagnstímataka=electime, vantar_vind=0)
     else: # Dálkurinn með rafmagnstímataka getur verið hvað sem er í greinum sem eru ekki með tímatöku.
         if (Legal == 1):
-             q = q.filter(vindur__lte=2.00)
+            q = q.filter(vindur__lte=2.00, vantar_vind=0)
     #    order_by_str = '-árangur'
 
     # Ef við viljum fá öll gögn þá er Year = 0
     if (Year > 0):
-        q = q.filter(dagsetning__gte=datetime.date(Year, 1, 1),
-                     dagsetning__lte=datetime.date(Year, 12, 31))
+        q = q.filter(dagsetning__gte=datetime.datetime(Year, 1, 1, tzinfo=pytz.UTC),
+                     dagsetning__lte=datetime.datetime(Year, 12, 31, tzinfo=pytz.UTC))
 
     # Öll þjóðerni eða ekki. ISL = 0 þýðir bara íslendingar.
     if (ISL == 0):

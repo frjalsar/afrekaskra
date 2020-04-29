@@ -146,7 +146,7 @@
             <tr>
               <th class="d-none d-sm-table-cell" scope="col">#</th>
               <th scope="col">Árangur</th>
-              <th v-bind:class="{'d-none': !hasWind}" scope="col">Vindur</th>
+              <th v-bind:class="{'d-none': !hasWindWomen}" scope="col">Vindur</th>
               <th scope="col">Nafn</th>
               <th class="d-none d-sm-table-cell" scope="col">Aldur</th>
               <th class="d-none d-sm-table-cell" scope="col">Félag</th>
@@ -158,8 +158,8 @@
             <tr v-for="(competitor, index) in women_data">
               <th class="d-none d-sm-table-cell" scope="row">{{index+1}}</th>
               <td>{{competitor.results}}</td>
-              <td v-bind:class="{'d-none': !hasWind}">{{competitor.wind}}</td>
-              <td><a v-bind:href="'/keppandi/' + competitor.competitorcode">{{competitor.name}}</a></td>
+              <td v-bind:class="{'d-none': !hasWindWomen}">{{competitor.wind}}</td>
+              <td><a v-bind:href="'/keppandi/' + competitor.competitor_code">{{competitor.name}}</a></td>
               <td class="d-none d-sm-table-cell">{{competitor.age}}</td>
               <td class="d-none d-sm-table-cell">{{competitor.club}}</td>
               <td class="d-none d-xl-table-cell"><a
@@ -179,7 +179,7 @@
             <tr>
               <th class="d-none d-sm-table-cell" scope="col">#</th>
               <th scope="col">Árangur</th>
-              <th v-bind:class="{'d-none': !hasWind}" scope="col">Vindur</th>
+              <th v-bind:class="{'d-none': !hasWindMen}" scope="col">Vindur</th>
               <th scope="col">Nafn</th>
               <th class="d-none d-sm-table-cell" scope="col">Aldur</th>
               <th class="d-none d-sm-table-cell" scope="col">Félag</th>
@@ -191,8 +191,8 @@
             <tr v-for="(competitor, index) in men_data">
               <th class="d-none d-sm-table-cell" scope="row">{{index+1}}</th>
               <td>{{competitor.results}}</td>
-              <td v-bind:class="{'d-none': !hasWind}">{{competitor.wind}}</td>
-              <td><a v-bind:href="'/keppandi/' + competitor.competitorcode">{{competitor.name}}</a></td>
+              <td v-bind:class="{'d-none': !hasWindMen}">{{competitor.wind}}</td>
+              <td><a v-bind:href="'/keppandi/' + competitor.competitor_code">{{competitor.name}}</a></td>
               <td class="d-none d-sm-table-cell">{{competitor.age}}</td>
               <td class="d-none d-sm-table-cell">{{competitor.club}}</td>
               <td class="d-none d-xl-table-cell"><a
@@ -276,10 +276,25 @@
         return this.year.toString()
       }
     },
-    hasWind: function () {
+    hasWindWomen: function () {
       if (this.outin === '0') {
           // We are outdoor. Does the current selected event have wind?
-          return true
+          if (this.men_event['HasWind'] === 1) {
+            return true
+          } else {
+            return false
+          }
+        } else {
+          return false // We are indoor, no wind
+        }
+    },
+    hasWindMen: function () {
+      if (this.outin === '0') {
+        if (this.women_event['HasWind'] === 1) {
+            return true
+          } else {
+            return false
+          }
         } else {
           return false // We are indoor, no wind
         }
