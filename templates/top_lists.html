@@ -243,7 +243,7 @@
             </tr>
           </tbody>
         </table>
-        <pulse-loader :loading="loading"></pulse-loader>
+        <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
         <p align="center">{{women_message}}</p>
         <!-- ------------------------------------------------------------------------------------------------------------------------------------------------- -->
       </div>
@@ -277,6 +277,7 @@
             </tr>
           </tbody>
         </table>
+        <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
         <p align="center">{{men_message}}</p>
         <!-- ------------------------------------------------------------------------------------------------------------------------------------------------- -->
       </div>
@@ -333,7 +334,7 @@
     },
     data() {
       return {
-        color: '#3AB982',
+        color: '#0275d8',
         size: '15px',
         margin: '2px',
         radius: '100%',
