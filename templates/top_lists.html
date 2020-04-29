@@ -243,6 +243,7 @@
             </tr>
           </tbody>
         </table>
+        <pulse-loader :loading="loading"></pulse-loader>
         <p align="center">{{women_message}}</p>
         <!-- ------------------------------------------------------------------------------------------------------------------------------------------------- -->
       </div>
@@ -296,6 +297,7 @@
   integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="{% static "vue-spinner.js" %}"></script>
 <style>
   .dropdown-menu-long {
     max-height: 500px;
@@ -323,10 +325,20 @@
 
 {% verbatim %}
 <script>
+  var PulseLoader = VueSpinner.PulseLoader // https://github.com/greyby/vue-spinner
   new Vue({
     el: '#app',
+    components: {
+		PulseLoader
+    },
     data() {
       return {
+        color: '#3AB982',
+        size: '15px',
+        margin: '2px',
+        radius: '100%',
+        loading: false,
+
         women_data: null,
         men_data: null,
         women_event: null,
@@ -354,9 +366,8 @@
         ageStart: 0, // Start age
         ageEnd: 99, // End age
         legal: 1, // Only legal = 1, all = 0
-        isl: 0,
+        isl: 0, // Icelandic = 0, Everybody = 1
         bestbyath: 1,
-        busy: false // Icelandic = 0, Everybody = 1
       }
     },
     computed: {
@@ -397,7 +408,7 @@
     // define methods under the `methods` object
     methods: {
       get_data: function (event) {
-        this.busy = true
+        this.loading = true
 
         this.women_data = []
         this.men_data = []
@@ -435,7 +446,7 @@
               this.men_message = ''
               this.men_data = this.convert_to_timeformat(this.men_event['Units'], this.men_data)
             }
-            this.busy = false
+            this.loading = false
           }))
       },
       convert_to_timeformat: function (unit, my_data) {
