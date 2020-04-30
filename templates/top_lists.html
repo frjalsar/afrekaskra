@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Sif - Afrekaskrá FRÍ{% endblock %}
+{% block title %}Top listar - Afrekaskrá FRÍ{% endblock %}
+
 {% block content %}
 {% verbatim %}
 <div class="card ">
@@ -11,17 +12,19 @@
         <ul class="nav nav-pills nav-fill card-header-tabs pull-right" id="myTab" role="tablist">
           <!-- https://codepen.io/surjithctly/pen/PJqKzQ -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
               {{eventText}}
             </a>
             <ul v-on:click="event_change($event)" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Stökkgreinar</a>
                 <ul class="dropdown-menu">
                   <li><a v-bind:class="{active: (event_id===124)}" class="dropdown-item" id="124">Hástökk</a></li>
-                  <li><a v-bind:class="{active: (event_id===125)}" class="dropdown-item" id="125">Hástökk án atrennu</a></li>
+                  <li><a v-bind:class="{active: (event_id===125)}" class="dropdown-item" id="125">Hástökk án atrennu</a>
+                  </li>
                   <li><a v-bind:class="{active: (event_id===154)}" class="dropdown-item" id="154">Langstökk</a></li>
-                  <li><a v-bind:class="{active: (event_id===155)}" class="dropdown-item" id="155">Langstökk án atrennu</a></li>
+                  <li><a v-bind:class="{active: (event_id===155)}" class="dropdown-item" id="155">Langstökk án
+                      atrennu</a></li>
                   <li><a v-bind:class="{active: (event_id===197)}" class="dropdown-item" id="197">Stangarstökk</a></li>
                   <li><a v-bind:class="{active: (event_id===204)}" class="dropdown-item" id="204">Þrístökk</a></li>
                 </ul>
@@ -31,23 +34,33 @@
                   <li><a v-bind:class="{active: (event_id===129)}" class="dropdown-item" id="129">Kringlukast (2,0 kg)</a></li>
                   <li><a v-bind:class="{active: (event_id===130)}" class="dropdown-item" id="130">Kringlukast (1,5 kg)</a></li>
                   <li><a v-bind:class="{active: (event_id===131)}" class="dropdown-item" id="131">Kringlukast (1,0 kg)</a></li>
-                  <li><a v-bind:class="{active: (event_id===135)}" class="dropdown-item" id="135">Kringlukast (1,75kg)</a></li>
-                  <li><a v-bind:class="{active: (event_id===138)}" class="dropdown-item" id="138">Kúluvarp (7,26 kg)</a></li>
-                  <li><a v-bind:class="{active: (event_id===139)}" class="dropdown-item" id="139">Kúluvarp (6,00 kg)</a></li>
-                  <li><a v-bind:class="{active: (event_id===140)}" class="dropdown-item" id="140">Kúluvarp (5,0 kg)</a></li>
-                  <li><a v-bind:class="{active: (event_id===142)}" class="dropdown-item" id="142">Kúluvarp (4,0 kg)</a></li>
-                  <li><a v-bind:class="{active: (event_id===143)}" class="dropdown-item" id="143">Kúluvarp (2,0 kg)</a></li>
-                  <li><a v-bind:class="{active: (event_id===144)}" class="dropdown-item" id="144">Kúluvarp (3,0 kg)</a></li>
+                  <li><a v-bind:class="{active: (event_id===135)}" class="dropdown-item" id="135">Kringlukast (1,75 kg)</a></li>
+                  <li><a v-bind:class="{active: (event_id===138)}" class="dropdown-item" id="138">Kúluvarp (7,26 kg)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===139)}" class="dropdown-item" id="139">Kúluvarp (6,00 kg)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===140)}" class="dropdown-item" id="140">Kúluvarp (5,0 kg)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===142)}" class="dropdown-item" id="142">Kúluvarp (4,0 kg)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===143)}" class="dropdown-item" id="143">Kúluvarp (2,0 kg)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===144)}" class="dropdown-item" id="144">Kúluvarp (3,0 kg)</a>
+                  </li>
                   <li><a v-bind:class="{active: (event_id===176)}" class="dropdown-item" id="176">Sleggjukast (7,26 kg)</a></li>
                   <li><a v-bind:class="{active: (event_id===177)}" class="dropdown-item" id="177">Sleggjukast (4,0 kg)</a></li>
                   <li><a v-bind:class="{active: (event_id===178)}" class="dropdown-item" id="178">Sleggjukast (2,0 kg)</a></li>
                   <li><a v-bind:class="{active: (event_id===179)}" class="dropdown-item" id="179">Sleggjukast (3,0 kg)</a></li>
                   <li><a v-bind:class="{active: (event_id===181)}" class="dropdown-item" id="181">Sleggjukast (5,0 kg)</a></li>
                   <li><a v-bind:class="{active: (event_id===183)}" class="dropdown-item" id="183">Sleggjukast (6,0 kg)</a></li>
-                  <li><a v-bind:class="{active: (event_id===187)}" class="dropdown-item" id="187">Spjótkast (800 gr)</a></li>
-                  <li><a v-bind:class="{active: (event_id===189)}" class="dropdown-item" id="189">Spjótkast (600 gr)</a></li>
-                  <li><a v-bind:class="{active: (event_id===190)}" class="dropdown-item" id="190">Spjótkast (400 gr)</a></li>
-                  <li><a v-bind:class="{active: (event_id===191)}" class="dropdown-item" id="191">Spjótkast (500 gr)</a></li>                               
+                  <li><a v-bind:class="{active: (event_id===187)}" class="dropdown-item" id="187">Spjótkast (800 gr)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===189)}" class="dropdown-item" id="189">Spjótkast (600 gr)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===190)}" class="dropdown-item" id="190">Spjótkast (400 gr)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===191)}" class="dropdown-item" id="191">Spjótkast (500 gr)</a>
+                  </li>
                 </ul>
               </li>
               <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Spretthlaup</a>
@@ -57,28 +70,44 @@
                   <li><a v-bind:class="{active: (event_id===25)}" class="dropdown-item" id="25">200 m hlaup</a></li>
                   <li><a v-bind:class="{active: (event_id===31)}" class="dropdown-item" id="31">300 m hlaup</a></li>
                   <li><a v-bind:class="{active: (event_id===44)}" class="dropdown-item" id="44">400 m hlaup</a></li>
-                  <li><a v-bind:class="{active: (event_id===50)}" class="dropdown-item" id="50">4x100 m boðhlaup</a></li>
-                  <li><a v-bind:class="{active: (event_id===52)}" class="dropdown-item" id="52">4x200 m boðhlaup</a></li>
-                  <li><a v-bind:class="{active: (event_id===54)}" class="dropdown-item" id="54">4x400 m boðhlaup</a></li>
+                  <li><a v-bind:class="{active: (event_id===50)}" class="dropdown-item" id="50">4x100 m boðhlaup</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===52)}" class="dropdown-item" id="52">4x200 m boðhlaup</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===54)}" class="dropdown-item" id="54">4x400 m boðhlaup</a>
+                  </li>
                   <li><a v-bind:class="{active: (event_id===74)}" class="dropdown-item" id="74">60 m hlaup</a></li>
                 </ul>
               </li>
               <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Grindarhlaup</a>
                 <ul class="dropdown-menu">
                   <li><a v-bind:class="{active: (event_id===7)}" class="dropdown-item" id="7">100 m gr. (84 cm)</a></li>
-                  <li><a v-bind:class="{active: (event_id===8)}" class="dropdown-item" id="8">100 m gr. (76,2 cm)</a></li>
-                  <li><a v-bind:class="{active: (event_id===11)}" class="dropdown-item" id="11">100 m gr. (91,4 cm)</a></li>
-                  <li><a v-bind:class="{active: (event_id===15)}" class="dropdown-item" id="15">110 m gr. (106,7 cm)</a></li>
-                  <li><a v-bind:class="{active: (event_id===16)}" class="dropdown-item" id="16">110 m gr. (91,4 cm)</a></li>
-                  <li><a v-bind:class="{active: (event_id===17)}" class="dropdown-item" id="17">110 m gr. (99,1 cm)</a></li>
-                  <li><a v-bind:class="{active: (event_id===45)}" class="dropdown-item" id="45">400 m gr. (91,4 cm)</a></li>
-                  <li><a v-bind:class="{active: (event_id===46)}" class="dropdown-item" id="46">400 m gr. (84 cm)</a></li>
-                  <li><a v-bind:class="{active: (event_id===47)}" class="dropdown-item" id="47">400 m gr. (76,2 cm)</a></li>
-                  <li><a v-bind:class="{active: (event_id===75)}" class="dropdown-item" id="75">60 m gr. (106,7cm)</a></li>
-                  <li><a v-bind:class="{active: (event_id===77)}" class="dropdown-item" id="77">60 m gr. (91,4 cm)</a></li>
-                  <li><a v-bind:class="{active: (event_id===78)}" class="dropdown-item" id="78">60 m gr. (99,1 cm)</a></li>
-                  <li><a v-bind:class="{active: (event_id===80)}" class="dropdown-item" id="80">60 m gr. (76,2 cm)</a></li>
-                  <li><a v-bind:class="{active: (event_id===82)}" class="dropdown-item" id="82">60 m gr. (84,0 cm)</a></li>
+                  <li><a v-bind:class="{active: (event_id===8)}" class="dropdown-item" id="8">100 m gr. (76,2 cm)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===11)}" class="dropdown-item" id="11">100 m gr. (91,4 cm)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===15)}" class="dropdown-item" id="15">110 m gr. (106,7 cm)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===16)}" class="dropdown-item" id="16">110 m gr. (91,4 cm)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===17)}" class="dropdown-item" id="17">110 m gr. (99,1 cm)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===45)}" class="dropdown-item" id="45">400 m gr. (91,4 cm)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===46)}" class="dropdown-item" id="46">400 m gr. (84 cm)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===47)}" class="dropdown-item" id="47">400 m gr. (76,2 cm)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===75)}" class="dropdown-item" id="75">60 m gr. (106,7cm)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===77)}" class="dropdown-item" id="77">60 m gr. (91,4 cm)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===78)}" class="dropdown-item" id="78">60 m gr. (99,1 cm)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===80)}" class="dropdown-item" id="80">60 m gr. (76,2 cm)</a>
+                  </li>
+                  <li><a v-bind:class="{active: (event_id===82)}" class="dropdown-item" id="82">60 m gr. (84,0 cm)</a>
+                  </li>
                 </ul>
               </li>
               <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Millivegalengdir</a>
@@ -93,13 +122,16 @@
               <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Langhlaup</a>
                 <ul class="dropdown-menu">
                   <li><a v-bind:class="{active: (event_id===3)}" class="dropdown-item" id="3">10.000 m hlaup</a></li>
-                  <li><a v-bind:class="{active: (event_id===12)}" class="dropdown-item" id="12">10 km götuhlaup (flögutímar)</a></li>
+                  <li><a v-bind:class="{active: (event_id===12)}" class="dropdown-item" id="12">10 km götuhlaup
+                      (flögutímar)</a></li>
                   <li><a v-bind:class="{active: (event_id===13)}" class="dropdown-item" id="13">10 km götuhlaup</a></li>
                   <li><a v-bind:class="{active: (event_id===57)}" class="dropdown-item" id="57">5000 m hlaup</a></li>
                   <li><a v-bind:class="{active: (event_id===122)}" class="dropdown-item" id="122">Hálft maraþon</a></li>
-                  <li><a v-bind:class="{active: (event_id===123)}" class="dropdown-item" id="123">Hálft maraþon (flögutímar)</a></li>
+                  <li><a v-bind:class="{active: (event_id===123)}" class="dropdown-item" id="123">Hálft maraþon
+                      (flögutímar)</a></li>
                   <li><a v-bind:class="{active: (event_id===166)}" class="dropdown-item" id="166">Maraþon</a></li>
-                  <li><a v-bind:class="{active: (event_id===167)}" class="dropdown-item" id="167">Maraþon (flögutímar)</a></li>
+                  <li><a v-bind:class="{active: (event_id===167)}" class="dropdown-item" id="167">Maraþon
+                      (flögutímar)</a></li>
                 </ul>
               </li>
               <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Þrautagreinar</a>
@@ -121,20 +153,20 @@
               </li>
             </ul>
           </li>
-                              <!--  Outdoor = 0, Indoor = 1
+          <!--  Outdoor = 0, Indoor = 1
                           Women = 2, Men = 1 -->
-                          <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#outorindoors" role="button"
-                              aria-haspopup="true" aria-expanded="false">{{outinsexText}}</a>
-                            <div class="dropdown-menu" id="outorindoorsDropdown">
-                              <a v-on:click="outinsex_change($event, 1, 2)" class="dropdown-item" id="0">Konur (Innanhús)</a>
-                              <a v-on:click="outinsex_change($event, 1, 1)" class="dropdown-item" id="0">Karlar (Innanhús)</a>
-                              <div class="dropdown-divider" id="outinDivider"></div>
-                              <a v-on:click="outinsex_change($event, 0, 2)" class="dropdown-item" id="1">Konur (Utanhús)</a>
-                              <a v-on:click="outinsex_change($event, 0, 1)" class="dropdown-item" id="1">Karlar (Utanhús)</a>
-                            </div>
-                          </li>
-                          <!---->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#outorindoors" role="button"
+              aria-haspopup="true" aria-expanded="false">{{outinsexText}}</a>
+            <div class="dropdown-menu" id="outorindoorsDropdown">
+              <a v-on:click="outinsex_change($event, 1, 2)" class="dropdown-item" id="0">Konur (Innanhús)</a>
+              <a v-on:click="outinsex_change($event, 1, 1)" class="dropdown-item" id="0">Karlar (Innanhús)</a>
+              <div class="dropdown-divider" id="outinDivider"></div>
+              <a v-on:click="outinsex_change($event, 0, 2)" class="dropdown-item" id="1">Konur (Utanhús)</a>
+              <a v-on:click="outinsex_change($event, 0, 1)" class="dropdown-item" id="1">Karlar (Utanhús)</a>
+            </div>
+          </li>
+          <!---->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#activeyear" role="button"
               aria-haspopup="true" aria-expanded="false">{{yearText}}</a>
@@ -249,7 +281,8 @@
     max-height: 500px;
     overflow-y: auto;
     overflow-x: hidden;
-}
+  }
+
   .dropdown-submenu {
     position: relative;
   }
@@ -275,7 +308,7 @@
   new Vue({
     el: '#app',
     components: {
-		PulseLoader
+      PulseLoader
     },
     data() {
       return {
@@ -337,7 +370,7 @@
       var year_start = 1909
       var year_end = this.year
       this.year_list = []
-      while (year_end+1 > year_start) {
+      while (year_end + 1 > year_start) {
         this.year_list.push(year_end--)
       }
 
@@ -352,34 +385,34 @@
         this.data = []
 
         url = '/api/top_list/' + this.event_id + '/' + this.outin + '/' + this.gender + '/' + this.year + '/' + this.ageStart + '/' + this.ageEnd + '/' + this.legal + '/' + this.isl + '/' + this.bestbyath + '/'
-
         axios
           .all([axios.get(url)]).then(axios.spread((...response) => {
             this.data = response[0]['data']['TopList']
 
             this.event = response[0]['data']['EventInfo']
 
-            //console.log(this.women_data)
-
-            //0, # No units!
-            //'metrar': 1, # Meters
-            //'sek.': 2, # ss,dd
-            //'mín.': 3, # mm:ss
-            //'klst.': 4, # hh:mm:ss,dd
-            //'stig': 5, # Points
-            //'Ungl.stig': 6 # Points junior
-            //alert(this.women_event['Units'])
             if (this.data.length === 0) {
-              this.message = 'Engin gögn fundust :('
+              this.message = 'Engin gögn fundust fyrir ' + this.eventText + ' ' + this.outinsexText + ' í ' + this.ageText + ' fyrir ' + this.yearText + ' 😟'
             } else {
               this.message = ''
               this.data = this.convert_to_timeformat(this.event['Units'], this.data)
             }
-            this.loading = false
           }))
+          .catch((error) => {
+            this.message = 'Villa frá vefþjóni (' + error + ') 😭'
+          })
+          .finally(() => {
+            this.loading = false
+            })
       },
       convert_to_timeformat: function (unit, my_data) {
-
+            //0, # No units!
+            //'metrar': 1, # Meters
+            //'sek.': 2, # ss,dd
+            //'mín.': 3, # mm:ss,dd
+            //'klst.': 4, # hh:mm:ss,dd
+            //'stig': 5, # Points
+            //'Ungl.stig': 6 # Points junior
         if ((unit === 3) || (unit === 4)) {
           var dataLen = my_data.length
           for (i = 0; i < dataLen; i++) {
@@ -471,16 +504,16 @@
         this.get_data(event)
       },
       age_change: function (event) {
-          this.agegroup = event.target.id
-          const split = this.agegroup.split('-')
-          if (split.length === 2) {
+        this.agegroup = event.target.id
+        const split = this.agegroup.split('-')
+        if (split.length === 2) {
 
-            this.ageStart = split[0]
-            this.ageEnd = split[1]
-            this.ageText = event.target.textContent
-            this.get_data(event)
-            
-          }
+          this.ageStart = split[0]
+          this.ageEnd = split[1]
+          this.ageText = event.target.textContent
+          this.get_data(event)
+
+        }
       },
       event_change: function (event) {
         this.event_id = Number(event.target.id)
