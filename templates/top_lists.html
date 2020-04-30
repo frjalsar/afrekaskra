@@ -9,15 +9,32 @@
     <div class="row mb-4">
       <div class="col">
         <ul class="nav nav-pills nav-fill card-header-tabs pull-right" id="myTab" role="tablist">
+          <!--
           <li class="nav-item">
             <a class="nav-link active" id="women-tab" data-toggle="tab" href="#women" role="tab" aria-controls="women"
               aria-selected="true">Konur</a>
           </li>
-          <!---->
+        -->
+          <!--
           <li class="nav-item">
             <a class="nav-link" id="men-tab" data-toggle="tab" href="#men" role="tab" aria-controls="men"
               aria-selected="false">Karlar</a>
           </li>
+          -->
+                    <!--  Outdoor = 0, Indoor = 1
+                          Women = 2, Men = 1 -->
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#outorindoors" role="button"
+                        aria-haspopup="true" aria-expanded="false">{{outinsexText}}</a>
+                      <div class="dropdown-menu" id="outorindoorsDropdown">
+                        <a v-on:click="outinsex_change($event, 1, 2)" class="dropdown-item" id="0">Konur (Innanhús)</a>
+                        <a v-on:click="outinsex_change($event, 1, 1)" class="dropdown-item" id="0">Karlar (Innanhús)</a>
+                        <div class="dropdown-divider" id="outinDivider"></div>
+                        <a v-on:click="outinsex_change($event, 0, 2)" class="dropdown-item" id="1">Konur (Utanhús)</a>
+                        <a v-on:click="outinsex_change($event, 0, 1)" class="dropdown-item" id="1">Karlar (Utanhús)</a>
+                      </div>
+                    </li>
+                    <!---->
           <!-- https://codepen.io/surjithctly/pen/PJqKzQ -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
@@ -130,27 +147,12 @@
               </li>
             </ul>
           </li>
-          <!--
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#outorindoors" role="button"
-              aria-haspopup="true" aria-expanded="false">{{outorinText}}</a>
-            <div v-on:click="toggle_outin($event)" class="dropdown-menu" id="outorindoorsDropdown">
-              <a class="dropdown-item" id="0">Úti</a>
-              <a class="dropdown-item" id="1">Inni</a>
-            </div>
-          </li>
-          -->
-          <!---->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#activeyear" role="button"
               aria-haspopup="true" aria-expanded="false">{{yearText}}</a>
             <div v-on:click="year_change($event)" class="dropdown-menu dropdown-menu-long" id="activeyearDropdown">
               <a v-bind:class="{active: year===0}" class="dropdown-item" id="0">Öll ár</a>
-              {% endverbatim %}
-              {% for year in YEARS %}
-              <a v-bind:class="{active: year==={{ year }}}" class="dropdown-item" id="{{ year }}">{{ year }}</a>
-              {% endfor %}
-              {% verbatim %}
+              <a v-bind:class="{active: year===i}" v-for="i in year_list" class="dropdown-item" :id="i">{{i}}</a>
             </div>
           </li>
           <!---->
@@ -158,25 +160,14 @@
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#age" role="button" aria-haspopup="true"
               aria-expanded="false">{{ageText}}</a>
             <div v-on:click="age_change($event)" class="dropdown-menu" id="ageDropdown">
-              <a class="dropdown-item disabled" id="IndoorOutdoor">Innanhús</a>
-              <a class="dropdown-item" id="i-00-99">Allir aldursflokkar</a>
-              <a class="dropdown-item" id="i-20-22">20-22 ára</a>
-              <a class="dropdown-item" id="i-18-19">18-19 ára</a>
-              <a class="dropdown-item" id="i-16-17">16-17 ára</a>
-              <a class="dropdown-item" id="i-15-15">15 ára</a>
-              <a class="dropdown-item" id="i-14-14">14 ára</a>
-              <a class="dropdown-item" id="i-13-13">13 ára</a>
-              <a class="dropdown-item" id="i-12-12">12 ára</a>
-              <div class="dropdown-divider" id="ageDivider"></div>
-              <a class="dropdown-item disabled" id="IndoorOutdoor">Utanhús</a>
-              <a class="dropdown-item" id="o-00-99">Allir aldursflokkar</a>
-              <a class="dropdown-item" id="o-20-22">20-22 ára</a>
-              <a class="dropdown-item" id="o-18-19">18-19 ára</a>
-              <a class="dropdown-item" id="o-16-17">16-17 ára</a>
-              <a class="dropdown-item" id="o-15-15">15 ára</a>
-              <a class="dropdown-item" id="o-14-14">14 ára</a>
-              <a class="dropdown-item" id="o-13-13">13 ára</a>
-              <a class="dropdown-item" id="o-12-12">12 ára</a>
+              <a class="dropdown-item" id="00-99">Allir aldursflokkar</a>
+              <a class="dropdown-item" id="20-22">20-22 ára</a>
+              <a class="dropdown-item" id="18-19">18-19 ára</a>
+              <a class="dropdown-item" id="16-17">16-17 ára</a>
+              <a class="dropdown-item" id="15-15">15 ára</a>
+              <a class="dropdown-item" id="14-14">14 ára</a>
+              <a class="dropdown-item" id="13-13">13 ára</a>
+              <a class="dropdown-item" id="12-12">12 ára</a>
             </div>
           </li>
           <!---->
@@ -213,14 +204,14 @@
 
   <div class="card-body">
     <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="women" role="tabpanel" aria-labelledby="women-tab">
+      <div class="tab-pane fade show active" id="datatab" role="tabpanel" aria-labelledby="data-tab">
         <!-- ------------------------------------------------------------------------------------------------------------------------------------------------- -->
         <table class="table table-striped table-responsive-sm">
           <thead>
             <tr>
               <th class="d-none d-sm-table-cell" scope="col">#</th>
               <th scope="col">Árangur</th>
-              <th v-bind:class="{'d-none': !hasWindWomen}" scope="col">Vindur</th>
+              <th v-bind:class="{'d-none': !hasWind}" scope="col">Vindur</th>
               <th scope="col">Nafn</th>
               <th class="d-none d-sm-table-cell" scope="col">Aldur</th>
               <th class="d-none d-sm-table-cell" scope="col">Félag</th>
@@ -229,10 +220,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(competitor, index) in women_data">
+            <tr v-for="(competitor, index) in data">
               <th class="d-none d-sm-table-cell" scope="row">{{index+1}}</th>
               <td>{{competitor.results}}</td>
-              <td v-bind:class="{'d-none': !hasWindWomen}">{{competitor.wind}}</td>
+              <td v-bind:class="{'d-none': !hasWind}">{{competitor.wind}}</td>
               <td><a v-bind:href="'/keppandi/' + competitor.competitor_code">{{competitor.name}}</a></td>
               <td class="d-none d-sm-table-cell">{{competitor.age}}</td>
               <td class="d-none d-sm-table-cell">{{competitor.club}}</td>
@@ -244,41 +235,7 @@
           </tbody>
         </table>
         <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
-        <p align="center">{{women_message}}</p>
-        <!-- ------------------------------------------------------------------------------------------------------------------------------------------------- -->
-      </div>
-      <div class="tab-pane fade" id="men" role="tabpanel" aria-labelledby="men-tab">
-        <!-- ------------------------------------------------------------------------------------------------------------------------------------------------- -->
-        <table class="table table-striped table-responsive-sm">
-          <thead>
-            <tr>
-              <th class="d-none d-sm-table-cell" scope="col">#</th>
-              <th scope="col">Árangur</th>
-              <th v-bind:class="{'d-none': !hasWindMen}" scope="col">Vindur</th>
-              <th scope="col">Nafn</th>
-              <th class="d-none d-sm-table-cell" scope="col">Aldur</th>
-              <th class="d-none d-sm-table-cell" scope="col">Félag</th>
-              <th class="d-none d-xl-table-cell" scope="col">Mót</th>
-              <th class="d-none d-md-table-cell" scope="col">Dags.</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(competitor, index) in men_data">
-              <th class="d-none d-sm-table-cell" scope="row">{{index+1}}</th>
-              <td>{{competitor.results}}</td>
-              <td v-bind:class="{'d-none': !hasWindMen}">{{competitor.wind}}</td>
-              <td><a v-bind:href="'/keppandi/' + competitor.competitor_code">{{competitor.name}}</a></td>
-              <td class="d-none d-sm-table-cell">{{competitor.age}}</td>
-              <td class="d-none d-sm-table-cell">{{competitor.club}}</td>
-              <td class="d-none d-xl-table-cell"><a
-                  v-bind:href="'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' + competitor.competition_id">{{competitor.competition_name}}</a>
-              </td>
-              <td class="d-none d-md-table-cell">{{competitor.date}}</td>
-            </tr>
-          </tbody>
-        </table>
-        <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
-        <p align="center">{{men_message}}</p>
+        <p align="center">{{message}}</p>
         <!-- ------------------------------------------------------------------------------------------------------------------------------------------------- -->
       </div>
     </div>
@@ -340,29 +297,25 @@
         radius: '100%',
         loading: false,
 
-        women_data: null,
-        men_data: null,
-        women_event: null,
-        men_event: null,
-        women_message: '',
-        men_message: '',
+        data: null,
+        event: null,
+        message: '',
 
         isBestByAthActive: true,
         isLegalActive: true,
         isISLActive: true,
         //hasWind: false,
 
-        outorinText: 'Inni',
+        outinsexText: 'Konur (Innanhús)',
         eventText: 'Langstökk',
         //yearText: '',
-        ageText: 'Allir aldursflokkar (Inni)',
+        ageText: 'Allir aldursflokkar',
 
         event_id: 154, // Event_id
         outin: 1, // Outdoor = 0, Indoor = 1
-        //gender: 2, // Women = 2, Men = 1
-        gender_women: 2,
-        gender_men: 1,
+        gender: 2, // Women = 2, Men = 1
         year: new Date().getFullYear(), // Year
+        year_list: [2020],
         agegroup: '00-99',
         ageStart: 0, // Start age
         ageEnd: 99, // End age
@@ -379,10 +332,10 @@
           return this.year.toString()
         }
       },
-      hasWindWomen: function () {
+      hasWind: function () {
         if (this.outin === '0') {
           // We are outdoor. Does the current selected event have wind?
-          if (this.men_event['HasWind'] === 1) {
+          if (this.event['HasWind'] === 1) {
             return true
           } else {
             return false
@@ -391,41 +344,32 @@
           return false // We are indoor, no wind
         }
       },
-      hasWindMen: function () {
-        if (this.outin === '0') {
-          if (this.women_event['HasWind'] === 1) {
-            return true
-          } else {
-            return false
-          }
-        } else {
-          return false // We are indoor, no wind
-        }
-      }
     },
     mounted() {
+      var year_start = 1909
+      var year_end = this.year
+      this.year_list = []
+      while (year_end+1 > year_start) {
+        this.year_list.push(year_end--)
+      }
+
       this.get_data(null)
     },
     // define methods under the `methods` object
     methods: {
       get_data: function (event) {
         this.loading = true
-        this.women_message = 'Næ í gögn ekki stökkva langt 😉'
-        this.men_message = 'Næ í gögn ekki stökkva langt 😉'
+        this.message = 'Næ í gögn ekki stökkva langt 😉'
 
-        this.women_data = []
-        this.men_data = []
+        this.data = []
 
-        women_url = '/api/top_list/' + this.event_id + '/' + this.outin + '/' + this.gender_women + '/' + this.year + '/' + this.ageStart + '/' + this.ageEnd + '/' + this.legal + '/' + this.isl + '/' + this.bestbyath + '/'
-        men_url = '/api/top_list/' + this.event_id + '/' + this.outin + '/' + this.gender_men + '/' + this.year + '/' + this.ageStart + '/' + this.ageEnd + '/' + this.legal + '/' + this.isl + '/' + this.bestbyath + '/'
+        url = '/api/top_list/' + this.event_id + '/' + this.outin + '/' + this.gender + '/' + this.year + '/' + this.ageStart + '/' + this.ageEnd + '/' + this.legal + '/' + this.isl + '/' + this.bestbyath + '/'
 
         axios
-          .all([axios.get(women_url), axios.get(men_url)]).then(axios.spread((...response) => {
-            this.women_data = response[0]['data']['TopList']
-            this.men_data = response[1]['data']['TopList']
+          .all([axios.get(url)]).then(axios.spread((...response) => {
+            this.data = response[0]['data']['TopList']
 
-            this.women_event = response[0]['data']['EventInfo']
-            this.men_event = response[1]['data']['EventInfo']
+            this.event = response[0]['data']['EventInfo']
 
             //console.log(this.women_data)
 
@@ -437,17 +381,11 @@
             //'stig': 5, # Points
             //'Ungl.stig': 6 # Points junior
             //alert(this.women_event['Units'])
-            if (this.women_data.length === 0) {
-              this.women_message = 'Engin gögn fundust :('
+            if (this.data.length === 0) {
+              this.message = 'Engin gögn fundust :('
             } else {
-              this.women_message = ''
-              this.women_data = this.convert_to_timeformat(this.women_event['Units'], this.women_data)
-            }
-            if (this.men_data.length === 0) {
-              this.men_message = 'Engin gögn fundust :('
-            } else {
-              this.men_message = ''
-              this.men_data = this.convert_to_timeformat(this.men_event['Units'], this.men_data)
+              this.message = ''
+              this.data = this.convert_to_timeformat(this.event['Units'], this.data)
             }
             this.loading = false
           }))
@@ -499,6 +437,13 @@
         alert(event.target.id)
         console.log('Hi')
       },
+      outinsex_change: function (event, outin, gender) {
+        this.outin = outin
+        this.gender = gender
+        this.outinsexText = event.target.textContent
+
+        this.get_data(event)
+      },
       toggle_outin: function (event) {
         this.outin = event.target.id
         this.outorinText = event.target.textContent
@@ -538,27 +483,16 @@
         this.get_data(event)
       },
       age_change: function (event) {
-        //if ((event.target.id !== "ageDivider") || (event.target.id !== "ageDropdown")) {
-          //alert(event.target.id)
           this.agegroup = event.target.id
           const split = this.agegroup.split('-')
-          if (split.length === 3) {
-            if (split[0] === 'i') {
-              this.outin = 1 // Indoor
-              this.outorinText = 'Innanhús'
-              this.ageText = event.target.textContent + ' (Inni)'
-            } else {
-              this.outin = 0 //Outdoor
-              this.outorinText = 'Utanhús'
-              this.ageText = event.target.textContent + ' (Úti)'
-            }
+          if (split.length === 2) {
 
-            this.ageStart = split[1]
-            this.ageEnd = split[2]
+            this.ageStart = split[0]
+            this.ageEnd = split[1]
+            this.ageText = event.target.textContent
             this.get_data(event)
             
           }
-        //}
       },
       event_change: function (event) {
         this.event_id = Number(event.target.id)
