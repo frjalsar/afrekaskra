@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block title %}Top listar - Afrekaskrá FRÍ{% endblock %}
-
 {% block content %}
 {% verbatim %}
 <div class="card ">
@@ -20,11 +19,10 @@
               <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Stökkgreinar</a>
                 <ul class="dropdown-menu">
                   <li><a v-bind:class="{active: (event_id===124)}" class="dropdown-item" id="124">Hástökk</a></li>
-                  <li><a v-bind:class="{active: (event_id===125)}" class="dropdown-item" id="125">Hástökk án atrennu</a>
+                  <li><a v-bind:class="{active: (event_id===125)}" class="dropdown-item" id="125">Hástökk án atr.</a>
                   </li>
                   <li><a v-bind:class="{active: (event_id===154)}" class="dropdown-item" id="154">Langstökk</a></li>
-                  <li><a v-bind:class="{active: (event_id===155)}" class="dropdown-item" id="155">Langstökk án
-                      atrennu</a></li>
+                  <li><a v-bind:class="{active: (event_id===155)}" class="dropdown-item" id="155">Langstökk án atr.</a></li>
                   <li><a v-bind:class="{active: (event_id===197)}" class="dropdown-item" id="197">Stangarstökk</a></li>
                   <li><a v-bind:class="{active: (event_id===204)}" class="dropdown-item" id="204">Þrístökk</a></li>
                 </ul>
@@ -275,7 +273,8 @@
   integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="{% static "vue-spinner.js" %}"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script src='{% static "vue-spinner.js" %}'></script>
 <style>
   .dropdown-menu-long {
     max-height: 500px;
@@ -395,6 +394,9 @@
               this.message = 'Engin gögn fundust fyrir ' + this.eventText + ' ' + this.outinsexText + ' í ' + this.ageText + ' fyrir ' + this.yearText + ' 😟'
             } else {
               this.message = ''
+              if (this.year !== 0) {
+                this.data = this.cut_year(this.data)
+              }
               this.data = this.convert_to_timeformat(this.event['Units'], this.data)
             }
           }))
@@ -405,7 +407,19 @@
             this.loading = false
             })
       },
-      convert_to_timeformat: function (unit, my_data) {
+      cut_year: function (my_data) { //Klippa út árið úr dags. ef eitt ár er valið
+        var dataLen = my_data.length
+        console.log(dataLen)
+        for (i = 0; i < dataLen; i++) {
+          split = my_data[i]['date'].split(' ')
+          if (split.length === 3) {
+            my_data[i]['date'] = split[0] + ' ' + split[1]
+          }
+        }
+
+        return my_data
+      },
+      convert_to_timeformat: function (unit, my_data) { // Breyta tíma úr sek í mm:ss,dd eða hh:mm:ss,dd eftir því hvaða grein er valin.
             //0, # No units!
             //'metrar': 1, # Meters
             //'sek.': 2, # ss,dd
