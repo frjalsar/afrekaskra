@@ -9,32 +9,6 @@
     <div class="row mb-4">
       <div class="col">
         <ul class="nav nav-pills nav-fill card-header-tabs pull-right" id="myTab" role="tablist">
-          <!--
-          <li class="nav-item">
-            <a class="nav-link active" id="women-tab" data-toggle="tab" href="#women" role="tab" aria-controls="women"
-              aria-selected="true">Konur</a>
-          </li>
-        -->
-          <!--
-          <li class="nav-item">
-            <a class="nav-link" id="men-tab" data-toggle="tab" href="#men" role="tab" aria-controls="men"
-              aria-selected="false">Karlar</a>
-          </li>
-          -->
-                    <!--  Outdoor = 0, Indoor = 1
-                          Women = 2, Men = 1 -->
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#outorindoors" role="button"
-                        aria-haspopup="true" aria-expanded="false">{{outinsexText}}</a>
-                      <div class="dropdown-menu" id="outorindoorsDropdown">
-                        <a v-on:click="outinsex_change($event, 1, 2)" class="dropdown-item" id="0">Konur (Innanhús)</a>
-                        <a v-on:click="outinsex_change($event, 1, 1)" class="dropdown-item" id="0">Karlar (Innanhús)</a>
-                        <div class="dropdown-divider" id="outinDivider"></div>
-                        <a v-on:click="outinsex_change($event, 0, 2)" class="dropdown-item" id="1">Konur (Utanhús)</a>
-                        <a v-on:click="outinsex_change($event, 0, 1)" class="dropdown-item" id="1">Karlar (Utanhús)</a>
-                      </div>
-                    </li>
-                    <!---->
           <!-- https://codepen.io/surjithctly/pen/PJqKzQ -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
@@ -147,6 +121,20 @@
               </li>
             </ul>
           </li>
+                              <!--  Outdoor = 0, Indoor = 1
+                          Women = 2, Men = 1 -->
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#outorindoors" role="button"
+                              aria-haspopup="true" aria-expanded="false">{{outinsexText}}</a>
+                            <div class="dropdown-menu" id="outorindoorsDropdown">
+                              <a v-on:click="outinsex_change($event, 1, 2)" class="dropdown-item" id="0">Konur (Innanhús)</a>
+                              <a v-on:click="outinsex_change($event, 1, 1)" class="dropdown-item" id="0">Karlar (Innanhús)</a>
+                              <div class="dropdown-divider" id="outinDivider"></div>
+                              <a v-on:click="outinsex_change($event, 0, 2)" class="dropdown-item" id="1">Konur (Utanhús)</a>
+                              <a v-on:click="outinsex_change($event, 0, 1)" class="dropdown-item" id="1">Karlar (Utanhús)</a>
+                            </div>
+                          </li>
+                          <!---->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#activeyear" role="button"
               aria-haspopup="true" aria-expanded="false">{{yearText}}</a>
