@@ -52,7 +52,9 @@ def results_to_float(in_str):
 
         return time_sec
     else:
-        return np.nan # Fengum ekki match skilum NaN
+        print(in_str)
+        raise ValueError()
+        return None
 
 def Get_List_of_Years():
     #df = pd.DataFrame(list(AthlAfrek.objects.values('dagsetning')))
@@ -129,7 +131,10 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
         if (row.rafmagnstímataka == 0 and Event_Info['Minimize'] == True):
             result_str = '{:.1f}'.format(row.árangur_float)
         else:
-            result_str = '{:.2f}'.format(row.árangur_float)
+            if (Event_Info['Units'] == 5):
+                result_str = '{:.0f}'.format(row.árangur_float)
+            else:
+                result_str = '{:.2f}'.format(row.árangur_float)
 
         Achievement_info = {'name': row.nafn,
                             'results': result_str,
@@ -285,12 +290,38 @@ def Get_List_of_Events(CompetitorCode=None, Event_id=None):
     return Event_list
 
 def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal, ISL, BestByAth):
-    Event_Info = Get_Event_Info(Event_id)
-    q = AthlAfrek.objects.all().filter(tákn_greinar__iexact=Event_Info['THORID_1'],
-                                       úti_inni=IndoorOutDoor,
-                                       kyn=Gender,
-                                       aldur_keppanda__range=[AgeStart, AgeEnd])
+    if (Event_id > 1000): # Ef Event_id ef yfir 1000 þá er þetta þrautagrein. Þurfum að meðhöndla þær sérstaklega.
+        Athlon_events = {1001: 'FIMMTARÞR',  # Fimmtarþraut
+                         1002: 'FIMMTUNG',   # Fimmtarþr. unglingastig
+                         1003: 'FIMMTAR76C', # Fimmtarþraut (76cm grind)
+                         1004: 'FIMMTARÞ15', # Fimmtarþraut pilta 15 ára
 
+                         1011: 'SJÖÞRAUT',   # Sjöþraut
+                         1012: 'SJÖÞRAUT6K', # Sjöþraut (6Kg kúla) 
+                         1013: 'SJÖÞRAUT5K', # Sjöþraut (5Kg kúla)
+                         1014: 'SJÖÞRAUT',   # Sjöþraut meyjaáhöld
+
+                         1021: 'TUGÞRAUT',   # Tugþraut
+                         1022: 'TUGÞRAU17',  # Tugþraut 16-17 ára
+                         1023: 'TUGÞRRU20'}  # Tugþraut U20 (Norðurlönd)
+
+        THORID_2 = Athlon_events[Event_id]
+
+        Event_Info = {'THORID_1': '',
+                      'Units': 5,
+                      'Units_symbol': 'Stig',
+                      'Minimize': False,
+                      'ShortName': '',
+                      'HasWind': 0}
+        q = AthlAfrek.objects.all().filter(grein__iexact=THORID_2)
+        if ((Event_id == 1002) or (Event_id == 1014)):
+            q = q.filter(flokkur=14)
+
+    else:
+        Event_Info = Get_Event_Info(Event_id)
+        q = AthlAfrek.objects.all().filter(tákn_greinar__iexact=Event_Info['THORID_1'])
+
+    #--
     if (Event_Info['Minimize'] == True):
         #order_by_str = 'árangur'
         if (Legal == 1):
@@ -302,6 +333,8 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
         if (Legal == 1):
             q = q.filter(vindur__lte=2.00, vantar_vind=0)
     #    order_by_str = '-árangur'
+
+    q = q.filter(úti_inni=IndoorOutDoor, kyn=Gender, aldur_keppanda__range=[AgeStart, AgeEnd])
 
     # Ef við viljum fá öll gögn þá er Year = 0
     if (Year > 0):
