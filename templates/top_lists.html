@@ -80,14 +80,7 @@
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#age" role="button" aria-haspopup="true"
               aria-expanded="false">{{ageText}}</a>
             <div v-on:click="age_change($event)" class="dropdown-menu" id="ageDropdown">
-              <a class="dropdown-item" id="00-99">Allir aldursflokkar</a>
-              <a class="dropdown-item" id="20-22">20-22 ára</a>
-              <a class="dropdown-item" id="18-19">18-19 ára</a>
-              <a class="dropdown-item" id="16-17">16-17 ára</a>
-              <a class="dropdown-item" id="15-15">15 ára</a>
-              <a class="dropdown-item" id="14-14">14 ára</a>
-              <a class="dropdown-item" id="13-13">13 ára</a>
-              <a class="dropdown-item" id="12-12">12 ára</a>
+              <a v-for="i in ageGroups" v-bind:class="{active: ageGroup===i.id}" class="dropdown-item" :id=i.id>{{i.name}}</a>
             </div>
           </li>
           <!---->
@@ -226,19 +219,16 @@
         isBestByAthActive: true,
         isLegalActive: true,
         isISLActive: true,
-        //hasWind: false,
 
         outinsexText: 'Konur [Innanhús]',
         eventText: 'Langstökk',
-        //yearText: '',
-        ageText: 'Allir aldursflokkar',
 
         event_id: 154, // Event_id
         outin: 1, // Outdoor = 0, Indoor = 1
         gender: 2, // Women = 2, Men = 1
         year: new Date().getFullYear(), // Year
         year_list: [2020],
-        agegroup: '00-99',
+        ageGroup: 0,
         ageStart: 0, // Start age
         ageEnd: 99, // End age
         legal: 1, // Only legal = 1, all = 0
@@ -317,10 +307,21 @@
                            {id: 1014, name: 'Sjöþraut meyjaáhöld'},
                            {id: 1021, name: 'Tugþraut'},
                            {id: 1022, name: 'Tugþraut 16-17 ára'},
-                           {id: 1023, name: 'Tugþraut U20 (Norðurlönd)'} ]
+                           {id: 1023, name: 'Tugþraut U20 (Norðurlönd)'} ],
+          ageGroups: [ {id: 0, name: 'Allir aldursflokkar', ageStart: 0, ageEnd: 999},
+                       {id: 1, name: '20-22 ára', ageStart: 20, ageEnd: 22},
+                       {id: 2, name: '18-19 ára', ageStart: 18, ageEnd: 19},
+                       {id: 3, name: '16-17 ára', ageStart: 16, ageEnd: 17},
+                       {id: 4, name: '15 ára', ageStart: 15, ageEnd: 15},
+                       {id: 5, name: '14 ára', ageStart: 14, ageEnd: 14},
+                       {id: 6, name: '13 ára', ageStart: 13, ageEnd: 13},
+                       {id: 7, name: '12 ára', ageStart: 12, ageEnd: 12} ]
       }
     },
     computed: {
+      ageText: function () {
+        return this.ageGroups[this.ageGroup].name
+      },
       yearText: function () {
         if (this.year === 0) {
           return 'Öll ár'
@@ -385,7 +386,6 @@
       },
       cut_year: function (my_data) { //Klippa út árið úr dags. ef eitt ár er valið
         var dataLen = my_data.length
-        console.log(dataLen)
         for (i = 0; i < dataLen; i++) {
           split = my_data[i]['date'].split(' ')
           if (split.length === 3) {
@@ -494,16 +494,12 @@
         this.get_data(event)
       },
       age_change: function (event) {
-        this.agegroup = event.target.id
-        const split = this.agegroup.split('-')
-        if (split.length === 2) {
+        this.ageGroup = Number(event.target.id)
+        
+        this.ageStart = this.ageGroups[this.ageGroup].ageStart
+        this.ageEnd = this.ageGroups[this.ageGroup].ageEnd
 
-          this.ageStart = split[0]
-          this.ageEnd = split[1]
-          this.ageText = event.target.textContent
-          this.get_data(event)
-
-        }
+        this.get_data(event)
       },
       event_change: function (event) {
         this.event_id = Number(event.target.id)
