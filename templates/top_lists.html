@@ -400,6 +400,11 @@
           return this.events_athlon[index].name
         }
       },
+      titleText: function () {
+        my_str = 'Sif - Afrek ' + this.eventText + ' ' + this.outinsexText + ' í ' + this.ageText + ' fyrir ' + this.yearText
+
+        return my_str
+      },
       hasWind: function () {
         if (this.outin === 0) {
           // We are outdoor. Does the current selected event have wind?
@@ -502,6 +507,7 @@
           })
           .finally(() => {
             this.loading = false
+            document.title = this.titleText
             })
       },
       cut_year: function (my_data) { //Klippa út árið úr dags. ef eitt ár er valið
