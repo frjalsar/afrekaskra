@@ -11,42 +11,42 @@
         <ul class="nav nav-pills nav-fill card-header-tabs pull-right" id="myTab" role="tablist">
           <!-- https://codepen.io/surjithctly/pen/PJqKzQ -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
               {{eventText}}
             </a>
             <ul v-on:click="event_change($event)" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===1)}" class="dropdown-item dropdown-toggle" href="#">Stökkgreinar</a>
+              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===1)}" class="dropdown-item dropdown-toggle">Stökkgreinar</a>
                 <ul class="dropdown-menu">
                   <li v-for="i in events_jump"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{i.name}}</a></li>
                 </ul>
               </li>
-              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===2)}" class="dropdown-item dropdown-toggle" href="#">Kastgreinar</a>
+              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===2)}" class="dropdown-item dropdown-toggle">Kastgreinar</a>
                 <ul class="dropdown-menu">
                   <li v-for="i in events_throw"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{i.name}}</a></li>
                 </ul>
               </li>
-              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===3)}" class="dropdown-item dropdown-toggle" href="#">Spretthlaup</a>
+              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===3)}" class="dropdown-item dropdown-toggle">Spretthlaup</a>
                 <ul class="dropdown-menu">
                   <li v-for="i in events_sprint"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{i.name}}</a></li>
                 </ul>
               </li>
-              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===4)}" class="dropdown-item dropdown-toggle" href="#">Grindarhlaup</a>
+              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===4)}" class="dropdown-item dropdown-toggle">Grindarhlaup</a>
                 <ul class="dropdown-menu">
                   <li v-for="i in events_hurdle"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{i.name}}</a></li>
                 </ul>
               </li>
-              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===5)}" class="dropdown-item dropdown-toggle" href="#">Millivegalengdir</a>
+              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===5)}" class="dropdown-item dropdown-toggle">Millivegalengdir</a>
                 <ul class="dropdown-menu">
                   <li v-for="i in events_middle"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{i.name}}</a></li>
                 </ul>
               </li>
-              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===6)}" class="dropdown-item dropdown-toggle" href="#">Langhlaup</a>
+              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===6)}" class="dropdown-item dropdown-toggle">Langhlaup</a>
                 <ul class="dropdown-menu">
                   <li v-for="i in events_long"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{i.name}}</a></li>
                 </ul>
               </li>
-              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===7)}" class="dropdown-item dropdown-toggle" href="#">Þrautagreinar</a>
+              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===7)}" class="dropdown-item dropdown-toggle">Þrautagreinar</a>
                 <ul class="dropdown-menu">
                   <li v-for="i in events_athlon"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{i.name}}</a></li>
                 </ul>
@@ -55,20 +55,41 @@
           </li>
           <!--  Outdoor = 0, Indoor = 1
                           Women = 2, Men = 1 -->
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                              aria-haspopup="true" aria-expanded="false">
+                              {{outinsexText}}
+                            </a>
+                          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li class="dropdown-submenu"><a v-bind:class="{active: (gender===2)}" class="dropdown-item dropdown-toggle">Konur</a>
+                              <ul class="dropdown-menu">
+                                <li><a v-on:click="outinsex_change($event, 1, 2)" v-bind:class="{active: ((gender===2) && (outin===1))}" class="dropdown-item">Innanhús</a></li>
+                                <li><a v-on:click="outinsex_change($event, 0, 2)" v-bind:class="{active: ((gender===2) && (outin===0))}" class="dropdown-item">Utanhús</a></li>
+                              </ul>
+                            </li>
+                            <li class="dropdown-submenu"><a v-bind:class="{active: (gender===1)}" class="dropdown-item dropdown-toggle">Karlar</a>
+                              <ul class="dropdown-menu">
+                                <li><a v-on:click="outinsex_change($event, 1, 1)" v-bind:class="{active: (gender===1 && outin===1)}" class="dropdown-item">Innanhús</a></li>
+                                <li><a v-on:click="outinsex_change($event, 0, 1)" v-bind:class="{active: (gender===1 && outin===0)}" class="dropdown-item">Utanhús</a></li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                          <!--
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#outorindoors" role="button"
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
               aria-haspopup="true" aria-expanded="false">{{outinsexText}}</a>
             <div class="dropdown-menu" id="outorindoorsDropdown">
               <a v-on:click="outinsex_change($event, 1, 2)" class="dropdown-item" id="1">Konur [Innanhús]</a>
-              <a v-on:click="outinsex_change($event, 1, 1)" class="dropdown-item" id="2">Karlar [Innanhús]</a>
-              <div class="dropdown-divider" id="outinDivider"></div>
               <a v-on:click="outinsex_change($event, 0, 2)" class="dropdown-item" id="3">Konur [Utanhús]</a>
+              <div class="dropdown-divider" id="outinDivider"></div>
+              <a v-on:click="outinsex_change($event, 1, 1)" class="dropdown-item" id="2">Karlar [Innanhús]</a>
               <a v-on:click="outinsex_change($event, 0, 1)" class="dropdown-item" id="4">Karlar [Utanhús]</a>
             </div>
-          </li>
+          </li>-->
           <!---->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#activeyear" role="button"
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
               aria-haspopup="true" aria-expanded="false">{{yearText}}</a>
             <div v-on:click="year_change($event)" class="dropdown-menu dropdown-menu-long" id="activeyearDropdown">
               <a v-bind:class="{active: year===0}" class="dropdown-item" id="0">Öll ár</a>
@@ -77,7 +98,7 @@
           </li>
           <!---->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#age" role="button" aria-haspopup="true"
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
               aria-expanded="false">{{ageText}}</a>
             <div v-on:click="age_change($event)" class="dropdown-menu" id="ageDropdown">
               <a v-for="i in ageGroups" v-bind:class="{active: ageGroup===i.id}" class="dropdown-item" :id=i.id>{{i.name}}</a>
@@ -93,20 +114,20 @@
           <div class="col-md-4 col-sm-12 mb-3 text-center">
             <div class="custom-control custom-switch">
               <input v-on:click="toggle_bestbyath($event)" type="checkbox" class="custom-control-input"
-                id="customSwitch2" checked>
+                id="customSwitch2" :checked="isBestByAthActive">
               <label class="custom-control-label" for="customSwitch2">Birta bara besta afrek íþróttamanns</label>
             </div>
           </div>
           <div class="col-md-4 col-sm-12 mb-3 text-center">
             <div class="custom-control custom-switch">
               <input v-on:click="toggle_legalresults($event)" type="checkbox" class="custom-control-input"
-                id="customSwitch1">
+                id="customSwitch1" :checked="!isLegalActive">
               <label class="custom-control-label" for="customSwitch1">Birta ólöglegan árangur</label>
             </div>
           </div>
           <div class="col-md-4 col-sm-12 mb-3 text-center">
             <div class="custom-control custom-switch">
-              <input v-on:click="toggle_isl($event)" type="checkbox" class="custom-control-input" id="customSwitch3">
+              <input v-on:click="toggle_isl($event)" type="checkbox" class="custom-control-input" id="customSwitch3" :checked="!isISLActive">
               <label class="custom-control-label" for="customSwitch3">Birta öll þjóðerni</label>
             </div>
           </div>
@@ -198,9 +219,18 @@
 
 {% verbatim %}
 <script>
+  const Top = { props: null }
+  const routes = [{ path: '/', component: Top, props: true}]
+
+  const router = new VueRouter({
+    mode: 'history',
+    routes // short for `routes: routes`
+  })
+
   var PulseLoader = VueSpinner.PulseLoader // https://github.com/greyby/vue-spinner
   new Vue({
     el: '#app',
+    router,
     components: {
       PulseLoader
     },
@@ -212,16 +242,13 @@
         radius: '100%',
         loading: false,
 
-        data: null,
-        event: null,
+        data: [],
+        event: [],
         message: '',
 
         isBestByAthActive: true,
         isLegalActive: true,
         isISLActive: true,
-
-        outinsexText: 'Konur [Innanhús]',
-        eventText: 'Langstökk',
 
         event_id: 154, // Event_id
         event_type: 1, //Jumps = 1, Throws = 2, Sprint = 3, Hurdles = 4, Middle = 5, Long = 6, -athlon = 7
@@ -231,7 +258,7 @@
         year_list: [2020],
         ageGroup: 0,
         ageStart: 0, // Start age
-        ageEnd: 99, // End age
+        ageEnd: 999, // End age
         legal: 1, // Only legal = 1, all = 0
         isl: 0, // Icelandic = 0, Everybody = 1
         bestbyath: 1,
@@ -320,6 +347,10 @@
       }
     },
     computed: {
+      testPar: function () {
+        //return 'Hello'
+        return this.$route.params.test
+      },
       ageText: function () {
         return this.ageGroups[this.ageGroup].name
       },
@@ -330,8 +361,47 @@
           return this.year.toString()
         }
       },
+      outinsexText: function () {
+        if (this.outin === 0) {
+          var outinText = 'Utanhús'
+        } else {
+          var outinText = 'Innanhús'
+        }
+
+        if (this.gender === 1) {
+          var sexText = 'Karlar'
+        } else {
+          var sexText = 'Konur'
+        }
+
+        return sexText + ' [' + outinText + ']'
+      },
+      eventText: function () {
+        if (this.event_type === 1) {
+          var index = this.events_jump.findIndex(p => p.id == this.event_id)
+          return this.events_jump[index].name
+        } else if (this.event_type === 2) {
+          var index = this.events_throw.findIndex(p => p.id == this.event_id)
+          return this.events_throw[index].name
+        } else if (this.event_type === 3) {
+          var index = this.events_sprint.findIndex(p => p.id == this.event_id)
+          return this.events_sprint[index].name
+        } else if (this.event_type === 4) {
+          var index = this.events_hurdle.findIndex(p => p.id == this.event_id)
+          return this.events_hurdle[index].name
+        } else if (this.event_type === 5) {
+          var index = this.events_middle.findIndex(p => p.id == this.event_id)
+          return this.events_middle[index].name
+        } else if (this.event_type === 6) {
+          var index = this.events_long.findIndex(p => p.id == this.event_id)
+          return this.events_long[index].name
+        } else if (this.event_type === 7) {
+          var index = this.events_athlon.findIndex(p => p.id == this.event_id)
+          return this.events_athlon[index].name
+        }
+      },
       hasWind: function () {
-        if (this.outin === '0') {
+        if (this.outin === 0) {
           // We are outdoor. Does the current selected event have wind?
           if (this.event['HasWind'] === 1) {
             return true
@@ -349,6 +419,55 @@
       this.year_list = []
       while (year_end + 1 > year_start) {
         this.year_list.push(year_end--)
+      }
+
+      parameters = this.$route.query
+      if ('y' in parameters) {
+        this.year = Number(this.$route.query.y)
+      }
+      if ('a' in parameters) {
+        this.ageGroup = Number(this.$route.query.a)
+        this.ageStart = this.ageGroups[this.ageGroup].ageStart
+        this.ageEnd = this.ageGroups[this.ageGroup].ageEnd
+      }
+      if ('g' in parameters) {
+        this.gender = Number(this.$route.query.g)
+      }
+      if ('i' in parameters) {
+        this.outin = Number(this.$route.query.i)
+      }
+      if ('l' in parameters) {
+        this.legal = Number(this.$route.query.l)
+        
+        if (this.legal === 1) {
+          this.isLegalActive = true
+        } else {
+          this.isLegalActive = false
+        }
+      }
+      if ('b' in parameters) {
+        this.bestbyath = Number(this.$route.query.b)
+
+        if (this.bestbyath === 1) {
+          this.isBestByAthActive = true
+        } else {
+          this.isBestByAthActive = false
+        }
+      }
+      if ('isl' in parameters) {
+        this.isl = Number(this.$route.query.isl)
+
+        if (this.isl === 0) {
+          this.isISLActive = true
+        } else {
+          this.isISLActive = false
+        }
+      }
+      if ('t' in parameters) {
+        this.event_type = Number(this.$route.query.t)
+      }
+      if ('e' in parameters) {
+        this.event_id = Number(this.$route.query.e)
       }
 
       this.get_data(null)
@@ -449,17 +568,13 @@
         alert(event.target.id)
         console.log('Hi')
       },
+      //Outdoor = 0, Indoor = 1
+      //Women = 2, Men = 1 -->
       outinsex_change: function (event, outin, gender) {
         this.outin = outin
         this.gender = gender
-        this.outinsexText = event.target.textContent
 
-        this.get_data(event)
-      },
-      toggle_outin: function (event) {
-        this.outin = event.target.id
-        this.outorinText = event.target.textContent
-
+        this.$router.push({query: {...this.$route.query, g: gender, i: outin}})
         this.get_data(event)
       },
       toggle_legalresults: function (event) {
@@ -469,6 +584,8 @@
         } else {
           this.legal = 0
         }
+
+        this.$router.push({query: {...this.$route.query, l: this.legal}})
         this.get_data(event)
       },
       toggle_isl: function (event, isl) {
@@ -478,6 +595,8 @@
         } else {
           this.isl = 1
         }
+
+        this.$router.push({query: {...this.$route.query, isl: this.isl}})
         this.get_data(event)
       },
       toggle_bestbyath: function (event) {
@@ -487,11 +606,15 @@
         } else {
           this.bestbyath = 0
         }
+
+        this.$router.push({query: {...this.$route.query, b: this.bestbyath}})
         this.get_data(event)
       },
       year_change: function (event) {
         this.year = Number(event.target.id)
         //this.yearText = event.target.textContent
+
+        this.$router.push({query: {...this.$route.query, y: this.year}})
         this.get_data(event)
       },
       age_change: function (event) {
@@ -500,13 +623,14 @@
         this.ageStart = this.ageGroups[this.ageGroup].ageStart
         this.ageEnd = this.ageGroups[this.ageGroup].ageEnd
 
+        this.$router.push({query: {...this.$route.query, a: this.ageGroup}})
         this.get_data(event)
       },
       event_change: function (event) {
         this.event_id = Number(event.target.id)
         this.event_type = Number(event.target.dataset.eventType)
-        this.eventText = event.target.textContent
-        
+
+        this.$router.push({query: {...this.$route.query, t: this.event_type, e: this.event_id}})
         this.get_data(event)
       }
     }

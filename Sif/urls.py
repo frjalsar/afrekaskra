@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 #from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
@@ -29,7 +29,7 @@ urlpatterns = [
     path(r'', views.front_page, name='front_page'),
     path(r'keppandi/<int:CompetitorCode>/', views.competitor, name='competitor'),
     path(r'keppandi/', views.competitor),
-    path(r'top/', views.top_lists, name="top_lists"),
+    re_path(r'^top/*', views.top_lists, name="top_lists"),
 
     # API
     path(r'api/keppandi/<int:CompetitorCode>/', api_views.competitor, name ='api_competitor'),
