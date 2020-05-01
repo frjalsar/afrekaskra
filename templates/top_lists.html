@@ -16,39 +16,39 @@
               {{eventText}}
             </a>
             <ul v-on:click="event_change($event)" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Stökkgreinar</a>
+              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===1)}" class="dropdown-item dropdown-toggle" href="#">Stökkgreinar</a>
                 <ul class="dropdown-menu">
-                  <li v-for="i in events_jump"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" class="dropdown-item">{{i.name}}</a></li>
+                  <li v-for="i in events_jump"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{i.name}}</a></li>
                 </ul>
               </li>
-              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Kastgreinar</a>
+              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===2)}" class="dropdown-item dropdown-toggle" href="#">Kastgreinar</a>
                 <ul class="dropdown-menu">
-                  <li v-for="i in events_throw"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" class="dropdown-item">{{i.name}}</a></li>
+                  <li v-for="i in events_throw"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{i.name}}</a></li>
                 </ul>
               </li>
-              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Spretthlaup</a>
+              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===3)}" class="dropdown-item dropdown-toggle" href="#">Spretthlaup</a>
                 <ul class="dropdown-menu">
-                  <li v-for="i in events_sprint"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" class="dropdown-item">{{i.name}}</a></li>
+                  <li v-for="i in events_sprint"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{i.name}}</a></li>
                 </ul>
               </li>
-              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Grindarhlaup</a>
+              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===4)}" class="dropdown-item dropdown-toggle" href="#">Grindarhlaup</a>
                 <ul class="dropdown-menu">
-                  <li v-for="i in events_hurdle"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" class="dropdown-item">{{i.name}}</a></li>
+                  <li v-for="i in events_hurdle"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{i.name}}</a></li>
                 </ul>
               </li>
-              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Millivegalengdir</a>
+              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===5)}" class="dropdown-item dropdown-toggle" href="#">Millivegalengdir</a>
                 <ul class="dropdown-menu">
-                  <li v-for="i in events_middle"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" class="dropdown-item">{{i.name}}</a></li>
+                  <li v-for="i in events_middle"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{i.name}}</a></li>
                 </ul>
               </li>
-              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Langhlaup</a>
+              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===6)}" class="dropdown-item dropdown-toggle" href="#">Langhlaup</a>
                 <ul class="dropdown-menu">
-                  <li v-for="i in events_long"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" class="dropdown-item">{{i.name}}</a></li>
+                  <li v-for="i in events_long"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{i.name}}</a></li>
                 </ul>
               </li>
-              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Þrautagreinar</a>
+              <li class="dropdown-submenu"><a v-bind:class="{active: (event_type===7)}" class="dropdown-item dropdown-toggle" href="#">Þrautagreinar</a>
                 <ul class="dropdown-menu">
-                  <li v-for="i in events_athlon"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" class="dropdown-item">{{i.name}}</a></li>
+                  <li v-for="i in events_athlon"><a v-bind:class="{active: (event_id===i.id)}" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{i.name}}</a></li>
                 </ul>
               </li>
             </ul>
@@ -224,6 +224,7 @@
         eventText: 'Langstökk',
 
         event_id: 154, // Event_id
+        event_type: 1, //Jumps = 1, Throws = 2, Sprint = 3, Hurdles = 4, Middle = 5, Long = 6, -athlon = 7
         outin: 1, // Outdoor = 0, Indoor = 1
         gender: 2, // Women = 2, Men = 1
         year: new Date().getFullYear(), // Year
@@ -235,79 +236,79 @@
         isl: 0, // Icelandic = 0, Everybody = 1
         bestbyath: 1,
 
-        events_sprint: [ {id: 5, name: '1000 m boðhlaup'},
-                       {id: 6, name: '100 m'},
-                       {id: 25, name: '200 m'},
-                       {id: 31, name: '300 m'},
-                       {id: 44, name: '400 m'},
-                       {id: 50, name: '4x100 m boðhlaup'},
-                       {id: 52, name: '4x200 m boðhlaup'},
-                       {id: 54, name: '4x400 m boðhlaup'},
-                       {id: 74, name: '60 m'} ],
-        events_jump: [ {id: 124, name: 'Hástökk'},
-                       {id: 125, name: 'Hástökk án atrennu'},
-                       {id: 154, name: 'Langstökk'},
-                       {id: 155, name: 'Langstökk án atrennu'},
-                       {id: 197, name: 'Stangarstökk'},
-                       {id: 204, name: 'Þrístökk'} ],
-        events_throw: [ {id: 129, name: 'Kringlukast (2,0 kg)'},
-                        {id: 130, name: 'Kringlukast (1,5 kg)'},
-                        {id: 131, name: 'Kringlukast (1,0 kg)'},
-                        {id: 135, name: 'Kringlukast (1,75kg)'},
-                        {id: 138, name: 'Kúluvarp (7,26 kg)'},
-                        {id: 139, name: 'Kúluvarp (6,00 kg)'},
-                        {id: 140, name: 'Kúluvarp (5,0 kg)'},
-                        {id: 142, name: 'Kúluvarp (4,0 kg)'},
-                        {id: 143, name: 'Kúluvarp (2,0 kg)'},
-                        {id: 144, name: 'Kúluvarp (3,0 kg)'},
-                        {id: 176, name: 'Sleggjukast (7,26 kg)'},
-                        {id: 177, name: 'Sleggjukast (4,0 kg)'},
-                        {id: 178, name: 'Sleggjukast (2,0 kg)'},
-                        {id: 179, name: 'Sleggjukast (3,0 kg)'},
-                        {id: 181, name: 'Sleggjukast (5,0 kg)'},
-                        {id: 183, name: 'Sleggjukast (6,0 kg)'},
-                        {id: 187, name: 'Spjótkast (800 gr)'},
-                        {id: 189, name: 'Spjótkast (600 gr)'},
-                        {id: 190, name: 'Spjótkast (400 gr)'},
-                        {id: 191, name: 'Spjótkast (500 gr)'} ],
-        events_hurdle: [ {id: 7, name: '100 m gr. (84 cm)'},
-                         {id: 8, name: '100 m gr. (76,2 cm)'},
-                         {id: 11, name: '100 m gr. (91,4 cm)'},
-                         {id: 15, name: '110 m gr. (106,7 cm)'},
-                         {id: 16, name: '110 m gr. (91,4 cm)'},
-                         {id: 17, name: '110 m gr. (99,1 cm)'},
-                         {id: 45, name: '400 m gr. (91,4 cm)'},
-                         {id: 46, name: '400 m gr. (84 cm)'},
-                         {id: 47, name: '400 m gr. (76,2 cm)'},
-                         {id: 75, name: '60 m gr. (106,7 cm)'},
-                         {id: 77, name: '60 m gr. (91,4 cm)'},
-                         {id: 78, name: '60 m gr. (99,1 cm)'},
-                         {id: 80, name: '60 m gr. (76,2 cm)'},
-                         {id: 82, name: '60 m gr. (84,0 cm)'} ],
-          events_middle: [ {id: 18, name: '1500 m'},
-                           {id: 28, name: '3000 m'},
-                           {id: 30, name: '3000 m hindrun'},
-                           {id: 73, name: '600 m'},
-                           {id: 86, name: '800 m'} ],
-          events_long: [ {id: 3, name: '10.000 metra hlaup'},
-                         {id: 12, name: '10 km götuhlaup (flögutímar)'},
-                         {id: 13, name: '10 km götuhlaup'},
-                         {id: 57, name: '5000 metra hlaup'},
-                         {id: 122, name: 'Hálft maraþon'},
-                         {id: 123, name: 'Hálft maraþon (flögutímar)'},
-                         {id: 166, name: 'Maraþon'},
-                         {id: 167, name: 'Maraþon (flögutímar)'} ],
-          events_athlon: [ {id: 1001, name: 'Fimmtarþraut'},
-                           {id: 1002, name: 'Fimmtarþr. unglingastig'},
-                           {id: 1003, name: 'Fimmtarþraut (76 cm gr.)'},
-                           {id: 1004, name: 'Fimmtarþraut pilta 15 ára'},
-                           {id: 1011, name: 'Sjöþraut'},
-                           {id: 1012, name: 'Sjöþraut (6 kg kúla)'},
-                           {id: 1013, name: 'Sjöþraut (5 kg kúla)'},
-                           {id: 1014, name: 'Sjöþraut meyjaáhöld'},
-                           {id: 1021, name: 'Tugþraut'},
-                           {id: 1022, name: 'Tugþraut 16-17 ára'},
-                           {id: 1023, name: 'Tugþraut U20 (Norðurlönd)'} ],
+        events_jump: [ {id: 124, type: 1, name: 'Hástökk'},
+                       {id: 125, type: 1, name: 'Hástökk án atrennu'},
+                       {id: 154, type: 1, name: 'Langstökk'},
+                       {id: 155, type: 1, name: 'Langstökk án atrennu'},
+                       {id: 197, type: 1, name: 'Stangarstökk'},
+                       {id: 204, type: 1, name: 'Þrístökk'} ],
+        events_throw: [ {id: 129, type: 2, name: 'Kringlukast (2,0 kg)'},
+                        {id: 130, type: 2, name: 'Kringlukast (1,5 kg)'},
+                        {id: 131, type: 2, name: 'Kringlukast (1,0 kg)'},
+                        {id: 135, type: 2, name: 'Kringlukast (1,75kg)'},
+                        {id: 138, type: 2, name: 'Kúluvarp (7,26 kg)'},
+                        {id: 139, type: 2, name: 'Kúluvarp (6,00 kg)'},
+                        {id: 140, type: 2, name: 'Kúluvarp (5,0 kg)'},
+                        {id: 142, type: 2, name: 'Kúluvarp (4,0 kg)'},
+                        {id: 143, type: 2, name: 'Kúluvarp (2,0 kg)'},
+                        {id: 144, type: 2, name: 'Kúluvarp (3,0 kg)'},
+                        {id: 176, type: 2, name: 'Sleggjukast (7,26 kg)'},
+                        {id: 177, type: 2, name: 'Sleggjukast (4,0 kg)'},
+                        {id: 178, type: 2, name: 'Sleggjukast (2,0 kg)'},
+                        {id: 179, type: 2, name: 'Sleggjukast (3,0 kg)'},
+                        {id: 181, type: 2, name: 'Sleggjukast (5,0 kg)'},
+                        {id: 183, type: 2, name: 'Sleggjukast (6,0 kg)'},
+                        {id: 187, type: 2, name: 'Spjótkast (800 gr)'},
+                        {id: 189, type: 2, name: 'Spjótkast (600 gr)'},
+                        {id: 190, type: 2, name: 'Spjótkast (400 gr)'},
+                        {id: 191, type: 2, name: 'Spjótkast (500 gr)'} ],
+        events_sprint: [ {id: 5, type: 3, name: '1000 m boðhlaup'},
+                       {id: 6, type: 3, name: '100 m'},
+                       {id: 25, type: 3, name: '200 m'},
+                       {id: 31, type: 3, name: '300 m'},
+                       {id: 44, type: 3, name: '400 m'},
+                       {id: 50, type: 3, name: '4x100 m boðhlaup'},
+                       {id: 52, type: 3, name: '4x200 m boðhlaup'},
+                       {id: 54, type: 3, name: '4x400 m boðhlaup'},
+                       {id: 74, type: 3, name: '60 m'} ],
+        events_hurdle: [ {id: 7, type: 4, name: '100 m gr. (84 cm)'},
+                         {id: 8, type: 4, name: '100 m gr. (76,2 cm)'},
+                         {id: 11, type: 4, name: '100 m gr. (91,4 cm)'},
+                         {id: 15, type: 4, name: '110 m gr. (106,7 cm)'},
+                         {id: 16, type: 4, name: '110 m gr. (91,4 cm)'},
+                         {id: 17, type: 4, name: '110 m gr. (99,1 cm)'},
+                         {id: 45, type: 4, name: '400 m gr. (91,4 cm)'},
+                         {id: 46, type: 4, name: '400 m gr. (84 cm)'},
+                         {id: 47, type: 4, name: '400 m gr. (76,2 cm)'},
+                         {id: 75, type: 4, name: '60 m gr. (106,7 cm)'},
+                         {id: 77, type: 4, name: '60 m gr. (91,4 cm)'},
+                         {id: 78, type: 4, name: '60 m gr. (99,1 cm)'},
+                         {id: 80, type: 4, name: '60 m gr. (76,2 cm)'},
+                         {id: 82, type: 4, name: '60 m gr. (84,0 cm)'} ],
+          events_middle: [ {id: 18, type: 5, name: '1500 m'},
+                           {id: 28, type: 5, name: '3000 m'},
+                           {id: 30, type: 5, name: '3000 m hindrun'},
+                           {id: 73, type: 5, name: '600 m'},
+                           {id: 86, type: 5, name: '800 m'} ],
+          events_long: [ {id: 3, type: 6, name: '10.000 metra hlaup'},
+                         {id: 12, type: 6, name: '10 km götuhlaup (flögutímar)'},
+                         {id: 13, type: 6, name: '10 km götuhlaup'},
+                         {id: 57, type: 6, name: '5000 metra hlaup'},
+                         {id: 122, type: 6, name: 'Hálft maraþon'},
+                         {id: 123, type: 6, name: 'Hálft maraþon (flögutímar)'},
+                         {id: 166, type: 6, name: 'Maraþon'},
+                         {id: 167, type: 6, name: 'Maraþon (flögutímar)'} ],
+          events_athlon: [ {id: 1001, type: 7, name: 'Fimmtarþraut'},
+                           {id: 1002, type: 7, name: 'Fimmtarþr. unglingastig'},
+                           {id: 1003, type: 7, name: 'Fimmtarþraut (76 cm gr.)'},
+                           {id: 1004, type: 7, name: 'Fimmtarþraut pilta 15 ára'},
+                           {id: 1011, type: 7, name: 'Sjöþraut'},
+                           {id: 1012, type: 7, name: 'Sjöþraut (6 kg kúla)'},
+                           {id: 1013, type: 7, name: 'Sjöþraut (5 kg kúla)'},
+                           {id: 1014, type: 7, name: 'Sjöþraut meyjaáhöld'},
+                           {id: 1021, type: 7, name: 'Tugþraut'},
+                           {id: 1022, type: 7, name: 'Tugþraut 16-17 ára'},
+                           {id: 1023, type: 7, name: 'Tugþraut U20 (Norðurlönd)'} ],
           ageGroups: [ {id: 0, name: 'Allir aldursflokkar', ageStart: 0, ageEnd: 999},
                        {id: 1, name: '20-22 ára', ageStart: 20, ageEnd: 22},
                        {id: 2, name: '18-19 ára', ageStart: 18, ageEnd: 19},
@@ -503,7 +504,9 @@
       },
       event_change: function (event) {
         this.event_id = Number(event.target.id)
+        this.event_type = Number(event.target.dataset.eventType)
         this.eventText = event.target.textContent
+        
         this.get_data(event)
       }
     }
