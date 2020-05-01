@@ -25,7 +25,7 @@ SECRET_KEY = os.environ['SIF_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if 'SIF_ON_HEROKU' in os.environ:
-    DEBUG = FALSE
+    DEBUG = False
 else:
     DEBUG = True
 
