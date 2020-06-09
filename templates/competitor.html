@@ -4,5 +4,159 @@
 {% block title %}Sif - Afrekaskrá FRÍ{% endblock %}
 
 {% block content %}
-    Keppandi - {{ Competitor.Name }} {{ Competitor.Club }} {{ Competitor.YOB }}
+{% verbatim %}
+<pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
+<router-view></router-view>
+{% endverbatim %}
+{% endblock %}
+
+{% block scripts %}
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script src='{% static "vue-spinner.js" %}'></script>
+
+{% verbatim %}
+<script>
+    const competitor = {
+        props: ['id'],
+        message: '',
+        template: `
+        <div id="competitor-view" v-if="isReady">
+            <div class="card" style="width: 35.5rem;">
+  <img class="card-img-top" src="/static/kt_action.jpg" alt="Card image cap">
+  <div class="card-header">
+    {{competitor_info.FirstName}} {{competitor_info.LastName}}
+  </div>
+  <div class="card-body">
+            <table class="table table-striped table-hover table-responsive-sm table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Grein</th>
+              <th scope="col">PB úti</th>
+              <th scope="col">PB inni</th>
+              <th scope="col">Fjöldi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(i, index) in event_info">
+              <th scope="row">{{i.Event}}</th>
+              <td>{{i.PB_out}}</td>
+              <td>{{i.PB_in}}</td>
+              <td>{{i.count}}</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+    <div class="card-footer text-muted text-center">
+    Sýna meira.
+  </div>
+</div>
+        </div>
+        `,
+        data() {
+            return {
+                competitor_info: [],
+                event_info: [],
+                isReady: false
+            }
+        },
+        created() {
+            this.get_data()
+            console.log(this.id)
+        },
+        methods: {
+            get_data: function () {
+                this.$parent.loading = true
+                this.message = 'Næ í gögn ekki stökkva langt 😉'
+
+                this.data = []
+
+                url = '/api/keppandi/' + this.id
+                axios
+                    .all([axios.get(url)]).then(axios.spread((...response) => {
+                        this.competitor_info = response[0]['data']['Competitor']
+                        this.event_info = response[0]['data']['Events']
+
+                    }))
+                    .catch((error) => {
+                        this.message = 'Villa frá vefþjóni (' + error + ') 😭'
+                    })
+                    .finally(() => {
+                        this.$parent.loading = false
+                        //document.title = this.titleText
+                        this.$parent.do_stuff()
+                        this.isReady = true
+                    })
+            },
+        }
+    }
+    const home = {
+        template: `
+  <div class="card mt-4">
+  <div class="card-header">
+    Finna íþróttamann
+  </div>
+  <div class="card-body">
+    <p class="card-text">Byrjaðu að slá inn nafn íþróttamanns og Sif hjálpar þér að finna hana eða hann.</p>
+    <form>
+      <div class="form-group">
+        <label for="inputName">Nafn:</label>
+        <input type="email" class="form-control" id="nameInput" aria-describedby="nameMore" placeholder="Sláðu inn nafn, t.d. Kristinn Torfa FH">
+      </div>
+    </form>
+  </div>
+</div>
+` }
+    const routes = [{ path: '/keppandi/:id', component: competitor, props: true },
+    { path: '/keppandi/*', component: home, props: false }]
+
+    const router = new VueRouter({
+        mode: 'history',
+        routes // short for `routes: routes`
+    })
+
+    var PulseLoader = VueSpinner.PulseLoader // https://github.com/greyby/vue-spinner
+    new Vue({
+        el: '#app',
+        router,
+        components: {
+            PulseLoader,
+            competitor
+        },
+        data() {
+            return {
+                color: '#0275d8',
+                size: '15px',
+                margin: '2px',
+                radius: '100%',
+                loading: true,
+
+                //message: 'Hello vue',
+                competitor_data: competitor.data
+            }
+        },
+        mounted() {
+            console.log(competitor.id)
+        },
+        methods: {
+            do_stuff: function () {
+                console.log('Doing stuff')
+                console.log(competitor.id)
+            }
+        }
+    })
+</script>
+{% endverbatim %}
 {% endblock %}

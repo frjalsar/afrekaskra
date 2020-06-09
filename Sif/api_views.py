@@ -24,7 +24,8 @@ def Print_list_vertically(my_list):
 
 def competitor(request, CompetitorCode=None, Event=None):
     Competitor_info = data.Get_Competitor_Info(CompetitorCode)
-    return JsonResponse(Competitor_info, safe=False)
+    Event_info = data.Get_Competitor_Events_Info(CompetitorCode)
+    return JsonResponse({'Competitor': Competitor_info, 'Events': Event_info}, safe=False)
 
 def events(request, Event_id=None):
     event_list = data.Get_List_of_Events(CompetitorCode=None, Event_id=Event_id)

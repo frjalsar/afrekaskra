@@ -27,8 +27,7 @@ urlpatterns = [
     # Views
     #path('admin/', admin.site.urls),
     path(r'', views.front_page, name='front_page'),
-    path(r'keppandi/<int:CompetitorCode>/', views.competitor, name='competitor'),
-    path(r'keppandi/', views.competitor),
+    re_path(r'^keppandi/*', views.competitor, name='competitor'),
     re_path(r'^top/*', views.top_lists, name="top_lists"),
 
     # API

@@ -12,6 +12,7 @@ from Sif import settings
 import datetime
 import pytz
 import pandas as pd
+import numpy as np
 import os
 from babel.dates import format_date, format_datetime, format_time
 
@@ -20,7 +21,7 @@ EVENT_LIST_FILENAME = os.path.join(settings.BASE_DIR, 'Sif/event_list.pickle')
 df_event_list = pd.read_pickle(EVENT_LIST_FILENAME)
 
 # Units
-Units_symbol = {1: 'm', 2: 's', 3: 'mm:ss', 4: 'hh:mm:ss,dd', 5: 'stig', 6: 'stig'}
+Units_symbol = {1: 'm', 2: 's', 3: 'mm:ss,dd', 4: 'hh:mm:ss,dd', 5: 'stig', 6: 'stig'}
 
 # stuff
 import re
@@ -86,6 +87,7 @@ def Get_Event_Info(Event_id):
                       'Units_symbol': Units_symbol[Units],
                       'Minimize': minimize,
                       'ShortName': df_event_list['ShortName'].values[Event_id],
+                      'Name_ISL': df_event_list['Name_ISL'].values[Event_id],
                       'HasWind': df_event_list['Wind'].values[Event_id]}
     except:
         raise Http404('Gat ekki fundið grein.')
@@ -247,7 +249,7 @@ def Get_Competitor_Info(CompetitorCode):
     # Look upp the competitor in the table. We want an exact match.
     try:
         q = AthlCompetitors.objects.get(pk=CompetitorCode) # pk means primary key which in this case is númer
-        event_list = Get_List_of_Events(CompetitorCode=CompetitorCode, Event_id=None)
+        #event_list = Get_List_of_Events(CompetitorCode=CompetitorCode, Event_id=None)
         
         # Make a Competitor dict with information about the competitor
         Competitor_Info = {'CompetitorCode': CompetitorCode,
@@ -255,13 +257,179 @@ def Get_Competitor_Info(CompetitorCode):
                            'FirstName': q.nafn.split(' ')[0],
                            'LastName': q.nafn.split(' ')[-1],
                            'YOB': q.fæðingarár,
-                           'Club': q.félag,
+                           'Club': q.félag
                            #'Datetime': datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
-                           'Events': event_list}
+                           #'Events': event_list
+                           }
     except AthlCompetitors.DoesNotExist:
         raise Http404('Gat ekki fundið keppanda.')
 
     return Competitor_Info
+
+def Get_Competitor_Events_Info(CompetitorCode=None):
+    q = AthlAfrek.objects.all().filter(keppandanúmer__iexact=CompetitorCode)
+    df = pd.DataFrame.from_records(q.values_list('lína', 'nafn', 'keppandanúmer',
+                                                 'árangur', 'vindur', 'félag',
+                                                 'aldur_keppanda', 'heiti_móts', 'mót',
+                                                 'dagsetning', 'rafmagnstímataka', 'úti_inni',
+                                                 'grein', 'tákn_greinar', 'vantar_vind'),
+                                                 columns=['lína', 'nafn', 'keppandanúmer',
+                                                          'Árangur', 'Vindur', 'félag',
+                                                          'aldur_keppanda', 'heiti_móts', 'mót',
+                                                          'dagsetning', 'rafmagnstímataka', 'úti_inni',
+                                                          'grein', 'tákn_greinar', 'vantar_vind'])
+
+    # úti_inni: Úti = 0, Inni = 1
+    df['Dagsetn.'] = pd.to_datetime(df['dagsetning'], dayfirst=True)
+
+    # Breytum öllum árangri yfir í rauntölur
+    df['Árangur_float'] = df['Árangur'].map(results_to_float)
+
+    # Búa til lista yfir greinar
+    list_events = df['tákn_greinar'].copy() # copy til að búa til afrit
+    list_events.drop_duplicates(inplace=True) # Henda út endurtekningum
+    list_events.reset_index(drop=True, inplace=True) # Endur númera index
+
+    list_pb = []
+    list_sb = []
+    for i in list_events:
+        event_id = df_event_list[df_event_list['THORID_1'] == i].index.tolist()[0]
+        event_info = Get_Event_Info(event_id)
+        #print(event_info)
+
+        # Flokka út Grein
+        df_event = df.loc[df['tákn_greinar'] == i].copy() # Búum til copy til að breyta
+        df_event.reset_index(drop=True, inplace=True) # Endur númera index
+
+        # Úti árangur með löglegum vindi
+        mask = np.logical_and(df_event['Vindur'] <= 2.0, df_event['úti_inni'] == 0)
+        #mask = np.logical_and(mask, df_event['vantar_vind'] == 0)
+        df_event_nowind_out = df_event.loc[mask]
+
+        df_event_out = df_event.loc[df_event['úti_inni'] == 0] # Úti árangur + vind árangur
+        df_event_in = df_event.loc[df_event['úti_inni'] == 1] # Inni árangur
+
+        #print(df_event_out.head(n=10))
+
+        # Telja hve oft viðkomandi hefur keppt í þessari grein
+        count = df_event['Árangur'].count()
+
+        pb_out = ''
+        pb_in = ''
+
+        #try:
+            # Finnum PB inni ef það er til
+        if (df_event_in.empty == False):
+            if (event_info['Minimize'] == False):
+                idx = df_event_in['Árangur_float'].idxmax()
+            else:
+                idx = df_event_in['Árangur_float'].idxmin()
+
+            pb_in = df_event_in['Árangur'][idx]
+
+        # Finnum PB úti með löglegum árangri ef það er til
+        if (df_event_nowind_out.empty == False):
+            if (event_info['Minimize'] == False):
+                idx = df_event_nowind_out['Árangur_float'].idxmax()
+            else:
+                idx = df_event_nowind_out['Árangur_float'].idxmin()
+
+            pb_out = df_event_nowind_out['Árangur'][idx]
+
+        # Ef ekki þá athugum við ólöglegan árangur
+        elif (df_event_out.empty == False):
+            if (event_info['Minimize'] == False):
+                idx = df_event_out['Árangur_float'].idxmax()
+            else:
+                idx = df_event_out['Árangur_float'].idxmin()
+
+            pb_out = df_event_out['Árangur'][idx] + ' ({:+.1f}'.format(df_event_out['Vindur'][idx]) + ' m/s)'
+        #except:
+            # Ef eitthvað klikkar þá sleppum við þessari grein
+        #    pass
+
+
+        # Fyrir SB
+        # date_now = datetime.date.today()
+        # if (date_now.month >= 11):
+        #     date_to_in = date_now
+        #     date_from_in = datetime.datetime(date_now.year, 11, 1, 0, 0, 0) # 1 Nov
+        #
+        #     date_to_out = datetime.datetime(date_now.year, 10, 31, 0, 0, 0) # 31 Okt
+        #     date_from_out = datetime.datetime(date_now.year, 5, 1, 0, 0, 0) # 1 Maí
+        # elif (date_now.month <= 4):
+        #     date_to_in = date_now
+        #     date_from_in = datetime.datetime(date_now.year-1, 11, 1, 0, 0, 0) # 1 Nov í fyrra
+        #
+        #     date_to_out = datetime.datetime(date_now.year-1, 10, 31, 0, 0, 0) # 30 Okt í fyrra
+        #     date_from_out = datetime.datetime(date_now.year-1, 5, 1, 0, 0, 0) # 1 Maí í fyrra
+        # else:
+        #     date_to_in = datetime.datetime(date_now.year, 4, 30, 0, 0, 0) # 30 Apr
+        #     date_from_in = datetime.datetime(date_now.year-1, 11, 1, 0, 0, 0) # 1 Nov
+        #
+        #     date_to_out = date_now
+        #     date_from_out = datetime.datetime(date_now.year, 5, 1, 0, 0, 0) # 1 Maí
+
+
+        # date_now = pd.Timestamp( datetime.date.today() )
+        # date_later = pd.Timestamp( datetime.date.today() + datetime.timedelta(days=-240) ) # 8*30 = 240, 8 mánuðir, ath mínus
+        # date_to_out = date_now
+        # date_from_out = date_later
+        # date_to_in = date_now
+        # date_from_in = date_later
+
+        # mask_out = np.logical_and(df_event_out['Dagsetn.'] < date_to_out, date_from_out < df_event_out['Dagsetn.'])
+        # mask_nowind_out = np.logical_and(df_event_nowind_out['Dagsetn.'] < date_to_out, date_from_out < df_event_nowind_out['Dagsetn.'])
+        # mask_in = np.logical_and(df_event_in['Dagsetn.'] < date_to_in, date_from_in < df_event_in['Dagsetn.'])
+
+        # df_event_sb_out = df_event_out.loc[mask_out]
+        # df_event_nowind_sb_out = df_event_nowind_out.loc[mask_nowind_out]
+        # df_event_sb_in = df_event_in.loc[mask_in]
+
+        sb_out = ''
+        sb_in = ''
+
+        # try:
+        #     # Finnum SB inni ef það er til
+        #     if (df_event_sb_in.empty == False):
+        #         if (event_max == True):
+        #             idx = df_event_sb_in['Árangur_float'].idxmax()
+        #         else:
+        #             idx = df_event_sb_in['Árangur_float'].idxmin()
+
+        #         sb_in = df_event_sb_in['Árangur'][idx]
+
+        #     # Finnum SB úti með löglegum árangri ef það er til
+        #     if (df_event_nowind_sb_out.empty == False):
+        #         if (event_max == True):
+        #             idx = df_event_nowind_sb_out['Árangur_float'].idxmax()
+        #         else:
+        #             idx = df_event_nowind_sb_out['Árangur_float'].idxmin()
+
+        #         sb_out = df_event_nowind_sb_out['Árangur'][idx]
+
+        #     # Ef ekki þá athugum við ólöglegan árangur
+        #     elif (df_event_sb_out.empty == False):
+        #         if (event_max == True):
+        #             idx = df_event_sb_out['Árangur_float'].idxmax()
+        #         else:
+        #             idx = df_event_sb_out['Árangur_float'].idxmin()
+
+        #         sb_out = df_event_osb_ut['Árangur'][idx] + ' (' + Wind_as_str(df_event_sb_out['Vindur'][idx]) + ' m/s)'
+        # except:
+        #     # Ef eitthvað klikkar þá sleppum við þessari grein
+        #     pass
+
+        # Bæta við í listan
+        list_pb.append({'Event': event_info['Name_ISL'] + ' [' + event_info['Units_symbol'] + ']', 'PB_out': pb_out, 'PB_in': pb_in, 'SB_out': sb_out, 'SB_in': sb_in, 'count': int(count)})
+
+    # Röðum listanum í öfuga röð eftir því oft hefur verið keppt í greinunum
+    # Þarf ekki því html taflan gerir þetta líka!!
+    list_pb.sort(key=lambda dic: dic['count'], reverse=True)
+
+    print(list_pb)
+
+    return list_pb
 
 def Get_List_of_Events(CompetitorCode=None, Event_id=None):
     if (CompetitorCode == None):
@@ -288,6 +456,16 @@ def Get_List_of_Events(CompetitorCode=None, Event_id=None):
             pass
 
     return Event_list
+
+# Get_Competitor_Info
+# Looks upp information about a competitor from the AthlCompetitors table.
+# Inn:
+#  CompetitorCode: Fiffós ID code for the competitor
+# Out:
+#  Competitor_Info: A dictionary containing name, year of birth and club.
+def Get_Competitor_Data(CompetitorCode):
+    Test_List_of_Events(CompetitorCode=CompetitorCode, Event_id = None)
+    return None
 
 def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal, ISL, BestByAth):
     if (Event_id > 1000): # Ef Event_id ef yfir 1000 þá er þetta þrautagrein. Þurfum að meðhöndla þær sérstaklega.
