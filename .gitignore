@@ -132,3 +132,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# npm
+npm-debug.log*
+node_modules/
