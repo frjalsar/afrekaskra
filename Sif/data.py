@@ -98,11 +98,11 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
     df = pd.DataFrame.from_records(q.values_list('lína', 'nafn', 'keppandanúmer',
                                                  'árangur', 'vindur', 'félag',
                                                  'aldur_keppanda', 'heiti_móts', 'mót',
-                                                 'dagsetning', 'rafmagnstímataka'),
+                                                 'dagsetning', 'rafmagnstímataka', 'úti_inni'),
                                                  columns=['lína', 'nafn', 'keppandanúmer',
                                                           'árangur', 'vindur', 'félag',
                                                           'aldur_keppanda', 'heiti_móts', 'mót',
-                                                          'dagsetning', 'rafmagnstímataka'])
+                                                          'dagsetning', 'rafmagnstímataka', 'úti_inni'])
 
     df['dagsetning'] = pd.to_datetime(df['dagsetning'], dayfirst=True)
 
@@ -145,6 +145,7 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
                             'age': row.aldur_keppanda,
                             'competition_name': row.heiti_móts,
                             'competition_id': row.mót,
+                            'outdoor_indoor': row.úti_inni, 
                             'date': date_str,
                             'competitor_code': row.keppandanúmer,
                             'electronic_timing': row.rafmagnstímataka
@@ -512,7 +513,10 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
             q = q.filter(vindur__lte=2.00, vantar_vind=0)
     #    order_by_str = '-árangur'
 
-    q = q.filter(úti_inni=IndoorOutDoor, kyn=Gender, aldur_keppanda__range=[AgeStart, AgeEnd])
+    q = q.filter(kyn=Gender, aldur_keppanda__range=[AgeStart, AgeEnd])
+
+    if (IndoorOutDoor != 2): # 2 þýðir bæði úti og inni árangur
+        q = q.filter(úti_inni=IndoorOutDoor)
 
     # Ef við viljum fá öll gögn þá er Year = 0
     if (Year > 0):

@@ -137,75 +137,15 @@
                   </li>
                 </ul>
               </li>
-              <!--  Outdoor = 0, Indoor = 1
-              Women = 2, Men = 1-->
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  id="navbarDropdownMenuLink"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >{{outinsexText}}</a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <li class="dropdown-submenu">
-                    <a
-                      v-bind:class="{active: (gender===2)}"
-                      class="dropdown-item dropdown-toggle"
-                    >Konur</a>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a
-                          v-on:click="outinsex_change($event, 1, 2)"
-                          v-bind:class="{active: ((gender===2) && (outin===1))}"
-                          class="dropdown-item"
-                        >Innanhús</a>
-                      </li>
-                      <li>
-                        <a
-                          v-on:click="outinsex_change($event, 0, 2)"
-                          v-bind:class="{active: ((gender===2) && (outin===0))}"
-                          class="dropdown-item"
-                        >Utanhús</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="dropdown-submenu">
-                    <a
-                      v-bind:class="{active: (gender===1)}"
-                      class="dropdown-item dropdown-toggle"
-                    >Karlar</a>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a
-                          v-on:click="outinsex_change($event, 1, 1)"
-                          v-bind:class="{active: (gender===1 && outin===1)}"
-                          class="dropdown-item"
-                        >Innanhús</a>
-                      </li>
-                      <li>
-                        <a
-                          v-on:click="outinsex_change($event, 0, 1)"
-                          v-bind:class="{active: (gender===1 && outin===0)}"
-                          class="dropdown-item"
-                        >Utanhús</a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <!--
+              <!-- Women = 2, Men = 1-->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-              aria-haspopup="true" aria-expanded="false">{{outinsexText}}</a>
-            <div class="dropdown-menu" id="outorindoorsDropdown">
-              <a v-on:click="outinsex_change($event, 1, 2)" class="dropdown-item" id="1">Konur [Innanhús]</a>
-              <a v-on:click="outinsex_change($event, 0, 2)" class="dropdown-item" id="3">Konur [Utanhús]</a>
-              <div class="dropdown-divider" id="outinDivider"></div>
-              <a v-on:click="outinsex_change($event, 1, 1)" class="dropdown-item" id="2">Karlar [Innanhús]</a>
-              <a v-on:click="outinsex_change($event, 0, 1)" class="dropdown-item" id="4">Karlar [Utanhús]</a>
+              aria-haspopup="true" aria-expanded="false">{{sexText}}</a>
+            <div class="dropdown-menu" id="sexDropdown">
+              <a v-on:click="toogle_sex($event, 2)" class="dropdown-item" id="1">Konur</a>
+              <a v-on:click="toogle_sex($event, 1)" class="dropdown-item" id="2">Karlar</a>
             </div>
-              </li>-->
+              </li>
               <!---->
               <li class="nav-item dropdown">
                 <a
@@ -296,19 +236,20 @@
             </div>
           </div>
         </div>
+        <!-- Outdoor = 0, Indoor = 1 -->
         <div class="row">
           <div class="col">
             <div class="row justify-content-center">
               <div class="col-md-4 col-sm-12 mb-3 text-center">
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <label class="btn btn-primary">
-                    <input type="radio" name="options" id="option1" autocomplete="off" /> Innanhús
+                  <label class="btn" v-bind:class="{'btn-primary': (outin===1), 'btn-secondary': (outin!==1)}">
+                    <input v-on:click="toogle_innout($event, 1)" type="radio" name="options" id="option1" autocomplete="off" /> Innanhús
                   </label>
-                  <label class="btn btn-secondary">
-                    <input type="radio" name="options" id="option2" autocomplete="off" /> Innan og utanhús
+                  <label class="btn" v-bind:class="{'btn-primary': (outin===2), 'btn-secondary': (outin!==2)}">
+                    <input v-on:click="toogle_innout($event, 2)" type="radio" name="options" id="option2" autocomplete="off" /> Innan og utanhús
                   </label>
-                  <label class="btn btn-secondary">
-                    <input type="radio" name="options" id="option3" autocomplete="off" /> Utanhús
+                  <label class="btn" v-bind:class="{'btn-primary': (outin===0), 'btn-secondary': (outin!==0)}">
+                    <input v-on:click="toogle_innout($event, 0)" type="radio" name="options" id="option3" autocomplete="off" /> Utanhús
                   </label>
                 </div>
               </div>
@@ -542,20 +483,14 @@ export default {
         return this.year.toString();
       }
     },
-    outinsexText: function() {
-      if (this.outin === 0) {
-        var outinText = "Utanhús";
-      } else {
-        var outinText = "Innanhús";
-      }
-
+    sexText: function() {
       if (this.gender === 1) {
         var sexText = "Karlar";
       } else {
         var sexText = "Konur";
       }
 
-      return sexText + " [" + outinText + "]";
+      return sexText;
     },
     eventText: function() {
       if (this.event_type === 1) {
@@ -595,7 +530,7 @@ export default {
       return my_str;
     },
     hasWind: function() {
-      if (this.outin === 0) {
+      if ((this.outin === 0) || (this.outin === 2)) {
         // We are outdoor. Does the current selected event have wind?
         if (this.event["HasWind"] === 1) {
           return true;
@@ -673,7 +608,7 @@ export default {
 
       this.data = [];
 
-      const url =
+      const url = this.global_API_URL + 
         "/api/top_list/" +
         this.event_id +
         "/" +
@@ -721,6 +656,9 @@ export default {
                 this.event["Units"],
                 this.data
               );
+              if (this.outin === 2) {
+              this.data = this.add_inndoor_sign(this.data);
+            }
             }
           })
         )
@@ -744,6 +682,18 @@ export default {
 
       return my_data;
     },
+    add_inndoor_sign: function(my_data) {
+      var dataLen = my_data.length;
+
+      for (var i = 0; i < dataLen; i++)
+      {
+        if (my_data[i]['outdoor_indoor'] === 1) {
+          my_data[i]["results"] = my_data[i]["results"] + ' (i)'
+        }
+      }
+
+      return my_data;
+    },
     convert_to_timeformat: function(unit, my_data) {
       // Breyta tíma úr sek í mm:ss,dd eða hh:mm:ss,dd eftir því hvaða grein er valin.
       //0, # No units!
@@ -755,7 +705,7 @@ export default {
       //'Ungl.stig': 6 # Points junior
       if (unit === 3 || unit === 4) {
         var dataLen = my_data.length;
-        for (i = 0; i < dataLen; i++) {
+        for (var i = 0; i < dataLen; i++) {
           var f = Number(my_data[i]["results"]);
           if (unit === 4) {
             // This unit has hours
@@ -808,9 +758,19 @@ export default {
       this.outin = outin;
       this.gender = gender;
 
-      this.$router.push({
-        query: { ...this.$route.query, g: gender, i: outin }
-      });
+      this.$router.push({ query: { ...this.$route.query, g: gender, i: outin } });
+      this.get_data(event);
+    },
+    toogle_sex: function(event, gender) {
+      this.gender = gender
+
+      this.$router.push({ query: { ...this.$route.query, g: gender} });
+      this.get_data(event);
+    },
+    toogle_innout(event, outin) {
+      this.outin = outin
+
+      this.$router.push({ query: { ...this.$route.query, i: outin } });
       this.get_data(event);
     },
     toggle_legalresults: function(event) {

@@ -65,5 +65,4 @@ a.title-link {
   text-decoration: none;
   color: #343a40;
 }
-
 </style>

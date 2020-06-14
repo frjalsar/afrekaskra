@@ -25,6 +25,10 @@ export default new Router({
     {
       path: '/keppandi/:ID',
       component: () => import('./keppandi/single.vue')
+    },
+    {
+      path: '*',
+      component: () => import('./404.vue')
     }
   ]
 })
