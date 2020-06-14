@@ -35,6 +35,12 @@
         >
           Ársbest
         </router-link>
+        <router-link
+          to="/keppandi"
+          class="p-2 text-dark"
+        >
+          Keppandi
+        </router-link>
     </div>
     <div class="container">
       <div class="my-5 p-3 bg-white rounded shadow">

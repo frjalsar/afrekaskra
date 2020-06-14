@@ -17,6 +17,14 @@ export default new Router({
     {
       path: '/arsbest',
       component: () => import('./arsbest/arsbest.vue')
+    },
+    {
+      path: '/keppandi',
+      component: () => import('./keppandi/list.vue')
+    },
+    {
+      path: '/keppandi/:ID',
+      component: () => import('./keppandi/single.vue')
     }
   ]
 })

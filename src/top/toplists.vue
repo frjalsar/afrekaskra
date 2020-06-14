@@ -296,6 +296,25 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col">
+            <div class="row justify-content-center">
+              <div class="col-md-4 col-sm-12 mb-3 text-center">
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-primary">
+                    <input type="radio" name="options" id="option1" autocomplete="off" /> Innanhús
+                  </label>
+                  <label class="btn btn-secondary">
+                    <input type="radio" name="options" id="option2" autocomplete="off" /> Innan og utanhús
+                  </label>
+                  <label class="btn btn-secondary">
+                    <input type="radio" name="options" id="option3" autocomplete="off" /> Utanhús
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="card-body">
@@ -379,7 +398,7 @@ export default {
       outin: 1, // Outdoor = 0, Indoor = 1
       gender: 2, // Women = 2, Men = 1
       year: new Date().getFullYear(), // Year
-      year_list: [2020],
+      year_list: [],
       ageGroup: 0,
       ageStart: 0, // Start age
       ageEnd: 999, // End age
@@ -596,56 +615,56 @@ export default {
       this.year_list.push(year_end--);
     }
 
-    var parameters = this.$route.query
-    if ('y' in parameters) {
-      this.year = Number(this.$route.query.y)
+    var parameters = this.$route.query;
+    if ("y" in parameters) {
+      this.year = Number(this.$route.query.y);
     }
-    if ('a' in parameters) {
-      this.ageGroup = Number(this.$route.query.a)
-      this.ageStart = this.ageGroups[this.ageGroup].ageStart
-      this.ageEnd = this.ageGroups[this.ageGroup].ageEnd
+    if ("a" in parameters) {
+      this.ageGroup = Number(this.$route.query.a);
+      this.ageStart = this.ageGroups[this.ageGroup].ageStart;
+      this.ageEnd = this.ageGroups[this.ageGroup].ageEnd;
     }
-    if ('g' in parameters) {
-      this.gender = Number(this.$route.query.g)
+    if ("g" in parameters) {
+      this.gender = Number(this.$route.query.g);
     }
-    if ('i' in parameters) {
-      this.outin = Number(this.$route.query.i)
+    if ("i" in parameters) {
+      this.outin = Number(this.$route.query.i);
     }
-    if ('l' in parameters) {
-      this.legal = Number(this.$route.query.l)
+    if ("l" in parameters) {
+      this.legal = Number(this.$route.query.l);
 
       if (this.legal === 1) {
-        this.isLegalActive = true
+        this.isLegalActive = true;
       } else {
-        this.isLegalActive = false
+        this.isLegalActive = false;
       }
     }
-    if ('b' in parameters) {
-      this.bestbyath = Number(this.$route.query.b)
+    if ("b" in parameters) {
+      this.bestbyath = Number(this.$route.query.b);
 
       if (this.bestbyath === 1) {
-        this.isBestByAthActive = true
+        this.isBestByAthActive = true;
       } else {
-        this.isBestByAthActive = false
+        this.isBestByAthActive = false;
       }
     }
-    if ('isl' in parameters) {
-      this.isl = Number(this.$route.query.isl)
+    if ("isl" in parameters) {
+      this.isl = Number(this.$route.query.isl);
 
       if (this.isl === 0) {
-        this.isISLActive = true
+        this.isISLActive = true;
       } else {
-        this.isISLActive = false
+        this.isISLActive = false;
       }
     }
-    if ('t' in parameters) {
-      this.event_type = Number(this.$route.query.t)
+    if ("t" in parameters) {
+      this.event_type = Number(this.$route.query.t);
     }
-    if ('e' in parameters) {
-      this.event_id = Number(this.$route.query.e)
+    if ("e" in parameters) {
+      this.event_id = Number(this.$route.query.e);
     }
 
-    this.get_data(null)
+    this.get_data(null);
   },
   methods: {
     get_data: function(event) {
