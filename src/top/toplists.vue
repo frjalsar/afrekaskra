@@ -350,24 +350,8 @@
 </template>
 
 <script>
-import axios from "axios"
-import PulseLoader from "vue-spinner/src/PulseLoader.vue"
-
-      $('.dropdown-menu a.dropdown-toggle').on('click', function (e) {
-        if (!$(this).next().hasClass('show')) {
-          $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
-        }
-        var $subMenu = $(this).next(".dropdown-menu");
-        $subMenu.toggleClass('show');
-    
-    
-        $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function (e) {
-          $('.dropdown-submenu .show').removeClass("show");
-        });
-    
-    
-        return false;
-      });
+import axios from "axios";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default {
   name: "TopLists",
@@ -434,7 +418,7 @@ export default {
         { id: 191, type: 2, name: "Spjótkast (500 gr)" }
       ],
       events_sprint: [
-        { id: 5, type: 3, name: "1000 m boðhlaup" },
+        { id: 74, type: 3, name: "60 m" },
         { id: 6, type: 3, name: "100 m" },
         { id: 25, type: 3, name: "200 m" },
         { id: 31, type: 3, name: "300 m" },
@@ -442,7 +426,7 @@ export default {
         { id: 50, type: 3, name: "4x100 m boðhlaup" },
         { id: 52, type: 3, name: "4x200 m boðhlaup" },
         { id: 54, type: 3, name: "4x400 m boðhlaup" },
-        { id: 74, type: 3, name: "60 m" }
+        { id: 5, type: 3, name: "1000 m boðhlaup" }
       ],
       events_hurdle: [
         { id: 7, type: 4, name: "100 m gr. (84 cm)" },
@@ -501,6 +485,28 @@ export default {
         { id: 7, name: "12 ára", ageStart: 12, ageEnd: 12 }
       ]
     };
+  },
+  mounted() {
+    //let extScript = document.createElement('script')
+    //extScript.setAttribute('src', 'static/extScript.js')
+    //document.head.appendChild(extScript)
+
+    var scriptTag = document.createElement("script");
+    scriptTag.type = "text/javascript";
+    scriptTag.text = `$('.dropdown-menu a.dropdown-toggle').on('click', function (e) {
+    if (!$(this).next().hasClass('show')) {
+      $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
+    }
+    var $subMenu = $(this).next(".dropdown-menu");
+    $subMenu.toggleClass('show');
+
+    $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function (e) {
+      $('.dropdown-submenu .show').removeClass("show");
+    });
+
+    return false;
+  });`;
+    document.body.appendChild(scriptTag);
   },
   computed: {
     testPar: function() {
@@ -741,9 +747,9 @@ export default {
           }
           var m = Math.floor(f / 60);
           var s = f - m * 60;
-          var s_str
-          var m_str
-          var h_str
+          var s_str;
+          var m_str;
+          var h_str;
 
           if (s < 10) {
             s_str = "0" + s.toFixed(2);
