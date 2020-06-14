@@ -286,7 +286,13 @@
                   <td>{{competitor.results}}</td>
                   <td v-bind:class="{'d-none': !hasWind}">{{competitor.wind}}</td>
                   <td>
-                    <a v-bind:href="'/keppandi/' + competitor.competitor_code">{{competitor.name}}</a>
+                            <router-link
+          :to="{ path: '/keppandi/'+ competitor.competitor_code}"
+          class="p-2 text-dark"
+        >
+          <a>{{competitor.name}}</a>
+        </router-link>
+                    <!--<a v-bind:href="'/keppandi/' + competitor.competitor_code">{{competitor.name}}</a>-->
                   </td>
                   <td class="d-none d-sm-table-cell">{{competitor.age}}</td>
                   <td class="d-none d-sm-table-cell">{{competitor.club}}</td>

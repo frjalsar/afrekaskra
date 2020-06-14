@@ -23,7 +23,7 @@ export default new Router({
       component: () => import('./keppandi/list.vue')
     },
     {
-      path: '/keppandi/:ID',
+      path: '/keppandi/:competitorID',
       component: () => import('./keppandi/single.vue')
     },
     {
