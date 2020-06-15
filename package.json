@@ -4,7 +4,7 @@
   "description": "Afrekaskrá FRÍ",
   "scripts": {
     "start": "node server.js",
-    "build": "parcel build --public-url=/static/ ./src/index.html && rm static/* && cp dist/* static/",
+    "build": "parcel build --public-url=/static/ ./src/index.html",
     "serve": "parcel ./src/index.html",
     "dev": "parcel watch ./src/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
