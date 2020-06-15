@@ -43,5 +43,5 @@ urlpatterns = [
 #if 'SIF_LOCAL' in os.environ:
 #    urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT, show_indexes=True)
 
-if (settings.DEBUG == True):
-    urlpatterns += static('staticfiles/', document_root='/home/kristor/FRI/Sif-site/staticfiles')
+#if (settings.DEBUG == True):
+#    urlpatterns += static('staticfiles/', document_root='/home/kristor/FRI/Sif-site/staticfiles')
