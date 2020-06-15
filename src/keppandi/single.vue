@@ -4,10 +4,11 @@
             <div class="card" style="width: 35.5rem;">
   <img class="card-img-top" src="./static/kt_action.jpg" alt="Card image cap">
   <div class="card-header">
-    {{competitor_info.FirstName}} {{competitor_info.LastName}}
+    {{competitor_info.FirstName}} {{competitor_info.LastName}} ({{competitor_info.Club}})
   </div>
   <div class="card-body">
             <table class="table table-striped table-hover table-responsive-sm table-sm">
+              <col span="1" class="wide">
           <thead>
             <tr>
               <th scope="col">Grein</th>
@@ -17,7 +18,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(i, index) in event_info">
+            <tr v-for="(i, index) in event_info" v-show="(index < 3) || showAllEvents"> <!-- v-bind:style="{display: 'none'}" -->
               <th scope="row">{{i.Event}}</th>
               <td>{{i.PB_out}}</td>
               <td>{{i.PB_in}}</td>
@@ -27,7 +28,7 @@
         </table>
     </div>
     <div class="card-footer text-muted text-center">
-    Sýna meira.
+    <a href="#" v-on:click.prevent="toggle_showEvents($event)">Sýna meira/minna</a>
   </div>
 </div>
         </div>
@@ -49,7 +50,8 @@ export default {
                 event_info: [],
                 isReady: false,
                 competitorID: '',
-                message: ''
+                message: '',
+                showAllEvents: false
             }
         },
   created() {
@@ -80,6 +82,23 @@ export default {
                         this.isReady = true
                     })
             },
+            toggle_showEvents: function(event) {
+              this.showAllEvents = !this.showAllEvents;
+            }
         }
 }
 </script>
+
+<style scoped>
+.table {
+  table-layout: fixed;
+  border-collapse: collapse;
+  width: 100%;
+}
+.td {
+  border: 1px solid #000;
+}
+.wide {
+  width: 300px;
+}
+</style>
