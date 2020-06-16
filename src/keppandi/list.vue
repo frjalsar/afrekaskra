@@ -16,14 +16,13 @@
               <th scope="col" class="d-none d-lg-table-cell">Númer</th>
               <th scope="col">Nafn</th>
               <th scope="col" class="d-none d-md-table-cell">Fæðingarár</th>
-              <th scope="col" class="d-none d-md-table-cell">Félag</th>
+              <th scope="col" class="d-none d-sm-table-cell">Félag</th>
             </tr>
           </thead>
           <tbody>
             <tr v-if="loading">
-              <td colspan="5" align="center">
+              <td colspan="4" align="center">
                 <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
-                {{message}}
               </td>
             </tr>
             <tr
@@ -34,7 +33,7 @@
               <td class="d-none d-lg-table-cell">{{ athlete.CompetitorCode }}</td>
               <td>{{ athlete.Name }}</td>
               <td class="d-none d-md-table-cell">{{ athlete.YOB }}</td>
-              <td class="d-none d-md-table-cell">{{ athlete.Club }}</td>
+              <td class="d-none d-sm-table-cell">{{ athlete.Club }}</td>
             </tr>
           </tbody>
         </table>
@@ -63,7 +62,8 @@ export default {
 
       athletes: [],
       searchQ: "",
-      message: ""
+      message: "",
+      cancelSource: null
     };
   },
   created() {
@@ -99,32 +99,40 @@ export default {
     //   // }
     // },
     search() {
-      var url = this.global_API_URL + "/api/keppandi/";
+      var url = this.global_API_URL + "/api/keppandi?term=";
 
       this.loading = true;
       this.athletes = [];
 
-      //console.log('Searching for ' + this.searchQ)
+      this.cancelSearch();
+      this.cancelSource = axios.CancelToken.source();
+
+      //console.log("Searching for " + this.searchQ);
       axios
-        .get(url, {
-          params: {
-            term: this.searchQ
-          }
-        })
+        .get(url + this.searchQ, {
+        cancelToken: this.cancelSource.token })
         .then(response => {
-          //console.log('RESPONSE')
-          //console.log(response)
+          //console.log("RESPONSE");
+          //console.log(response);
           this.athletes = response["data"];
+          this.cancelSource = null;
+          this.loading = false;
         })
         .catch(error => {
-          //console.log('ERROR')
-          //console.log(error)
+          //console.log("ERROR");
+          //console.log(error);
           this.message = "Villa frá vefþjóni (" + error + ") 😭";
         })
         .finally(() => {
-          //console.log('FINALLY')
-          this.loading = false;
+          //console.log("FINALLY");
+          //this.loading = false;
         });
+    },
+    cancelSearch () {
+      if (this.cancelSource) {
+        this.cancelSource.cancel('Start new search, stop active search');
+        //console.log('cancel request done');
+      }
     }
   }
 };

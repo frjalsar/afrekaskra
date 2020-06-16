@@ -21,18 +21,6 @@
         <p
           class="card-text"
         >Byrjaðu að slá inn nafn íþróttamanns og Sif hjálpar þér að finna hana eða hann.</p>
-        <form>
-          <div class="form-group">
-            <label for="inputName">Nafn:</label>
-            <input
-              type="email"
-              class="form-control"
-              id="nameInput"
-              aria-describedby="nameMore"
-              placeholder="Sláðu inn nafn, t.d. Kristinn Torfa FH"
-            />
-          </div>
-        </form>
       </div>
     </div>
     <!---->

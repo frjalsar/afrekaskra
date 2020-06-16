@@ -556,12 +556,12 @@ def Get_Competitor_List(q):
                                               columns=['keppandanúmer', 'nafn', 'fæðingarár', 'félag', 'dagsetning'])
 
     df['dagsetning'] = pd.to_datetime(df['dagsetning'], dayfirst=True)
-    df.sort_values(by=['dagsetning', 'fæðingarár', 'nafn'], ascending=[False, False, True], inplace=True)
+    df.sort_values(by=['dagsetning'], ascending=[False], inplace=True)
 
     df.drop_duplicates(subset=['keppandanúmer'], keep='first', inplace=True, ignore_index=True)
 
-    # Hendum út öllu sem er ekki í top 100
-    df = df.iloc[0:100]
+    # Hendum út öllu nema í top 25 matches
+    df = df.iloc[0:25]
 
     for index, row in df.iterrows():
         Competitor_Info = {'CompetitorCode': row.keppandanúmer,
@@ -573,6 +573,4 @@ def Get_Competitor_List(q):
                            }
         results.append(Competitor_Info)
 
-    #sb_json = { 'results': results,
-    #            'pagination': [ {'more': False} ] }
     return results
