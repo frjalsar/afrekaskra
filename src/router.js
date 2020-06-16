@@ -8,7 +8,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      alias: '/',
+      //alias: '/',
       component: () => import('./front.vue')
     },
     {
@@ -27,9 +27,9 @@ export default new Router({
       path: '/keppandi/:competitorID',
       component: () => import('./keppandi/single.vue')
     }//,
-    // {
-    //   path: '*',
-    //   component: () => import('./404.vue')
-    // }
+    {
+      path: '*',
+      component: () => import('./404.vue')
+    }
   ]
 })
