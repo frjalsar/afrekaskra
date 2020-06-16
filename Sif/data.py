@@ -4,6 +4,7 @@ from django.http import Http404
 # We only use AthlCompetitors for information about competitors
 # and AthlAfrek for the achievements.
 from Sif.models import AthlCompetitors, AthlAfrek
+from django.db.models import Q
 
 # Settings
 from Sif import settings
@@ -428,7 +429,7 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
     # Þarf ekki því html taflan gerir þetta líka!!
     list_pb.sort(key=lambda dic: dic['count'], reverse=True)
 
-    print(list_pb)
+    #print(list_pb)
 
     return list_pb
 
@@ -538,3 +539,38 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
     Achievements_list = Convert_Achievements_to_List_PD(q, BestByAth, Event_Info)
 
     return Achievements_list[:100], Event_Info
+
+def Get_Competitor_List(q):
+
+    names_q = AthlAfrek.objects.all()
+
+    for i in q.split():
+            names_q = names_q.filter(
+              Q(nafn__icontains=i)
+            | Q(félag__icontains=i)
+            | Q(fæðingarár__icontains=i) )
+
+            # Taka saman niðurstöðunar
+    results = []
+
+    df = pd.DataFrame.from_records(names_q.values_list('keppandanúmer', 'nafn', 'fæðingarár', 'félag'),
+                                              columns=['keppandanúmer', 'nafn', 'fæðingarár', 'félag'])
+
+    df.drop_duplicates(subset=['keppandanúmer'], keep='first', inplace=True, ignore_index=True)
+
+    # Hendum út öllu sem er ekki í top 100
+    df = df.iloc[0:100]
+
+    for index, row in df.iterrows():
+        Competitor_Info = {'CompetitorCode': row.keppandanúmer,
+                           'Name': row.nafn,
+                           'FirstName': row.nafn.split(' ')[0],
+                           'LastName': row.nafn.split(' ')[-1],
+                           'YOB': row.fæðingarár,
+                           'Club': row.félag
+                           }
+        results.append(Competitor_Info)
+
+    #sb_json = { 'results': results,
+    #            'pagination': [ {'more': False} ] }
+    return results

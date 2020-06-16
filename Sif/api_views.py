@@ -27,6 +27,15 @@ def competitor(request, CompetitorCode=None, Event=None):
     Event_info = data.Get_Competitor_Events_Info(CompetitorCode)
     return JsonResponse({'Competitor': Competitor_info, 'Events': Event_info}, safe=False)
 
+def competitor_list(request):
+    #if request.is_ajax():
+    q = request.GET.get('term', '') # Hvað notandinn sló inn í boxið
+    #print('SEARCH ' + q)
+    list_of_competitors = data.Get_Competitor_List(q)
+    return JsonResponse(list_of_competitors, safe=False)
+    #else:
+    #    return HttpResponseServerError('<h1>Server Error (500)</h1>', content_type='text/html')
+
 def events(request, Event_id=None):
     event_list = data.Get_List_of_Events(CompetitorCode=None, Event_id=Event_id)
     #print(event_list)

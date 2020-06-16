@@ -29,15 +29,16 @@ urlpatterns = [
     #path('admin/', admin.site.urls),
     #path(r'', views.front_page, name='front_page'),
     path(r'', TemplateView.as_view(template_name='index.html')),
-    re_path(r'^keppandi/*', views.competitor, name='competitor'),
-    re_path(r'^top/*', views.top_lists, name="top_lists"),
+    #re_path(r'^keppandi/*', views.competitor, name='competitor'),
+    #re_path(r'^top/*', views.top_lists, name="top_lists"),
 
     # API
     path(r'api/keppandi/<int:CompetitorCode>/', api_views.competitor, name ='api_competitor'),
     path(r'api/events/', api_views.events, name ='api_events'),
     path(r'api/events/<int:Event_id>/', api_views.events, name ='api_events'),
     path(r'api/achievements/<int:CompetitorCode>/<int:Event_id>/', api_views.competitor_achievements, name='api_achievements'),
-    path(r'api/top_list/<int:Event_id>/<int:IndoorOutDoor>/<int:Gender>/<int:Year>/<int:AgeStart>/<int:AgeEnd>/<int:Legal>/<int:ISL>/<int:BestByAth>/', api_views.Get_Top_100, name='api_top100')
+    path(r'api/top_list/<int:Event_id>/<int:IndoorOutDoor>/<int:Gender>/<int:Year>/<int:AgeStart>/<int:AgeEnd>/<int:Legal>/<int:ISL>/<int:BestByAth>/', api_views.Get_Top_100, name='api_top100'),
+    path(r'api/keppandi/', api_views.competitor_list, name='api_competitor_list')
 ]
 
 #if 'SIF_LOCAL' in os.environ:

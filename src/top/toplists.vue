@@ -866,6 +866,7 @@ export default {
   margin-right: 0.1rem;
 }
 
+/* center spinner */
 .v-spinner {
   text-align: center;
 }
