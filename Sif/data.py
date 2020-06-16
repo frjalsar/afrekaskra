@@ -550,11 +550,13 @@ def Get_Competitor_List(q):
             | Q(félag__icontains=i)
             | Q(fæðingarár__icontains=i) )
 
-            # Taka saman niðurstöðunar
     results = []
 
-    df = pd.DataFrame.from_records(names_q.values_list('keppandanúmer', 'nafn', 'fæðingarár', 'félag'),
-                                              columns=['keppandanúmer', 'nafn', 'fæðingarár', 'félag'])
+    df = pd.DataFrame.from_records(names_q.values_list('keppandanúmer', 'nafn', 'fæðingarár', 'félag', 'dagsetning'),
+                                              columns=['keppandanúmer', 'nafn', 'fæðingarár', 'félag', 'dagsetning'])
+
+    df['dagsetning'] = pd.to_datetime(df['dagsetning'], dayfirst=True)
+    df.sort_values(by=['dagsetning', 'fæðingarár', 'nafn'], ascending=[False, False, True], inplace=True)
 
     df.drop_duplicates(subset=['keppandanúmer'], keep='first', inplace=True, ignore_index=True)
 

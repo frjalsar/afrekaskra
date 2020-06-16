@@ -4,7 +4,7 @@
       :value="searchQ"
       type="text"
       class="form-control text-center"
-      placeholder="Leita"
+      placeholder="Leita (t.d. Kristinn FH)"
       @input="searchInput"
     />
     <!-- -->
@@ -44,13 +44,13 @@
 </template>
 
 <script>
-import axios from "axios"
-import debounce from 'lodash.debounce'
-import PulseLoader from "vue-spinner/src/PulseLoader.vue"
+import axios from "axios";
+import debounce from "lodash.debounce";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default {
   name: "KeppandiList",
-    components: {
+  components: {
     PulseLoader
   },
   data() {
@@ -62,20 +62,33 @@ export default {
       loading: false,
 
       athletes: [],
-      searchQ: '',
-      message: ''
+      searchQ: "",
+      message: ""
     };
   },
-  // //created() {},
+  created() {
+    var parameters = this.$route.query;
+    if ("search" in parameters) {
+      this.searchQ = this.$route.query.search;
+      this.search();
+    }
+  },
   methods: {
-        onClick (item) {
-      this.$router.push('/keppandi/' + item.CompetitorCode)
+    onClick(item) {
+      this.$router.push("/keppandi/" + item.CompetitorCode);
     },
     searchInput: debounce(function(e) {
-      this.searchQ = e.target && e.target.value
+      this.searchQ = e.target && e.target.value;
+      this.$router.replace({ query: { search: this.searchQ } });
+
+      // To clear box
+      if (this.search.length === 0) {
+        this.athletes = [];
+      }
+
       //Only search on 3
       if (this.searchQ.length >= 3) {
-        this.search()
+        this.search();
       }
     }, 300),
     //     searchInput: function(e) {
@@ -86,30 +99,30 @@ export default {
     //   // }
     // },
     search() {
-      var url = this.global_API_URL + '/api/keppandi/'
+      var url = this.global_API_URL + "/api/keppandi/";
 
-      this.loading = true
+      this.loading = true;
+      this.athletes = [];
 
-
-      console.log('Searching for ' + this.searchQ)
+      //console.log('Searching for ' + this.searchQ)
       axios
         .get(url, {
-                              params: {
-                        term: this.searchQ
-                    }
+          params: {
+            term: this.searchQ
+          }
         })
         .then(response => {
-          console.log('RESPONSE')
-          console.log(response)
-          this.athletes = response["data"]
+          //console.log('RESPONSE')
+          //console.log(response)
+          this.athletes = response["data"];
         })
         .catch(error => {
-          console.log('ERROR')
-          console.log(error)
+          //console.log('ERROR')
+          //console.log(error)
           this.message = "Villa frá vefþjóni (" + error + ") 😭";
         })
         .finally(() => {
-          console.log('FINALLY')
+          //console.log('FINALLY')
           this.loading = false;
         });
     }

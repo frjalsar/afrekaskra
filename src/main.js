@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import '@fortawesome/fontawesome-free/css/all.css'
 
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 
 Vue.mixin({
   data: function() {
