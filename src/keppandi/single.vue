@@ -10,7 +10,7 @@
         <div class="card-header">
           <div class="row justify-content-start">
             <div class="col-4">
-              <img class="card-img-profile" src="./static/kt_profile.jpg" width="150px" />
+              <img class="rounded-circle" src="./static/kt_profile.jpg" width="150px" />
             </div>
             <div class="col align-self-center">
               <p>
