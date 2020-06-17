@@ -47,6 +47,7 @@
               </tr>
             </tbody>
           </table>
+          <highcharts class="chart" :options="chartOptions"></highcharts>
         </div>
         <div class="card-footer text-muted text-center">
           <a href="#" v-on:click.prevent="toggle_showEvents($event)">Sýna meira/minna</a>
@@ -58,11 +59,13 @@
 
 <script>
 import axios from "axios";
+import { Chart } from "highcharts-vue";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default {
   name: "KeppandiSingle",
   components: {
+    highcharts: Chart,
     PulseLoader
   },
   data() {
@@ -77,7 +80,28 @@ export default {
       isReady: false,
       competitorID: "",
       message: "",
-      showAllEvents: false
+      showAllEvents: false,
+
+      chartOptions: {
+        chart: {
+          type: "pie"
+        },
+        title: {
+          text: ""
+        },
+        series: [
+          {
+            name: "Greinar",
+            colorByPoint: true,
+            data: [
+              {
+                name: "Grein",
+                y: 1
+              }
+            ]
+          }
+        ]
+      }
     };
   },
   created() {
@@ -101,6 +125,8 @@ export default {
           axios.spread((...response) => {
             this.competitor_info = response[0]["data"]["Competitor"];
             this.event_info = response[0]["data"]["Events"];
+            //console.log("Got data");
+            this.processData();
           })
         )
         .catch(error => {
@@ -112,6 +138,21 @@ export default {
           //this.$parent.do_stuff()
           this.isReady = true;
         });
+    },
+    processData: function() {
+      //console.log("Process data");
+      var dataLen = this.event_info.length;
+
+      let data_points = [];
+      for (var i = 0; i < dataLen; i++) {
+        data_points.push({
+          name: this.event_info[i].Event,
+          y: this.event_info[i].count
+        });
+      }
+
+      //console.log(data_points);
+      this.chartOptions.series[0].data = data_points;
     },
     toggle_showEvents: function(event) {
       this.showAllEvents = !this.showAllEvents;

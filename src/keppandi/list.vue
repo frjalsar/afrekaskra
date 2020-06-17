@@ -117,6 +117,7 @@ export default {
           this.athletes = response["data"];
           this.cancelSource = null;
           this.loading = false;
+          
         })
         .catch(error => {
           //console.log("ERROR");
