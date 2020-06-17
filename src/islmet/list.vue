@@ -1,6 +1,6 @@
 <template>
 <div class="h_iframe">
-    <iframe src="http://fri.is/afrekaskra/MetOfl/islandsmet.htm" id="contentFrame" frameborder="0" scrolling="no" onload="resizeIframe(this)" style="height:62750px;"></iframe>
+    <iframe src="https://fri.is/afrekaskra/MetOfl/islandsmet.htm" id="contentFrame" frameborder="0" scrolling="no" onload="resizeIframe(this)" style="height:62750px;"></iframe>
 </div>
 </template>
 
