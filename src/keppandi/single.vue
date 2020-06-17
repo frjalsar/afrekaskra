@@ -5,11 +5,22 @@
       <p style="text-align:center">{{message}}</p>
     </div>
     <div id="competitor-view" v-if="isReady">
-      <div class="card" style="width: 35.5rem;">
-        <img class="card-img-top" src="./static/kt_action.jpg" alt="Card image cap" />
-        <div
-          class="card-header"
-        >{{competitor_info.FirstName}} {{competitor_info.LastName}} ({{competitor_info.Club}})</div>
+      <div class="card" style="width: 32.5rem;">
+        <img class="card-img-top" src="./static/kt_action.jpg" />
+        <div class="card-header">
+          <div class="row justify-content-start">
+            <div class="col-4">
+              <img class="card-img-profile" src="./static/kt_profile.jpg" width="150px" />
+            </div>
+            <div class="col">
+              <p>
+                {{competitor_info.FirstName}} {{competitor_info.LastName}}
+                <br />
+                ({{competitor_info.Club}})
+              </p>
+            </div>
+          </div>
+        </div>
         <div class="card-body">
           <table class="table table-striped table-hover table-responsive-sm table-sm">
             <col span="1" class="wide" />
@@ -22,7 +33,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(i, index) in event_info" v-show="(index < 3) || showAllEvents">
+              <tr
+                v-for="(i, index) in event_info"
+                v-show="(index < 3) || showAllEvents"
+                :key="i.Event"
+                @click.prevent="onClick && onClick(i)"
+              >
                 <!-- v-bind:style="{display: 'none'}" -->
                 <th scope="row">{{i.Event}}</th>
                 <td>{{i.PB_out}}</td>
@@ -69,6 +85,9 @@ export default {
     this.get_data();
   },
   methods: {
+    onClick(item) {
+      alert(item.EventID);
+    },
     get_data: function() {
       this.$parent.loading = true;
       this.message = "Næ í gögn ekki stökkva langt 😉";
@@ -121,8 +140,8 @@ export default {
 
 /* Center card */
 .card {
-        margin: 0 auto; /* Added */
-        float: none; /* Added */
-        margin-bottom: 10px; /* Added */
+  margin: 0 auto; /* Added */
+  float: none; /* Added */
+  margin-bottom: 10px; /* Added */
 }
 </style>

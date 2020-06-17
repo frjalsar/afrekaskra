@@ -614,7 +614,7 @@ export default {
 
       this.data = [];
 
-      const url = this.global_API_URL + 
+      let url = this.global_API_URL + 
         "/api/top_list/" +
         this.event_id +
         "/" +
