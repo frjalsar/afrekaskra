@@ -40,7 +40,7 @@
                 @click.prevent="onClick && onClick(i)"
               >
                 <!-- v-bind:style="{display: 'none'}" -->
-                <th scope="row">{{i.EventName}} [{{i.EventUnit}}]</th>
+                <th scope="row">{{i.EventShortName}} [{{i.EventUnit}}]</th>
                 <td>{{i.PB_out}}</td>
                 <td>{{i.PB_in}}</td>
                 <td>{{i.count}}</td>
@@ -86,12 +86,23 @@ export default {
         chart: {
           type: "pie"
         },
+        credits: {
+          enabled: false
+        },
+        accessibility: {
+          point: {
+            valueSuffix: "%"
+          }
+        },
+        tooltip: {
+          pointFormat: "{series.name}: <b>{point.percentage:.2f}%</b>"
+        },
         title: {
           text: ""
         },
         series: [
           {
-            name: "Fjöldi keppna",
+            name: "Hlutafall keppna",
             colorByPoint: true,
             data: [
               {
@@ -143,12 +154,27 @@ export default {
       //console.log("Process data");
       var dataLen = this.event_info.length;
 
+      let total = 0;
+      let other = 0;
+      for (var i = 0; i < dataLen; i++) {
+        total = total + this.event_info[i].count;
+        if (this.event_info[i].count < 5) {
+          other = other + this.event_info[i].count;
+        }
+      }
+
       let data_points = [];
       for (var i = 0; i < dataLen; i++) {
-        data_points.push({
-          name: this.event_info[i].EventName,
-          y: this.event_info[i].count
-        });
+        if (this.event_info[i].count >= 5) {
+          data_points.push({
+            name: this.event_info[i].EventShortName,
+            y: (this.event_info[i].count / total) * 100
+          });
+        }
+      }
+
+      if (other > 0) {
+        data_points.push({ name: "Aðrar greinar", y: (other / total) * 100 });
       }
 
       //console.log(data_points);
@@ -162,7 +188,7 @@ export default {
 </script>
 
 <style scoped>
-.table {
+/* .table {
   table-layout: fixed;
   border-collapse: collapse;
   width: 100%;
@@ -172,7 +198,7 @@ export default {
 }
 .wide {
   width: 300px;
-}
+} */
 
 /* center spinner */
 .v-spinner {
