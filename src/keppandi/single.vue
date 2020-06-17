@@ -102,7 +102,7 @@ export default {
         },
         series: [
           {
-            name: "Hlutafall keppna",
+            name: "Hlutafall",
             colorByPoint: true,
             data: [
               {
