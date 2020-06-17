@@ -36,13 +36,13 @@ prog_time = re.compile('^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?(\d+\.?\d*)?$') #
 # Ef strengurinn er tími á forminu HH:MM:SS.FF þá er honum breytt yfir í sek
 # '02:43.45' -> 2*60 + 43.45 = 163.45
 # '01:02.45' -> 1*60*60 + 2*60 + 43.45 = 3763.45
-def results_to_float(in_str):
+def results_to_float_old(in_str):
     #prog_time = re.compile('^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?(\d+\.?\d*)?$') # Notum regex
     m = prog_time.match(str(in_str).replace(',', '.'))
     if (m): # Athuga hvort við fengum match
 
         if (m.group(1) is None and m.group(2) is None and m.group(3) is None):
-            return np.nan # Eitthvað skrítið í gagni eða tómur strengur skila NaN
+            return np.nan # Eitthvað skrítið í gangi eða tómur strengur skila NaN
 
         time_sec = 0.0 # Breytum yfir í sek ef þetta er tími
         if (m.group(1) is not None):
@@ -54,9 +54,35 @@ def results_to_float(in_str):
 
         return time_sec
     else:
+        print('String er')
         print(in_str)
+        print('Error')
         raise ValueError()
         return None
+
+def results_to_float(in_str):
+    split = str(in_str).replace(',', '.').split('.')
+    hh = 0
+    mm = 0
+    ss = 0
+    dd = 0
+    
+    if (len(split) == 2): # hh:mm:ss,dd eða mm:ss,dd eða ss,dd
+        dd = float(split[1])/100
+    
+    split = split[0].split(':')
+    if (len(split) == 3): # hh:mm:ss
+        hh = float(split[0])
+        mm = float(split[1])
+        ss = float(split[2])
+    elif (len(split) == 2): # mm:ss
+        mm = float(split[0])
+        ss = float(split[1])
+    elif (len(split) == 1): # ss
+        ss =float(split[0])
+        
+    time_sec = hh*3600 + mm*60 + ss + dd
+    return time_sec
 
 def Get_List_of_Years():
     #df = pd.DataFrame(list(AthlAfrek.objects.values('dagsetning')))

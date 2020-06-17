@@ -155,26 +155,28 @@ export default {
       var dataLen = this.event_info.length;
 
       let total = 0;
-      let other = 0;
       for (var i = 0; i < dataLen; i++) {
         total = total + this.event_info[i].count;
-        if (this.event_info[i].count < 5) {
-          other = other + this.event_info[i].count;
-        }
       }
 
       let data_points = [];
+      let other = 0;
+      let per = 0
       for (var i = 0; i < dataLen; i++) {
-        if (this.event_info[i].count >= 5) {
+        per = (this.event_info[i].count / total) * 100
+
+        if (per < 1.5) {
+          other = other + per
+        } else {
           data_points.push({
             name: this.event_info[i].EventShortName,
-            y: (this.event_info[i].count / total) * 100
+            y: per
           });
         }
       }
 
       if (other > 0) {
-        data_points.push({ name: "Aðrar greinar", y: (other / total) * 100 });
+        data_points.push({ name: "Aðrar greinar", y: other });
       }
 
       //console.log(data_points);
