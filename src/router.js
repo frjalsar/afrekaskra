@@ -29,8 +29,15 @@ export default new Router({
     },
     {
       path: '/islmet',
-      component: () => import('./islmet/list.vue')
-    },
+      beforeEnter(to, from, next) {
+          // Put the full page url including the protocol http(s) below
+          window.location = "http://fri.is/afrekaskra/MetOfl/islandsmet.htm"
+      }
+  },
+    // {
+    //   path: '/islmet',
+    //   component: () => import('./islmet/list.vue')
+    // },
     {
       path: '*',
       component: () => import('./404.vue')
