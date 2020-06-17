@@ -283,8 +283,8 @@ def Get_Competitor_Info(CompetitorCode):
         # Make a Competitor dict with information about the competitor
         Competitor_Info = {'CompetitorCode': CompetitorCode,
                            'Name': q.nafn,
-                           'FirstName': q.nafn.split(' ')[0],
-                           'LastName': q.nafn.split(' ')[-1],
+                           'FirstName': q.nafn.split(' ', 1)[0],
+                           'LastName': q.nafn.split(' ', 1)[-1],
                            'YOB': q.fæðingarár,
                            'Club': q.félag
                            #'Datetime': datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S"),

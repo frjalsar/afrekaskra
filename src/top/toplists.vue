@@ -138,13 +138,18 @@
                 </ul>
               </li>
               <!-- Women = 2, Men = 1-->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-              aria-haspopup="true" aria-expanded="false">{{sexText}}</a>
-            <div class="dropdown-menu" id="sexDropdown">
-              <a v-on:click="toogle_sex($event, 2)" class="dropdown-item" id="1">Konur</a>
-              <a v-on:click="toogle_sex($event, 1)" class="dropdown-item" id="2">Karlar</a>
-            </div>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  data-toggle="dropdown"
+                  role="button"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >{{sexText}}</a>
+                <div class="dropdown-menu" id="sexDropdown">
+                  <a v-on:click="toogle_sex($event, 2)" class="dropdown-item" id="1">Konur</a>
+                  <a v-on:click="toogle_sex($event, 1)" class="dropdown-item" id="2">Karlar</a>
+                </div>
               </li>
               <!---->
               <li class="nav-item dropdown">
@@ -242,14 +247,41 @@
             <div class="row justify-content-center">
               <div class="col-md-4 col-sm-12 mb-3 text-center">
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <label class="btn" v-bind:class="{'btn-primary': (outin===1), 'btn-secondary': (outin!==1)}">
-                    <input v-on:click="toogle_innout($event, 1)" type="radio" name="options" id="option1" autocomplete="off" /> Innanhús
+                  <label
+                    class="btn"
+                    v-bind:class="{'btn-primary': (outin===1), 'btn-secondary': (outin!==1)}"
+                  >
+                    <input
+                      v-on:click="toogle_innout($event, 1)"
+                      type="radio"
+                      name="options"
+                      id="option1"
+                      autocomplete="off"
+                    /> Innanhús
                   </label>
-                  <label class="btn" v-bind:class="{'btn-primary': (outin===2), 'btn-secondary': (outin!==2)}">
-                    <input v-on:click="toogle_innout($event, 2)" type="radio" name="options" id="option2" autocomplete="off" /> Innan og utanhús
+                  <label
+                    class="btn"
+                    v-bind:class="{'btn-primary': (outin===2), 'btn-secondary': (outin!==2)}"
+                  >
+                    <input
+                      v-on:click="toogle_innout($event, 2)"
+                      type="radio"
+                      name="options"
+                      id="option2"
+                      autocomplete="off"
+                    /> Innan og utanhús
                   </label>
-                  <label class="btn" v-bind:class="{'btn-primary': (outin===0), 'btn-secondary': (outin!==0)}">
-                    <input v-on:click="toogle_innout($event, 0)" type="radio" name="options" id="option3" autocomplete="off" /> Utanhús
+                  <label
+                    class="btn"
+                    v-bind:class="{'btn-primary': (outin===0), 'btn-secondary': (outin!==0)}"
+                  >
+                    <input
+                      v-on:click="toogle_innout($event, 0)"
+                      type="radio"
+                      name="options"
+                      id="option3"
+                      autocomplete="off"
+                    /> Utanhús
                   </label>
                 </div>
               </div>
@@ -286,12 +318,12 @@
                   <td>{{competitor.results}}</td>
                   <td v-bind:class="{'d-none': !hasWind}">{{competitor.wind}}</td>
                   <td>
-                            <router-link
-          :to="{ path: '/keppandi/'+ competitor.competitor_code}"
-          class="p-2 text-dark"
-        >
-          <a>{{competitor.name}}</a>
-        </router-link>
+                    <router-link
+                      :to="{ path: '/keppandi/'+ competitor.competitor_code}"
+                      class="p-2 text-dark"
+                    >
+                      <a>{{competitor.name}}</a>
+                    </router-link>
                     <!--<a v-bind:href="'/keppandi/' + competitor.competitor_code">{{competitor.name}}</a>-->
                   </td>
                   <td class="d-none d-sm-table-cell">{{competitor.age}}</td>
@@ -355,11 +387,12 @@ export default {
 
       events_jump: [
         { id: 124, type: 1, name: "Hástökk" },
-        { id: 125, type: 1, name: "Hástökk án atrennu" },
+        { id: 125, type: 1, name: "Hástökk án atr." },
         { id: 154, type: 1, name: "Langstökk" },
-        { id: 155, type: 1, name: "Langstökk án atrennu" },
+        { id: 155, type: 1, name: "Langstökk án atr." },
+        { id: 204, type: 1, name: "Þrístökk" },
+        { id: 205, type: 1, name: "Þrístökk án atr."},
         { id: 197, type: 1, name: "Stangarstökk" },
-        { id: 204, type: 1, name: "Þrístökk" }
       ],
       events_throw: [
         { id: 129, type: 2, name: "Kringlukast (2,0 kg)" },
@@ -370,18 +403,18 @@ export default {
         { id: 139, type: 2, name: "Kúluvarp (6,00 kg)" },
         { id: 140, type: 2, name: "Kúluvarp (5,0 kg)" },
         { id: 142, type: 2, name: "Kúluvarp (4,0 kg)" },
-        { id: 143, type: 2, name: "Kúluvarp (2,0 kg)" },
         { id: 144, type: 2, name: "Kúluvarp (3,0 kg)" },
+        { id: 143, type: 2, name: "Kúluvarp (2,0 kg)" },
         { id: 176, type: 2, name: "Sleggjukast (7,26 kg)" },
-        { id: 177, type: 2, name: "Sleggjukast (4,0 kg)" },
-        { id: 178, type: 2, name: "Sleggjukast (2,0 kg)" },
-        { id: 179, type: 2, name: "Sleggjukast (3,0 kg)" },
-        { id: 181, type: 2, name: "Sleggjukast (5,0 kg)" },
         { id: 183, type: 2, name: "Sleggjukast (6,0 kg)" },
+        { id: 181, type: 2, name: "Sleggjukast (5,0 kg)" },
+        { id: 177, type: 2, name: "Sleggjukast (4,0 kg)" },
+        { id: 179, type: 2, name: "Sleggjukast (3,0 kg)" },
+        { id: 178, type: 2, name: "Sleggjukast (2,0 kg)" },
         { id: 187, type: 2, name: "Spjótkast (800 gr)" },
         { id: 189, type: 2, name: "Spjótkast (600 gr)" },
-        { id: 190, type: 2, name: "Spjótkast (400 gr)" },
-        { id: 191, type: 2, name: "Spjótkast (500 gr)" }
+        { id: 191, type: 2, name: "Spjótkast (500 gr)" },
+        { id: 190, type: 2, name: "Spjótkast (400 gr)" }
       ],
       events_sprint: [
         { id: 74, type: 3, name: "60 m" },
@@ -395,33 +428,33 @@ export default {
         { id: 5, type: 3, name: "1000 m boðhlaup" }
       ],
       events_hurdle: [
+        { id: 11, type: 4, name: "100 m gr. (91,4 cm)" },
         { id: 7, type: 4, name: "100 m gr. (84 cm)" },
         { id: 8, type: 4, name: "100 m gr. (76,2 cm)" },
-        { id: 11, type: 4, name: "100 m gr. (91,4 cm)" },
         { id: 15, type: 4, name: "110 m gr. (106,7 cm)" },
-        { id: 16, type: 4, name: "110 m gr. (91,4 cm)" },
         { id: 17, type: 4, name: "110 m gr. (99,1 cm)" },
+        { id: 16, type: 4, name: "110 m gr. (91,4 cm)" },
         { id: 45, type: 4, name: "400 m gr. (91,4 cm)" },
         { id: 46, type: 4, name: "400 m gr. (84 cm)" },
         { id: 47, type: 4, name: "400 m gr. (76,2 cm)" },
         { id: 75, type: 4, name: "60 m gr. (106,7 cm)" },
-        { id: 77, type: 4, name: "60 m gr. (91,4 cm)" },
         { id: 78, type: 4, name: "60 m gr. (99,1 cm)" },
-        { id: 80, type: 4, name: "60 m gr. (76,2 cm)" },
-        { id: 82, type: 4, name: "60 m gr. (84,0 cm)" }
+        { id: 77, type: 4, name: "60 m gr. (91,4 cm)" },
+        { id: 82, type: 4, name: "60 m gr. (84,0 cm)" },
+        { id: 80, type: 4, name: "60 m gr. (76,2 cm)" }
       ],
       events_middle: [
+        { id: 73, type: 5, name: "600 m" },
+        { id: 86, type: 5, name: "800 m" },
         { id: 18, type: 5, name: "1500 m" },
         { id: 28, type: 5, name: "3000 m" },
-        { id: 30, type: 5, name: "3000 m hindrun" },
-        { id: 73, type: 5, name: "600 m" },
-        { id: 86, type: 5, name: "800 m" }
+        { id: 30, type: 5, name: "3000 m hindrun" }
       ],
       events_long: [
-        { id: 3, type: 6, name: "10.000 metra hlaup" },
-        { id: 12, type: 6, name: "10 km götuhlaup (flögutímar)" },
-        { id: 13, type: 6, name: "10 km götuhlaup" },
         { id: 57, type: 6, name: "5000 metra hlaup" },
+        { id: 3, type: 6, name: "10.000 metra hlaup" },
+        { id: 13, type: 6, name: "10 km götuhlaup" },
+        { id: 12, type: 6, name: "10 km götuhlaup (flögutímar)" },
         { id: 122, type: 6, name: "Hálft maraþon" },
         { id: 123, type: 6, name: "Hálft maraþon (flögutímar)" },
         { id: 166, type: 6, name: "Maraþon" },
@@ -451,6 +484,9 @@ export default {
         { id: 7, name: "12 ára", ageStart: 12, ageEnd: 12 }
       ]
     };
+  },
+  beforeDestroy() {
+    document.title = 'Afrekaskrá FRÍ'
   },
   mounted() {
     //let extScript = document.createElement('script')
@@ -498,6 +534,13 @@ export default {
 
       return sexText;
     },
+    inoutText: function() {
+      if (this.outin == 1) {
+        return "innanhús"
+      } else {
+        return "utanhús"
+      }
+    },
     eventText: function() {
       if (this.event_type === 1) {
         var index = this.events_jump.findIndex(p => p.id == this.event_id);
@@ -524,10 +567,12 @@ export default {
     },
     titleText: function() {
       var my_str =
-        "Sif - Afrek " +
+        "Afrekaskrá FRÍ - " +
         this.eventText +
         " " +
-        this.outinsexText +
+        this.sexText +
+        " " +
+        this.inoutText
         " í " +
         this.ageText +
         " fyrir " +
@@ -536,7 +581,7 @@ export default {
       return my_str;
     },
     hasWind: function() {
-      if ((this.outin === 0) || (this.outin === 2)) {
+      if (this.outin === 0 || this.outin === 2) {
         // We are outdoor. Does the current selected event have wind?
         if (this.event["HasWind"] === 1) {
           return true;
@@ -614,7 +659,8 @@ export default {
 
       this.data = [];
 
-      let url = this.global_API_URL + 
+      let url =
+        this.global_API_URL +
         "/api/top_list/" +
         this.event_id +
         "/" +
@@ -663,13 +709,14 @@ export default {
                 this.data
               );
               if (this.outin === 2) {
-              this.data = this.add_inndoor_sign(this.data);
-            }
+                this.data = this.add_inndoor_sign(this.data);
+              }
             }
           })
         )
         .catch(error => {
           this.message = "Villa frá vefþjóni (" + error + ") 😭";
+          document.title = 'Afrekaskrá FRÍ'
         })
         .finally(() => {
           this.loading = false;
@@ -691,10 +738,9 @@ export default {
     add_inndoor_sign: function(my_data) {
       var dataLen = my_data.length;
 
-      for (var i = 0; i < dataLen; i++)
-      {
-        if (my_data[i]['outdoor_indoor'] === 1) {
-          my_data[i]["results"] = my_data[i]["results"] + ' (i)'
+      for (var i = 0; i < dataLen; i++) {
+        if (my_data[i]["outdoor_indoor"] === 1) {
+          my_data[i]["results"] = my_data[i]["results"] + " (i)";
         }
       }
 
@@ -764,17 +810,19 @@ export default {
       this.outin = outin;
       this.gender = gender;
 
-      this.$router.push({ query: { ...this.$route.query, g: gender, i: outin } });
+      this.$router.push({
+        query: { ...this.$route.query, g: gender, i: outin }
+      });
       this.get_data(event);
     },
     toogle_sex: function(event, gender) {
-      this.gender = gender
+      this.gender = gender;
 
-      this.$router.push({ query: { ...this.$route.query, g: gender} });
+      this.$router.push({ query: { ...this.$route.query, g: gender } });
       this.get_data(event);
     },
     toogle_innout(event, outin) {
-      this.outin = outin
+      this.outin = outin;
 
       this.$router.push({ query: { ...this.$route.query, i: outin } });
       this.get_data(event);

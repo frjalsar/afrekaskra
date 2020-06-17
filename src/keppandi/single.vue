@@ -119,6 +119,9 @@ export default {
     this.competitorID = this.$route.params.competitorID;
     this.get_data();
   },
+  beforeDestroy() {
+    document.title = 'Afrekaskrá FRÍ'
+  },
   methods: {
     onClick(item) {
       alert(item.EventID);
@@ -137,11 +140,14 @@ export default {
             this.competitor_info = response[0]["data"]["Competitor"];
             this.event_info = response[0]["data"]["Events"];
             //console.log("Got data");
+
+            document.title = 'Afrekaskrá FRÍ - ' + this.competitor_info.FirstName + ' ' + this.competitor_info.LastName + ' (' + this.competitor_info.Club + ')'
             this.processData();
           })
         )
         .catch(error => {
           this.message = "Villa frá vefþjóni (" + error + ") 😭";
+          document.title = 'Afrekaskrá FRÍ'
         })
         .finally(() => {
           //this.$parent.loading = false;
