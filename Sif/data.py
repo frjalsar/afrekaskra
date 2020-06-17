@@ -423,7 +423,7 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
         #     pass
 
         # Bæta við í listan
-        list_pb.append({'Event': event_info['Name_ISL'] + ' [' + event_info['Units_symbol'] + ']', 'EventID': event_id, 'PB_out': pb_out, 'PB_in': pb_in, 'SB_out': sb_out, 'SB_in': sb_in, 'count': int(count)})
+        list_pb.append({'EventName': event_info['Name_ISL'], 'EventShortName': event_info['ShortName'], 'EventUnit': event_info['Units_symbol'], 'EventID': event_id, 'PB_out': pb_out, 'PB_in': pb_in, 'SB_out': sb_out, 'SB_in': sb_in, 'count': int(count)})
 
     # Röðum listanum í öfuga röð eftir því oft hefur verið keppt í greinunum
     # Þarf ekki því html taflan gerir þetta líka!!

@@ -40,14 +40,14 @@
                 @click.prevent="onClick && onClick(i)"
               >
                 <!-- v-bind:style="{display: 'none'}" -->
-                <th scope="row">{{i.Event}}</th>
+                <th scope="row">{{i.EventName}} [{{i.EventUnit}}]</th>
                 <td>{{i.PB_out}}</td>
                 <td>{{i.PB_in}}</td>
                 <td>{{i.count}}</td>
               </tr>
             </tbody>
           </table>
-          <highcharts class="chart" :options="chartOptions"></highcharts>
+          <highcharts class="chart" :options="chartOptions" v-show="!showAllEvents"></highcharts>
         </div>
         <div class="card-footer text-muted text-center">
           <a href="#" v-on:click.prevent="toggle_showEvents($event)">Sýna meira/minna</a>
@@ -91,7 +91,7 @@ export default {
         },
         series: [
           {
-            name: "Greinar",
+            name: "Fjöldi keppna",
             colorByPoint: true,
             data: [
               {
@@ -146,7 +146,7 @@ export default {
       let data_points = [];
       for (var i = 0; i < dataLen; i++) {
         data_points.push({
-          name: this.event_info[i].Event,
+          name: this.event_info[i].EventName,
           y: this.event_info[i].count
         });
       }
