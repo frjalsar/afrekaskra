@@ -28,6 +28,10 @@ export default new Router({
       component: () => import('./keppandi/single.vue')
     },
     {
+      path: '/islmet',
+      component: () => import('./islmet/list.vue')
+    },
+    {
       path: '*',
       component: () => import('./404.vue')
     }
