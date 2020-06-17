@@ -12,7 +12,7 @@
             <div class="col-4">
               <img class="card-img-profile" src="./static/kt_profile.jpg" width="150px" />
             </div>
-            <div class="col">
+            <div class="col align-self-center">
               <p>
                 {{competitor_info.FirstName}} {{competitor_info.LastName}}
                 <br />
@@ -35,7 +35,7 @@
             <tbody>
               <tr
                 v-for="(i, index) in event_info"
-                v-show="(index < 3) || showAllEvents"
+                v-show="(index < 5) || showAllEvents"
                 :key="i.Event"
                 @click.prevent="onClick && onClick(i)"
               >
