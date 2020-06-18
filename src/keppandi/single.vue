@@ -6,11 +6,11 @@
     </div>
     <div id="competitor-view" v-if="isReady">
       <div class="card" style="width: 32.5rem;">
-        <img class="card-img-top img-fluid" v-bind:src="'/api/img/action/' + competitor_info.CompetitorCode" />
+        <img class="card-img-top img-fluid" v-bind:src="'/api/img/action/' + competitorID" />
         <div class="card-header">
           <div class="row justify-content-start">
             <div class="col-4">
-              <img class="rounded-circle img-thumbnail img-fluid" v-bind:src="'/api/img/profile/' + competitor_info.CompetitorCode" width="150px" />
+              <img class="rounded-circle img-thumbnail img-fluid" v-bind:src="'/api/img/profile/' + competitorID" width="150px" />
             </div>
             <div class="col align-self-center">
               <p>

@@ -79,7 +79,7 @@ def results_to_float(in_str):
         mm = float(split[0])
         ss = float(split[1])
     elif (len(split) == 1): # ss
-        ss =float(split[0])
+        ss = float(split[0])
         
     time_sec = hh*3600 + mm*60 + ss + dd
     return time_sec
@@ -296,6 +296,7 @@ def Get_Competitor_Info(CompetitorCode):
     return Competitor_Info
 
 def Get_Competitor_Events_Info(CompetitorCode=None):
+    print('Event_info for {:d}'.format(CompetitorCode))
     q = AthlAfrek.objects.all().filter(keppandanúmer__iexact=CompetitorCode)
     df = pd.DataFrame.from_records(q.values_list('lína', 'nafn', 'keppandanúmer',
                                                  'árangur', 'vindur', 'félag',
@@ -322,7 +323,13 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
     list_pb = []
     list_sb = []
     for i in list_events:
-        event_id = df_event_list[df_event_list['THORID_1'] == i].index.tolist()[0]
+        #print(i)
+        try:
+            event_id = df_event_list[df_event_list['THORID_1'] == i].index.tolist()[0]
+        except:
+            print('ERROR gat ekki fundið grein')
+            pass
+        #print(event_id)
         event_info = Get_Event_Info(event_id)
         #print(event_info)
 
