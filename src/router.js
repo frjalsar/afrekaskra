@@ -31,7 +31,8 @@ export default new Router({
       path: '/islmet',
       beforeEnter(to, from, next) {
           // Put the full page url including the protocol http(s) below
-          window.location = "https://fri.is/afrekaskra/MetOfl/islandsmet.htm"
+          //window.location = "https://fri.is/afrekaskra/MetOfl/islandsmet.htm"
+        window.location = "http://mot.fri.is/MotFRI/Islandsmet.aspx"
       }
   },
     // {
