@@ -11,6 +11,7 @@ from Sif import data
 
 # Other
 import os
+from PIL import Image
 
 # Database
 # We only use AthlCompetitors for information about competitors
@@ -48,3 +49,27 @@ def competitor_achievements(request, CompetitorCode, Event_id):
 def Get_Top_100(request, Event_id, IndoorOutDoor, Gender, Year, AgeStart, AgeEnd, Legal, ISL, BestByAth):
     Top_list, Event_Info = data.Top_100_List(Event_id=Event_id, Year=Year, IndoorOutDoor=IndoorOutDoor, Gender=Gender, AgeStart=AgeStart, AgeEnd=AgeEnd, Legal=Legal, ISL=ISL, BestByAth=BestByAth)
     return JsonResponse({'TopList': Top_list, 'EventInfo': Event_Info}, safe=False)
+
+def competitor_img_profile(request, CompetitorCode):
+    filename_profile = './images/profile_{:d}.jpg'.format(CompetitorCode)
+    #filename_profile = './images/kt_profile.jpg'
+    try:
+        with open(filename_profile, "rb") as f:
+            return HttpResponse(f.read(), content_type="image/jpeg")
+    except IOError:
+        red = Image.new('RGB', (465, 465), (255,0,0))
+        response = HttpResponse(content_type="image/jpeg")
+        red.save(response, "JPEG")
+        return response
+
+def competitor_img_action(request, CompetitorCode):
+    filename_action = './images/action_{:d}.jpg'.format(CompetitorCode)
+    #filename_action = './images/kt_action.jpg'
+    try:
+        with open(filename_action, "rb") as f:
+            return HttpResponse(f.read(), content_type="image/jpeg")
+    except IOError:
+        red = Image.new('RGB', (960, 355), (255,0,0))
+        response = HttpResponse(content_type="image/jpeg")
+        red.save(response, "JPEG")
+        return response
