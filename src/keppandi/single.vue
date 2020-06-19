@@ -5,7 +5,7 @@
       <p style="text-align:center">{{message}}</p>
     </div>
     <div id="competitor-view" v-if="isReady">
-      <div class="card" style="width: 32.5rem;">
+      <div class="card">
         <img class="card-img-top img-fluid" v-bind:src="'/api/img/action/' + competitorID" />
         <div class="card-header">
           <div class="row justify-content-start">
