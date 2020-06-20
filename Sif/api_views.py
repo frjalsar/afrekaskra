@@ -52,7 +52,6 @@ def Get_Top_100(request, Event_id, IndoorOutDoor, Gender, Year, AgeStart, AgeEnd
 
 def competitor_img_profile(request, CompetitorCode):
     filename_profile = './images/profile_{:d}.jpg'.format(CompetitorCode)
-    #filename_profile = './images/kt_profile.jpg'
     try:
         with open(filename_profile, "rb") as f:
             return HttpResponse(f.read(), content_type="image/jpeg")
@@ -63,7 +62,6 @@ def competitor_img_profile(request, CompetitorCode):
 
 def competitor_img_action(request, CompetitorCode):
     filename_action = './images/action_{:d}.jpg'.format(CompetitorCode)
-    #filename_action = './images/kt_action.jpg'
     try:
         with open(filename_action, "rb") as f:
             return HttpResponse(f.read(), content_type="image/jpeg")

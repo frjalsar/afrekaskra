@@ -94,6 +94,10 @@ DATABASES = {
             'host_is_server': True,
         },
     },
+    'competitor_list': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 
 #MIGRATION_MODULES = {

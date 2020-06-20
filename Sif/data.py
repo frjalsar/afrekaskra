@@ -3,7 +3,7 @@ from django.http import Http404
 # Database
 # We only use AthlCompetitors for information about competitors
 # and AthlAfrek for the achievements.
-from Sif.models import AthlCompetitors, AthlAfrek
+from Sif.models import AthlCompetitors, AthlAfrek, Competitors
 from django.db.models import Q
 
 # Settings
@@ -576,7 +576,8 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
 
 def Get_Competitor_List(q):
 
-    names_q = AthlAfrek.objects.all()
+    names_q = Competitors.objects.using('competitor_list').all()
+    #names_q = AthlCompetitors.objects.all()
 
     for i in q.split():
             names_q = names_q.filter(
@@ -586,13 +587,16 @@ def Get_Competitor_List(q):
 
     results = []
 
+    #df = pd.DataFrame.from_records(names_q.values_list('númer', 'nafn', 'fæðingarár', 'félag'),
+    #                                          columns=['keppandanúmer', 'nafn', 'fæðingarár', 'félag'])
+
     df = pd.DataFrame.from_records(names_q.values_list('keppandanúmer', 'nafn', 'fæðingarár', 'félag', 'dagsetning'),
                                               columns=['keppandanúmer', 'nafn', 'fæðingarár', 'félag', 'dagsetning'])
 
     df['dagsetning'] = pd.to_datetime(df['dagsetning'], dayfirst=True)
     df.sort_values(by=['dagsetning'], ascending=[False], inplace=True)
 
-    df.drop_duplicates(subset=['keppandanúmer'], keep='first', inplace=True, ignore_index=True)
+    #df.drop_duplicates(subset=['keppandanúmer'], keep='first', inplace=True, ignore_index=True)
 
     # Hendum út öllu nema í top 25 matches
     df = df.iloc[0:25]

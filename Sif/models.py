@@ -7,6 +7,19 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
+class Competitors(models.Model):
+    level_0 = models.IntegerField(blank=True, null=True)
+    index = models.IntegerField(blank=True, null=True)
+    keppandanúmer = models.IntegerField(blank=True, null=True)
+    nafn = models.TextField(blank=True, null=True)
+    dagsetning = models.DateTimeField(db_column='Dagsetning')  # This field type is a guess.
+    félag = models.TextField(blank=True, null=True)
+    fæðingarár = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'Competitors'
+
 
 class NdoDbproperty(models.Model):
     programid = models.IntegerField()
