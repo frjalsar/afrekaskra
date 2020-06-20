@@ -57,10 +57,9 @@ def competitor_img_profile(request, CompetitorCode):
         with open(filename_profile, "rb") as f:
             return HttpResponse(f.read(), content_type="image/jpeg")
     except IOError:
-        red = Image.new('RGB', (465, 465), (255,0,0))
-        response = HttpResponse(content_type="image/jpeg")
-        red.save(response, "JPEG")
-        return response
+        filename_profile = './images/profile_default.png'
+        with open(filename_profile, "rb") as f:
+            return HttpResponse(f.read(), content_type="image/png")
 
 def competitor_img_action(request, CompetitorCode):
     filename_action = './images/action_{:d}.jpg'.format(CompetitorCode)
@@ -69,7 +68,8 @@ def competitor_img_action(request, CompetitorCode):
         with open(filename_action, "rb") as f:
             return HttpResponse(f.read(), content_type="image/jpeg")
     except IOError:
-        red = Image.new('RGB', (960, 355), (255,0,0))
-        response = HttpResponse(content_type="image/jpeg")
-        red.save(response, "JPEG")
+        #return Http404()
+        blank = Image.new('RGBA', (2160, 1), (255,255,255,0))
+        response = HttpResponse(content_type="image/png")
+        blank.save(response, "PNG")
         return response

@@ -296,7 +296,7 @@ def Get_Competitor_Info(CompetitorCode):
     return Competitor_Info
 
 def Get_Competitor_Events_Info(CompetitorCode=None):
-    print('Event_info for {:d}'.format(CompetitorCode))
+    #print('Event_info for {:d}'.format(CompetitorCode))
     q = AthlAfrek.objects.all().filter(keppandanúmer__iexact=CompetitorCode)
     df = pd.DataFrame.from_records(q.values_list('lína', 'nafn', 'keppandanúmer',
                                                  'árangur', 'vindur', 'félag',

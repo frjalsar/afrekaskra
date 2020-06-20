@@ -8,16 +8,18 @@
       <div class="card">
         <img class="card-img-top img-fluid" v-bind:src="'/api/img/action/' + competitorID" />
         <div class="card-header">
-          <div class="row justify-content-start">
-            <div class="col-4">
-              <img class="rounded-circle img-thumbnail img-fluid" v-bind:src="'/api/img/profile/' + competitorID" width="150px" />
+          <div class="d-flex">
+            <div class="p-2">
+              <img
+                class="rounded-circle img-thumbnail img-fluid"
+                v-bind:src="'/api/img/profile/' + competitorID"
+                width="150px"
+              />
             </div>
-            <div class="col align-self-center">
-              <p>
-                {{competitor_info.FirstName}} {{competitor_info.LastName}}
-                <br />
-                ({{competitor_info.Club}})
-              </p>
+            <div class="p-2 flex-grow-1 align-self-center">
+                <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b><br>
+                {{competitor_info.Club}}<br>
+                {{competitor_info.YOB}}
             </div>
           </div>
         </div>
@@ -120,7 +122,7 @@ export default {
     this.get_data();
   },
   beforeDestroy() {
-    document.title = 'Afrekaskrá FRÍ'
+    document.title = "Afrekaskrá FRÍ";
   },
   methods: {
     onClick(item) {
@@ -141,13 +143,20 @@ export default {
             this.event_info = response[0]["data"]["Events"];
             //console.log("Got data");
 
-            document.title = 'Afrekaskrá FRÍ - ' + this.competitor_info.FirstName + ' ' + this.competitor_info.LastName + ' (' + this.competitor_info.Club + ')'
+            document.title =
+              "Afrekaskrá FRÍ - " +
+              this.competitor_info.FirstName +
+              " " +
+              this.competitor_info.LastName +
+              " (" +
+              this.competitor_info.Club +
+              ")";
             this.processData();
           })
         )
         .catch(error => {
           this.message = "Villa frá vefþjóni (" + error + ") 😭";
-          document.title = 'Afrekaskrá FRÍ'
+          document.title = "Afrekaskrá FRÍ";
         })
         .finally(() => {
           //this.$parent.loading = false;
@@ -167,12 +176,12 @@ export default {
 
       let data_points = [];
       let other = 0;
-      let per = 0
+      let per = 0;
       for (var i = 0; i < dataLen; i++) {
-        per = (this.event_info[i].count / total) * 100
+        per = (this.event_info[i].count / total) * 100;
 
         if (per < 1.5) {
-          other = other + per
+          other = other + per;
         } else {
           data_points.push({
             name: this.event_info[i].EventShortName,
@@ -211,6 +220,11 @@ export default {
 /* center spinner */
 .v-spinner {
   text-align: center;
+}
+
+td {
+  text-align: center;
+  vertical-align: middle;
 }
 
 /* Center card */
