@@ -80,7 +80,7 @@ export default {
       competitor_info: [],
       event_info: [],
       isReady: false,
-      competitorID: "",
+      competitorID: null,
       message: "",
       showAllEvents: false,
 
@@ -126,7 +126,9 @@ export default {
   },
   methods: {
     onClick(item) {
-      alert(item.EventID);
+      //alert(item.EventID);
+      //this.$router.push("/keppandi/" + this.competitorID + "/" + item.EventID)
+      this.$router.push({name: 'CompetitorEvent', params: { competitorID: this.competitorID, eventID: item.EventID }})
     },
     get_data: function() {
       this.$parent.loading = true;

@@ -70,12 +70,15 @@ export default {
     var parameters = this.$route.query;
     if ("search" in parameters) {
       this.searchQ = this.$route.query.search;
-      this.search();
+      if (this.searchQ.length >= 3) {
+        this.search()
+      }
     }
   },
   methods: {
     onClick(item) {
-      this.$router.push("/keppandi/" + item.CompetitorCode);
+      //this.$router.push("/keppandi/" + item.CompetitorCode);
+      this.$router.push({name: 'CompetitorProfile', params: {competitorID: item.CompetitorCode}})
     },
     searchInput: debounce(function(e) {
       this.searchQ = e.target && e.target.value;
@@ -90,7 +93,7 @@ export default {
       if (this.searchQ.length >= 3) {
         this.search();
       }
-    }, 300),
+    }, 350),
     //     searchInput: function(e) {
     //       this.searchQ = e.target && e.target.value
     //   // Only search on 3
@@ -104,7 +107,7 @@ export default {
       this.loading = true;
       this.athletes = [];
 
-      this.cancelSearch();
+      //this.cancelSearch();
       this.cancelSource = axios.CancelToken.source();
 
       //console.log("Searching for " + this.searchQ);

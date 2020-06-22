@@ -23,10 +23,15 @@ def Print_list_vertically(my_list):
         print(i)
     return None
 
-def competitor(request, CompetitorCode=None, Event=None):
+def competitor(request, CompetitorCode=None):
     Competitor_info = data.Get_Competitor_Info(CompetitorCode)
     Event_info = data.Get_Competitor_Events_Info(CompetitorCode)
     return JsonResponse({'Competitor': Competitor_info, 'Events': Event_info}, safe=False)
+
+def competitor_event(request, CompetitorCode=None, Event_id=None):
+    Competitor_info = data.Get_Competitor_Info(CompetitorCode)
+    Event_info, Event_data = data.Get_Competitor_Event(CompetitorCode, Event_id)
+    return JsonResponse({'Competitor': Competitor_info, 'EventInfo': Event_info, 'EventData': Event_data}, safe=False)
 
 def competitor_list(request):
     #if request.is_ajax():

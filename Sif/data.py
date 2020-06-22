@@ -467,6 +467,40 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
 
     return list_pb
 
+def Get_Competitor_Event(CompetitorCode, Event_id):
+    event_info = Get_Event_Info(Event_id)
+        
+    q = AthlAfrek.objects.all().filter(keppandanúmer__iexact=CompetitorCode, tákn_greinar__iexact=event_info['THORID_1'])
+    df = pd.DataFrame.from_records(q.values_list('árangur', 'vindur', 'félag',
+                                                 'aldur_keppanda', 'heiti_móts', 'mót',
+                                                 'dagsetning', 'rafmagnstímataka', 'úti_inni',
+                                                 'grein', 'tákn_greinar', 'vantar_vind'),
+                                                 columns=['Árangur', 'Vindur', 'félag',
+                                                          'aldur_keppanda', 'heiti_móts', 'mót',
+                                                          'dagsetning', 'rafmagnstímataka', 'úti_inni',
+                                                          'grein', 'tákn_greinar', 'vantar_vind'])
+
+    # úti_inni: Úti = 0, Inni = 1
+    df['Dagsetn.'] = pd.to_datetime(df['dagsetning'], dayfirst=True)
+
+    # Breytum öllum árangri yfir í rauntölur
+    df['Árangur_float'] = df['Árangur'].map(results_to_float)
+
+    event_data = []
+    for index, row in df.iterrows():
+        event_data.append({'Results': row['Árangur'],
+                           'Wind': row['Vindur'],
+                           'Club': row['félag'],
+                           'OutIn': row['úti_inni'],
+                           'MeetName': row['heiti_móts'],
+                           'Age': row['aldur_keppanda'],
+                           'Date': row['dagsetning'],
+                           'ElectricTiming': row['rafmagnstímataka'],
+                           'MissingWind': row['vantar_vind']
+                           })
+
+    return event_info, event_data
+
 def Get_List_of_Events(CompetitorCode=None, Event_id=None):
     if (CompetitorCode == None):
         q = AthlAfrek.objects.order_by('tákn_greinar').values_list('tákn_greinar', flat=True).distinct()
@@ -579,7 +613,8 @@ def Get_Competitor_List(q):
     names_q = Competitors.objects.using('competitor_list').all()
     #names_q = AthlCompetitors.objects.all()
 
-    for i in q.split():
+    for i in q.split(' '):
+        if (len(i) > 3):
             names_q = names_q.filter(
               Q(nafn__icontains=i)
             | Q(félag__icontains=i)

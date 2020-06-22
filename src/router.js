@@ -21,17 +21,22 @@ export default new Router({
     },
     {
       path: '/keppandi',
+      name: 'CompetitorList',
       component: () => import('./keppandi/list.vue')
     },
     {
       path: '/keppandi/:competitorID',
+      name: 'CompetitorProfile',
       component: () => import('./keppandi/single.vue')
+    },
+    {
+      path: '/keppandi/:competitorID/:eventID',
+      name: 'CompetitorEvent',
+      component: () => import('./keppandi/event.vue')
     },
     {
       path: '/islmet',
       beforeEnter(to, from, next) {
-          // Put the full page url including the protocol http(s) below
-          //window.location = "https://fri.is/afrekaskra/MetOfl/islandsmet.htm"
         window.location = "http://mot.fri.is/MotFRI/Islandsmet.aspx"
       }
   },

@@ -35,6 +35,7 @@ urlpatterns = [
 
     # API
     path(r'api/keppandi/<int:CompetitorCode>/', api_views.competitor, name ='api_competitor'),
+    path(r'api/keppandi/<int:CompetitorCode>/<int:Event_id>/', api_views.competitor_event, name ='api_competitor_event'),
     path(r'api/events/', api_views.events, name ='api_events'),
     path(r'api/events/<int:Event_id>/', api_views.events, name ='api_events'),
     path(r'api/achievements/<int:CompetitorCode>/<int:Event_id>/', api_views.competitor_achievements, name='api_achievements'),
