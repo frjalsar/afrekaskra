@@ -1,30 +1,39 @@
 <template>
   <div>
-      {{competitorID}} and {{eventID}} and {{competitor_info.FirstName}} and {{event_info.ShortName}}<br>
-          <table class="table table-striped table-hover table-responsive-sm table-sm">
-            <col span="1" class="wide" />
-            <thead>
-              <tr>
-                <th scope="col">Árangur [{{event_info.Units_symbol}}]</th>
-                <th scope="col">Vindur</th>
-                <th scope="col">Dags.</th>
-                <th scope="col">Heiti móts</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(i, index) in event_data"
-                v-show="(index < 5) || showAllEvents"
-                :key="i.Event"
-              >
-                <!-- v-bind:style="{display: 'none'}" -->
-                <th scope="row">{{i.Results}}</th>
-                <td>{{i.Wind}}</td>
-                <td>{{i.Date}}</td>
-                <td>{{i.MeetName}}</td>
-              </tr>
-            </tbody>
-          </table>
+    <div v-if="!isReady">
+      <pulse-loader :loading="!isReady" :color="color" :size="size"></pulse-loader>
+      <p style="text-align:center">{{message}}</p>
+    </div>
+    <div v-if="isReady">
+      {{competitorID}} and {{eventID}} and {{competitor_info.FirstName}} and {{event_info.ShortName}}
+      <br />
+      <table class="table table-striped table-hover table-responsive-sm table-sm">
+        <col span="1" class="wide" />
+        <thead>
+          <tr>
+            <th scope="col">Árangur [{{event_info.Units_symbol}}]</th>
+            <th scope="col">Vindur</th>
+            <th scope="col">Dags.</th>
+            <th scope="col">Aldur</th>
+            <th scope="col">Heiti móts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(i, index) in event_data" v-show="(index < 5) || showAllEvents" :key="i.Event">
+            <!-- v-bind:style="{display: 'none'}" -->
+            <th scope="row">{{i.Results}}</th>
+            <td>{{i.Wind}}</td>
+            <td>{{i.Date}}</td>
+            <td>{{i.Age}}</td>
+            <td>
+              <a
+                v-bind:href="'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' + i.competition_id"
+              >{{i.competition_name}}</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -41,6 +50,11 @@ export default {
   },
   data() {
     return {
+      color: "#0275d8",
+      size: "15px",
+      margin: "2px",
+      radius: "100%",
+
       competitorID: null,
       eventID: null,
       competitor_info: [],
@@ -48,13 +62,13 @@ export default {
       event_data: [],
       isReady: false,
       showAllEvents: true,
-      message: ''
+      message: ""
     };
   },
   created() {
     this.competitorID = this.$route.params.competitorID;
     this.eventID = this.$route.params.eventID;
-    this.get_data()
+    this.get_data();
   },
   methods: {
     get_data: function() {
@@ -95,3 +109,14 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.v-spinner {
+  text-align: center;
+}
+
+.td {
+  text-align: center;
+  vertical-align: middle;
+}
+</style>

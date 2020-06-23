@@ -475,26 +475,40 @@ def Get_Competitor_Event(CompetitorCode, Event_id):
                                                  'aldur_keppanda', 'heiti_móts', 'mót',
                                                  'dagsetning', 'rafmagnstímataka', 'úti_inni',
                                                  'grein', 'tákn_greinar', 'vantar_vind'),
-                                                 columns=['Árangur', 'Vindur', 'félag',
+                                                 columns=['árangur', 'vindur', 'félag',
                                                           'aldur_keppanda', 'heiti_móts', 'mót',
                                                           'dagsetning', 'rafmagnstímataka', 'úti_inni',
                                                           'grein', 'tákn_greinar', 'vantar_vind'])
 
     # úti_inni: Úti = 0, Inni = 1
-    df['Dagsetn.'] = pd.to_datetime(df['dagsetning'], dayfirst=True)
+    df['dagsetning'] = pd.to_datetime(df['dagsetning'], dayfirst=True)
 
     # Breytum öllum árangri yfir í rauntölur
-    df['Árangur_float'] = df['Árangur'].map(results_to_float)
+    df['árangur_float'] = df['árangur'].map(results_to_float)
 
     event_data = []
     for index, row in df.iterrows():
-        event_data.append({'Results': row['Árangur'],
-                           'Wind': row['Vindur'],
+        if (row.vantar_vind == True):
+            wind_str = 'N/A'
+        else:
+            wind_str = '{:+.1f}'.format(row.vindur)
+
+        if (row.rafmagnstímataka == 0 and event_info['Minimize'] == True):
+            result_str = '{:.1f}'.format(row.árangur_float)
+        else:
+            if (event_info['Units'] == 5):
+                result_str = '{:.0f}'.format(row.árangur_float)
+            else:
+                result_str = '{:.2f}'.format(row.árangur_float)
+
+        event_data.append({'Results': result_str,
+                           'Wind': wind_str,
                            'Club': row['félag'],
                            'OutIn': row['úti_inni'],
-                           'MeetName': row['heiti_móts'],
+                           'competition_name': row['heiti_móts'],
+                           'competition_id': row['mót'],
                            'Age': row['aldur_keppanda'],
-                           'Date': row['dagsetning'],
+                           'Date': format_date(row['dagsetning'], "d MMM yyyy",locale='is_IS').upper(),
                            'ElectricTiming': row['rafmagnstímataka'],
                            'MissingWind': row['vantar_vind']
                            })

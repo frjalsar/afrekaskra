@@ -224,7 +224,7 @@ export default {
   text-align: center;
 }
 
-td {
+.td {
   text-align: center;
   vertical-align: middle;
 }
