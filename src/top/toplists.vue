@@ -374,7 +374,7 @@ export default {
 
       event_id: 154, // Event_id
       event_type: 1, //Jumps = 1, Throws = 2, Sprint = 3, Hurdles = 4, Middle = 5, Long = 6, -athlon = 7
-      outin: 1, // Outdoor = 0, Indoor = 1
+      outin: 2, // Outdoor = 0, Indoor = 1
       gender: 2, // Women = 2, Men = 1
       year: new Date().getFullYear(), // Year
       year_list: [],
@@ -693,7 +693,9 @@ export default {
                 "Engin gögn fundust fyrir " +
                 this.eventText +
                 " " +
-                this.outinsexText +
+                this.sexText +
+                " " +
+                this.inoutText +
                 " í " +
                 this.ageText +
                 " fyrir " +

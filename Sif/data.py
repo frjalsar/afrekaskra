@@ -79,7 +79,10 @@ def results_to_float(in_str):
         mm = float(split[0])
         ss = float(split[1])
     elif (len(split) == 1): # ss
-        ss = float(split[0])
+        try:
+            ss = float(split[0])
+        except ValueError: # Some results are stored as DNF.
+            ss = -1.0 
         
     time_sec = hh*3600 + mm*60 + ss + dd
     return time_sec

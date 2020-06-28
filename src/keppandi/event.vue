@@ -75,7 +75,7 @@ export default {
       this.$parent.loading = true;
       this.message = "Næ í gögn ekki stökkva langt 😉";
 
-      var url = "/api/keppandi/" + this.competitorID + "/" + this.eventID;
+      var url = "/api/keppandi/" + this.competitorID + "/" + this.eventID + "/";
       axios
         .all([axios.get(url)])
         .then(

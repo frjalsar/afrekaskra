@@ -136,7 +136,7 @@ export default {
 
       this.data = [];
 
-      var url = "/api/keppandi/" + this.competitorID;
+      var url = "/api/keppandi/" + this.competitorID + "/";
       axios
         .all([axios.get(url)])
         .then(

@@ -29,6 +29,8 @@ if 'SIF_ON_HEROKU' in os.environ:
 else:
     DEBUG = True
 
+#APPEND_SLASH = False
+
 ALLOWED_HOSTS = [] # The django_heroku package takes care of this.
 
 
