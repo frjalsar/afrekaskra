@@ -42,6 +42,9 @@ import KeppandiList from './keppandi/list.vue'
 export default {
   components: {
     KeppandiList
+  },
+  mounted() {
+    document.title = "Afrekaskrá FRÍ"; //Reset the title
   }
 }
 </script>

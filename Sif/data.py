@@ -511,7 +511,7 @@ def Get_Competitor_Event(CompetitorCode, Event_id):
                            'competition_name': row['heiti_móts'],
                            'competition_id': row['mót'],
                            'Age': row['aldur_keppanda'],
-                           'Date': format_date(row['dagsetning'], "d MMM yyyy",locale='is_IS').upper(),
+                           'Date': row['dagsetning'], #format_date(row['dagsetning'], "d MMM yyyy",locale='is_IS').upper(),
                            'ElectricTiming': row['rafmagnstímataka'],
                            'MissingWind': row['vantar_vind']
                            })

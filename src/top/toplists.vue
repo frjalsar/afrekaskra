@@ -485,15 +485,15 @@ export default {
       ]
     };
   },
-  beforeDestroy() {
-    document.title = 'Afrekaskrá FRÍ'
-  },
+  //beforeDestroy() {
+  //  document.title = 'Afrekaskrá FRÍ'
+  //},
   mounted() {
     //let extScript = document.createElement('script')
     //extScript.setAttribute('src', 'static/extScript.js')
     //document.head.appendChild(extScript)
 
-    var scriptTag = document.createElement("script");
+    var scriptTag = document.createElement("script"); // Can we ""Vue"" this script?
     scriptTag.type = "text/javascript";
     scriptTag.text = `$('.dropdown-menu a.dropdown-toggle').on('click', function (e) {
     if (!$(this).next().hasClass('show')) {

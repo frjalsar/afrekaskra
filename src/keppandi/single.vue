@@ -121,9 +121,9 @@ export default {
     this.competitorID = this.$route.params.competitorID;
     this.get_data();
   },
-  beforeDestroy() {
-    document.title = "Afrekaskrá FRÍ";
-  },
+  //beforeDestroy() {
+  //  document.title = "Afrekaskrá FRÍ";
+  //},
   methods: {
     onClick(item) {
       //alert(item.EventID);

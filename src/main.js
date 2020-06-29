@@ -2,8 +2,17 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import '@fortawesome/fontawesome-free/css/all.css'
+import moment from 'moment'
 
-Vue.config.productionTip = false
+Vue.config.productionTip = true
+
+
+moment.locale('is');
+Vue.filter('formatDate', function(value) {
+  if (value) {
+    return moment(String(value)).format('ll')
+  }
+})
 
 Vue.mixin({
   data: function() {

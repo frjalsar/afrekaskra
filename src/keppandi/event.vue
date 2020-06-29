@@ -11,19 +11,30 @@
         <col span="1" class="wide" />
         <thead>
           <tr>
-            <th scope="col">Árangur [{{event_info.Units_symbol}}]</th>
-            <th scope="col">Vindur</th>
-            <th scope="col">Dags.</th>
-            <th scope="col">Aldur</th>
-            <th scope="col">Heiti móts</th>
+            <th scope="col" @click="sort('Results')">
+              <i class="fas fa-sort"></i>
+              Árangur [{{event_info.Units_symbol}}]
+            </th>
+            <th scope="col" @click="sort('Wind')" v-bind:class="{'d-none': !hasWind}">
+              <i class="fas fa-sort"></i> Vindur
+            </th>
+            <th scope="col" @click="sort('Date')">
+              <i class="fas fa-sort"></i> Dags.
+            </th>
+            <th scope="col" @click="sort('Age')">
+              <i class="fas fa-sort"></i> Aldur
+            </th>
+            <th scope="col" @click="sort('competition_name')">
+              <i class="fas fa-sort"></i> Heiti móts
+            </th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(i, index) in event_data" v-show="(index < 5) || showAllEvents" :key="i.Event">
+          <tr v-for="(i, index) in sortedData" v-show="(index < 5) || showAllEvents" :key="i.Event">
             <!-- v-bind:style="{display: 'none'}" -->
             <th scope="row">{{i.Results}}</th>
-            <td>{{i.Wind}}</td>
-            <td>{{i.Date}}</td>
+            <td v-bind:class="{'d-none': !hasWind}">{{i.Wind}}</td>
+            <td>{{i.Date | formatDate}}</td>
             <td>{{i.Age}}</td>
             <td>
               <a
@@ -62,6 +73,8 @@ export default {
       event_data: [],
       isReady: false,
       showAllEvents: true,
+      currentSort: "Results",
+      currentSortDir: "desc",
       message: ""
     };
   },
@@ -82,8 +95,13 @@ export default {
           axios.spread((...response) => {
             this.competitor_info = response[0]["data"]["Competitor"];
             this.event_info = response[0]["data"]["EventInfo"];
-            this.event_data = response[0]["data"]["EventData"];
-            console.log("Got data");
+            //this.event_data = response[0]["data"]["EventData"];
+            //console.log("Got data");
+
+            this.event_data = this.add_inndoor_sign(
+              response[0]["data"]["EventData"]
+            );
+            //console.log("Got data 2");
 
             document.title =
               "Afrekaskrá FRÍ - " +
@@ -105,6 +123,46 @@ export default {
           //this.$parent.do_stuff()
           this.isReady = true;
         });
+    },
+    add_inndoor_sign: function(my_data) {
+      var dataLen = my_data.length;
+
+      for (var i = 0; i < dataLen; i++) {
+        if (my_data[i]["OutIn"] === 1) {
+          my_data[i]["Results"] = my_data[i]["Results"] + " (i)";
+        }
+      }
+
+      return my_data;
+    },
+    sort: function(s) {
+      //if s == current sort, reverse
+      if (s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
+      }
+      this.currentSort = s;
+
+      //console.log("Sort");
+      //console.log(this.currentSort);
+      //console.log(this.currentSortDir);
+    }
+  },
+  computed: {
+    hasWind: function() {
+      if (this.event_info["HasWind"] === 1) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    sortedData: function() {
+      return this.event_data.sort((a, b) => {
+        let modifier = 1;
+        if (this.currentSortDir === "desc") modifier = -1;
+        if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+        if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+        return 0;
+      });
     }
   }
 };
