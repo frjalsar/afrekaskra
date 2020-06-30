@@ -98,6 +98,12 @@ export default {
             //this.event_data = response[0]["data"]["EventData"];
             //console.log("Got data");
 
+            if (this.event_info.Minimize === true) {
+              this.currentSortDir = 'asc'
+            } else {
+              this.currentSortDir = 'desc'
+            }
+
             this.event_data = this.add_inndoor_sign(
               response[0]["data"]["EventData"]
             );
