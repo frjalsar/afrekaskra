@@ -53,6 +53,11 @@ export default {
         xAxis: {
           type: "datetime"
         },
+        yAxis: {
+          title: {
+            text: "Árangur"
+          }
+        },
         series: [
           {
             name: "Árangur",

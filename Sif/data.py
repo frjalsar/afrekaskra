@@ -489,13 +489,14 @@ def Get_Competitor_Event(CompetitorCode, Event_id):
     # Breytum öllum árangri yfir í rauntölur
     df['árangur_float'] = df['árangur'].map(results_to_float)
 
-    year_arr, results_year_max, results_year_min, results_avg, results_std = filter_year_best(df, ~event_info['Minimize'], False)
+    year_arr, results_year_max, results_year_min, results_avg, results_std, tooltip_str = filter_year_best(df, True, False, event_info['Units_symbol'])
 
     event_min_max = {'Years': year_arr,
                      'Max': results_year_max,
                      'Min': results_year_min,
                      'Avg': results_avg,
-                     'Std': results_std
+                     'Std': results_std,
+                     'Tooltip': tooltip_str
                      }
 
     event_data = []
@@ -676,7 +677,7 @@ def Get_Competitor_List(q):
 
 
 #-------------------------------------------------------------------------------
-def filter_year_best(df_event_data, event_max, event_time_axis):
+def filter_year_best(df_event_data, event_max, event_time_axis, event_unit):
     year_max = df_event_data['dagsetning'].max().year
     year_min = df_event_data['dagsetning'].min().year
 
@@ -686,7 +687,7 @@ def filter_year_best(df_event_data, event_max, event_time_axis):
     results_std = []
     year_arr = []
     #org_str = []
-    #more_str = []
+    more_str = []
     #avg_str = []
 
     if (df_event_data.empty == True):
@@ -727,7 +728,8 @@ def filter_year_best(df_event_data, event_max, event_time_axis):
                     results_year_max.append(df_event_year['árangur_float'][idx_best])
                     results_year_min.append(df_event_year['árangur_float'][idx_worst])
 
-            # more_str.append(df_event_year['Árangur'][idx_best] + ' ' + event_unit + ' (' + Wind_as_str(df_event_year['Vindur'][idx_best]) + ' m/s)<br>' + df_event_year['Heiti móts'][idx_best])
+            wind_str = '{:+.1f}'.format(df_event_year['vindur'][idx_best])
+            more_str.append(df_event_year['árangur'][idx_best] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + df_event_year['heiti_móts'][idx_best])
         else:
             # Við fáum villu ef við reynum að taka min/max og enginn árangur er til fyrir árið
             results_year_max.append(None)
@@ -735,8 +737,8 @@ def filter_year_best(df_event_data, event_max, event_time_axis):
             results_std.append(None)
             results_avg.append(None)
             #org_str.append('')
-            #more_str.append('')
+            more_str.append('')
 
         year_arr.append(i)
 
-    return year_arr, results_year_max, results_year_min, results_avg, results_std
+    return year_arr, results_year_max, results_year_min, results_avg, results_std, more_str

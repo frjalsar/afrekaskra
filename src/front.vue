@@ -9,7 +9,7 @@
           <a href="http://thor.fri.is">Þórs</a> móta forrits FRÍ.
           <!--Þór var skapaður af
           <a href="/keppandi/2487">Friðrik Þór</a> til að safna saman gögnum um íslenska keppendur í frjálsum íþróttum.-->
-          Sif fær öll gögnin sín frá Þór og vinnur úr þeim.
+          <!--Sif fær öll gögnin sín frá Þór og vinnur úr þeim.-->
           <!--Jötnarnir <a href="/keppandi/17364">Kristinn</a>, <a href="/keppandi/20844">Bergur</a> og <a href="/keppandi/76227">Þorsteinn</a> kenndu Sif að vinna
           úr gögnunum frá Þór.-->
         </p>

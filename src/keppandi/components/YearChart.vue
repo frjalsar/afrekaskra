@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  props: ["data"],
+  props: ["alldata"],
   computed: {
     chartOptions() {
       return {
@@ -16,15 +16,33 @@ export default {
         title: {
           text: ""
         },
+        yAxis: {
+          title: {
+            text: "Árangur"
+          }
+        },
+        tooltip: {
+          formatter: function() {
+            return this.point.label;
+          }
+        },
+        plotOptions: {
+          line: {
+            dataLabels: {
+              enabled: true
+            },
+            enableMouseTracking: true
+          }
+        },
         series: [
           {
-            name: "Árangur",
+            name: "Allur árangur",
             connectNulls: false,
-            tooltip: {
+            /*             tooltip: {
               //valueSuffix: " m",
               valueDecimals: 2
-            },
-            data: this.data
+            }, */
+            data: this.alldata
           }
         ]
       };

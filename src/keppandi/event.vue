@@ -6,12 +6,62 @@
     </div>
     <div v-if="isReady">
       {{competitor_info.FirstName}} {{event_info.ShortName}}
-      <br />
-      <!--<highcharts class="stock" :constructor-type="'stockChart'" :options="chartOptions"></highcharts>-->
-      <timeserieschart :data="timeData"></timeserieschart>
-      <br />
-      <yearchart :data="yearData"></yearchart>
-      <br />
+      <div class="card">
+        <div class="card-header">
+          <ul class="nav nav-tabs card-header-tabs pull-right" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                id="home-tab"
+                data-toggle="tab"
+                href="#home"
+                role="tab"
+                aria-controls="home"
+                aria-selected="true"
+              ><i class="fas fa-chart-line"></i> Ársbest</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                id="profile-tab"
+                data-toggle="tab"
+                href="#profile"
+                role="tab"
+                aria-controls="profile"
+                aria-selected="false"
+              ><i class="fas fa-chart-line"></i> Tímaröð</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                id="contact-tab"
+                data-toggle="tab"
+                href="#contact"
+                role="tab"
+                aria-controls="contact"
+                aria-selected="false"
+              ><i class="fas fa-chart-line"></i> Bætingar</a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content" id="myTabContent">
+            <div
+              class="tab-pane fade show active"
+              id="home"
+              role="tabpanel"
+              aria-labelledby="home-tab">
+              <yearchart :alldata="yearAllData"></yearchart>
+              </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <timeserieschart :data="timeData"></timeserieschart>
+            </div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+              ...
+            </div>
+          </div>
+        </div>
+      </div>
       <table class="table table-striped table-hover table-responsive-sm table-sm">
         <col span="1" class="wide" />
         <thead>
@@ -83,6 +133,7 @@ export default {
       event_min: [],
       event_max: [],
       event_years: [],
+      event_tooltip: [],
       isReady: false,
       showAllEvents: true,
       currentSort: "Results",
@@ -113,6 +164,7 @@ export default {
             this.event_years = response[0]["data"]["Years"];
             this.event_min = response[0]["data"]["Min"];
             this.event_max = response[0]["data"]["Max"];
+            this.event_tooltip = response[0]["data"]["Tooltip"];
 
             if (this.event_info.Minimize === true) {
               this.currentSortDir = "asc";
@@ -204,20 +256,23 @@ export default {
 
       return data_points;
     },
-    yearData: function() {
+    yearAllData: function() {
       let data_points = [];
       var dataLen = this.event_years.length;
 
       for (var i = 0; i < dataLen; i++) {
+        console.log(this.event_tooltip[i]);
         if (this.event_info.Minimize === true) {
           data_points.push({
             x: this.event_years[i],
-            y: this.event_min[i]
+            y: this.event_min[i],
+            label: this.event_tooltip[i]
           });
         } else {
           data_points.push({
             x: this.event_years[i],
-            y: this.event_max[i]
+            y: this.event_max[i],
+            label: this.event_tooltip[i]
           });
         }
       }
