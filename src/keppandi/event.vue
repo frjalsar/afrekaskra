@@ -5,7 +5,9 @@
       <p style="text-align:center">{{message}}</p>
     </div>
     <div v-if="isReady">
-      {{competitorID}} and {{eventID}} and {{competitor_info.FirstName}} and {{event_info.ShortName}}
+      {{competitor_info.FirstName}} {{event_info.ShortName}}
+      <br />
+      <highcharts class="stock" :constructor-type="'stockChart'" :options="chartOptions"></highcharts>
       <br />
       <table class="table table-striped table-hover table-responsive-sm table-sm">
         <col span="1" class="wide" />
@@ -32,7 +34,7 @@
         <tbody>
           <tr v-for="(i, index) in sortedData" v-show="(index < 5) || showAllEvents" :key="i.Event">
             <!-- v-bind:style="{display: 'none'}" -->
-            <th scope="row">{{i.Results}}</th>
+            <th scope="row">{{i.Results_text}}</th>
             <td v-bind:class="{'d-none': !hasWind}">{{i.Wind}}</td>
             <td>{{i.Date | formatDate}}</td>
             <td>{{i.Age}}</td>
@@ -50,13 +52,13 @@
 
 <script>
 import axios from "axios";
-import { Chart } from "highcharts-vue";
+import moment from "moment";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default {
   name: "KeppandiEvent",
   components: {
-    highcharts: Chart,
+    //highcharts: Chart,
     PulseLoader
   },
   data() {
@@ -75,7 +77,78 @@ export default {
       showAllEvents: true,
       currentSort: "Results",
       currentSortDir: "desc",
-      message: ""
+      message: "",
+
+      chartOptions: {
+        //chart: {
+        //  type: "line"
+        //},
+        credits: {
+          enabled: false
+        },
+        //tooltip: {
+        //  pointFormat: ""
+        //},
+        title: {
+          text: ""
+        },
+        xAxis: {
+          type: "datetime"
+        },
+        rangeSelector: {
+          selected: "all",
+          buttons: [
+            {
+              type: "month",
+              count: 3,
+              text: "3m"
+            },
+            {
+              type: "month",
+              count: 6,
+              text: "6m"
+            },
+            {
+              type: "year",
+              count: 1,
+              text: "1 ár"
+            },
+            {
+              type: "year",
+              count: 3,
+              text: "3 ár"
+            },
+            {
+              type: "year",
+              count: 6,
+              text: "6 ár"
+            },
+            {
+              type: "all",
+              text: "Allt"
+            }
+          ]
+        },
+        series: [
+          {
+            name: "Árangur",
+            tooltip: {
+              valueSuffix: " m",
+              valueDecimals: 2
+            },
+            data: [
+              {
+                x: 1,
+                y: 2
+              },
+              {
+                x: 1532352600000,
+                y: 20
+              }
+            ]
+          }
+        ]
+      }
     };
   },
   created() {
@@ -99,14 +172,16 @@ export default {
             //console.log("Got data");
 
             if (this.event_info.Minimize === true) {
-              this.currentSortDir = 'asc'
+              this.currentSortDir = "asc";
             } else {
-              this.currentSortDir = 'desc'
+              this.currentSortDir = "desc";
             }
 
             this.event_data = this.add_inndoor_sign(
               response[0]["data"]["EventData"]
             );
+
+            this.make_chart();
             //console.log("Got data 2");
 
             document.title =
@@ -130,12 +205,28 @@ export default {
           this.isReady = true;
         });
     },
+    make_chart: function() {
+      let data_points = [];
+      var dataLen = this.sortDataByDate.length;
+      //console.log("Making chart");
+      for (var i = 0; i < dataLen; i++) {
+        data_points.push({
+          x: moment(this.sortDataByDate[i]["Date"]).valueOf(),
+          y: Number(this.sortDataByDate[i]["Results"])
+        });
+      }
+      //console.log("Loop done");
+      this.chartOptions.series[0].data = data_points;
+      //console.log("Done making chart");
+    },
     add_inndoor_sign: function(my_data) {
       var dataLen = my_data.length;
 
       for (var i = 0; i < dataLen; i++) {
         if (my_data[i]["OutIn"] === 1) {
-          my_data[i]["Results"] = my_data[i]["Results"] + " (i)";
+          my_data[i]["Results_text"] = my_data[i]["Results"] + " (i)";
+        } else {
+          my_data[i]["Results_text"] = my_data[i]["Results"];
         }
       }
 
@@ -160,6 +251,14 @@ export default {
       } else {
         return false;
       }
+    },
+    sortDataByDate: function() { //Highcharts wants the date sorted in ascending order
+      return this.event_data.sort((a, b) => {
+        let modifier = 1;
+        if (moment(a['Date']).valueOf() < moment(b['Date']).valueOf()) return -1 * modifier;
+        if (moment(a['Date']).valueOf() > moment(b['Date']).valueOf()) return 1 * modifier;
+        return 0;
+      });
     },
     sortedData: function() {
       return this.event_data.sort((a, b) => {

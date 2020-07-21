@@ -61,13 +61,13 @@
 
 <script>
 import axios from "axios";
-import { Chart } from "highcharts-vue";
+//import { Chart } from "highcharts-vue";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default {
   name: "KeppandiSingle",
   components: {
-    highcharts: Chart,
+    //highcharts: Chart,
     PulseLoader
   },
   data() {

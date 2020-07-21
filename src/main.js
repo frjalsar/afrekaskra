@@ -3,9 +3,14 @@ import App from './App.vue'
 import router from './router'
 import '@fortawesome/fontawesome-free/css/all.css'
 import moment from 'moment'
+import Highcharts from "highcharts";
+import HighchartsVue from "highcharts-vue";
+import StockModule from "highcharts/modules/stock";
 
 Vue.config.productionTip = true
 
+StockModule(Highcharts);
+Vue.use(HighchartsVue);
 
 moment.locale('is');
 Vue.filter('formatDate', function(value) {
