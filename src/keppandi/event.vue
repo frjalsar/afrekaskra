@@ -7,7 +7,8 @@
     <div v-if="isReady">
       {{competitor_info.FirstName}} {{event_info.ShortName}}
       <br />
-      <highcharts class="stock" :constructor-type="'stockChart'" :options="chartOptions"></highcharts>
+      <!--<highcharts class="stock" :constructor-type="'stockChart'" :options="chartOptions"></highcharts>-->
+      <timeserieschart :data="timeData"></timeserieschart>
       <br />
       <table class="table table-striped table-hover table-responsive-sm table-sm">
         <col span="1" class="wide" />
@@ -54,11 +55,13 @@
 import axios from "axios";
 import moment from "moment";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+import TimeSeriesChart from "./components/TimeSeriesChart.vue";
 
 export default {
   name: "KeppandiEvent",
   components: {
     //highcharts: Chart,
+    timeserieschart: TimeSeriesChart,
     PulseLoader
   },
   data() {
@@ -78,77 +81,6 @@ export default {
       currentSort: "Results",
       currentSortDir: "desc",
       message: "",
-
-      chartOptions: {
-        //chart: {
-        //  type: "line"
-        //},
-        credits: {
-          enabled: false
-        },
-        //tooltip: {
-        //  pointFormat: ""
-        //},
-        title: {
-          text: ""
-        },
-        xAxis: {
-          type: "datetime"
-        },
-        rangeSelector: {
-          selected: "all",
-          buttons: [
-            {
-              type: "month",
-              count: 3,
-              text: "3m"
-            },
-            {
-              type: "month",
-              count: 6,
-              text: "6m"
-            },
-            {
-              type: "year",
-              count: 1,
-              text: "1 ár"
-            },
-            {
-              type: "year",
-              count: 3,
-              text: "3 ár"
-            },
-            {
-              type: "year",
-              count: 6,
-              text: "6 ár"
-            },
-            {
-              type: "all",
-              text: "Allt"
-            }
-          ]
-        },
-        series: [
-          {
-            name: "Árangur",
-            tooltip: {
-              valueSuffix: " m",
-              valueDecimals: 2
-            },
-            data: [
-              {
-                x: 1,
-                y: 2
-              },
-              {
-                x: 1532352600000,
-                y: 20
-              }
-            ]
-          }
-        ]
-      }
     };
   },
   created() {
@@ -181,7 +113,6 @@ export default {
               response[0]["data"]["EventData"]
             );
 
-            this.make_chart();
             //console.log("Got data 2");
 
             document.title =
@@ -204,20 +135,6 @@ export default {
           //this.$parent.do_stuff()
           this.isReady = true;
         });
-    },
-    make_chart: function() {
-      let data_points = [];
-      var dataLen = this.sortDataByDate.length;
-      //console.log("Making chart");
-      for (var i = 0; i < dataLen; i++) {
-        data_points.push({
-          x: moment(this.sortDataByDate[i]["Date"]).valueOf(),
-          y: Number(this.sortDataByDate[i]["Results"])
-        });
-      }
-      //console.log("Loop done");
-      this.chartOptions.series[0].data = data_points;
-      //console.log("Done making chart");
     },
     add_inndoor_sign: function(my_data) {
       var dataLen = my_data.length;
@@ -252,13 +169,28 @@ export default {
         return false;
       }
     },
-    sortDataByDate: function() { //Highcharts wants the date sorted in ascending order
+    sortDataByDate: function() {
+      //Highcharts wants the date sorted in ascending order
       return this.event_data.sort((a, b) => {
         let modifier = 1;
-        if (moment(a['Date']).valueOf() < moment(b['Date']).valueOf()) return -1 * modifier;
-        if (moment(a['Date']).valueOf() > moment(b['Date']).valueOf()) return 1 * modifier;
+        if (moment(a["Date"]).valueOf() < moment(b["Date"]).valueOf())
+          return -1 * modifier;
+        if (moment(a["Date"]).valueOf() > moment(b["Date"]).valueOf())
+          return 1 * modifier;
         return 0;
       });
+    },
+    timeData: function() {
+      let data_points = [];
+      var dataLen = this.sortDataByDate.length;
+      for (var i = 0; i < dataLen; i++) {
+        data_points.push({
+          x: moment(this.sortDataByDate[i]["Date"]).valueOf(),
+          y: Number(this.sortDataByDate[i]["Results"])
+        });
+      }
+
+      return data_points;
     },
     sortedData: function() {
       return this.event_data.sort((a, b) => {
