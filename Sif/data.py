@@ -211,7 +211,7 @@ def Convert_Achievements_to_List(q, minimize_results, best_by_ath, units):
             result_str = 'ERROR'
 
         # Turn the date into a string
-        date_str = format_date(Achievement.dagsetning.date(), "d MMM yyyy",locale='is_IS').upper()
+        date_str = format_date(Achievement.dagsetning.date(), "d MMM yyyy", locale='is_IS').upper()
 
         # Data
         Achievement_info = {'name': Achievement.nafn,
@@ -473,7 +473,7 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
 def Get_Competitor_Event(CompetitorCode, Event_id):
     event_info = Get_Event_Info(Event_id)
         
-    q = AthlAfrek.objects.all().filter(keppandanúmer__iexact=CompetitorCode, tákn_greinar__iexact=event_info['THORID_1'])
+    q = AthlAfrek.objects.all().filter(keppandanúmer__iexact=CompetitorCode, tákn_greinar__iexact=event_info['THORID_1']).order_by('dagsetning')
     df = pd.DataFrame.from_records(q.values_list('árangur', 'vindur', 'félag',
                                                  'aldur_keppanda', 'heiti_móts', 'mót',
                                                  'dagsetning', 'rafmagnstímataka', 'úti_inni',
@@ -488,6 +488,15 @@ def Get_Competitor_Event(CompetitorCode, Event_id):
 
     # Breytum öllum árangri yfir í rauntölur
     df['árangur_float'] = df['árangur'].map(results_to_float)
+
+    year_arr, results_year_max, results_year_min, results_avg, results_std = filter_year_best(df, ~event_info['Minimize'], False)
+
+    event_min_max = {'Years': year_arr,
+                     'Max': results_year_max,
+                     'Min': results_year_min,
+                     'Avg': results_avg,
+                     'Std': results_std
+                     }
 
     event_data = []
     for index, row in df.iterrows():
@@ -516,7 +525,7 @@ def Get_Competitor_Event(CompetitorCode, Event_id):
                            'MissingWind': row['vantar_vind']
                            })
 
-    return event_info, event_data
+    return event_info, event_data, event_min_max
 
 def Get_List_of_Events(CompetitorCode=None, Event_id=None):
     if (CompetitorCode == None):
@@ -664,3 +673,70 @@ def Get_Competitor_List(q):
         results.append(Competitor_Info)
 
     return results
+
+
+#-------------------------------------------------------------------------------
+def filter_year_best(df_event_data, event_max, event_time_axis):
+    year_max = df_event_data['dagsetning'].max().year
+    year_min = df_event_data['dagsetning'].min().year
+
+    results_year_max = []
+    results_year_min = []
+    results_avg = []
+    results_std = []
+    year_arr = []
+    #org_str = []
+    #more_str = []
+    #avg_str = []
+
+    if (df_event_data.empty == True):
+        return year_arr, results_year_max, results_year_min, results_avg, results_std
+
+    for i in range(year_min, year_max+1):
+        df_event_year = df_event_data.loc[df_event_data['dagsetning'].dt.year == i]
+        if (df_event_year.empty == False):
+            mean_f = df_event_year['árangur_float'].mean()
+            std_f = df_event_year['árangur_float'].std()
+
+            if (event_time_axis == False):
+                results_avg.append( mean_f )
+                results_std.append( std_f )
+                #avg_str.append( '{.2f} ± {.2f}'.format(mean_f, std_f) + ' ' + event_unit )
+                #results_std.append( df_event_year['Árangur_float'].std() / np.sqrt(df_event_year['Árangur_float'].count()) ) # Standard error
+            else:
+                results_avg.append( float_to_datetime(mean_f) )
+                results_std.append( std_f )
+                #avg_str.append( float_to_datetime(mean_f) + event_unit + ' ± {.2f} s'.format(std_f) )
+                #results_std.append( df_event_year['Árangur_float'].std() / np.sqrt(df_event_year['Árangur_float'].count()) ) # Standard error
+
+            if (event_max == True):
+                idx_best = df_event_year['árangur_float'].idxmax()
+                idx_worst = df_event_year['árangur_float'].idxmin()
+                #org_str.append(df_event_year['Árangur'][idx_best])
+                results_year_max.append(df_event_year['árangur_float'][idx_best])
+                results_year_min.append(df_event_year['árangur_float'][idx_worst])
+            else:
+                idx_best = df_event_year['árangur_float'].idxmin()
+                idx_worst = df_event_year['árangur_float'].idxmax()
+                #org_str.append(df_event_year['Árangur'][idx_best])
+
+                if (event_time_axis == True):
+                    results_year_max.append(df_event_year['Árangur_dt'][idx_best])
+                    results_year_min.append(df_event_year['Árangur_dt'][idx_worst])
+                else:
+                    results_year_max.append(df_event_year['árangur_float'][idx_best])
+                    results_year_min.append(df_event_year['árangur_float'][idx_worst])
+
+            # more_str.append(df_event_year['Árangur'][idx_best] + ' ' + event_unit + ' (' + Wind_as_str(df_event_year['Vindur'][idx_best]) + ' m/s)<br>' + df_event_year['Heiti móts'][idx_best])
+        else:
+            # Við fáum villu ef við reynum að taka min/max og enginn árangur er til fyrir árið
+            results_year_max.append(None)
+            results_year_min.append(None)
+            results_std.append(None)
+            results_avg.append(None)
+            #org_str.append('')
+            #more_str.append('')
+
+        year_arr.append(i)
+
+    return year_arr, results_year_max, results_year_min, results_avg, results_std

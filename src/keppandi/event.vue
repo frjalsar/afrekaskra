@@ -10,6 +10,8 @@
       <!--<highcharts class="stock" :constructor-type="'stockChart'" :options="chartOptions"></highcharts>-->
       <timeserieschart :data="timeData"></timeserieschart>
       <br />
+      <yearchart :data="yearData"></yearchart>
+      <br />
       <table class="table table-striped table-hover table-responsive-sm table-sm">
         <col span="1" class="wide" />
         <thead>
@@ -56,12 +58,14 @@ import axios from "axios";
 import moment from "moment";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import TimeSeriesChart from "./components/TimeSeriesChart.vue";
+import YearChart from "./components/YearChart.vue";
 
 export default {
   name: "KeppandiEvent",
   components: {
     //highcharts: Chart,
     timeserieschart: TimeSeriesChart,
+    yearchart: YearChart,
     PulseLoader
   },
   data() {
@@ -76,11 +80,14 @@ export default {
       competitor_info: [],
       event_info: [],
       event_data: [],
+      event_min: [],
+      event_max: [],
+      event_years: [],
       isReady: false,
       showAllEvents: true,
       currentSort: "Results",
       currentSortDir: "desc",
-      message: "",
+      message: ""
     };
   },
   created() {
@@ -98,10 +105,14 @@ export default {
         .all([axios.get(url)])
         .then(
           axios.spread((...response) => {
+            console.log("Got data");
+            console.log(console.log(response[0]["data"]["Max"]));
             this.competitor_info = response[0]["data"]["Competitor"];
             this.event_info = response[0]["data"]["EventInfo"];
-            //this.event_data = response[0]["data"]["EventData"];
-            //console.log("Got data");
+            this.event_data = response[0]["data"]["EventData"];
+            this.event_years = response[0]["data"]["Years"];
+            this.event_min = response[0]["data"]["Min"];
+            this.event_max = response[0]["data"]["Max"];
 
             if (this.event_info.Minimize === true) {
               this.currentSortDir = "asc";
@@ -169,25 +180,46 @@ export default {
         return false;
       }
     },
-    sortDataByDate: function() {
-      //Highcharts wants the date sorted in ascending order
-      return this.event_data.sort((a, b) => {
-        let modifier = 1;
-        if (moment(a["Date"]).valueOf() < moment(b["Date"]).valueOf())
-          return -1 * modifier;
-        if (moment(a["Date"]).valueOf() > moment(b["Date"]).valueOf())
-          return 1 * modifier;
-        return 0;
-      });
-    },
+    // sortDataByDate: function() {
+    //   //Highcharts wants the date sorted in ascending order
+    //   return this.event_data.sort((a, b) => {
+    //     let modifier = 1;
+    //     if (moment(a["Date"]).valueOf() < moment(b["Date"]).valueOf())
+    //       return -1 * modifier;
+    //     if (moment(a["Date"]).valueOf() > moment(b["Date"]).valueOf())
+    //       return 1 * modifier;
+    //     return 0;
+    //   });
+    // },
     timeData: function() {
       let data_points = [];
-      var dataLen = this.sortDataByDate.length;
+      var dataLen = this.event_data.length;
+
       for (var i = 0; i < dataLen; i++) {
         data_points.push({
-          x: moment(this.sortDataByDate[i]["Date"]).valueOf(),
-          y: Number(this.sortDataByDate[i]["Results"])
+          x: moment(this.event_data[i]["Date"]).valueOf(),
+          y: Number(this.event_data[i]["Results"])
         });
+      }
+
+      return data_points;
+    },
+    yearData: function() {
+      let data_points = [];
+      var dataLen = this.event_years.length;
+
+      for (var i = 0; i < dataLen; i++) {
+        if (this.event_info.Minimize === true) {
+          data_points.push({
+            x: this.event_years[i],
+            y: this.event_min[i]
+          });
+        } else {
+          data_points.push({
+            x: this.event_years[i],
+            y: this.event_max[i]
+          });
+        }
       }
 
       return data_points;

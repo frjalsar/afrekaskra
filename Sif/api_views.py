@@ -30,8 +30,16 @@ def competitor(request, CompetitorCode=None):
 
 def competitor_event(request, CompetitorCode=None, Event_id=None):
     Competitor_info = data.Get_Competitor_Info(CompetitorCode)
-    Event_info, Event_data = data.Get_Competitor_Event(CompetitorCode, Event_id)
-    return JsonResponse({'Competitor': Competitor_info, 'EventInfo': Event_info, 'EventData': Event_data}, safe=False)
+    Event_info, Event_data, Event_min_max = data.Get_Competitor_Event(CompetitorCode, Event_id)
+    print(Event_min_max['Min'])
+    return JsonResponse({'Competitor': Competitor_info,
+                         'EventInfo': Event_info,
+                         'EventData': Event_data,
+                         'Years': Event_min_max['Years'],
+                         'Max': Event_min_max['Max'],
+                         'Min': Event_min_max['Min'],
+                         },
+                         safe=True)
 
 def competitor_list(request):
     #if request.is_ajax():
