@@ -14,6 +14,17 @@ export default {
     };
   },
   computed: {
+    sortDataByDate: function() {
+      //Highcharts wants the date sorted in ascending order
+      return this.data.sort((a, b) => {
+        let modifier = 1;
+        if (a["x"] < b["x"])
+          return -1 * modifier;
+        if (a["x"] > b["x"])
+          return 1 * modifier;
+        return 0;
+      });
+    },
     stockOptions() {
       return {
         exporting: {
@@ -78,7 +89,7 @@ export default {
               //valueSuffix: " m",
               valueDecimals: 2
             },
-            data: this.data
+            data: this.sortDataByDate //this.data
           }
         ]
       };
