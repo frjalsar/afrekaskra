@@ -17,9 +17,11 @@
               />
             </div>
             <div class="p-2 flex-grow-1 align-self-center">
-                <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b><br>
-                {{competitor_info.Club}}<br>
-                {{competitor_info.YOB}}
+              <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
+              <br />
+              {{competitor_info.Club}}
+              <br />
+              {{competitor_info.YOB}}
             </div>
           </div>
         </div>
@@ -102,6 +104,16 @@ export default {
         title: {
           text: ""
         },
+        plotOptions: {
+          pie: {
+            dataLabels: {
+                enabled: true,
+                connectorShape: 'fixedOffset',
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+            },
+            enableMouseTracking: true
+          }
+        },
         series: [
           {
             name: "Hlutafall",
@@ -128,7 +140,10 @@ export default {
     onClick(item) {
       //alert(item.EventID);
       //this.$router.push("/keppandi/" + this.competitorID + "/" + item.EventID)
-      this.$router.push({name: 'CompetitorEvent', params: { competitorID: this.competitorID, eventID: item.EventID }})
+      this.$router.push({
+        name: "CompetitorEvent",
+        params: { competitorID: this.competitorID, eventID: item.EventID }
+      });
     },
     get_data: function() {
       this.$parent.loading = true;
