@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  props: ["alldata"],
+  props: ["alldata", "legaldata"],
   computed: {
     chartOptions() {
       return {
@@ -22,12 +22,28 @@ export default {
           }
         },
         tooltip: {
+          crosshairs: [false, false],
+          shared: true,
           formatter: function() {
-            return this.point.label;
+            if (this.points.length < 2) {
+              return this.points[0].point.label;
+            } else {
+              return (
+                "<b>" +
+                this.points[0].series.name +
+                ":</b> " +
+                this.points[0].point.label +
+                "<br>" +
+                "<b>" +
+                this.points[1].series.name +
+                ":</b> " +
+                this.points[1].point.label
+              );
+            }
           }
         },
         plotOptions: {
-          line: {
+          spline: {
             dataLabels: {
               enabled: true
             },
@@ -36,8 +52,21 @@ export default {
         },
         series: [
           {
+            name: "Löglegur árangur",
+            connectNulls: false,
+            visible: true,
+            type: "spline",
+            /*             tooltip: {
+              //valueSuffix: " m",
+              valueDecimals: 2
+            }, */
+            data: this.legaldata
+          },
+          {
             name: "Allur árangur",
             connectNulls: false,
+            visible: false,
+            type: "spline",
             /*             tooltip: {
               //valueSuffix: " m",
               valueDecimals: 2

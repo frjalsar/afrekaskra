@@ -12,34 +12,37 @@
             <li class="nav-item">
               <a
                 class="nav-link active"
-                id="home-tab"
+                id="bestbyyear-tab"
                 data-toggle="tab"
-                href="#home"
+                href="#bestbyyear"
                 role="tab"
-                aria-controls="home"
+                aria-controls="bestbyyear"
                 aria-selected="true"
+                v-on:click="onTabClick"
               ><i class="fas fa-chart-line"></i> Ársbest</a>
             </li>
             <li class="nav-item">
               <a
                 class="nav-link"
-                id="profile-tab"
+                id="timeseries-tab"
                 data-toggle="tab"
-                href="#profile"
+                href="#timeseries"
                 role="tab"
-                aria-controls="profile"
+                aria-controls="timeseries"
                 aria-selected="false"
+                v-on:click="onTabClick"
               ><i class="fas fa-chart-line"></i> Tímaröð</a>
             </li>
             <li class="nav-item">
               <a
                 class="nav-link"
-                id="contact-tab"
+                id="pb-tab"
                 data-toggle="tab"
-                href="#contact"
+                href="#pb"
                 role="tab"
-                aria-controls="contact"
+                aria-controls="pb"
                 aria-selected="false"
+                v-on:click="onTabClick"
               ><i class="fas fa-chart-line"></i> Bætingar</a>
             </li>
           </ul>
@@ -48,15 +51,15 @@
           <div class="tab-content" id="myTabContent">
             <div
               class="tab-pane fade show active"
-              id="home"
+              id="bestbyyear"
               role="tabpanel"
-              aria-labelledby="home-tab">
-              <yearchart :alldata="yearAllData"></yearchart>
+              aria-labelledby="bestbyyear-tab">
+              <yearchart :alldata="yearAllData" :legaldata="yearLegalData"></yearchart>
               </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="tab-pane fade" id="timeseries" role="tabpanel" aria-labelledby="timeseries-tab">
               <timeserieschart :data="timeData"></timeserieschart>
             </div>
-            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            <div class="tab-pane fade" id="pb" role="tabpanel" aria-labelledby="pb-tab">
               ...
             </div>
           </div>
@@ -130,10 +133,14 @@ export default {
       competitor_info: [],
       event_info: [],
       event_data: [],
-      event_min: [],
-      event_max: [],
-      event_years: [],
-      event_tooltip: [],
+      event_min_all: [],
+      event_max_all: [],
+      event_years_all: [],
+      event_tooltip_all: [],
+      event_min_legal: [],
+      event_max_legal: [],
+      event_years_legal: [],
+      event_tooltip_legal: [],
       isReady: false,
       showAllEvents: true,
       currentSort: "Results",
@@ -147,6 +154,13 @@ export default {
     this.get_data();
   },
   methods: {
+    onTabClick(event) {
+      //alert('hi');
+      //console.log(event)
+      //console.log(TimeSeriesChart)
+      //TimeSeriesChart.props.data = this.timeData
+      //this.$router.push("/keppandi/" + this.competitorID + "/" + item.EventID)
+    },
     get_data: function() {
       this.$parent.loading = true;
       this.message = "Næ í gögn ekki stökkva langt 😉";
@@ -156,15 +170,21 @@ export default {
         .all([axios.get(url)])
         .then(
           axios.spread((...response) => {
-            console.log("Got data");
-            console.log(console.log(response[0]["data"]["Max"]));
+            //console.log("Got data");
+            //console.log(console.log(response[0]["data"]["Max"]));
             this.competitor_info = response[0]["data"]["Competitor"];
             this.event_info = response[0]["data"]["EventInfo"];
             this.event_data = response[0]["data"]["EventData"];
-            this.event_years = response[0]["data"]["Years"];
-            this.event_min = response[0]["data"]["Min"];
-            this.event_max = response[0]["data"]["Max"];
-            this.event_tooltip = response[0]["data"]["Tooltip"];
+
+            this.event_years_all = response[0]["data"]["Years_all"];
+            this.event_min_all = response[0]["data"]["Min_all"];
+            this.event_max_all = response[0]["data"]["Max_all"];
+            this.event_tooltip_all = response[0]["data"]["Tooltip_all"];
+
+            this.event_years_legal = response[0]["data"]["Years_legal"];
+            this.event_min_legal = response[0]["data"]["Min_legal"];
+            this.event_max_legal = response[0]["data"]["Max_legal"];
+            this.event_tooltip_legal = response[0]["data"]["Tooltip_legal"];
 
             if (this.event_info.Minimize === true) {
               this.currentSortDir = "asc";
@@ -258,21 +278,44 @@ export default {
     },
     yearAllData: function() {
       let data_points = [];
-      var dataLen = this.event_years.length;
+      var dataLen = this.event_years_all.length;
 
       for (var i = 0; i < dataLen; i++) {
-        console.log(this.event_tooltip[i]);
+        //console.log(this.event_tooltip[i]);
         if (this.event_info.Minimize === true) {
           data_points.push({
-            x: this.event_years[i],
-            y: this.event_min[i],
-            label: this.event_tooltip[i]
+            x: this.event_years_all[i],
+            y: this.event_min_all[i],
+            label: this.event_tooltip_all[i]
           });
         } else {
           data_points.push({
-            x: this.event_years[i],
-            y: this.event_max[i],
-            label: this.event_tooltip[i]
+            x: this.event_years_all[i],
+            y: this.event_max_all[i],
+            label: this.event_tooltip_all[i]
+          });
+        }
+      }
+
+      return data_points;
+    },
+    yearLegalData: function() {
+      let data_points = [];
+      var dataLen = this.event_years_legal.length;
+
+      for (var i = 0; i < dataLen; i++) {
+        //console.log(this.event_tooltip[i]);
+        if (this.event_info.Minimize === true) {
+          data_points.push({
+            x: this.event_years_legal[i],
+            y: this.event_min_legal[i],
+            label: this.event_tooltip_legal[i]
+          });
+        } else {
+          data_points.push({
+            x: this.event_years_legal[i],
+            y: this.event_max_legal[i],
+            label: this.event_tooltip_legal[i]
           });
         }
       }

@@ -489,15 +489,21 @@ def Get_Competitor_Event(CompetitorCode, Event_id):
     # Breytum öllum árangri yfir í rauntölur
     df['árangur_float'] = df['árangur'].map(results_to_float)
 
-    year_arr, results_year_max, results_year_min, results_avg, results_std, tooltip_str = filter_year_best(df, True, False, event_info['Units_symbol'])
+    year_arr_all, results_year_max_all, results_year_min_all, _, _, tooltip_str_all = filter_year_best(df, True, False, event_info['Units_symbol'])
+    df_legal = df.loc[df['vindur'] <= 2.0]
+    year_arr_legal, results_year_max_legal, results_year_min_legal, _, _, tooltip_str_legal = filter_year_best(df_legal, True, False, event_info['Units_symbol'])
 
-    event_min_max = {'Years': year_arr,
-                     'Max': results_year_max,
-                     'Min': results_year_min,
-                     'Avg': results_avg,
-                     'Std': results_std,
-                     'Tooltip': tooltip_str
-                     }
+    event_min_max_all = {'Years': year_arr_all,
+                         'Max': results_year_max_all,
+                         'Min': results_year_min_all,
+                         'Tooltip': tooltip_str_all
+                        }
+
+    event_min_max_legal = {'Years': year_arr_legal,
+                           'Max': results_year_max_legal,
+                           'Min': results_year_min_legal,
+                           'Tooltip': tooltip_str_legal
+                          }
 
     event_data = []
     for index, row in df.iterrows():
@@ -526,7 +532,7 @@ def Get_Competitor_Event(CompetitorCode, Event_id):
                            'MissingWind': row['vantar_vind']
                            })
 
-    return event_info, event_data, event_min_max
+    return event_info, event_data, event_min_max_all, event_min_max_legal
 
 def Get_List_of_Events(CompetitorCode=None, Event_id=None):
     if (CompetitorCode == None):
