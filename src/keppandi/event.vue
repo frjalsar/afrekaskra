@@ -54,10 +54,10 @@
               id="bestbyyear"
               role="tabpanel"
               aria-labelledby="bestbyyear-tab">
-              <yearchart :alldata="yearAllData" :legaldata="yearLegalData"></yearchart>
+              <yearchart :alldata="yearAllData" :legaldata="yearLegalData" ref="yearChart"></yearchart>
               </div>
             <div class="tab-pane fade" id="timeseries" role="tabpanel" aria-labelledby="timeseries-tab">
-              <timeserieschart :data="timeData"></timeserieschart>
+              <timeserieschart :data="timeData" ref="timeChart"></timeserieschart>
             </div>
             <div class="tab-pane fade" id="pb" role="tabpanel" aria-labelledby="pb-tab">
               ...
@@ -155,11 +155,9 @@ export default {
   },
   methods: {
     onTabClick(event) {
-      //alert('hi');
-      //console.log(event)
-      //console.log(TimeSeriesChart)
-      //TimeSeriesChart.props.data = this.timeData
-      //this.$router.push("/keppandi/" + this.competitorID + "/" + item.EventID)
+      //Redraw the graphs on tab click.
+      this.$refs.yearChart.$refs.chart.chart.redraw();
+      this.$refs.timeChart.$refs.chart.chart.redraw();
     },
     get_data: function() {
       this.$parent.loading = true;

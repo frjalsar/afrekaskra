@@ -1,12 +1,18 @@
 <template>
   <div>
-    <highcharts class="stock" :constructor-type="'stockChart'" :options="stockOptions"></highcharts>
+    <highcharts class="stock" :constructor-type="'stockChart'" :options="stockOptions" ref="chart"></highcharts>
   </div>
 </template>
 
 <script>
 export default {
   props: ["data"],
+  data() {
+      return {
+          isVisible: true,
+          sometext: 'Árangur'
+      }
+  },
   computed: {
     stockOptions() {
       return {
@@ -60,7 +66,8 @@ export default {
         },
         series: [
           {
-            name: "Árangur",
+            name: this.sometext,
+            visible: this.isVisible,
             tooltip: {
               //valueSuffix: " m",
               valueDecimals: 2
