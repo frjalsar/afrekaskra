@@ -13,8 +13,14 @@ export default {
         credits: {
           enabled: false
         },
+        exporting: {
+          enabled: true
+        },
         title: {
           text: ""
+        },
+        legend: {
+          enabled: true
         },
         yAxis: {
           title: {

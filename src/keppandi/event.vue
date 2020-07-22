@@ -156,8 +156,16 @@ export default {
   methods: {
     onTabClick(event) {
       //Redraw the graphs on tab click.
-      this.$refs.yearChart.$refs.chart.chart.redraw();
-      this.$refs.timeChart.$refs.chart.chart.redraw();
+      console.log('TabClick 1')
+      this.$refs.yearChart.$refs.chart.chart.xAxis[0].isDirty = true;
+      this.$refs.yearChart.$refs.chart.chart.redraw(true);
+      this.$refs.yearChart.$refs.chart.chart.update({});
+      this.$refs.yearChart.$refs.chart.chart.reflow();
+      this.$refs.timeChart.$refs.chart.chart.xAxis[0].isDirty = true;
+      this.$refs.timeChart.$refs.chart.chart.redraw(true);
+      this.$refs.timeChart.$refs.chart.chart.update({});
+      this.$refs.timeChart.$refs.chart.chart.reflow();
+      console.log('TabClick 2')
     },
     get_data: function() {
       this.$parent.loading = true;

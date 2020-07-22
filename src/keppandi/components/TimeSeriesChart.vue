@@ -8,14 +8,20 @@
 export default {
   props: ["data"],
   data() {
-      return {
-          isVisible: true,
-          sometext: 'Árangur'
-      }
+    return {
+      isVisible: true,
+      sometext: "Árangur"
+    };
   },
   computed: {
     stockOptions() {
       return {
+        exporting: {
+          enabled: true
+        },
+        legend: {
+          enabled: false
+        },
         rangeSelector: {
           selected: "all",
           buttons: [
