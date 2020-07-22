@@ -66,6 +66,12 @@ export default {
               //valueSuffix: " m",
               valueDecimals: 2
             }, */
+            marker: {
+              enabled: true,
+              fillColor: "#FFFFFF",
+              lineWidth: 2,
+              lineColor: null // inherit from series
+            },
             data: this.legaldata
           },
           {
@@ -77,6 +83,12 @@ export default {
               //valueSuffix: " m",
               valueDecimals: 2
             }, */
+            marker: {
+              enabled: true,
+              fillColor: "#FFFFFF",
+              lineWidth: 2,
+              lineColor: null // inherit from series
+            },
             data: this.alldata
           }
         ]

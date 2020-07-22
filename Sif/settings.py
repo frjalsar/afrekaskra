@@ -102,6 +102,20 @@ DATABASES = {
     }
 }
 
+if (DEBUG == False):
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'unique-snowflake',
+        }
+    }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        }
+    }
+
 #MIGRATION_MODULES = {
 #    'auth': None
 #}

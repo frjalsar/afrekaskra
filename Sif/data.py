@@ -505,6 +505,13 @@ def Get_Competitor_Event(CompetitorCode, Event_id):
                            'Tooltip': tooltip_str_legal
                           }
 
+    pb_dates, pb, pb_tooltip = filter_progression(df, not event_info['Minimize'], event_info['Units_symbol'])
+
+    event_progression = {'Dates': pb_dates,
+                         'PBs': pb,
+                         'Tooltip': pb_tooltip
+                        }
+
     event_data = []
     for index, row in df.iterrows():
         if (row.vantar_vind == True):
@@ -532,7 +539,7 @@ def Get_Competitor_Event(CompetitorCode, Event_id):
                            'MissingWind': row['vantar_vind']
                            })
 
-    return event_info, event_data, event_min_max_all, event_min_max_legal
+    return event_info, event_data, event_min_max_all, event_min_max_legal, event_progression
 
 def Get_List_of_Events(CompetitorCode=None, Event_id=None):
     if (CompetitorCode == None):
@@ -748,3 +755,42 @@ def filter_year_best(df_event_data, event_max, event_time_axis, event_unit):
         year_arr.append(i)
 
     return year_arr, results_year_max, results_year_min, results_avg, results_std, more_str
+
+def filter_progression(df_event, event_max, event_unit):
+    # Tökum út vind árangur
+    df_event_nowind = df_event.loc[df_event['vindur'] <= 2.0]
+
+    # Röðum eftir dags. og árangri
+    df_sorted = df_event_nowind.sort_values(by=['dagsetning', 'árangur_float'], ascending=[True, True], inplace=False)
+    df_sorted.reset_index(drop=True, inplace=True)
+
+    # Athugum hvort það sé til löglegur árangur.
+    # Ef ekki notum þá vind árangur.
+    if (df_sorted.empty == True):
+        df_sorted = df_event.sort_values(by=['dagsetning', 'árangur_float'], ascending=[True, True], inplace=False)
+
+    # Finnum fyrsta afrekið
+    last_row = df_sorted.iloc[0]
+
+    pb = [last_row['árangur_float']]
+    pb_dates = [last_row['dagsetning']]
+    wind_str = '{:+.1f}'.format(last_row['vindur'])
+    text_place = [last_row['árangur'] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + last_row['heiti_móts']]
+
+    for idx, row in df_sorted.iterrows():
+        if (event_max == True):
+            if ( (row['árangur_float'] >= last_row['árangur_float']) and (row['dagsetning'] > last_row['dagsetning']) ):
+                last_row = row
+                pb.append(row['árangur_float'])
+                pb_dates.append(row['dagsetning'])
+                wind_str = '{:+.1f}'.format(row['vindur'])
+                text_place.append(row['árangur'] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + row['heiti_móts'])
+        else:
+            if ( (row['árangur_float'] <= last_row['árangur_float']) and (row['dagsetning'] > last_row['dagsetning']) ):
+                last_row = row
+                pb.append(row['árangur_float'])
+                pb_dates.append(row['dagsetning'])
+                wind_str = '{:+.1f}'.format(row['vindur'])
+                text_place.append(row['árangur'] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + row['heiti_móts'])
+
+    return pb_dates, pb, text_place

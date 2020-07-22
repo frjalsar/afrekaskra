@@ -36,11 +36,11 @@
             <li class="nav-item">
               <a
                 class="nav-link"
-                id="pb-tab"
+                id="progression-tab"
                 data-toggle="tab"
-                href="#pb"
+                href="#progression"
                 role="tab"
-                aria-controls="pb"
+                aria-controls="progression"
                 aria-selected="false"
                 v-on:click="onTabClick"
               ><i class="fas fa-chart-line"></i> Bætingar</a>
@@ -59,8 +59,8 @@
             <div class="tab-pane fade" id="timeseries" role="tabpanel" aria-labelledby="timeseries-tab">
               <timeserieschart :data="timeData" ref="timeChart"></timeserieschart>
             </div>
-            <div class="tab-pane fade" id="pb" role="tabpanel" aria-labelledby="pb-tab">
-              ...
+            <div class="tab-pane fade" id="progression" role="tabpanel" aria-labelledby="progression-tab">
+              <progressionchart :data="progressionData" ref="progressionChart"></progressionchart>
             </div>
           </div>
         </div>
@@ -112,6 +112,7 @@ import moment from "moment";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import TimeSeriesChart from "./components/TimeSeriesChart.vue";
 import YearChart from "./components/YearChart.vue";
+import ProgressionChart from "./components/ProgressionChart.vue";
 
 export default {
   name: "KeppandiEvent",
@@ -119,6 +120,7 @@ export default {
     //highcharts: Chart,
     timeserieschart: TimeSeriesChart,
     yearchart: YearChart,
+    progressionchart: ProgressionChart,
     PulseLoader
   },
   data() {
@@ -131,16 +133,23 @@ export default {
       competitorID: null,
       eventID: null,
       competitor_info: [],
+
       event_info: [],
       event_data: [],
       event_min_all: [],
       event_max_all: [],
       event_years_all: [],
       event_tooltip_all: [],
+
       event_min_legal: [],
       event_max_legal: [],
       event_years_legal: [],
       event_tooltip_legal: [],
+
+      progression_dates : [],
+      progression_pbs: [],
+      progression_tooltips: [],
+
       isReady: false,
       showAllEvents: true,
       currentSort: "Results",
@@ -156,16 +165,22 @@ export default {
   methods: {
     onTabClick(event) {
       //Redraw the graphs on tab click.
-      console.log('TabClick 1')
+      //console.log('TabClick 1')
       this.$refs.yearChart.$refs.chart.chart.xAxis[0].isDirty = true;
-      this.$refs.yearChart.$refs.chart.chart.redraw(true);
+      this.$refs.yearChart.$refs.chart.chart.redraw();
       this.$refs.yearChart.$refs.chart.chart.update({});
       this.$refs.yearChart.$refs.chart.chart.reflow();
+
       this.$refs.timeChart.$refs.chart.chart.xAxis[0].isDirty = true;
-      this.$refs.timeChart.$refs.chart.chart.redraw(true);
+      this.$refs.timeChart.$refs.chart.chart.redraw();
       this.$refs.timeChart.$refs.chart.chart.update({});
       this.$refs.timeChart.$refs.chart.chart.reflow();
-      console.log('TabClick 2')
+
+      this.$refs.progressionChart.$refs.chart.chart.xAxis[0].isDirty = true;
+      this.$refs.progressionChart.$refs.chart.chart.redraw();
+      this.$refs.progressionChart.$refs.chart.chart.update({});
+      this.$refs.progressionChart.$refs.chart.chart.reflow();
+      //console.log('TabClick 2')
     },
     get_data: function() {
       this.$parent.loading = true;
@@ -191,6 +206,10 @@ export default {
             this.event_min_legal = response[0]["data"]["Min_legal"];
             this.event_max_legal = response[0]["data"]["Max_legal"];
             this.event_tooltip_legal = response[0]["data"]["Tooltip_legal"];
+
+            this.progression_dates = response[0]["data"]["PB_dates"];
+            this.progression_pbs = response[0]["data"]["PBs"];
+            this.progression_tooltips = response[0]["data"]["PB_tooltip"];
 
             if (this.event_info.Minimize === true) {
               this.currentSortDir = "asc";
@@ -279,6 +298,22 @@ export default {
           y: Number(this.event_data[i]["Results"])
         });
       }
+
+      return data_points;
+    },
+    progressionData: function() {
+      let data_points = [];
+      var dataLen = this.progression_dates.length;
+
+      for (var i = 0; i < dataLen; i++) {
+        data_points.push({
+          x: moment(this.progression_dates[i]).valueOf(),
+          y: this.progression_pbs[i],
+          label: this.progression_tooltips[i]
+        });
+      }
+
+      console.log(data_points)
 
       return data_points;
     },

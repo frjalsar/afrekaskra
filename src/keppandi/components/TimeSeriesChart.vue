@@ -7,12 +7,11 @@
 <script>
 export default {
   props: ["data"],
-  data() {
-    return {
-      isVisible: true,
-      sometext: "Árangur"
-    };
-  },
+//   data() {
+//     return {
+//       isVisible: true,
+//     };
+//   },
   computed: {
     sortDataByDate: function() {
       //Highcharts wants the date sorted in ascending order
@@ -83,8 +82,8 @@ export default {
         },
         series: [
           {
-            name: this.sometext,
-            visible: this.isVisible,
+            name: 'Árangur',
+            visible: true,
             tooltip: {
               //valueSuffix: " m",
               valueDecimals: 2
