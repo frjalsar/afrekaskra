@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import Highcharts from 'highcharts'
+
 export default {
   props: ["data"],
   computed: {
@@ -40,7 +42,10 @@ export default {
         plotOptions: {
           line: {
             dataLabels: {
-              enabled: true
+              enabled: true,
+              formatter: function() {
+                return Highcharts.numberFormat(this.y, 2);
+              }
             },
             enableMouseTracking: true
           }

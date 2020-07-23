@@ -313,7 +313,7 @@ export default {
         });
       }
 
-      console.log(data_points)
+      //console.log(data_points)
 
       return data_points;
     },

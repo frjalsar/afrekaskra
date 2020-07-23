@@ -742,7 +742,7 @@ def filter_year_best(df_event_data, event_max, event_time_axis, event_unit):
                     results_year_min.append(df_event_year['árangur_float'][idx_worst])
 
             wind_str = '{:+.1f}'.format(df_event_year['vindur'][idx_best])
-            more_str.append(df_event_year['árangur'][idx_best] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + df_event_year['heiti_móts'][idx_best])
+            more_str.append(df_event_year['árangur'][idx_best] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + df_event_year['heiti_móts'][idx_best] + '<br>' + df_event_year['dagsetning'][idx_best].strftime("%d-%m-%Y"))
         else:
             # Við fáum villu ef við reynum að taka min/max og enginn árangur er til fyrir árið
             results_year_max.append(None)
@@ -775,7 +775,7 @@ def filter_progression(df_event, event_max, event_unit):
     pb = [last_row['árangur_float']]
     pb_dates = [last_row['dagsetning']]
     wind_str = '{:+.1f}'.format(last_row['vindur'])
-    text_place = [last_row['árangur'] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + last_row['heiti_móts']]
+    text_place = [last_row['árangur'] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + last_row['heiti_móts'] + '<br>' + last_row['dagsetning'].strftime("%d-%m-%Y")]
 
     for idx, row in df_sorted.iterrows():
         if (event_max == True):
@@ -784,13 +784,13 @@ def filter_progression(df_event, event_max, event_unit):
                 pb.append(row['árangur_float'])
                 pb_dates.append(row['dagsetning'])
                 wind_str = '{:+.1f}'.format(row['vindur'])
-                text_place.append(row['árangur'] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + row['heiti_móts'])
+                text_place.append(row['árangur'] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + row['heiti_móts'] + '<br>' + row['dagsetning'].strftime("%d-%m-%Y"))
         else:
             if ( (row['árangur_float'] <= last_row['árangur_float']) and (row['dagsetning'] > last_row['dagsetning']) ):
                 last_row = row
                 pb.append(row['árangur_float'])
                 pb_dates.append(row['dagsetning'])
                 wind_str = '{:+.1f}'.format(row['vindur'])
-                text_place.append(row['árangur'] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + row['heiti_móts'])
+                text_place.append(row['árangur'] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + row['heiti_móts'] + '<br>' + row['dagsetning'].strftime("%d-%m-%Y"))
 
     return pb_dates, pb, text_place

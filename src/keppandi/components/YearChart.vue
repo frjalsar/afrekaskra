@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import Highcharts from 'highcharts'
+
 export default {
   props: ["alldata", "legaldata"],
   computed: {
@@ -51,7 +53,10 @@ export default {
         plotOptions: {
           spline: {
             dataLabels: {
-              enabled: true
+              enabled: true,
+              formatter: function() {
+                return Highcharts.numberFormat(this.y, 2);
+              }
             },
             enableMouseTracking: true
           }
