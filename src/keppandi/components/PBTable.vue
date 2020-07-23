@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p align="center"><i class="far fa-hand-pointer"></i> <small>Veldu grein í töflunni til að sjá meiri upplýsingar um hana.</small></p>
     <table class="table table-striped table-hover table-responsive-sm table-sm">
       <col span="1" class="wide" />
       <thead>
@@ -32,9 +33,9 @@
 export default {
   props: ["data", "showAllEvents", "competitorID"],
   computed: {
-      event_info() {
-          return this.data
-      }
+    event_info() {
+      return this.data;
+    },
   },
   methods: {
     onClick(item) {
@@ -48,3 +49,13 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.table {
+    margin-bottom: 0;
+}
+.td {
+  text-align: center;
+  vertical-align: middle;
+}
+</style>

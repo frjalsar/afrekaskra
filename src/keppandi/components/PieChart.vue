@@ -1,5 +1,6 @@
 <template>
   <div>
+      <p align="center"><i class="fas fa-chart-pie"></i> <small>Greinar</small></p>
     <highcharts class="chart" :options="chartOptions" ref="chart"></highcharts>
   </div>
 </template>

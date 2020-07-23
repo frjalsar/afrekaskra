@@ -27,12 +27,12 @@
         </div>
         <div class="card-body">
           <pbtable :data="event_info" :showAllEvents="showAllEvents" :competitorID="competitorID" ref="pbtable"></pbtable>
-          <piechart :data="pieData" ref="pieChart" v-show="!showAllEvents"></piechart>
         </div>
         <div class="card-footer text-muted text-center">
           <a href="#" v-on:click.prevent="toggle_showEvents($event)">Sýna meira/minna</a>
         </div>
       </div>
+      <piechart :data="pieData" ref="pieChart" v-show="!showAllEvents"></piechart>
     </div>
   </div>
 </template>
@@ -169,11 +169,6 @@ export default {
 /* center spinner */
 .v-spinner {
   text-align: center;
-}
-
-.td {
-  text-align: center;
-  vertical-align: middle;
 }
 
 /* Center card */

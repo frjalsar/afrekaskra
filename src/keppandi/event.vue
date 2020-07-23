@@ -19,7 +19,9 @@
                 aria-controls="bestbyyear"
                 aria-selected="true"
                 v-on:click="onTabClick"
-              ><i class="fas fa-chart-line"></i> Ársbest</a>
+              >
+                <i class="fas fa-chart-line"></i> Ársbest
+              </a>
             </li>
             <li class="nav-item">
               <a
@@ -31,7 +33,9 @@
                 aria-controls="timeseries"
                 aria-selected="false"
                 v-on:click="onTabClick"
-              ><i class="fas fa-chart-line"></i> Tímaröð</a>
+              >
+                <i class="fas fa-chart-line"></i> Tímaröð
+              </a>
             </li>
             <li class="nav-item">
               <a
@@ -43,7 +47,9 @@
                 aria-controls="progression"
                 aria-selected="false"
                 v-on:click="onTabClick"
-              ><i class="fas fa-chart-line"></i> Bætingar</a>
+              >
+                <i class="fas fa-chart-line"></i> Bætingar
+              </a>
             </li>
           </ul>
         </div>
@@ -53,55 +59,30 @@
               class="tab-pane fade show active"
               id="bestbyyear"
               role="tabpanel"
-              aria-labelledby="bestbyyear-tab">
+              aria-labelledby="bestbyyear-tab"
+            >
               <yearchart :alldata="yearAllData" :legaldata="yearLegalData" ref="yearChart"></yearchart>
-              </div>
-            <div class="tab-pane fade" id="timeseries" role="tabpanel" aria-labelledby="timeseries-tab">
+            </div>
+            <div
+              class="tab-pane fade"
+              id="timeseries"
+              role="tabpanel"
+              aria-labelledby="timeseries-tab"
+            >
               <timeserieschart :data="timeData" ref="timeChart"></timeserieschart>
             </div>
-            <div class="tab-pane fade" id="progression" role="tabpanel" aria-labelledby="progression-tab">
+            <div
+              class="tab-pane fade"
+              id="progression"
+              role="tabpanel"
+              aria-labelledby="progression-tab"
+            >
               <progressionchart :data="progressionData" ref="progressionChart"></progressionchart>
             </div>
           </div>
         </div>
       </div>
-      <table class="table table-striped table-hover table-responsive-sm table-sm">
-        <col span="1" class="wide" />
-        <thead>
-          <tr>
-            <th scope="col" @click="sort('Results')">
-              <i class="fas fa-sort"></i>
-              Árangur [{{event_info.Units_symbol}}]
-            </th>
-            <th scope="col" @click="sort('Wind')" v-bind:class="{'d-none': !hasWind}">
-              <i class="fas fa-sort"></i> Vindur
-            </th>
-            <th scope="col" @click="sort('Date')">
-              <i class="fas fa-sort"></i> Dags.
-            </th>
-            <th scope="col" @click="sort('Age')">
-              <i class="fas fa-sort"></i> Aldur
-            </th>
-            <th scope="col" @click="sort('competition_name')">
-              <i class="fas fa-sort"></i> Heiti móts
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(i, index) in sortedData" v-show="(index < 5) || showAllEvents" :key="i.Event">
-            <!-- v-bind:style="{display: 'none'}" -->
-            <th scope="row">{{i.Results_text}}</th>
-            <td v-bind:class="{'d-none': !hasWind}">{{i.Wind}}</td>
-            <td>{{i.Date | formatDate}}</td>
-            <td>{{i.Age}}</td>
-            <td>
-              <a
-                v-bind:href="'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' + i.competition_id"
-              >{{i.competition_name}}</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <achievementtable :event_info="event_info" :showAllEvents="showAllEvents" :event_data="event_data"></achievementtable>
     </div>
   </div>
 </template>
@@ -113,6 +94,7 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import TimeSeriesChart from "./components/TimeSeriesChart.vue";
 import YearChart from "./components/YearChart.vue";
 import ProgressionChart from "./components/ProgressionChart.vue";
+import AchievementTable from "./components/AchievementTable.vue";
 
 export default {
   name: "KeppandiEvent",
@@ -121,7 +103,8 @@ export default {
     timeserieschart: TimeSeriesChart,
     yearchart: YearChart,
     progressionchart: ProgressionChart,
-    PulseLoader
+    achievementtable: AchievementTable,
+    PulseLoader,
   },
   data() {
     return {
@@ -146,15 +129,13 @@ export default {
       event_years_legal: [],
       event_tooltip_legal: [],
 
-      progression_dates : [],
+      progression_dates: [],
       progression_pbs: [],
       progression_tooltips: [],
 
       isReady: false,
       showAllEvents: true,
-      currentSort: "Results",
-      currentSortDir: "desc",
-      message: ""
+      message: "",
     };
   },
   created() {
@@ -182,7 +163,7 @@ export default {
       this.$refs.progressionChart.$refs.chart.chart.reflow();
       //console.log('TabClick 2')
     },
-    get_data: function() {
+    get_data: function () {
       this.$parent.loading = true;
       this.message = "Næ í gögn ekki stökkva langt 😉";
 
@@ -211,12 +192,6 @@ export default {
             this.progression_pbs = response[0]["data"]["PBs"];
             this.progression_tooltips = response[0]["data"]["PB_tooltip"];
 
-            if (this.event_info.Minimize === true) {
-              this.currentSortDir = "asc";
-            } else {
-              this.currentSortDir = "desc";
-            }
-
             this.event_data = this.add_inndoor_sign(
               response[0]["data"]["EventData"]
             );
@@ -233,7 +208,7 @@ export default {
               ")";
           })
         )
-        .catch(error => {
+        .catch((error) => {
           this.message = "Villa frá vefþjóni (" + error + ") 😭";
           document.title = "Afrekaskrá FRÍ";
         })
@@ -244,7 +219,7 @@ export default {
           this.isReady = true;
         });
     },
-    add_inndoor_sign: function(my_data) {
+    add_inndoor_sign: function (my_data) {
       var dataLen = my_data.length;
 
       for (var i = 0; i < dataLen; i++) {
@@ -257,51 +232,22 @@ export default {
 
       return my_data;
     },
-    sort: function(s) {
-      //if s == current sort, reverse
-      if (s === this.currentSort) {
-        this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
-      }
-      this.currentSort = s;
-
-      //console.log("Sort");
-      //console.log(this.currentSort);
-      //console.log(this.currentSortDir);
-    }
   },
   computed: {
-    hasWind: function() {
-      if (this.event_info["HasWind"] === 1) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    // sortDataByDate: function() {
-    //   //Highcharts wants the date sorted in ascending order
-    //   return this.event_data.sort((a, b) => {
-    //     let modifier = 1;
-    //     if (moment(a["Date"]).valueOf() < moment(b["Date"]).valueOf())
-    //       return -1 * modifier;
-    //     if (moment(a["Date"]).valueOf() > moment(b["Date"]).valueOf())
-    //       return 1 * modifier;
-    //     return 0;
-    //   });
-    // },
-    timeData: function() {
+    timeData: function () {
       let data_points = [];
       var dataLen = this.event_data.length;
 
       for (var i = 0; i < dataLen; i++) {
         data_points.push({
           x: moment(this.event_data[i]["Date"]).valueOf(),
-          y: Number(this.event_data[i]["Results"])
+          y: Number(this.event_data[i]["Results"]),
         });
       }
 
       return data_points;
     },
-    progressionData: function() {
+    progressionData: function () {
       let data_points = [];
       var dataLen = this.progression_dates.length;
 
@@ -309,7 +255,7 @@ export default {
         data_points.push({
           x: moment(this.progression_dates[i]).valueOf(),
           y: this.progression_pbs[i],
-          label: this.progression_tooltips[i]
+          label: this.progression_tooltips[i],
         });
       }
 
@@ -317,7 +263,7 @@ export default {
 
       return data_points;
     },
-    yearAllData: function() {
+    yearAllData: function () {
       let data_points = [];
       var dataLen = this.event_years_all.length;
 
@@ -327,20 +273,20 @@ export default {
           data_points.push({
             x: this.event_years_all[i],
             y: this.event_min_all[i],
-            label: this.event_tooltip_all[i]
+            label: this.event_tooltip_all[i],
           });
         } else {
           data_points.push({
             x: this.event_years_all[i],
             y: this.event_max_all[i],
-            label: this.event_tooltip_all[i]
+            label: this.event_tooltip_all[i],
           });
         }
       }
 
       return data_points;
     },
-    yearLegalData: function() {
+    yearLegalData: function () {
       let data_points = [];
       var dataLen = this.event_years_legal.length;
 
@@ -350,29 +296,20 @@ export default {
           data_points.push({
             x: this.event_years_legal[i],
             y: this.event_min_legal[i],
-            label: this.event_tooltip_legal[i]
+            label: this.event_tooltip_legal[i],
           });
         } else {
           data_points.push({
             x: this.event_years_legal[i],
             y: this.event_max_legal[i],
-            label: this.event_tooltip_legal[i]
+            label: this.event_tooltip_legal[i],
           });
         }
       }
 
       return data_points;
     },
-    sortedData: function() {
-      return this.event_data.sort((a, b) => {
-        let modifier = 1;
-        if (this.currentSortDir === "desc") modifier = -1;
-        if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-        if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
-        return 0;
-      });
-    }
-  }
+  },
 };
 </script>
 
