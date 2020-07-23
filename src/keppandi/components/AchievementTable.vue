@@ -63,8 +63,17 @@ export default {
       return this.event_data.sort((a, b) => {
         let modifier = 1;
         if (this.currentSortDir === "desc") modifier = -1;
-        if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-        if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+
+        if (this.currentSort == "Results" || this.currentSort == "Wind" || this.currentSort == "Age") {
+          if (parseFloat(a[this.currentSort]) < parseFloat(b[this.currentSort]))
+            return -1 * modifier;
+          if (parseFloat(a[this.currentSort]) > parseFloat(b[this.currentSort]))
+            return 1 * modifier;
+        } else {
+          if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+          if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+        }
+        
         return 0;
       });
     },
