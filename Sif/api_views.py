@@ -9,6 +9,7 @@ from django.views.decorators.cache import cache_page
 
 from Sif import settings
 from Sif import data
+from Sif import records
 
 # Other
 import os
@@ -101,3 +102,8 @@ def competitor_img_action(request, CompetitorCode):
         response = HttpResponse(content_type="image/png")
         blank.save(response, "PNG")
         return response
+
+@cache_page(60 * 15)
+def competitor_records(request, CompetitorCode):
+    Records = Get_Competitor_Records(CompetitorCode)
+    return JsonResponse(Records, safe=False)

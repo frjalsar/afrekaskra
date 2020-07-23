@@ -6,6 +6,7 @@
       class="form-control text-center"
       placeholder="Leita (t.d. Kristinn FH)"
       @input="searchInput"
+      ref="athleteSearch"
     />
     <!-- -->
     <div class="row">
@@ -93,7 +94,7 @@ export default {
       if (this.searchQ.length >= 3) {
         this.search();
       }
-    }, 350),
+    }, 600),
     //     searchInput: function(e) {
     //       this.searchQ = e.target && e.target.value
     //   // Only search on 3
@@ -120,7 +121,8 @@ export default {
           this.athletes = response["data"];
           this.cancelSource = null;
           this.loading = false;
-          
+          //console.log(this.$refs)
+          this.$refs.athleteSearch.scrollIntoView({ scrollBehavior: 'smooth' });
         })
         .catch(error => {
           //console.log("ERROR");

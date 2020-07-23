@@ -51,7 +51,7 @@
               </tr>
             </tbody>
           </table>
-          <highcharts class="chart" :options="chartOptions" v-show="!showAllEvents"></highcharts>
+          <piechart :data="pieData" ref="pieChart" v-show="!showAllEvents"></piechart>
         </div>
         <div class="card-footer text-muted text-center">
           <a href="#" v-on:click.prevent="toggle_showEvents($event)">Sýna meira/minna</a>
@@ -65,12 +65,14 @@
 import axios from "axios";
 //import { Chart } from "highcharts-vue";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+import PieChart from "./components/PieChart.vue";
 
 export default {
   name: "KeppandiSingle",
   components: {
     //highcharts: Chart,
-    PulseLoader
+    piechart: PieChart,
+    PulseLoader,
   },
   data() {
     return {
@@ -85,48 +87,6 @@ export default {
       competitorID: null,
       message: "",
       showAllEvents: false,
-
-      chartOptions: {
-        chart: {
-          type: "pie"
-        },
-        credits: {
-          enabled: false
-        },
-        accessibility: {
-          point: {
-            valueSuffix: "%"
-          }
-        },
-        tooltip: {
-          pointFormat: "{series.name}: <b>{point.percentage:.2f}%</b>"
-        },
-        title: {
-          text: ""
-        },
-        plotOptions: {
-          pie: {
-            dataLabels: {
-                enabled: true,
-                connectorShape: 'fixedOffset',
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-            },
-            enableMouseTracking: true
-          }
-        },
-        series: [
-          {
-            name: "Hlutafall",
-            colorByPoint: true,
-            data: [
-              {
-                name: "Grein",
-                y: 1
-              }
-            ]
-          }
-        ]
-      }
     };
   },
   created() {
@@ -136,16 +96,50 @@ export default {
   //beforeDestroy() {
   //  document.title = "Afrekaskrá FRÍ";
   //},
+  computed: {
+    pieData: function() {
+            //console.log("Process data");
+      var dataLen = this.event_info.length;
+
+      let total = 0;
+      for (var i = 0; i < dataLen; i++) {
+        total = total + this.event_info[i].count;
+      }
+
+      let data_points = [];
+      let other = 0;
+      let per = 0;
+      for (var i = 0; i < dataLen; i++) {
+        per = (this.event_info[i].count / total) * 100;
+
+        if (per < 1.5) {
+          other = other + per;
+        } else {
+          data_points.push({
+            name: this.event_info[i].EventShortName,
+            y: per,
+          });
+        }
+      }
+
+      if (other > 0) {
+        data_points.push({ name: "Aðrar greinar", y: other });
+      }
+
+      //console.log(data_points);
+      return data_points;
+    }
+  },
   methods: {
     onClick(item) {
       //alert(item.EventID);
       //this.$router.push("/keppandi/" + this.competitorID + "/" + item.EventID)
       this.$router.push({
         name: "CompetitorEvent",
-        params: { competitorID: this.competitorID, eventID: item.EventID }
+        params: { competitorID: this.competitorID, eventID: item.EventID },
       });
     },
-    get_data: function() {
+    get_data: function () {
       this.$parent.loading = true;
       this.message = "Næ í gögn ekki stökkva langt 😉";
 
@@ -168,10 +162,10 @@ export default {
               " (" +
               this.competitor_info.Club +
               ")";
-            this.processData();
+            //this.processData();
           })
         )
-        .catch(error => {
+        .catch((error) => {
           this.message = "Villa frá vefþjóni (" + error + ") 😭";
           document.title = "Afrekaskrá FRÍ";
         })
@@ -182,7 +176,7 @@ export default {
           this.isReady = true;
         });
     },
-    processData: function() {
+/*     processData: function () {
       //console.log("Process data");
       var dataLen = this.event_info.length;
 
@@ -202,7 +196,7 @@ export default {
         } else {
           data_points.push({
             name: this.event_info[i].EventShortName,
-            y: per
+            y: per,
           });
         }
       }
@@ -213,11 +207,11 @@ export default {
 
       //console.log(data_points);
       this.chartOptions.series[0].data = data_points;
-    },
-    toggle_showEvents: function(event) {
+    }, */
+    toggle_showEvents: function (event) {
       this.showAllEvents = !this.showAllEvents;
-    }
-  }
+    },
+  },
 };
 </script>
 
