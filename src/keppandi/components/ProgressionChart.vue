@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Highcharts from 'highcharts'
+import Highcharts from "highcharts";
 
 export default {
   props: ["data"],
@@ -13,42 +13,47 @@ export default {
     chartOptions() {
       return {
         credits: {
-          enabled: false
+          enabled: false,
         },
         exporting: {
-          enabled: true
+          enabled: true,
         },
         title: {
-          text: ""
+          text: "",
         },
         legend: {
-          enabled: false
+          enabled: false,
         },
         yAxis: {
           title: {
-            text: "Árangur"
-          }
+            text: "Árangur",
+          },
         },
         xAxis: {
-          type: "datetime"
+          type: "datetime",
         },
         tooltip: {
           crosshairs: [false],
           shared: false,
-          formatter: function() {
+          formatter: function () {
             return this.point.label;
-          }
+          },
         },
         plotOptions: {
           line: {
             dataLabels: {
               enabled: true,
-              formatter: function() {
+              formatter: function () {
                 return Highcharts.numberFormat(this.y, 2);
-              }
+              },
             },
-            enableMouseTracking: true
-          }
+            enableMouseTracking: true,
+          },
+        },
+        navigation: {
+          buttonOptions: {
+            align: "left",
+          },
         },
         series: [
           {
@@ -61,17 +66,17 @@ export default {
               enabled: true,
               fillColor: "#FFFFFF",
               lineWidth: 2,
-              lineColor: null // inherit from series
+              lineColor: null, // inherit from series
             },
             /*             tooltip: {
               //valueSuffix: " m",
               valueDecimals: 2
             }, */
-            data: this.data
-          }
-        ]
+            data: this.data,
+          },
+        ],
       };
-    }
-  }
+    },
+  },
 };
 </script>

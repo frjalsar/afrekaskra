@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Highcharts from 'highcharts'
+import Highcharts from "highcharts";
 
 export default {
   props: ["alldata", "legaldata"],
@@ -13,26 +13,31 @@ export default {
     chartOptions() {
       return {
         credits: {
-          enabled: false
+          enabled: false,
         },
         exporting: {
-          enabled: true
+          enabled: true,
+        },
+        navigation: {
+          buttonOptions: {
+            align: "left",
+          },
         },
         title: {
-          text: ""
+          text: "",
         },
         legend: {
-          enabled: true
+          enabled: true,
         },
         yAxis: {
           title: {
-            text: "Árangur"
-          }
+            text: "Árangur",
+          },
         },
         tooltip: {
           crosshairs: [false, false],
           shared: true,
-          formatter: function() {
+          formatter: function () {
             if (this.points.length < 2) {
               return this.points[0].point.label;
             } else {
@@ -48,18 +53,18 @@ export default {
                 this.points[1].point.label
               );
             }
-          }
+          },
         },
         plotOptions: {
           spline: {
             dataLabels: {
               enabled: true,
-              formatter: function() {
+              formatter: function () {
                 return Highcharts.numberFormat(this.y, 2);
-              }
+              },
             },
-            enableMouseTracking: true
-          }
+            enableMouseTracking: true,
+          },
         },
         series: [
           {
@@ -75,9 +80,9 @@ export default {
               enabled: true,
               fillColor: "#FFFFFF",
               lineWidth: 2,
-              lineColor: null // inherit from series
+              lineColor: null, // inherit from series
             },
-            data: this.legaldata
+            data: this.legaldata,
           },
           {
             name: "Allir árangrar",
@@ -92,13 +97,13 @@ export default {
               enabled: true,
               fillColor: "#FFFFFF",
               lineWidth: 2,
-              lineColor: null // inherit from series
+              lineColor: null, // inherit from series
             },
-            data: this.alldata
-          }
-        ]
+            data: this.alldata,
+          },
+        ],
       };
-    }
-  }
+    },
+  },
 };
 </script>
