@@ -9,13 +9,16 @@ from django.db.models import Q
 # Settings
 from Sif import settings
 
+from babel.dates import format_date, format_datetime, format_time
+from Sif import common
+
 def Get_Competitor_Records(CompetitorCode):
     q = AthlMetaskrFr.objects.all().filter(methafi__iexact=CompetitorCode).order_by('aldursflokkur_frí', 'dagsetning_mets')
 
     record_list = []
     for record in q:
         wind_str = '{:+.1f}'.format(float(record.vindur))
-        results = results_to_float(record.árangur.replace(',', '.'))
+        results = common.results_to_float(record.árangur.replace(',', '.'))
         results_str = record.árangur
         date_str = format_date(record.dagsetning_mets.date(), "d MMM yyyy", locale='is_IS').upper()
         active = record.virkt
@@ -29,7 +32,7 @@ def Get_Competitor_Records(CompetitorCode):
                        'Club': club,
                        'Inout': inout,
                        'AgeGroup': agegroup,
-                       'age': age,
+                       'Age': age,
                        'isActive': active,
                        'Date': date_str,
                        'Results': results,

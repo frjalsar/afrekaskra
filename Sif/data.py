@@ -17,75 +17,13 @@ import numpy as np
 import os
 from babel.dates import format_date, format_datetime, format_time
 
+from Sif import common
+
 # Events
 EVENT_LIST_FILENAME = os.path.join(settings.BASE_DIR, 'Sif/event_list.pickle')
+CLUB_LIST_FILENAME = os.path.join(settings.BASE_DIR, 'Sif/clubs.csv')
 df_event_list = pd.read_pickle(EVENT_LIST_FILENAME)
 
-# Units
-Units_symbol = {1: 'm', 2: 's', 3: 'mm:ss,dd', 4: 'hh:mm:ss,dd', 5: 'stig', 6: 'stig'}
-
-# stuff
-import re
-prog_time = re.compile('^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?(\d+\.?\d*)?$') # Notum regex
-
-#-------------------------------------------------------------------------------
-# Fall sem breytir streng með árangri yfir í rauntölu
-# '65.76' -> 65.76
-# ''      -> NaN
-# 'ABCD'  -> NaN
-# Ef strengurinn er tími á forminu HH:MM:SS.FF þá er honum breytt yfir í sek
-# '02:43.45' -> 2*60 + 43.45 = 163.45
-# '01:02.45' -> 1*60*60 + 2*60 + 43.45 = 3763.45
-def results_to_float_old(in_str):
-    #prog_time = re.compile('^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?(\d+\.?\d*)?$') # Notum regex
-    m = prog_time.match(str(in_str).replace(',', '.'))
-    if (m): # Athuga hvort við fengum match
-
-        if (m.group(1) is None and m.group(2) is None and m.group(3) is None):
-            return np.nan # Eitthvað skrítið í gangi eða tómur strengur skila NaN
-
-        time_sec = 0.0 # Breytum yfir í sek ef þetta er tími
-        if (m.group(1) is not None):
-            time_sec = float(m.group(1))*3600.0 # 60*60 = 3600
-        if (m.group(2) is not None):
-            time_sec = time_sec + float(m.group(2))*60.0
-        if (m.group(3) is not None):
-            time_sec = time_sec + float(m.group(3))
-
-        return time_sec
-    else:
-        print('String er')
-        print(in_str)
-        print('Error')
-        raise ValueError()
-        return None
-
-def results_to_float(in_str):
-    split = str(in_str).replace(',', '.').split('.')
-    hh = 0
-    mm = 0
-    ss = 0
-    dd = 0
-    
-    if (len(split) == 2): # hh:mm:ss,dd eða mm:ss,dd eða ss,dd
-        dd = float(split[1])/100
-    
-    split = split[0].split(':')
-    if (len(split) == 3): # hh:mm:ss
-        hh = float(split[0])
-        mm = float(split[1])
-        ss = float(split[2])
-    elif (len(split) == 2): # mm:ss
-        mm = float(split[0])
-        ss = float(split[1])
-    elif (len(split) == 1): # ss
-        try:
-            ss = float(split[0])
-        except ValueError: # Some results are stored as DNF.
-            ss = -1.0 
-        
-    time_sec = hh*3600 + mm*60 + ss + dd
-    return time_sec
 
 def Get_List_of_Years():
     #df = pd.DataFrame(list(AthlAfrek.objects.values('dagsetning')))
@@ -115,12 +53,13 @@ def Get_Event_Info(Event_id):
         EventShorterName = df_event_list['Name_ISL'].values[Event_id].replace('metra', 'm').replace('hlaup', '').replace('grind', 'gr.').replace('atrennu', 'atr.')
         Event_Info = {'THORID_1': df_event_list['THORID_1'].values[Event_id],
                       'Units': Units,
-                      'Units_symbol': Units_symbol[Units],
+                      'Units_symbol': common.Units_symbol[Units],
                       'Minimize': minimize,
                       'ShortName': EventShorterName, #df_event_list['ShortName'].values[Event_id],
                       'Name_ISL': df_event_list['Name_ISL'].values[Event_id],
                       'HasWind': df_event_list['Wind'].values[Event_id]}
     except:
+        print(Event_id)
         raise Http404('Gat ekki fundið grein.')
 
     return Event_Info
@@ -138,7 +77,7 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
     df['dagsetning'] = pd.to_datetime(df['dagsetning'], dayfirst=True)
 
     # Breytum öllum árangri yfir í rauntölur
-    df['árangur_float'] = df['árangur'].map(results_to_float)
+    df['árangur_float'] = df['árangur'].map(common.results_to_float)
 
     # Röðum árangri, fyrst eftir árangri og svo eftir dagsetningu ef árangrar eru jafnir.
     if (Event_Info['Minimize'] == True):
@@ -195,7 +134,7 @@ def Convert_Achievements_to_List(q, minimize_results, best_by_ath, units):
         wind_str = '{:+.1f}'.format(float(Achievement.vindur))
 
         # Turn results into string with two decimals after period or one if hand timing.
-        results = results_to_float(Achievement.árangur.replace(',', '.'))
+        results = common.results_to_float(Achievement.árangur.replace(',', '.'))
         try:
             if (Achievement.rafmagnstímataka == 0 and minimize_results == True):
                 result_str = '{:.1f}'.format(results)
@@ -316,7 +255,7 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
     df['Dagsetn.'] = pd.to_datetime(df['dagsetning'], dayfirst=True)
 
     # Breytum öllum árangri yfir í rauntölur
-    df['Árangur_float'] = df['Árangur'].map(results_to_float)
+    df['Árangur_float'] = df['Árangur'].map(common.results_to_float)
 
     # Búa til lista yfir greinar
     list_events = df['tákn_greinar'].copy() # copy til að búa til afrit
@@ -487,7 +426,7 @@ def Get_Competitor_Event(CompetitorCode, Event_id):
     df['dagsetning'] = pd.to_datetime(df['dagsetning'], dayfirst=True)
 
     # Breytum öllum árangri yfir í rauntölur
-    df['árangur_float'] = df['árangur'].map(results_to_float)
+    df['árangur_float'] = df['árangur'].map(common.results_to_float)
 
     year_arr_all, results_year_max_all, results_year_min_all, _, _, tooltip_str_all = filter_year_best(df, True, False, event_info['Units_symbol'])
     df_legal = df.loc[df['vindur'] <= 2.0]
@@ -647,6 +586,17 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
     Achievements_list = Convert_Achievements_to_List_PD(q, BestByAth, Event_Info)
 
     return Achievements_list[:100], Event_Info
+
+def Get_Club_List():
+    df_clubs = pd.read_csv(CLUB_LIST_FILENAME)
+    list_of_clubs = []
+    for index, row in df_clubs.iterrows():
+        club_info = {'ShortName': row['shortname'],
+                     'FullName': row['fullname'],
+                     'ThorID': row['thorid']}
+        list_of_clubs.append(club_info)
+
+    return list_of_clubs
 
 def Get_Competitor_List(q):
 

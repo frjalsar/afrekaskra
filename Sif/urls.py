@@ -41,9 +41,10 @@ urlpatterns = [
     path(r'api/achievements/<int:CompetitorCode>/<int:Event_id>/', api_views.competitor_achievements, name='api_achievements'),
     path(r'api/top_list/<int:Event_id>/<int:IndoorOutDoor>/<int:Gender>/<int:Year>/<int:AgeStart>/<int:AgeEnd>/<int:Legal>/<int:ISL>/<int:BestByAth>/', api_views.Get_Top_100, name='api_top100'),
     path(r'api/keppandi/', api_views.competitor_list, name='api_competitor_list'),
-    path(r'api/img/profile/<int:CompetitorCode>', api_views.competitor_img_profile),
-    path(r'api/img/action/<int:CompetitorCode>', api_views.competitor_img_action),
-    path(r'api/records/<int:CompetitorCode>', api_views.competitor_records)
+    path(r'api/clubs/', api_views.club_list, name='api_club_list'),
+    path(r'api/img/profile/<int:CompetitorCode>/', api_views.competitor_img_profile),
+    path(r'api/img/action/<int:CompetitorCode>/', api_views.competitor_img_action),
+    path(r'api/records/<int:CompetitorCode>/', api_views.competitor_records)
 ]
 
 #if 'SIF_LOCAL' in os.environ:

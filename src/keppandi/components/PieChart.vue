@@ -1,8 +1,7 @@
 <template>
   <div>
     <p align="center">
-      <i class="fas fa-chart-pie"></i>
-      <small>Fjöldi keppna í hverri grein</small>
+      <h2 class="display-4">Skipting greina</h2>
     </p>
     <highcharts class="chart" :options="chartOptions" ref="chart"></highcharts>
   </div>

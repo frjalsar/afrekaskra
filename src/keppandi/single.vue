@@ -26,13 +26,13 @@
           </div>
         </div>
         <div class="card-body">
-          <pbtable :data="event_info" :showAllEvents="showAllEvents" :competitorID="competitorID" ref="pbtable"></pbtable>
+          <recordstable :competitorID="competitorID"></recordstable>
+          <pbtable :data="event_info" :competitorID="competitorID" ref="pbtable"></pbtable>
+          <br />
+          <piechart :data="pieData" ref="pieChart"></piechart>
         </div>
-        <div class="card-footer text-muted text-center">
-          <a href="#" v-on:click.prevent="toggle_showEvents($event)">Sýna meira/minna</a>
-        </div>
+        <div class="card-footer text-muted text-center"></div>
       </div>
-      <piechart :data="pieData" ref="pieChart" v-show="!showAllEvents"></piechart>
     </div>
   </div>
 </template>
@@ -43,6 +43,7 @@ import axios from "axios";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import PieChart from "./components/PieChart.vue";
 import PBTable from "./components/PBTable.vue";
+import RecordsTable from "./components/RecordsTable.vue";
 
 export default {
   name: "KeppandiSingle",
@@ -50,6 +51,7 @@ export default {
     //highcharts: Chart,
     piechart: PieChart,
     pbtable: PBTable,
+    recordstable: RecordsTable,
     PulseLoader,
   },
   data() {
@@ -64,10 +66,10 @@ export default {
       isReady: false,
       competitorID: null,
       message: "",
-      showAllEvents: false,
     };
   },
   created() {
+    //console.log('Created')
     this.competitorID = this.$route.params.competitorID;
     this.get_data();
   },
@@ -75,8 +77,8 @@ export default {
   //  document.title = "Afrekaskrá FRÍ";
   //},
   computed: {
-    pieData: function() {
-            //console.log("Process data");
+    pieData: function () {
+      //console.log("Process data");
       var dataLen = this.event_info.length;
 
       let total = 0;
@@ -93,12 +95,12 @@ export default {
 
         if (per < 1.5) {
           other = other + per;
-          other_count = other_count + this.event_info[i].count
+          other_count = other_count + this.event_info[i].count;
         } else {
           data_points.push({
             name: this.event_info[i].EventShortName,
             y: per,
-            z: this.event_info[i].count 
+            z: this.event_info[i].count,
           });
         }
       }
@@ -109,7 +111,7 @@ export default {
 
       //console.log(data_points);
       return data_points;
-    }
+    },
   },
   methods: {
     get_data: function () {
@@ -117,6 +119,7 @@ export default {
       this.message = "Næ í gögn ekki stökkva langt 😉";
 
       this.data = [];
+      //console.log('Getting data')
 
       var url = "/api/keppandi/" + this.competitorID + "/";
       axios
@@ -135,11 +138,11 @@ export default {
               " (" +
               this.competitor_info.Club +
               ")";
-
           })
         )
         .catch((error) => {
           this.message = "Villa frá vefþjóni (" + error + ") 😭";
+          console.log("Error getting data");
           document.title = "Afrekaskrá FRÍ";
         })
         .finally(() => {
@@ -148,9 +151,6 @@ export default {
           //this.$parent.do_stuff()
           this.isReady = true;
         });
-    },
-    toggle_showEvents: function (event) {
-      this.showAllEvents = !this.showAllEvents;
     },
   },
 };

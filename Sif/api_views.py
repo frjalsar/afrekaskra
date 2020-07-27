@@ -64,6 +64,11 @@ def competitor_list(request):
     #    return HttpResponseServerError('<h1>Server Error (500)</h1>', content_type='text/html')
 
 @cache_page(60 * 15)
+def club_list(request):
+    list_of_clubs = data.Get_Club_List()
+    return JsonResponse(list_of_clubs, safe=False)
+
+@cache_page(60 * 15)
 def events(request, Event_id=None):
     event_list = data.Get_List_of_Events(CompetitorCode=None, Event_id=Event_id)
     #print(event_list)
@@ -105,5 +110,5 @@ def competitor_img_action(request, CompetitorCode):
 
 @cache_page(60 * 15)
 def competitor_records(request, CompetitorCode):
-    Records = Get_Competitor_Records(CompetitorCode)
+    Records = records.Get_Competitor_Records(CompetitorCode)
     return JsonResponse(Records, safe=False)
