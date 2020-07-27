@@ -650,8 +650,8 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
 
 def Get_Competitor_List(q):
 
-    names_q = Competitors.objects.using('competitor_list').all()
-    #names_q = AthlCompetitors.objects.all()
+    #names_q = Competitors.objects.using('competitor_list').all()
+    names_q = AthlCompetitors.objects.all()
 
     for i in q.split(' '):
         if (len(i) > 3):
