@@ -654,7 +654,7 @@ def Get_Competitor_List(q):
     names_q = AthlCompetitors.objects.all()
 
     for i in q.split(' '):
-        if (len(i) > 3):
+        if (len(i) > 2):
             names_q = names_q.filter(
               Q(nafn__icontains=i)
             | Q(félag__icontains=i)
@@ -662,11 +662,11 @@ def Get_Competitor_List(q):
 
     results = []
 
-    #df = pd.DataFrame.from_records(names_q.values_list('númer', 'nafn', 'fæðingarár', 'félag'),
-    #                                          columns=['keppandanúmer', 'nafn', 'fæðingarár', 'félag'])
-
-    df = pd.DataFrame.from_records(names_q.values_list('keppandanúmer', 'nafn', 'fæðingarár', 'félag', 'dagsetning'),
+    df = pd.DataFrame.from_records(names_q.values_list('númer', 'nafn', 'fæðingarár', 'félag', 'dags_síðast_uppfært'),
                                               columns=['keppandanúmer', 'nafn', 'fæðingarár', 'félag', 'dagsetning'])
+
+    #df = pd.DataFrame.from_records(names_q.values_list('keppandanúmer', 'nafn', 'fæðingarár', 'félag', 'dagsetning'),
+    #                                          columns=['keppandanúmer', 'nafn', 'fæðingarár', 'félag', 'dagsetning'])
 
     df['dagsetning'] = pd.to_datetime(df['dagsetning'], dayfirst=True)
     df.sort_values(by=['dagsetning'], ascending=[False], inplace=True)
