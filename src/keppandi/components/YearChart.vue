@@ -80,7 +80,7 @@ export default {
             data: this.legaldata
           },
           {
-            name: "Allur árangur",
+            name: "Allir árangrar",
             connectNulls: false,
             visible: false,
             type: "spline",

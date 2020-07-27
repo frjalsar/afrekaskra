@@ -86,22 +86,25 @@ export default {
 
       let data_points = [];
       let other = 0;
+      let other_count = 0;
       let per = 0;
       for (var i = 0; i < dataLen; i++) {
         per = (this.event_info[i].count / total) * 100;
 
         if (per < 1.5) {
           other = other + per;
+          other_count = other_count + this.event_info[i].count
         } else {
           data_points.push({
             name: this.event_info[i].EventShortName,
             y: per,
+            z: this.event_info[i].count 
           });
         }
       }
 
       if (other > 0) {
-        data_points.push({ name: "Aðrar greinar", y: other });
+        data_points.push({ name: "Aðrar greinar", y: other, z: other_count });
       }
 
       //console.log(data_points);

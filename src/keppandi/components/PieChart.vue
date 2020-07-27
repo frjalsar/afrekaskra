@@ -1,6 +1,6 @@
 <template>
   <div>
-      <p align="center"><i class="fas fa-chart-pie"></i> <small>Greinar</small></p>
+      <p align="center"><i class="fas fa-chart-pie"></i> <small>Fjöldi keppna í hverri grein</small></p>
     <highcharts class="chart" :options="chartOptions" ref="chart"></highcharts>
   </div>
 </template>
@@ -35,9 +35,9 @@ export default {
             dataLabels: {
               enabled: true,
               connectorShape: "fixedOffset",
-              format: "<b>{point.name}</b>: {point.percentage:.1f} %",
+              format: "<b>{point.name}</b>: {point.z} ({point.percentage:.1f} %)",
             },
-            enableMouseTracking: true,
+            enableMouseTracking: false,
           },
         },
         series: [
