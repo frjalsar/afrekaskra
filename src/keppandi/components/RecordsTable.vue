@@ -42,7 +42,7 @@
       v-on:click.prevent="toggle_showEvents($event)"
       v-if="showMoreLessButton"
     >Sýna meira/minna</a>
-    <br>
+    <br />
   </div>
 </template>
 
@@ -58,7 +58,7 @@ export default {
       showAllRecords: false,
       record_data: [],
       showMoreLessButton: false,
-      showRecordsTable: false
+      showRecordsTable: false,
     };
   },
   created() {
@@ -119,12 +119,12 @@ export default {
         )
         .catch((error) => {
           console.log("Error getting records data.");
-          this.showRecordsTable = false
+          this.showRecordsTable = false;
         })
         .finally(() => {
           //console.log("Finally");
           if (this.record_data.length > 0) {
-              this.showRecordsTable = true
+            this.showRecordsTable = true;
           }
           if (this.record_data.length > 5) {
             this.showMoreLessButton = true;

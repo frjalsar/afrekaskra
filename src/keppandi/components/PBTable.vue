@@ -28,6 +28,7 @@
       </tbody>
     </table>
     <a href="#" v-on:click.prevent="toggle_showEvents($event)" v-if="showMoreLessButton">Sýna meira/minna</a>
+    <br />
   </div>
 </template>
 
