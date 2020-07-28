@@ -34,7 +34,7 @@
         <tbody>
           <tr v-for="(i, index) in sortedDataActive" v-show="(index < 5) || showAllActiveRecords">
             <th scope="row">{{i.Event}}</th>
-            <td>{{i.Results}}</td>
+            <td>{{i.Results.toFixed(2)}}</td>
             <td>{{i.Wind}}</td>
             <td>{{i.Inout}}</td>
             <td>{{i.Date}}</td>
@@ -85,7 +85,7 @@
         <tbody>
           <tr v-for="(i, index) in sortedDataunActive" v-show="(index < 5) || showAllunActiveRecords">
             <th scope="row">{{i.Event}}</th>
-            <td>{{i.Results}}</td>
+            <td>{{i.Results.toFixed(2)}}</td>
             <td>{{i.Wind}}</td>
             <td>{{i.Inout}}</td>
             <td>{{i.Date}}</td>

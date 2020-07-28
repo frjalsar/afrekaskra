@@ -5,8 +5,8 @@
         <h5 class="card-title">Velkominn til Sifjar</h5>
         <p>
           Sif heldur utan um afrekaskrá
-          <a href="http://www.fri.is">Frjálsíþrótta sambands Íslands</a> (FRÍ) og er eiginkona
-          <a href="http://thor.fri.is">Þórs</a> móta forrits FRÍ.
+          <a href="http://www.fri.is">Frjálsíþróttasambands Íslands</a> (FRÍ) og er eiginkona
+          <a href="http://thor.fri.is">Þórs</a> mótaforrits FRÍ.
           <!--Þór var skapaður af
           <a href="/keppandi/2487">Friðrik Þór</a> til að safna saman gögnum um íslenska keppendur í frjálsum íþróttum.-->
           <!--Sif fær öll gögnin sín frá Þór og vinnur úr þeim.-->
@@ -32,6 +32,15 @@
         <p
           class="card-text"
         >Veldu grein hér að neðan og Sif sýnir þér 100 bestu afrek hvers árs eða frá upphafi.</p>
+      </div>
+    </div>
+    <!---->
+        <div class="card mt-4">
+      <div class="card-header">Fyrirspurn</div>
+      <div class="card-body">
+        <p
+          class="card-text"
+        >Ertu með flóknari fyrirspurn. Prófaðu að spyrja Þór með því að smella <a href="http://mot.fri.is/MotFRI/Statistics.aspx">hér <i class="fas fa-external-link-alt"></i></a>.</p>
       </div>
     </div>
   </div>

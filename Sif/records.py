@@ -36,7 +36,7 @@ def Get_Competitor_Records(CompetitorCode):
                        'isActive': active,
                        'Date': date_str,
                        'Results': results,
-                       'Results_str': results_str,
+                       'Results_str': '{.2f}'.format(results),
                        'Wind': wind_str
                       }
 
