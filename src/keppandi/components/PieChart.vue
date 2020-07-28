@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="display-4">Skipting greina</h2>
+    <h2 class="display-4">Skipting</h2>
     <p><small>Heildar fjöldi skráðra afreka í afrekaskrá FRÍ er <b>{{total_count}}</b>. Skipting milli greina er eftirfarandi:</small></p>
     <highcharts class="chart" :options="chartOptions" ref="chart"></highcharts>
   </div>
@@ -102,3 +102,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.display-4 {
+  margin-top: 1rem;
+}
+</style>

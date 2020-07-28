@@ -41,8 +41,7 @@
       href="#"
       v-on:click.prevent="toggle_showEvents($event)"
       v-if="showMoreLessButton"
-    >Sýna meira/minna</a>
-    <br />
+    >{{textMoreLess}}</a>
   </div>
 </template>
 
@@ -65,6 +64,13 @@ export default {
     this.Get_Records_Data();
   },
   computed: {
+    textMoreLess: function () {
+      if (this.showAllRecords == false) {
+        return "Sýna meira";
+      } else {
+        return "Sýna minna";
+      }
+    },
     sortedData: function () {
       //console.log("Sorting data");
       return this.record_data.sort((a, b) => {
@@ -134,3 +140,16 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.table {
+  margin-bottom: 0;
+}
+.td {
+  text-align: center;
+  vertical-align: middle;
+}
+.display-4 {
+  margin-top: 1rem;
+}
+</style>

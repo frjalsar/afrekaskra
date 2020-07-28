@@ -1,7 +1,10 @@
 <template>
   <div>
-    <h2 class="display-4">Besti árangur</h2>
-    <p><i class="far fa-hand-pointer"></i> <small>Veldu grein í töflunni til að sjá meiri upplýsingar um hana.</small></p>
+    <h2 class="display-4">Árangur</h2>
+    <p>
+      <i class="far fa-hand-pointer"></i>
+      <small>Veldu grein í töflunni til að sjá meiri upplýsingar um hana.</small>
+    </p>
     <table class="table table-striped table-hover table-responsive-sm table-sm">
       <col span="1" class="wide" />
       <thead>
@@ -31,8 +34,11 @@
         </tr>
       </tbody>
     </table>
-    <a href="#" v-on:click.prevent="toggle_showEvents($event)" v-if="showMoreLessButton">Sýna meira/minna</a>
-    <br />
+    <a
+      href="#"
+      v-on:click.prevent="toggle_showEvents($event)"
+      v-if="showMoreLessButton"
+    >{{textMoreLess}}</a>
   </div>
 </template>
 
@@ -41,15 +47,22 @@ export default {
   props: ["data", "competitorID"],
   data() {
     return {
-      showAllEvents: false
-    }
+      showAllEvents: false,
+    };
   },
   computed: {
+    textMoreLess: function () {
+      if (this.showAllEvents == false) {
+        return "Sýna meira";
+      } else {
+        return "Sýna minna";
+      }
+    },
     showMoreLessButton() {
       if (this.event_info.length > 5) {
-        return true
+        return true;
       } else {
-        return false
+        return false;
       }
     },
     event_info() {
@@ -74,10 +87,13 @@ export default {
 
 <style scoped>
 .table {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 .td {
   text-align: center;
   vertical-align: middle;
+}
+.display-4 {
+  margin-top: 1rem;
 }
 </style>
