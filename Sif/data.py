@@ -362,14 +362,14 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
         sb_cur = ''
         try:
             # Finnum SB inni ef það er til
-            if (df_event_sb_cur.empty == False):
-                print(df_event_sb_cur)
+            if (df_event_nowind_sb_cur.empty == False):
+                print(df_event_nowind_sb_cur)
                 if (event_info['Minimize'] == False):
-                    idx = df_event_sb_cur['Árangur_float'].idxmax()
+                    idx = df_event_nowind_sb_cur['Árangur_float'].idxmax()
                 else:
-                    idx = df_event_sb_cur['Árangur_float'].idxmin()
-
-                sb_cur = df_event_sb_cur['Árangur'][idx]
+                    idx = df_event_nowind_sb_cur['Árangur_float'].idxmin()
+                    
+                sb_cur = df_event_nowind_sb_cur['Árangur'][idx]
                 print(sb_cur)
 
                 # Ef ekki þá athugum við ólöglegan árangur
