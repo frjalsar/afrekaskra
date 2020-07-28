@@ -6,19 +6,19 @@
         <tr>
           <th scope="col" @click="sort('Results')">
             <i class="fas fa-sort"></i>
-            Árangur [{{event_info.Units_symbol}}]
+            &nbsp;Árangur [{{event_info.Units_symbol}}]
           </th>
           <th scope="col" @click="sort('Wind')" v-bind:class="{'d-none': !hasWind}">
-            <i class="fas fa-sort"></i> Vindur
+            <i class="fas fa-sort"></i>&nbsp;Vindur
           </th>
           <th scope="col" @click="sort('Date')">
-            <i class="fas fa-sort"></i> Dags.
+            <i class="fas fa-sort"></i>&nbsp;Dags.
           </th>
           <th scope="col" @click="sort('Age')">
-            <i class="fas fa-sort"></i> Aldur
+            <i class="fas fa-sort"></i>&nbsp;Aldur
           </th>
           <th scope="col" @click="sort('competition_name')">
-            <i class="fas fa-sort"></i> Heiti móts
+            <i class="fas fa-sort"></i>&nbsp;Heiti&nbsp;móts
           </th>
         </tr>
       </thead>
@@ -64,7 +64,11 @@ export default {
         let modifier = 1;
         if (this.currentSortDir === "desc") modifier = -1;
 
-        if (this.currentSort == "Results" || this.currentSort == "Wind" || this.currentSort == "Age") {
+        if (
+          this.currentSort == "Results" ||
+          this.currentSort == "Wind" ||
+          this.currentSort == "Age"
+        ) {
           if (parseFloat(a[this.currentSort]) < parseFloat(b[this.currentSort]))
             return -1 * modifier;
           if (parseFloat(a[this.currentSort]) > parseFloat(b[this.currentSort]))
@@ -73,7 +77,7 @@ export default {
           if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
           if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
         }
-        
+
         return 0;
       });
     },

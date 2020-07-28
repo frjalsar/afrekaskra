@@ -1,47 +1,97 @@
 <template>
   <div v-if="showRecordsTable">
     <h2 class="display-4">Íslandsmet</h2>
-    <table class="table table-striped table-hover table-responsive-sm table-sm">
-      <col span="1" class="wide" />
-      <thead>
-        <tr>
-          <th scope="col" @click="sort('Event')">
-            <i class="fas fa-sort"></i> Grein
-          </th>
-          <th scope="col" @click="sort('Results')">
-            <i class="fas fa-sort"></i>
-            Árangur
-          </th>
-          <th scope="col" @click="sort('Wind')">
-            <i class="fas fa-sort"></i> Vindur
-          </th>
-          <th scope="col" @click="sort('Date')">
-            <i class="fas fa-sort"></i> Dags.
-          </th>
-          <th scope="col" @click="sort('Age')">
-            <i class="fas fa-sort"></i> Aldur
-          </th>
-          <th scope="col" @click="sort('AgeGroup')">
-            <i class="fas fa-sort"></i> Aldursfl.
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(i, index) in sortedData" v-show="(index < 5) || showAllRecords">
-          <th scope="row">{{i.Event}}</th>
-          <td>{{i.Results}}</td>
-          <td>{{i.Wind}}</td>
-          <td>{{i.Date}}</td>
-          <td>{{i.Age}}</td>
-          <td>{{i.AgeGroup}}</td>
-        </tr>
-      </tbody>
-    </table>
-    <a
-      href="#"
-      v-on:click.prevent="toggle_showEvents($event)"
-      v-if="showMoreLessButton"
-    >{{textMoreLess}}</a>
+    <!-- VIRK MET -->
+    <div v-show="showActiveRecordsTable">
+      <h5>Virk met</h5>
+      <table class="table table-striped table-hover table-responsive-sm table-sm">
+        <col span="1" class="wide" />
+        <thead>
+          <tr>
+            <th scope="col" @click="sort('Event')">
+              <i class="fas fa-sort"></i>&nbsp;Grein
+            </th>
+            <th scope="col" @click="sort('Results')">
+              <i class="fas fa-sort"></i>&nbsp;Árangur
+            </th>
+            <th scope="col" @click="sort('Wind')">
+              <i class="fas fa-sort"></i>&nbsp;Vindur
+            </th>
+            <th scope="col" @click="sort('Date')">
+              <i class="fas fa-sort"></i>&nbsp;Dags.
+            </th>
+            <th scope="col" @click="sort('Age')">
+              <i class="fas fa-sort"></i>&nbsp;Aldur
+            </th>
+            <th scope="col" @click="sort('AgeGroup')">
+              <i class="fas fa-sort"></i>&nbsp;Aldursfl.
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(i, index) in sortedDataActive" v-show="(index < 5) || showAllActiveRecords">
+            <th scope="row">{{i.Event}}</th>
+            <td>{{i.Results}}</td>
+            <td>{{i.Wind}}</td>
+            <td>{{i.Date}}</td>
+            <td>{{i.Age}}</td>
+            <td>{{i.AgeGroup}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <a
+        href="#"
+        v-on:click.prevent="toggle_ActiveRecords($event)"
+        v-if="showMoreLessButtonActive"
+      >{{textMoreLessActive}}</a>
+      <p>
+        <br />
+      </p>
+    </div>
+    <!-- ÓVIRK MET -->
+    <div v-show="showunActiveRecordsTable">
+      <h5>Óvirk met</h5>
+      <table class="table table-striped table-hover table-responsive-sm table-sm">
+        <col span="1" class="wide" />
+        <thead>
+          <tr>
+            <th scope="col" @click="sort('Event')">
+              <i class="fas fa-sort"></i>&nbsp;Grein
+            </th>
+            <th scope="col" @click="sort('Results')">
+              <i class="fas fa-sort"></i>&nbsp;Árangur
+            </th>
+            <th scope="col" @click="sort('Wind')">
+              <i class="fas fa-sort"></i>&nbsp;Vindur
+            </th>
+            <th scope="col" @click="sort('Date')">
+              <i class="fas fa-sort"></i>&nbsp;Dags.
+            </th>
+            <th scope="col" @click="sort('Age')">
+              <i class="fas fa-sort"></i>&nbsp;Aldur
+            </th>
+            <th scope="col" @click="sort('AgeGroup')">
+              <i class="fas fa-sort"></i>&nbsp;Aldursfl.
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(i, index) in sortedDataunActive" v-show="(index < 5) || showAllunActiveRecords">
+            <th scope="row">{{i.Event}}</th>
+            <td>{{i.Results}}</td>
+            <td>{{i.Wind}}</td>
+            <td>{{i.Date}}</td>
+            <td>{{i.Age}}</td>
+            <td>{{i.AgeGroup}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <a
+        href="#"
+        v-on:click.prevent="toggle_unActiveRecords($event)"
+        v-if="showMoreLessButtonunActive"
+      >{{textMoreLessunActive}}</a>
+    </div>
   </div>
 </template>
 
@@ -54,26 +104,101 @@ export default {
     return {
       currentSort: "Age",
       currentSortDir: "desc",
-      showAllRecords: false,
+      showAllActiveRecords: false,
+      showAllunActiveRecords: false,
       record_data: [],
-      showMoreLessButton: false,
+      showMoreLessButtonActive: false,
+      showMoreLessButtonunActive: false,
       showRecordsTable: false,
+      showActiveRecordsTable: false,
+      showunActiveRecordsTable: false,
     };
   },
   created() {
     this.Get_Records_Data();
   },
   computed: {
-    textMoreLess: function () {
-      if (this.showAllRecords == false) {
+    textMoreLessActive: function () {
+      if (this.showAllActiveRecords == false) {
         return "Sýna meira";
       } else {
         return "Sýna minna";
       }
     },
-    sortedData: function () {
+    textMoreLessunActive: function () {
+      if (this.showAllunActiveRecords == false) {
+        return "Sýna meira";
+      } else {
+        return "Sýna minna";
+      }
+    },
+    activeRecords: function () {
+      let data = [];
+      let dataLen = this.record_data.length;
+
+      for (var i = 0; i < dataLen; i++) {
+        if (this.record_data[i].isActive == true) {
+          data.push(this.record_data[i]);
+        }
+      }
+
+      console.log(data.length);
+      if (data.length > 0) {
+        this.showActiveRecordsTable = true;
+      }
+
+      if (data.length > 5) {
+        this.showMoreLessButtonActive = true;
+      }
+
+      return data;
+    },
+    unactiveRecords: function () {
+      let data = [];
+      let dataLen = this.record_data.length;
+
+      for (var i = 0; i < dataLen; i++) {
+        if (this.record_data[i].isActive == false) {
+          data.push(this.record_data[i]);
+        }
+      }
+
+      if (data.length > 0) {
+        this.showunActiveRecordsTable = true;
+      }
+
+      if (data.length > 5) {
+        this.showMoreLessButtonunActive = true;
+      }
+
+      return data;
+    },
+    sortedDataunActive: function () {
       //console.log("Sorting data");
-      return this.record_data.sort((a, b) => {
+      return this.unactiveRecords.sort((a, b) => {
+        let modifier = 1;
+        if (this.currentSortDir === "desc") modifier = -1;
+
+        if (
+          this.currentSort == "Results" ||
+          this.currentSort == "Wind" ||
+          this.currentSort == "Age"
+        ) {
+          if (parseFloat(a[this.currentSort]) < parseFloat(b[this.currentSort]))
+            return -1 * modifier;
+          if (parseFloat(a[this.currentSort]) > parseFloat(b[this.currentSort]))
+            return 1 * modifier;
+        } else {
+          if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+          if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+        }
+
+        return 0;
+      });
+    },
+    sortedDataActive: function () {
+      //console.log("Sorting data");
+      return this.activeRecords.sort((a, b) => {
         let modifier = 1;
         if (this.currentSortDir === "desc") modifier = -1;
 
@@ -96,8 +221,11 @@ export default {
     },
   },
   methods: {
-    toggle_showEvents: function (event) {
-      this.showAllRecords = !this.showAllRecords;
+    toggle_ActiveRecords: function (event) {
+      this.showAllActiveRecords = !this.showAllActiveRecords;
+    },
+    toggle_unActiveRecords: function (event) {
+      this.showAllunActiveRecords = !this.showAllunActiveRecords;
     },
     sort: function (s) {
       //if s == current sort, reverse

@@ -27,7 +27,7 @@
         </div>
         <div class="card-body">
           <recordstable :competitorID="competitorID"></recordstable>
-          <pbtable :data="event_info" :competitorID="competitorID" ref="pbtable"></pbtable>
+          <pbtable :event_info="event_info" :competitorID="competitorID" ref="pbtable"></pbtable>
           <piechart :event_info="event_info" ref="pieChart"></piechart>
         </div>
         <!--<div class="card-footer text-muted text-center"></div>-->
@@ -77,7 +77,7 @@ export default {
   //},
   methods: {
     get_data: function () {
-      this.$parent.loading = true;
+      //this.$parent.loading = true;
       this.message = "Næ í gögn ekki stökkva langt 😉";
 
       this.data = [];

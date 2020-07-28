@@ -44,7 +44,7 @@
 
 <script>
 export default {
-  props: ["data", "competitorID"],
+  props: ["event_info", "competitorID"],
   data() {
     return {
       showAllEvents: false,
@@ -64,10 +64,7 @@ export default {
       } else {
         return false;
       }
-    },
-    event_info() {
-      return this.data;
-    },
+    }
   },
   methods: {
     onClick(item) {
