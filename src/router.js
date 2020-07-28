@@ -15,10 +15,10 @@ export default new Router({
       path: '/top',
       component: () => import('./top/toplists.vue')
     },
-    {
-      path: '/arsbest',
-      component: () => import('./arsbest/arsbest.vue')
-    },
+    // {
+    //   path: '/arsbest',
+    //   component: () => import('./arsbest/arsbest.vue')
+    // },
     {
       path: '/keppandi',
       name: 'CompetitorList',

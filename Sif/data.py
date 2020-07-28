@@ -228,7 +228,8 @@ def Get_Competitor_Info(CompetitorCode):
                            'FirstName': q.nafn.split(' ', 1)[0],
                            'LastName': q.nafn.split(' ', 1)[-1],
                            'YOB': q.fæðingarár,
-                           'Club': q.félag
+                           'Club': q.félag,
+                           'Sex': q.kyn
                            #'Datetime': datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
                            #'Events': event_list
                            }

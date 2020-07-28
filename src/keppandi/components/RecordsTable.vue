@@ -17,6 +17,9 @@
             <th scope="col" @click="sort('Wind')">
               <i class="fas fa-sort"></i>&nbsp;Vindur
             </th>
+            <th scope="col" @click="sort('inout')">
+              <i class="fas fa-sort"></i>&nbsp;Úti/Inni
+            </th>
             <th scope="col" @click="sort('Date')">
               <i class="fas fa-sort"></i>&nbsp;Dags.
             </th>
@@ -33,6 +36,7 @@
             <th scope="row">{{i.Event}}</th>
             <td>{{i.Results}}</td>
             <td>{{i.Wind}}</td>
+            <td>{{i.Inout}}</td>
             <td>{{i.Date}}</td>
             <td>{{i.Age}}</td>
             <td>{{i.AgeGroup}}</td>
@@ -64,6 +68,9 @@
             <th scope="col" @click="sort('Wind')">
               <i class="fas fa-sort"></i>&nbsp;Vindur
             </th>
+            <th scope="col" @click="sort('inout')">
+              <i class="fas fa-sort"></i>&nbsp;Úti/Inni
+            </th>
             <th scope="col" @click="sort('Date')">
               <i class="fas fa-sort"></i>&nbsp;Dags.
             </th>
@@ -80,6 +87,7 @@
             <th scope="row">{{i.Event}}</th>
             <td>{{i.Results}}</td>
             <td>{{i.Wind}}</td>
+            <td>{{i.Inout}}</td>
             <td>{{i.Date}}</td>
             <td>{{i.Age}}</td>
             <td>{{i.AgeGroup}}</td>
@@ -142,7 +150,7 @@ export default {
         }
       }
 
-      console.log(data.length);
+      //console.log(data.length);
       if (data.length > 0) {
         this.showActiveRecordsTable = true;
       }

@@ -5,7 +5,11 @@
       <p style="text-align:center">{{message}}</p>
     </div>
     <div v-if="isReady">
-      {{competitor_info.FirstName}} {{event_info.ShortName}}
+      <h2>
+        <i class="fas" v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"></i> <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
+        <small class="text-muted">- {{competitor_info.Club}} ({{competitor_info.YOB}})</small>
+      </h2>
+      <h4>{{event_info.Name_ISL}}</h4>
       <div class="card">
         <div class="card-header">
           <ul class="nav nav-tabs card-header-tabs pull-right" id="myTab" role="tablist">
@@ -51,6 +55,20 @@
                 <i class="fas fa-chart-line"></i> Bætingar
               </a>
             </li>
+            <li>
+              <a
+                class="nav-link"
+                id="back-tab"
+                data-toggle="tab"
+                href="#back"
+                role="tab"
+                aria-controls="back"
+                aria-selected="false"
+                v-on:click="onBackClick"
+              >
+                <i class="fas fa-backward"></i> Til baka
+              </a>
+            </li>
           </ul>
         </div>
         <div class="card-body">
@@ -82,7 +100,11 @@
           </div>
         </div>
       </div>
-      <achievementtable :event_info="event_info" :showAllEvents="showAllEvents" :event_data="event_data"></achievementtable>
+      <achievementtable
+        :event_info="event_info"
+        :showAllEvents="showAllEvents"
+        :event_data="event_data"
+      ></achievementtable>
     </div>
   </div>
 </template>
@@ -144,6 +166,9 @@ export default {
     this.get_data();
   },
   methods: {
+    onBackClick(event) {
+      this.$router.go(-1);
+    },
     onTabClick(event) {
       //Redraw the graphs on tab click.
       //console.log('TabClick 1')

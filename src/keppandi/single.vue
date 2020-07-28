@@ -17,7 +17,7 @@
               />
             </div>
             <div class="p-2 flex-grow-1 align-self-center">
-              <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
+              <i class="fas" v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"></i> <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
               <br />
               {{competitor_info.Club}}
               <br />

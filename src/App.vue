@@ -29,12 +29,12 @@
         >
           Íslandsmet
         </router-link>
-        <router-link
+<!--         <router-link
           to="/arsbest"
           class="p-2 text-dark"
         >
           Ársbest
-        </router-link>
+        </router-link> -->
         <router-link
           to="/keppandi"
           class="p-2 text-dark"
