@@ -80,7 +80,7 @@ export default {
               enabled: true,
               connectorShape: "fixedOffset",
               format:
-                "<b>{point.name}</b>: {point.z} ({point.percentage:.1f} %)",
+                "<b>{point.name}</b><br />{point.z} ({point.percentage:.1f} %)",
             },
             enableMouseTracking: false,
           },

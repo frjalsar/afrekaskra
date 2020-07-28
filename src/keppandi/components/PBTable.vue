@@ -9,6 +9,8 @@
           <th scope="col">Grein</th>
           <th scope="col">PB úti</th>
           <th scope="col">PB inni</th>
+          <th scope="col">SB {{ new Date().getFullYear() }}</th>
+          <th scope="col">SB {{ new Date().getFullYear()-1 }}</th>
           <!--<th scope="col">Fjöldi</th>-->
         </tr>
       </thead>
@@ -23,6 +25,8 @@
           <th scope="row">{{i.EventShortName}} [{{i.EventUnit}}]</th>
           <td>{{i.PB_out}}</td>
           <td>{{i.PB_in}}</td>
+          <td>{{i.SB_cur}}</td>
+          <td>{{i.SB_last}}</td>
           <!--<td>{{i.count}}</td>-->
         </tr>
       </tbody>

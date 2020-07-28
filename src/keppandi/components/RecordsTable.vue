@@ -22,7 +22,7 @@
             <i class="fas fa-sort"></i> Aldur
           </th>
           <th scope="col" @click="sort('AgeGroup')">
-            <i class="fas fa-sort"></i> Aldursflokkur
+            <i class="fas fa-sort"></i> Aldursfl.
           </th>
         </tr>
       </thead>
