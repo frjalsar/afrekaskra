@@ -239,9 +239,11 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
     for i in list_events:
         #print(i)
         try:
-            event_id = df_event_list[df_event_list['THORID_1'] == i].index.tolist()[0]
+            event_id = events.df_event_list[events.df_event_list['THORID_1'] == i].index.tolist()[0]
         except:
             print('ERROR gat ekki fundið grein')
+            print(i)
+            print(type(i))
             pass
         #print(event_id)
         event_info = events.Get_Event_Info(event_id)
@@ -564,12 +566,12 @@ def Get_List_of_Events(CompetitorCode=None, Event_id=None):
     Event_list = []
     for event in q:
         try:
-            event_info = {'EVENT_ID': int(df_event_list[df_event_list['THORID_1'] == event].index[0]),
-                        'Name_ISL': df_event_list[df_event_list['THORID_1'] == event]['Name_ISL'].values[0],
-                        'Name_ENG': df_event_list[df_event_list['THORID_1'] == event]['Name_ENG'].values[0],
-                        'Name_short': df_event_list[df_event_list['THORID_1'] == event]['ShortName'].values[0],
-                        'Units': int(df_event_list[df_event_list['THORID_1'] == event]['Units'].values[0]),
-                        'Wind': bool(df_event_list[df_event_list['THORID_1'] == event]['Wind'].values[0])}
+            event_info = {'EVENT_ID': int(events.df_event_list[events.df_event_list['THORID_1'] == event].index[0]),
+                        'Name_ISL': events.df_event_list[events.df_event_list['THORID_1'] == event]['Name_ISL'].values[0],
+                        'Name_ENG': events.df_event_list[events.df_event_list['THORID_1'] == event]['Name_ENG'].values[0],
+                        'Name_short': events.df_event_list[events.df_event_list['THORID_1'] == event]['ShortName'].values[0],
+                        'Units': int(events.df_event_list[events.df_event_list['THORID_1'] == event]['Units'].values[0]),
+                        'Wind': bool(events.df_event_list[events.df_event_list['THORID_1'] == event]['Wind'].values[0])}
             if (Event_id == None):
                 Event_list.append(event_info)
             elif (Event_id == event_info['EVENT_ID']):

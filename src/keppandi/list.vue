@@ -23,7 +23,10 @@
           <tbody>
             <tr v-if="loading">
               <td colspan="4" align="center">
+                <div v_if="loading">
                 <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
+                <p>{{message}}<p>
+                <div>
               </td>
             </tr>
             <tr
@@ -103,7 +106,7 @@ export default {
     //   // }
     // },
     search() {
-      var url = this.global_API_URL + "/api/keppandi?term=";
+      var url = this.global_API_URL + "/api/competitor?term=";
 
       this.loading = true;
       this.athletes = [];
