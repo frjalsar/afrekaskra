@@ -6,11 +6,25 @@
 
 <script>
 import Highcharts from "highcharts";
+import moment from "moment";
 
 export default {
-  props: ["data"],
+  props: ["data", "event_info"],
   computed: {
+    strFormat() {
+      switch (this.event_info["Units"]) {
+        case 3:
+          return "{value:%M:%S}"; //%H:%M:%S.%L
+          break;
+        case 4:
+          return "{value:%H:%M:%S}"; //%H:%M:%S.%L
+          break;
+        default:
+          return "{value}";
+      }
+    },
     chartOptions() {
+      var ctx = this;
       return {
         credits: {
           enabled: false,
@@ -28,6 +42,9 @@ export default {
           title: {
             text: "Árangur",
           },
+          labels: {
+            format: this.strFormat,
+          },
         },
         xAxis: {
           type: "datetime",
@@ -44,7 +61,16 @@ export default {
             dataLabels: {
               enabled: true,
               formatter: function () {
-                return Highcharts.numberFormat(this.y, 2);
+                switch (ctx.event_info["Units"]) {
+                  case 3:
+                    return moment.unix(this.y/1000).format("mm:ss,SS");
+                    break;
+                  case 4:
+                    return moment.unix(this.y/1000).format("hh:mm:ss,SS");
+                    break;
+                  default:
+                    return Highcharts.numberFormat(this.y, 2);
+                }
               },
             },
             enableMouseTracking: true,

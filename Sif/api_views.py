@@ -31,6 +31,11 @@ def competitor(request, CompetitorCode=None):
     Event_info = data.Get_Competitor_Events_Info(CompetitorCode)
     return JsonResponse({'Competitor': Competitor_info, 'Events': Event_info}, safe=False)
 
+# Skilar öllum gögnum fyrir tiltekna grein.
+def competitor_event_all(request, CompetitorCode, Event_id):
+    EventData_all = data.Get_Competitor_Event_Data_All(CompetitorCode, Event_id)
+    return JsonResponse(EventData_all, safe=False)
+
 @cache_page(60 * 15)
 def competitor_event(request, CompetitorCode=None, Event_id=None):
     Competitor_info = data.Get_Competitor_Info(CompetitorCode)
@@ -42,11 +47,13 @@ def competitor_event(request, CompetitorCode=None, Event_id=None):
                          'Years_all': Event_min_max_all['Years'],
                          'Max_all': Event_min_max_all['Max'],
                          'Min_all': Event_min_max_all['Min'],
-                         'Tooltip_all': Event_min_max_all['Tooltip'],
+                         'Tooltip_all_max': Event_min_max_all['Tooltip_max'],
+                         'Tooltip_all_min': Event_min_max_all['Tooltip_min'],
                          'Years_legal': Event_min_max_legal['Years'],
                          'Max_legal': Event_min_max_legal['Max'],
                          'Min_legal': Event_min_max_legal['Min'],
-                         'Tooltip_legal': Event_min_max_legal['Tooltip'],
+                         'Tooltip_legal_max': Event_min_max_legal['Tooltip_max'],
+                         'Tooltip_legal_min': Event_min_max_legal['Tooltip_min'],
                          'PB_dates': Event_progession['Dates'],
                          'PBs': Event_progession['PBs'],
                          'PB_tooltip': Event_progession['Tooltip']
@@ -111,4 +118,9 @@ def competitor_img_action(request, CompetitorCode):
 @cache_page(60 * 15)
 def competitor_records(request, CompetitorCode):
     Records = records.Get_Competitor_Records(CompetitorCode)
+    return JsonResponse(Records, safe=False)
+
+@cache_page(60 * 60 * 3)
+def record_birthdays(request):
+    Records = records.Get_Records_Birthdays()
     return JsonResponse(Records, safe=False)

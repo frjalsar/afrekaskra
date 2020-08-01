@@ -34,17 +34,19 @@ urlpatterns = [
     #re_path(r'^top/*', views.top_lists, name="top_lists"),
 
     # API
-    path(r'api/keppandi/<int:CompetitorCode>/', api_views.competitor, name ='api_competitor'),
-    path(r'api/keppandi/<int:CompetitorCode>/<int:Event_id>/', api_views.competitor_event, name ='api_competitor_event'),
+    path(r'api/competitor/<int:CompetitorCode>/', api_views.competitor, name ='api_competitor'),
+    path(r'api/competitor/<int:CompetitorCode>/<int:Event_id>/', api_views.competitor_event, name ='api_competitor_event'),
+    path(r'api/competitor/<int:CompetitorCode>/<int:Event_id>/all/', api_views.competitor_event_all, name = 'api_competitor_all'),
     path(r'api/events/', api_views.events, name ='api_events'),
     path(r'api/events/<int:Event_id>/', api_views.events, name ='api_events'),
     path(r'api/achievements/<int:CompetitorCode>/<int:Event_id>/', api_views.competitor_achievements, name='api_achievements'),
     path(r'api/top_list/<int:Event_id>/<int:IndoorOutDoor>/<int:Gender>/<int:Year>/<int:AgeStart>/<int:AgeEnd>/<int:Legal>/<int:ISL>/<int:BestByAth>/', api_views.Get_Top_100, name='api_top100'),
-    path(r'api/keppandi/', api_views.competitor_list, name='api_competitor_list'),
+    path(r'api/competitor/', api_views.competitor_list, name='api_competitor_list'),
     path(r'api/clubs/', api_views.club_list, name='api_club_list'),
     path(r'api/img/profile/<int:CompetitorCode>/', api_views.competitor_img_profile),
     path(r'api/img/action/<int:CompetitorCode>/', api_views.competitor_img_action),
-    path(r'api/records/<int:CompetitorCode>/', api_views.competitor_records)
+    path(r'api/records/<int:CompetitorCode>/', api_views.competitor_records),
+    path(r'api/records/birthdays/', api_views.record_birthdays)
 ]
 
 #if 'SIF_LOCAL' in os.environ:

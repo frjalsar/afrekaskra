@@ -62,4 +62,17 @@ def results_to_float(in_str):
             ss = -1.0 
         
     time_sec = hh*3600 + mm*60 + ss + dd
+    # print('')
+    # print('Formating string to float')
+    # print('Input: ' + in_str)
+    # print(hh)
+    # print(mm)
+    # print(ss)
+    # print(dd)
+    # print(time_sec)
+    # print('Done')
+    # print('')
     return time_sec
+
+def wind_to_str(in_float):
+    return '{:+.1f}'.format(in_float)

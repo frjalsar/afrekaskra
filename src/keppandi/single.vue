@@ -83,7 +83,7 @@ export default {
       this.data = [];
       //console.log('Getting data')
 
-      var url = "/api/keppandi/" + this.competitorID + "/";
+      var url = "/api/competitor/" + this.competitorID + "/";
       axios
         .all([axios.get(url)])
         .then(

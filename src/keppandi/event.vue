@@ -6,7 +6,11 @@
     </div>
     <div v-if="isReady">
       <h2>
-        <i class="fas" v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"></i> <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
+        <i
+          class="fas"
+          v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"
+        ></i>
+        <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
         <small class="text-muted">- {{competitor_info.Club}} ({{competitor_info.YOB}})</small>
       </h2>
       <h4>{{event_info.Name_ISL}}</h4>
@@ -55,18 +59,18 @@
                 <i class="fas fa-chart-line"></i> Bætingar
               </a>
             </li>
-            <li>
+            <li class="nav-item">
               <a
                 class="nav-link"
                 id="back-tab"
                 data-toggle="tab"
-                href="#back"
                 role="tab"
                 aria-controls="back"
                 aria-selected="false"
                 v-on:click="onBackClick"
+                v-bind:href="'/keppandi/' + competitorID"
               >
-                <i class="fas fa-backward"></i> Til baka
+                <i class="fas fa-user-circle"></i> Prófíl
               </a>
             </li>
           </ul>
@@ -79,7 +83,13 @@
               role="tabpanel"
               aria-labelledby="bestbyyear-tab"
             >
-              <yearchart :alldata="yearAllData" :legaldata="yearLegalData" ref="yearChart"></yearchart>
+              <yearchart
+                :alldata="yearAllData"
+                :legaldata="yearLegalData"
+                :event_info="event_info"
+                ref="yearChart"
+                v-if="showYearChart"
+              ></yearchart>
             </div>
             <div
               class="tab-pane fade"
@@ -87,7 +97,7 @@
               role="tabpanel"
               aria-labelledby="timeseries-tab"
             >
-              <timeserieschart :data="timeData" ref="timeChart"></timeserieschart>
+              <timeserieschart :data="timeData" :event_info="event_info" :competitorID="competitorID" :eventID="eventID" ref="timeChart" v-if="showTimeChart"></timeserieschart>
             </div>
             <div
               class="tab-pane fade"
@@ -95,7 +105,12 @@
               role="tabpanel"
               aria-labelledby="progression-tab"
             >
-              <progressionchart :data="progressionData" ref="progressionChart"></progressionchart>
+              <progressionchart
+                :data="progressionData"
+                :event_info="event_info"
+                ref="progressionChart"
+                v-if="showProgressionChart"
+              ></progressionchart>
             </div>
           </div>
         </div>
@@ -144,12 +159,14 @@ export default {
       event_min_all: [],
       event_max_all: [],
       event_years_all: [],
-      event_tooltip_all: [],
+      event_tooltip_all_max: [],
+      event_tooltip_all_min: [],
 
       event_min_legal: [],
       event_max_legal: [],
       event_years_legal: [],
-      event_tooltip_legal: [],
+      event_tooltip_legal_max: [],
+      event_tooltip_legal_min: [],
 
       progression_dates: [],
       progression_pbs: [],
@@ -158,6 +175,10 @@ export default {
       isReady: false,
       showAllEvents: true,
       message: "",
+
+      showTimeChart: false,
+      showYearChart: true,
+      showProgressionChart: false,
     };
   },
   created() {
@@ -167,32 +188,50 @@ export default {
   },
   methods: {
     onBackClick(event) {
-      this.$router.go(-1);
+      this.$router.push({ path: `/keppandi/${this.competitorID}` });
     },
     onTabClick(event) {
       //Redraw the graphs on tab click.
-      //console.log('TabClick 1')
-      this.$refs.yearChart.$refs.chart.chart.xAxis[0].isDirty = true;
-      this.$refs.yearChart.$refs.chart.chart.redraw();
-      this.$refs.yearChart.$refs.chart.chart.update({});
-      this.$refs.yearChart.$refs.chart.chart.reflow();
+      //console.log(event.target.id);
 
-      this.$refs.timeChart.$refs.chart.chart.xAxis[0].isDirty = true;
-      this.$refs.timeChart.$refs.chart.chart.redraw();
-      this.$refs.timeChart.$refs.chart.chart.update({});
-      this.$refs.timeChart.$refs.chart.chart.reflow();
+      if (event.target.id == "timeseries-tab") {
+        this.showTimeChart = true
 
-      this.$refs.progressionChart.$refs.chart.chart.xAxis[0].isDirty = true;
-      this.$refs.progressionChart.$refs.chart.chart.redraw();
-      this.$refs.progressionChart.$refs.chart.chart.update({});
-      this.$refs.progressionChart.$refs.chart.chart.reflow();
-      //console.log('TabClick 2')
+        //this.$refs.timeChart.$refs.chart.chart.xAxis[0].isDirty = true;
+        //this.$refs.timeChart.$refs.chart.chart.redraw();
+        //this.$refs.timeChart.$refs.chart.chart.update({});
+        //this.$refs.timeChart.$refs.chart.chart.reflow();
+      } //else {
+        //this.showTimeChart = false
+      //}
+
+      if (event.target.id == "bestbyyear-tab") {
+        this.showYearChart = true
+
+        //this.$refs.yearChart.$refs.chart.chart.xAxis[0].isDirty = true;
+        //this.$refs.yearChart.$refs.chart.chart.redraw();
+        //this.$refs.yearChart.$refs.chart.chart.update({});
+        //this.$refs.yearChart.$refs.chart.chart.reflow();
+      } //else {
+        //this.showYearChart = false
+      //}
+
+      if (event.target.id == "progression-tab") {
+        this.showProgressionChart = true
+
+        //this.$refs.progressionChart.$refs.chart.chart.xAxis[0].isDirty = true;
+        //this.$refs.progressionChart.$refs.chart.chart.redraw();
+        //this.$refs.progressionChart.$refs.chart.chart.update({});
+        //this.$refs.progressionChart.$refs.chart.chart.reflow();
+      } //else {
+        //this.showProgressionChart = false
+      //}
     },
     get_data: function () {
       this.$parent.loading = true;
       this.message = "Næ í gögn ekki stökkva langt 😉";
 
-      var url = "/api/keppandi/" + this.competitorID + "/" + this.eventID + "/";
+      var url = "/api/competitor/" + this.competitorID + "/" + this.eventID + "/";
       axios
         .all([axios.get(url)])
         .then(
@@ -206,12 +245,16 @@ export default {
             this.event_years_all = response[0]["data"]["Years_all"];
             this.event_min_all = response[0]["data"]["Min_all"];
             this.event_max_all = response[0]["data"]["Max_all"];
-            this.event_tooltip_all = response[0]["data"]["Tooltip_all"];
+            this.event_tooltip_all_max = response[0]["data"]["Tooltip_all_max"];
+            this.event_tooltip_all_min = response[0]["data"]["Tooltip_all_min"];
 
             this.event_years_legal = response[0]["data"]["Years_legal"];
             this.event_min_legal = response[0]["data"]["Min_legal"];
             this.event_max_legal = response[0]["data"]["Max_legal"];
-            this.event_tooltip_legal = response[0]["data"]["Tooltip_legal"];
+            this.event_tooltip_legal_max =
+              response[0]["data"]["Tooltip_legal_max"];
+            this.event_tooltip_legal_min =
+              response[0]["data"]["Tooltip_legal_min"];
 
             this.progression_dates = response[0]["data"]["PB_dates"];
             this.progression_pbs = response[0]["data"]["PBs"];
@@ -246,12 +289,21 @@ export default {
     },
     add_inndoor_sign: function (my_data) {
       var dataLen = my_data.length;
+      let strPost = "";
 
       for (var i = 0; i < dataLen; i++) {
         if (my_data[i]["OutIn"] === 1) {
-          my_data[i]["Results_text"] = my_data[i]["Results"] + " (i)";
+          strPost = " (i)";
         } else {
-          my_data[i]["Results_text"] = my_data[i]["Results"];
+          strPost = "";
+        }
+
+        if (this.event_info["Units"] == 3 || this.event_info["Units"] == 4) {
+          my_data[i]["Results_text"] =
+            moment.unix(my_data[i]["Results"]).format("mm:ss,SS") + strPost;
+          //my_data[i]["Results"] = my_data[i]["Results"] * 10000; // Convert to ms for highcharts
+        } else {
+          my_data[i]["Results_text"] = my_data[i]["Results"] + strPost;
         }
       }
 
@@ -262,11 +314,16 @@ export default {
     timeData: function () {
       let data_points = [];
       var dataLen = this.event_data.length;
+      let factor = 1;
+
+      if (this.event_info["Units"] == 3 || this.event_info["Units"] == 4) {
+        factor = 1000; // Highcharts wants time axis data in ms
+      }
 
       for (var i = 0; i < dataLen; i++) {
         data_points.push({
           x: moment(this.event_data[i]["Date"]).valueOf(),
-          y: Number(this.event_data[i]["Results"]),
+          y: Number(this.event_data[i]["Results"]) * factor, //Tryggja að þetta sé tala, annars fer Highcharts í fýlu.
         });
       }
 
@@ -275,11 +332,16 @@ export default {
     progressionData: function () {
       let data_points = [];
       var dataLen = this.progression_dates.length;
+      let factor = 1;
+
+      if (this.event_info["Units"] == 3 || this.event_info["Units"] == 4) {
+        factor = 1000; // Highcharts wants time axis data in ms
+      }
 
       for (var i = 0; i < dataLen; i++) {
         data_points.push({
           x: moment(this.progression_dates[i]).valueOf(),
-          y: this.progression_pbs[i],
+          y: this.progression_pbs[i] * factor,
           label: this.progression_tooltips[i],
         });
       }
@@ -291,20 +353,37 @@ export default {
     yearAllData: function () {
       let data_points = [];
       var dataLen = this.event_years_all.length;
+      let factor = 1;
+
+      if (this.event_info["HasWind"] == false) {
+        return [];
+      }
+
+      if (this.event_info["Units"] == 3 || this.event_info["Units"] == 4) {
+        factor = 1000; // Highcharts wants time axis data in ms
+      }
 
       for (var i = 0; i < dataLen; i++) {
         //console.log(this.event_tooltip[i]);
         if (this.event_info.Minimize === true) {
+          let c =
+            this.event_min_all[i] === null
+              ? null
+              : this.event_min_all[i] * factor;
           data_points.push({
             x: this.event_years_all[i],
-            y: this.event_min_all[i],
-            label: this.event_tooltip_all[i],
+            y: c,
+            label: this.event_tooltip_all_min[i],
           });
         } else {
+          let c =
+            this.event_max_all[i] === null
+              ? null
+              : this.event_max_all[i] * factor;
           data_points.push({
             x: this.event_years_all[i],
-            y: this.event_max_all[i],
-            label: this.event_tooltip_all[i],
+            y: c,
+            label: this.event_tooltip_all_max[i],
           });
         }
       }
@@ -314,20 +393,33 @@ export default {
     yearLegalData: function () {
       let data_points = [];
       var dataLen = this.event_years_legal.length;
+      let factor = 1;
+
+      if (this.event_info["Units"] == 3 || this.event_info["Units"] == 4) {
+        factor = 1000; // Highcharts vill tíma ásinn í ms
+      }
 
       for (var i = 0; i < dataLen; i++) {
         //console.log(this.event_tooltip[i]);
         if (this.event_info.Minimize === true) {
+          let c =
+            this.event_min_legal[i] === null
+              ? null
+              : this.event_min_legal[i] * factor; // null margfaldað með tölu gefur 0 sem við viljum ekki
           data_points.push({
             x: this.event_years_legal[i],
-            y: this.event_min_legal[i],
-            label: this.event_tooltip_legal[i],
+            y: c,
+            label: this.event_tooltip_legal_min[i],
           });
         } else {
+          let c =
+            this.event_max_legal[i] === null
+              ? null
+              : this.event_max_legal[i] * factor;
           data_points.push({
             x: this.event_years_legal[i],
-            y: this.event_max_legal[i],
-            label: this.event_tooltip_legal[i],
+            y: c,
+            label: this.event_tooltip_legal_max[i],
           });
         }
       }

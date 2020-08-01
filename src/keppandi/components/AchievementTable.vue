@@ -49,14 +49,12 @@ export default {
       currentSortDir: "desc",
     };
   },
-  watch: {
-    event_info: function (val) {
-      if (this.val.Minimize === true) {
-        currentSortDir = "asc";
-      } else {
-        currentSortDir = "desc";
-      }
-    },
+  created() {
+    if (this.event_info['Minimize'] === true) {
+      this.currentSortDir = "asc";
+    } else {
+      this.currentSortDir = "desc";
+    }
   },
   computed: {
     sortedData: function () {

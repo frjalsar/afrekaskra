@@ -18,11 +18,11 @@ import os
 from babel.dates import format_date, format_datetime, format_time
 
 from Sif import common
+from Sif import events
+from Sif import competitor
 
-# Events
-EVENT_LIST_FILENAME = os.path.join(settings.BASE_DIR, 'Sif/event_list.pickle')
+
 CLUB_LIST_FILENAME = os.path.join(settings.BASE_DIR, 'Sif/clubs.csv')
-df_event_list = pd.read_pickle(EVENT_LIST_FILENAME)
 
 
 def Get_List_of_Years():
@@ -34,35 +34,6 @@ def Get_List_of_Years():
     # It takes a long time to get the list of all dates from the database because the Django drivers for MS-SQL doesn't support distinct.
     current_year = datetime.datetime.now().year
     return list(range(current_year, 1909-1, -1))
-
-def Get_Event_Info(Event_id):
-    try:
-        Units = df_event_list['Units'].values[Event_id]
-        #0, # No units!
-        #'metrar': 1, # Meters
-         #'sek.': 2, # ss,dd
-         #'mín.': 3, # mm:ss
-         #'klst.': 4, # hh:mm:ss,dd
-         #'stig': 5, # Points
-         #'Ungl.stig': 6 # Points junior
-        if (Units in [0, 2, 3, 4]):
-            minimize = True
-        else:
-            minimize = False
-
-        EventShorterName = df_event_list['Name_ISL'].values[Event_id].replace('metra', 'm').replace('hlaup', '').replace('grind', 'gr.').replace('atrennu', 'atr.')
-        Event_Info = {'THORID_1': df_event_list['THORID_1'].values[Event_id],
-                      'Units': Units,
-                      'Units_symbol': common.Units_symbol[Units],
-                      'Minimize': minimize,
-                      'ShortName': EventShorterName, #df_event_list['ShortName'].values[Event_id],
-                      'Name_ISL': df_event_list['Name_ISL'].values[Event_id],
-                      'HasWind': df_event_list['Wind'].values[Event_id]}
-    except:
-        print(Event_id)
-        raise Http404('Gat ekki fundið grein.')
-
-    return Event_Info
 
 def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
     df = pd.DataFrame.from_records(q.values_list('lína', 'nafn', 'keppandanúmer',
@@ -202,7 +173,7 @@ def Convert_Achievements_to_List(q, minimize_results, best_by_ath, units):
 # Out:
 #   A list of dictionaries containing information about each achievement.
 def Get_List_of_Achievements(CompetitorCode, Event_id):
-    THORID_1, _, _ = Get_Event_Info(Event_id)
+    THORID_1, _, _ = events.Get_Event_Info(Event_id)
 
     q = AthlAfrek.objects.all().filter(keppandanúmer__iexact=CompetitorCode).filter(tákn_greinar__iexact=THORID_1)
     Achievements_list = Convert_Achievements_to_List(q)
@@ -273,7 +244,7 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
             print('ERROR gat ekki fundið grein')
             pass
         #print(event_id)
-        event_info = Get_Event_Info(event_id)
+        event_info = events.Get_Event_Info(event_id)
         #print(event_info)
 
         # Flokka út Grein
@@ -364,14 +335,14 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
         try:
             # Finnum SB inni ef það er til
             if (df_event_nowind_sb_cur.empty == False):
-                print(df_event_nowind_sb_cur)
+                #print(df_event_nowind_sb_cur)
                 if (event_info['Minimize'] == False):
                     idx = df_event_nowind_sb_cur['Árangur_float'].idxmax()
                 else:
                     idx = df_event_nowind_sb_cur['Árangur_float'].idxmin()
                     
                 sb_cur = df_event_nowind_sb_cur['Árangur'][idx]
-                print(sb_cur)
+                #print(sb_cur)
 
                 # Ef ekki þá athugum við ólöglegan árangur
             elif (df_event_sb_cur.empty == False):
@@ -509,7 +480,7 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
     return list_pb
 
 def Get_Competitor_Event(CompetitorCode, Event_id):
-    event_info = Get_Event_Info(Event_id)
+    event_info = events.Get_Event_Info(Event_id)
         
     q = AthlAfrek.objects.all().filter(keppandanúmer__iexact=CompetitorCode, tákn_greinar__iexact=event_info['THORID_1']).order_by('dagsetning')
     df = pd.DataFrame.from_records(q.values_list('árangur', 'vindur', 'félag',
@@ -527,21 +498,26 @@ def Get_Competitor_Event(CompetitorCode, Event_id):
     # Breytum öllum árangri yfir í rauntölur
     df['árangur_float'] = df['árangur'].map(common.results_to_float)
 
-    year_arr_all, results_year_max_all, results_year_min_all, _, _, tooltip_str_all = filter_year_best(df, True, False, event_info['Units_symbol'])
+    year_arr_all, results_year_max_all, results_year_min_all, _, _, tooltip_str_max, tooltip_str_min = filter_year_best(df, True, False, event_info['Units_symbol'])
     df_legal = df.loc[df['vindur'] <= 2.0]
-    year_arr_legal, results_year_max_legal, results_year_min_legal, _, _, tooltip_str_legal = filter_year_best(df_legal, True, False, event_info['Units_symbol'])
+    year_arr_legal, results_year_max_legal, results_year_min_legal, _, _, tooltip_str_legal_max, tooltip_str_legal_min = filter_year_best(df_legal, True, False, event_info['Units_symbol'])
 
     event_min_max_all = {'Years': year_arr_all,
                          'Max': results_year_max_all,
                          'Min': results_year_min_all,
-                         'Tooltip': tooltip_str_all
+                         'Tooltip_max': tooltip_str_max,
+                         'Tooltip_min': tooltip_str_min
                         }
 
     event_min_max_legal = {'Years': year_arr_legal,
                            'Max': results_year_max_legal,
                            'Min': results_year_min_legal,
-                           'Tooltip': tooltip_str_legal
+                           'Tooltip_max': tooltip_str_legal_max,
+                           'Tooltip_min': tooltip_str_legal_min,
                           }
+
+    #print(event_min_max_legal)
+    #print('')
 
     pb_dates, pb, pb_tooltip = filter_progression(df, not event_info['Minimize'], event_info['Units_symbol'])
 
@@ -644,7 +620,7 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
             q = q.filter(flokkur=14)
 
     else:
-        Event_Info = Get_Event_Info(Event_id)
+        Event_Info = events.Get_Event_Info(Event_id)
         q = AthlAfrek.objects.all().filter(tákn_greinar__iexact=Event_Info['THORID_1'])
 
     #--
@@ -749,7 +725,8 @@ def filter_year_best(df_event_data, event_max, event_time_axis, event_unit):
     results_std = []
     year_arr = []
     #org_str = []
-    more_str = []
+    more_str_max = []
+    more_str_min = []
     #avg_str = []
 
     if (df_event_data.empty == True):
@@ -791,7 +768,8 @@ def filter_year_best(df_event_data, event_max, event_time_axis, event_unit):
                     results_year_min.append(df_event_year['árangur_float'][idx_worst])
 
             wind_str = '{:+.1f}'.format(df_event_year['vindur'][idx_best])
-            more_str.append(df_event_year['árangur'][idx_best] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + df_event_year['heiti_móts'][idx_best] + '<br>' + df_event_year['dagsetning'][idx_best].strftime("%d-%m-%Y"))
+            more_str_max.append(df_event_year['árangur'][idx_best] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + df_event_year['heiti_móts'][idx_best] + '<br>' + df_event_year['dagsetning'][idx_best].strftime("%d-%m-%Y"))
+            more_str_min.append(df_event_year['árangur'][idx_worst] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + df_event_year['heiti_móts'][idx_worst] + '<br>' + df_event_year['dagsetning'][idx_worst].strftime("%d-%m-%Y"))
         else:
             # Við fáum villu ef við reynum að taka min/max og enginn árangur er til fyrir árið
             results_year_max.append(None)
@@ -799,11 +777,12 @@ def filter_year_best(df_event_data, event_max, event_time_axis, event_unit):
             results_std.append(None)
             results_avg.append(None)
             #org_str.append('')
-            more_str.append('')
+            more_str_max.append('')
+            more_str_min.append('')
 
         year_arr.append(i)
 
-    return year_arr, results_year_max, results_year_min, results_avg, results_std, more_str
+    return year_arr, results_year_max, results_year_min, results_avg, results_std, more_str_max, more_str_min
 
 def filter_progression(df_event, event_max, event_unit):
     # Tökum út vind árangur
@@ -843,3 +822,23 @@ def filter_progression(df_event, event_max, event_unit):
                 text_place.append(row['árangur'] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + row['heiti_móts'] + '<br>' + row['dagsetning'].strftime("%d-%m-%Y"))
 
     return pb_dates, pb, text_place
+
+def Get_Competitor_Event_Data_All(CompetitorCode, Event_id):
+    EventInfo = events.Get_Event_Info(Event_id)
+    df = competitor.Get_Competitor_Event_DataFrame(CompetitorCode, Event_id, EventInfo)
+
+    EventData = []
+    for index, row in df.iterrows():
+        EventData.append({'strResults': row['árangur_str'],
+                          'floatResults': row['árangur_float'],
+                          'strWind': row['vindur_str'],
+                          'Club': row['félag'],
+                          'OutIn': row['úti_inni'],
+                          'CompetitionName': row['heiti_móts'],
+                          'CompetitionID': row['mót'],
+                          'Age': row['aldur_keppanda'],
+                          'Date': row['dagsetning'],
+                          'ElectricTiming': row['rafmagnstímataka'],
+                          'MissingWind': row['vantar_vind']
+                         })
+    return EventData
