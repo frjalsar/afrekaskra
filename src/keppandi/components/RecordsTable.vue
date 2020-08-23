@@ -1,6 +1,6 @@
 <template>
   <div v-if="showRecordsTable">
-    <h2 class="display-4">Íslandsmet</h2>
+    <h2 class="display-4"><i class="far fa-flag"></i> Íslandsmet</h2>
     <!-- VIRK MET -->
     <div v-show="showActiveRecordsTable">
       <h5>Virk met</h5>

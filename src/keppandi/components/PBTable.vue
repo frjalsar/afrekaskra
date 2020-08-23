@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="display-4">Árangur</h2>
+    <h2 class="display-4"><i class="fas fa-trophy"></i> Árangur</h2>
     <p>
       <i class="far fa-hand-pointer"></i>
       <small>Veldu grein í töflunni til að sjá meiri upplýsingar um hana.</small>

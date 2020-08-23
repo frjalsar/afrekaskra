@@ -683,7 +683,7 @@ def Get_Competitor_List(q):
     for i in q.split(' '):
         if (len(i) >= 2):
             if (i.isdigit() == True): # Athuga hvort þetta er tala
-                if (len(i) == 4): # Já þetta er tala. Ef 4 stafa þá túlkum við þetta sem fæðingarár annars hunsum við.
+                if (len(i) == 4): # Ef 4 stafa þá túlkum við þetta sem fæðingarár annars hunsum við.
                     names_q = names_q.filter(Q(fæðingarár__icontains=i))
             else:
                 names_q = names_q.filter(Q(nafn__icontains=i) | Q(félag__icontains=i))
