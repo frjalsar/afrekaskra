@@ -10,6 +10,20 @@ from Sif import common
 EVENT_LIST_FILENAME = os.path.join(settings.BASE_DIR, 'Sif/event_list.pickle')
 df_event_list = pd.read_pickle(EVENT_LIST_FILENAME)
 
+def Get_Event_Info_by_ThordID(ThordID):
+    mask = (df_event_list['THORID_1'] == ThordID) | (df_event_list['THORID_2'] == ThordID)
+    df_event = df_event_list[mask]
+
+    try:
+        print(df_event.iloc[0])
+    except:
+        print('')
+        print('Villa við að finna')
+        print(ThordID)
+        print('')
+
+    return None
+
 def Get_Event_Info(Event_id):
     try:
         Units = df_event_list['Units'].values[Event_id]

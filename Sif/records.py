@@ -11,6 +11,7 @@ from Sif import settings
 
 from babel.dates import format_date, format_datetime, format_time
 from Sif import common
+from Sif import events
 import datetime as dt
 import pandas as pd
 
@@ -71,6 +72,16 @@ def Get_Competitor_Records(CompetitorCode):
 
     record_list = []
     for record in q:
+        line_afrek = record.línunr_í_afrekum
+        try:
+            q_afrek = AthlAfrek.objects.get(pk=line_afrek) # Primary key (pk) er línu númerið
+        except:
+            print('VILLA')
+            print(line_afrek)
+            print('')
+        event_id = events.df_event_list[events.df_event_list['THORID_1'] == q_afrek.tákn_greinar].index.tolist()[0]
+        event_info = events.Get_Event_Info(event_id)
+
         wind_str = '{:+.1f}'.format(float(record.vindur))
         results = common.results_to_float(record.árangur.replace(',', '.'))
         results_str = record.árangur
@@ -80,7 +91,9 @@ def Get_Competitor_Records(CompetitorCode):
         agegroup = record.aldursflokkur_frí
         inout = record.úti_inni
         club = record.félag_methafa
-        event = record.grein
+        line_afrek = record.línunr_í_afrekum
+        event = event_info['ShortName']
+
 
         record_info = {'Event': event,
                        'Club': club,
