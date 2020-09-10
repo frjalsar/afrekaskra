@@ -1,6 +1,6 @@
 <template>
   <div v-if="showRecordsTable">
-    <h2 class="display-4"><i class="far fa-flag"></i> Íslandsmet</h2>
+    <h2 class="display-4"><img src="./ISL_Flag.svg" alt="Icelandic flag" height="56px"> Íslandsmet</h2> <!-- Font size er 3.5 rem í Display-4 sem er 56px-->
     <!-- VIRK MET -->
     <div v-show="showActiveRecordsTable">
       <h5>Virk met</h5>
