@@ -21,7 +21,7 @@
               <br />
                 <img
                 class="img-thumbnail img-fluid"
-                v-bind:src="'/api/img/club/' + ClubName"
+                v-bind:src="ClubNameUrl"
                 width="75px"
               />
               {{competitor_info.Club}}
@@ -70,7 +70,6 @@ export default {
       isReady: false,
       competitorID: null,
       message: "",
-      ClubName: "",
     };
   },
   created() {
@@ -81,6 +80,16 @@ export default {
   //beforeDestroy() {
   //  document.title = "Afrekaskrá FRÍ";
   //},
+  computed: {
+    ClubNameUrl: function () {
+      if (this.isReady === true) {
+        return '/api/img/club/' + this.competitor_info.Club
+      }
+      else {
+        return ''
+      }
+    }
+  },
   methods: {
     get_data: function () {
       //this.$parent.loading = true;
@@ -117,7 +126,6 @@ export default {
           //this.$parent.loading = false;
           //document.title = this.titleText
           //this.$parent.do_stuff()
-          this.ClubName = this.competitor_info.Club;
           this.isReady = true;
         });
     },
