@@ -22,7 +22,7 @@
                 <img
                 class="img-thumbnail img-fluid"
                 v-bind:src="'/api/img/club/' + ClubName"
-                width="50px"
+                width="75px"
               />
               {{competitor_info.Club}}
               <br />
