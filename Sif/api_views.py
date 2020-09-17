@@ -13,6 +13,7 @@ from Sif import records
 
 # Other
 import os
+import urllib
 from PIL import Image
 
 # Database
@@ -109,11 +110,26 @@ def competitor_img_action(request, CompetitorCode):
         with open(filename_action, "rb") as f:
             return HttpResponse(f.read(), content_type="image/jpeg")
     except IOError:
-        #return Http404()
+        #raise Http404()
         blank = Image.new('RGBA', (2160, 1), (255,255,255,0))
         response = HttpResponse(content_type="image/png")
         blank.save(response, "PNG")
         return response
+
+@cache_page(60 * 15)
+def club_logo(request, ClubName):
+    ClubName_decode = urllib.parse.unquote(ClubName).lower()
+    try: # Reyna png
+        filename = './images/clubs/{}.png'.format(ClubName_decode)
+        with open(filename, "rb") as f:
+            return HttpResponse(f.read(), content_type="image/png")
+    except:
+        try: # Reyna jpg
+            filename = './images/clubs/{}.jpg'.format(ClubName_decode)
+            with open(filename, "rb") as f:
+                return HttpResponse(f.read(), content_type="image/jpeg")
+        except:
+            raise Http404()
 
 @cache_page(60 * 15)
 def competitor_records(request, CompetitorCode):

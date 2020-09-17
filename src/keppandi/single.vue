@@ -19,6 +19,11 @@
             <div class="p-2 flex-grow-1 align-self-center">
               <i class="fas" v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"></i> <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
               <br />
+                <img
+                class="img-thumbnail img-fluid"
+                v-bind:src="'/api/img/club/' + ClubName"
+                width="50px"
+              />
               {{competitor_info.Club}}
               <br />
               {{competitor_info.YOB}}
@@ -65,6 +70,7 @@ export default {
       isReady: false,
       competitorID: null,
       message: "",
+      ClubName: "",
     };
   },
   created() {
@@ -111,6 +117,7 @@ export default {
           //this.$parent.loading = false;
           //document.title = this.titleText
           //this.$parent.do_stuff()
+          this.ClubName = this.competitor_info.Club;
           this.isReady = true;
         });
     },

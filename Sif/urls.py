@@ -45,6 +45,7 @@ urlpatterns = [
     path(r'api/clubs/', api_views.club_list, name='api_club_list'),
     path(r'api/img/profile/<int:CompetitorCode>/', api_views.competitor_img_profile),
     path(r'api/img/action/<int:CompetitorCode>/', api_views.competitor_img_action),
+    path(r'api/img/club/<str:ClubName>/', api_views.club_logo),
     path(r'api/records/<int:CompetitorCode>/', api_views.competitor_records),
     path(r'api/records/birthdays/', api_views.record_birthdays)
 ]

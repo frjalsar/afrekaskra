@@ -1,125 +1,152 @@
 <template>
-  <div v-if="showRecordsTable">
-    <h2 class="display-4"><img src="./ISL_Flag.svg" alt="Icelandic flag" height="56px"> Íslandsmet</h2> <!-- Font size er 3.5 rem í Display-4 sem er 56px-->
-    <!-- VIRK MET -->
-    <div v-show="showActiveRecordsTable">
-      <h5>Virk met</h5>
-      <table class="table table-striped table-hover table-responsive-sm table-sm">
-        <col span="1" class="wide" />
-        <thead>
-          <tr>
-            <th scope="col" @click="sort('Event')">
-              <i class="fas fa-sort"></i>&nbsp;Grein
-            </th>
-            <th scope="col" @click="sort('Results')">
-              <i class="fas fa-sort"></i>&nbsp;Árangur
-            </th>
-            <th scope="col" @click="sort('Wind')">
-              <i class="fas fa-sort"></i>&nbsp;Vindur
-            </th>
-            <th scope="col" @click="sort('inout')">
-              <i class="fas fa-sort"></i>&nbsp;Úti/Inni
-            </th>
-            <th scope="col" @click="sort('Date')">
-              <i class="fas fa-sort"></i>&nbsp;Dags.
-            </th>
-            <th scope="col" @click="sort('Age')">
-              <i class="fas fa-sort"></i>&nbsp;Aldur
-            </th>
-            <th scope="col" @click="sort('AgeGroup')">
-              <i class="fas fa-sort"></i>&nbsp;Aldursfl.
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(i, index) in sortedDataActive" v-show="(index < 5) || showAllActiveRecords">
-            <th scope="row">{{i.Event}}</th>
-            <td>{{i.Results.toFixed(2)}}</td>
-            <td>{{i.Wind}}</td>
-            <td>{{i.Inout}}</td>
-            <td>{{i.Date}}</td>
-            <td>{{i.Age}}</td>
-            <td>{{i.AgeGroup}}</td>
-          </tr>
-        </tbody>
-      </table>
-      <a
-        href="#"
-        v-on:click.prevent="toggle_ActiveRecords($event)"
-        v-if="showMoreLessButtonActive"
-      >{{textMoreLessActive}}</a>
-      <p>
-        <br />
-      </p>
+  <div>
+    <div v-if="loading">
+      <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
     </div>
-    <!-- ÓVIRK MET -->
-    <div v-show="showunActiveRecordsTable">
-      <h5>Óvirk met</h5>
-      <table class="table table-striped table-hover table-responsive-sm table-sm">
-        <col span="1" class="wide" />
-        <thead>
-          <tr>
-            <th scope="col" @click="sort('Event')">
-              <i class="fas fa-sort"></i>&nbsp;Grein
-            </th>
-            <th scope="col" @click="sort('Results')">
-              <i class="fas fa-sort"></i>&nbsp;Árangur
-            </th>
-            <th scope="col" @click="sort('Wind')">
-              <i class="fas fa-sort"></i>&nbsp;Vindur
-            </th>
-            <th scope="col" @click="sort('inout')">
-              <i class="fas fa-sort"></i>&nbsp;Úti/Inni
-            </th>
-            <th scope="col" @click="sort('Date')">
-              <i class="fas fa-sort"></i>&nbsp;Dags.
-            </th>
-            <th scope="col" @click="sort('Age')">
-              <i class="fas fa-sort"></i>&nbsp;Aldur
-            </th>
-            <th scope="col" @click="sort('AgeGroup')">
-              <i class="fas fa-sort"></i>&nbsp;Aldursfl.
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(i, index) in sortedDataunActive" v-show="(index < 5) || showAllunActiveRecords">
-            <th scope="row">{{i.Event}}</th>
-            <td>{{i.Results.toFixed(2)}}</td>
-            <td>{{i.Wind}}</td>
-            <td>{{i.Inout}}</td>
-            <td>{{i.Date}}</td>
-            <td>{{i.Age}}</td>
-            <td>{{i.AgeGroup}}</td>
-          </tr>
-        </tbody>
-      </table>
-      <a
-        href="#"
-        v-on:click.prevent="toggle_unActiveRecords($event)"
-        v-if="showMoreLessButtonunActive"
-      >{{textMoreLessunActive}}</a>
+    <div v-if="showRecordsTable">
+      <h2 class="display-4">
+        <!-- Font size er 3.5 rem í Display-4 sem er 56px-->
+        <img src="./ISL_Flag.svg" alt="Íslenski fáninn" height="56px" /> Íslandsmet
+      </h2>
+      <h4>Fjöldi skráðra Íslandsmeta er {{nrRecords}} þar af eru {{nrActiveRecords}} virk og {{nrUnActiveRecords}} óvirk.</h4>
+      <!-- VIRK MET -->
+      <div v-show="showActiveRecordsTable">
+        <h5>Virk met</h5>
+        <table class="table table-striped table-hover table-responsive-sm table-sm">
+          <col span="1" class="wide" />
+          <thead>
+            <tr>
+              <th scope="col" @click="sort('Event')">
+                <i class="fas fa-sort"></i>&nbsp;Grein
+              </th>
+              <th scope="col" @click="sort('Results')">
+                <i class="fas fa-sort"></i>&nbsp;Árangur
+              </th>
+              <th scope="col" @click="sort('Wind')">
+                <i class="fas fa-sort"></i>&nbsp;Vindur
+              </th>
+              <th scope="col" @click="sort('inout')">
+                <i class="fas fa-sort"></i>&nbsp;Úti/Inni
+              </th>
+              <th scope="col" @click="sort('Date')">
+                <i class="fas fa-sort"></i>&nbsp;Dags.
+              </th>
+              <th scope="col" @click="sort('Age')">
+                <i class="fas fa-sort"></i>&nbsp;Aldur
+              </th>
+              <th scope="col" @click="sort('AgeGroup')">
+                <i class="fas fa-sort"></i>&nbsp;Aldursfl.
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(i, index) in sortedDataActive" v-show="(index < 5) || showAllActiveRecords">
+              <th scope="row">{{i.Event}}</th>
+              <td>{{i.Results.toFixed(2)}}</td>
+              <td>{{i.Wind}}</td>
+              <td>{{inout_text(i.Inout)}}</td>
+              <td>{{i.Date}}</td>
+              <td>{{i.Age}}</td>
+              <td>{{i.AgeGroup}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <a
+          href="#"
+          v-on:click.prevent="toggle_ActiveRecords($event)"
+          v-if="showMoreLessButtonActive"
+        >{{textMoreLessActive}}</a>
+        <p>
+          <br />
+        </p>
+      </div>
+      <!-- ÓVIRK MET -->
+      <div v-show="showunActiveRecordsTable">
+        <h5>Óvirk met</h5>
+        <table class="table table-striped table-hover table-responsive-sm table-sm">
+          <col span="1" class="wide" />
+          <thead>
+            <tr>
+              <th scope="col" @click="sort('Event')">
+                <i class="fas fa-sort"></i>&nbsp;Grein
+              </th>
+              <th scope="col" @click="sort('Results')">
+                <i class="fas fa-sort"></i>&nbsp;Árangur
+              </th>
+              <th scope="col" @click="sort('Wind')">
+                <i class="fas fa-sort"></i>&nbsp;Vindur
+              </th>
+              <th scope="col" @click="sort('inout')">
+                <i class="fas fa-sort"></i>&nbsp;Úti/Inni
+              </th>
+              <th scope="col" @click="sort('Date')">
+                <i class="fas fa-sort"></i>&nbsp;Dags.
+              </th>
+              <th scope="col" @click="sort('Age')">
+                <i class="fas fa-sort"></i>&nbsp;Aldur
+              </th>
+              <th scope="col" @click="sort('AgeGroup')">
+                <i class="fas fa-sort"></i>&nbsp;Aldursfl.
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(i, index) in sortedDataunActive"
+              v-show="(index < 5) || showAllunActiveRecords"
+            >
+              <th scope="row">{{i.Event}}</th>
+              <td>{{i.Results.toFixed(2)}}</td>
+              <td>{{i.Wind}}</td>
+              <td>{{inout_text(i.Inout)}}</td>
+              <td>{{i.Date}}</td>
+              <td>{{i.Age}}</td>
+              <td>{{i.AgeGroup}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <a
+          href="#"
+          v-on:click.prevent="toggle_unActiveRecords($event)"
+          v-if="showMoreLessButtonunActive"
+        >{{textMoreLessunActive}}</a>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default {
   props: ["competitorID"],
+  components: {
+    PulseLoader,
+  },
   data() {
     return {
+      color: "#0275d8",
+      size: "15px",
+      margin: "2px",
+      radius: "100%",
+
       currentSort: "Age",
       currentSortDir: "desc",
       showAllActiveRecords: false,
       showAllunActiveRecords: false,
       record_data: [],
+
       showMoreLessButtonActive: false,
       showMoreLessButtonunActive: false,
       showRecordsTable: false,
       showActiveRecordsTable: false,
       showunActiveRecordsTable: false,
+      loading: true,
+
+      nrRecords: 0,
+      nrActiveRecords: 0,
+      nrUnActiveRecords: 0,
     };
   },
   created() {
@@ -144,6 +171,8 @@ export default {
       let data = [];
       let dataLen = this.record_data.length;
 
+      this.nrRecords = dataLen;
+
       for (var i = 0; i < dataLen; i++) {
         if (this.record_data[i].isActive == true) {
           data.push(this.record_data[i]);
@@ -159,6 +188,7 @@ export default {
         this.showMoreLessButtonActive = true;
       }
 
+      this.nrActiveRecords = data.length;
       return data;
     },
     unactiveRecords: function () {
@@ -179,6 +209,7 @@ export default {
         this.showMoreLessButtonunActive = true;
       }
 
+      this.nrUnActiveRecords = data.length;
       return data;
     },
     sortedDataunActive: function () {
@@ -229,6 +260,15 @@ export default {
     },
   },
   methods: {
+    inout_text: function(inout) {
+      if (inout === 0) {
+        return 'Úti'
+      }
+      else
+      {
+        return 'Inni'
+      }
+    },
     toggle_ActiveRecords: function (event) {
       this.showAllActiveRecords = !this.showAllActiveRecords;
     },
@@ -265,6 +305,7 @@ export default {
         })
         .finally(() => {
           //console.log("Finally");
+          this.loading = false;
           if (this.record_data.length > 0) {
             this.showRecordsTable = true;
           }
@@ -287,5 +328,10 @@ export default {
 }
 .display-4 {
   margin-top: 1rem;
+}
+
+/* center spinner */
+.v-spinner {
+  text-align: center;
 }
 </style>

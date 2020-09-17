@@ -76,7 +76,7 @@ def Get_Competitor_Records(CompetitorCode):
         try:
             q_afrek = AthlAfrek.objects.get(pk=line_afrek) # Primary key (pk) er línu númerið
         except:
-            print('VILLA')
+            print('VILLA FANN EKKI LÍNU FYRIR ÍSLANDSMET')
             print(line_afrek)
             print('')
         event_id = events.df_event_list[events.df_event_list['THORID_1'] == q_afrek.tákn_greinar].index.tolist()[0]
