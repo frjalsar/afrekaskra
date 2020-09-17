@@ -7,7 +7,7 @@
     <div id="competitor-view" v-if="isReady">
       <div class="card">
         <img class="card-img-top img-fluid" v-bind:src="'/api/img/action/' + competitorID" />
-        <div class="card-header">
+        <div class="card-header info-shift">
           <div class="d-flex">
             <div class="p-2">
               <img
@@ -17,8 +17,8 @@
               />
             </div>
             <div class="p-2 flex-grow-1 align-self-center">
-              <i class="fas" v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"></i> <b>{{competitor_info.FirstName}} {{competitor_info.LastName}} ({{competitor_info.YOB}})</b>
-              <br />
+              <h2 style="color:#FFFFFF;text-shadow: 0 0 3px rgba(0, 0, 0, .8);"><i class="fas" v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"></i> <b>{{competitor_info.FirstName}} {{competitor_info.LastName}} ({{competitor_info.YOB}})</b></h2>
+              </br>
                 <img
                 class="img-thumbnail img-fluid"
                 v-bind:src="ClubNameUrl"
@@ -161,5 +161,11 @@ export default {
   margin: 0 auto; /* Added */
   float: none; /* Added */
   margin-bottom: 10px; /* Added */
+}
+
+.info-shift {
+  position: relative;
+  top: -75px;
+  margin-bottom: -75px
 }
 </style>

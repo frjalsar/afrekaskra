@@ -111,7 +111,7 @@ def competitor_img_action(request, CompetitorCode):
             return HttpResponse(f.read(), content_type="image/jpeg")
     except IOError:
         #raise Http404()
-        blank = Image.new('RGBA', (2160, 1), (255,255,255,0))
+        blank = Image.new('RGBA', (2160, 150), (255,255,255,0))
         response = HttpResponse(content_type="image/png")
         blank.save(response, "PNG")
         return response
