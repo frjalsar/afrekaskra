@@ -14,6 +14,11 @@
         <small class="text-muted">- {{competitor_info.Club}} ({{competitor_info.YOB}})</small>
       </h2>
       <h4>{{event_info.Name_ISL}}</h4>
+      <h5>
+        <router-link :to="{ path: '/keppandi/'+ competitorID }">
+          <i class="fas fa-user-circle"></i> Fara á prófíl síðu keppanda
+        </router-link>
+      </h5>
       <div class="card">
         <div class="card-header">
           <ul class="nav nav-tabs card-header-tabs pull-right" id="myTab" role="tablist">
@@ -59,7 +64,7 @@
                 <i class="fas fa-chart-line"></i> Bætingar
               </a>
             </li>
-            <li class="nav-item">
+            <!--           <li class="nav-item">
               <a
                 class="nav-link"
                 id="back-tab"
@@ -72,7 +77,7 @@
               >
                 <i class="fas fa-user-circle"></i> Prófíl
               </a>
-            </li>
+            </li>-->
           </ul>
         </div>
         <div class="card-body">
@@ -97,7 +102,14 @@
               role="tabpanel"
               aria-labelledby="timeseries-tab"
             >
-              <timeserieschart :data="timeData" :event_info="event_info" :competitorID="competitorID" :eventID="eventID" ref="timeChart" v-if="showTimeChart"></timeserieschart>
+              <timeserieschart
+                :data="timeData"
+                :event_info="event_info"
+                :competitorID="competitorID"
+                :eventID="eventID"
+                ref="timeChart"
+                v-if="showTimeChart"
+              ></timeserieschart>
             </div>
             <div
               class="tab-pane fade"
@@ -195,43 +207,44 @@ export default {
       //console.log(event.target.id);
 
       if (event.target.id == "timeseries-tab") {
-        this.showTimeChart = true
+        this.showTimeChart = true;
 
         //this.$refs.timeChart.$refs.chart.chart.xAxis[0].isDirty = true;
         //this.$refs.timeChart.$refs.chart.chart.redraw();
         //this.$refs.timeChart.$refs.chart.chart.update({});
         //this.$refs.timeChart.$refs.chart.chart.reflow();
       } //else {
-        //this.showTimeChart = false
+      //this.showTimeChart = false
       //}
 
       if (event.target.id == "bestbyyear-tab") {
-        this.showYearChart = true
+        this.showYearChart = true;
 
         //this.$refs.yearChart.$refs.chart.chart.xAxis[0].isDirty = true;
         //this.$refs.yearChart.$refs.chart.chart.redraw();
         //this.$refs.yearChart.$refs.chart.chart.update({});
         //this.$refs.yearChart.$refs.chart.chart.reflow();
       } //else {
-        //this.showYearChart = false
+      //this.showYearChart = false
       //}
 
       if (event.target.id == "progression-tab") {
-        this.showProgressionChart = true
+        this.showProgressionChart = true;
 
         //this.$refs.progressionChart.$refs.chart.chart.xAxis[0].isDirty = true;
         //this.$refs.progressionChart.$refs.chart.chart.redraw();
         //this.$refs.progressionChart.$refs.chart.chart.update({});
         //this.$refs.progressionChart.$refs.chart.chart.reflow();
       } //else {
-        //this.showProgressionChart = false
+      //this.showProgressionChart = false
       //}
     },
     get_data: function () {
       this.$parent.loading = true;
       this.message = "Næ í gögn ekki stökkva langt 😉";
 
-      var url = "/api/competitor/" + this.competitorID + "/" + this.eventID + "/";
+      var url =
+        "/api/competitor/" + this.competitorID + "/" + this.eventID + "/";
       axios
         .all([axios.get(url)])
         .then(

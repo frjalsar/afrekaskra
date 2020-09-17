@@ -128,13 +128,8 @@ def club_logo(request, ClubName):
             filename = './images/clubs/{}.jpg'.format(ClubName_decode)
             with open(filename, "rb") as f:
                 return HttpResponse(f.read(), content_type="image/jpeg")
-        except:
-            try: # Ef ekkert virka nota þá ÍSÍ logo og svo 404 ef það virkar ekki heldur.
-                filename = './images/clubs/isi.png'
-                with open(filename, "rb") as f:
-                    return HttpResponse(f.read(), content_type="image/png")
-            except:
-                raise Http404()
+        except: # Ekkert virkar skila þá 404
+            raise Http404()
 
 @cache_page(60 * 15)
 def competitor_records(request, CompetitorCode):

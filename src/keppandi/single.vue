@@ -17,16 +17,16 @@
               />
             </div>
             <div class="p-2 flex-grow-1 align-self-center">
-              <i class="fas" v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"></i> <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
+              <i class="fas" v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"></i> <b>{{competitor_info.FirstName}} {{competitor_info.LastName}} ({{competitor_info.YOB}})</b>
               <br />
                 <img
                 class="img-thumbnail img-fluid"
                 v-bind:src="ClubNameUrl"
                 width="75px"
+                @error="ClubLogoError"
+                v-show="showClubLogo"
               />
-              {{competitor_info.Club}}
-              <br />
-              {{competitor_info.YOB}}
+              <div v-show="!showClubLogo">{{competitor_info.Club}}</div>
             </div>
           </div>
         </div>
@@ -70,6 +70,7 @@ export default {
       isReady: false,
       competitorID: null,
       message: "",
+      showClubLogo: true,
     };
   },
   created() {
@@ -91,6 +92,10 @@ export default {
     }
   },
   methods: {
+    ClubLogoError: function () {
+      // Fela Club logo ef við fáum villu á það.
+      this.showClubLogo = false;
+    },
     get_data: function () {
       //this.$parent.loading = true;
       this.message = "Næ í gögn ekki stökkva langt 😉";
