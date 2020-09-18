@@ -16,17 +16,29 @@
                 width="150px"
               />
             </div>
-            <div class="p-2 flex-grow-1 align-self-center">
-              <h2 style="color:#FFFFFF;text-shadow: 0 0 3px rgba(0, 0, 0, .8);"><i class="fas" v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"></i> <b>{{competitor_info.FirstName}} {{competitor_info.LastName}} ({{competitor_info.YOB}})</b></h2>
-              </br>
-                <img
-                class="img-thumbnail img-fluid"
+            <div class="p-2">
+              <img
+                class="img-thumbnail img-fluid img-club"
                 v-bind:src="ClubNameUrl"
-                width="75px"
+                width="125px"
                 @error="ClubLogoError"
                 v-show="showClubLogo"
               />
-              <div v-show="!showClubLogo">{{competitor_info.Club}}</div>
+              <div v-show="!showClubLogo">
+                <h2 class="club-text">{{competitor_info.Club}}</h2>
+              </div>
+            </div>
+            <div class="p-2 flex-grow-1 align-self-center">
+              <h2 style="color:#FFFFFF;text-shadow: 0 0 3px rgba(0, 0, 0, .8);" class="name-text">
+                <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
+              </h2>
+              <h5 class="yob-text">
+                <i
+                  class="fas"
+                  v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"
+                ></i>
+                {{competitor_info.YOB}}
+              </h5>
             </div>
           </div>
         </div>
@@ -84,12 +96,11 @@ export default {
   computed: {
     ClubNameUrl: function () {
       if (this.isReady === true) {
-        return '/api/img/club/' + this.competitor_info.Club
+        return "/api/img/club/" + this.competitor_info.Club;
+      } else {
+        return "";
       }
-      else {
-        return ''
-      }
-    }
+    },
   },
   methods: {
     ClubLogoError: function () {
@@ -166,6 +177,26 @@ export default {
 .info-shift {
   position: relative;
   top: -75px;
-  margin-bottom: -75px
+  margin-bottom: -75px;
+}
+
+.img-club {
+  position: relative;
+  top: +25px;
+}
+
+.club-text {
+  position: relative;
+  top: 65px;
+}
+
+.yob-text {
+  position: relative;
+  top: -15px;
+}
+
+.name-text {
+  position: relative;
+  top: -15px;
 }
 </style>

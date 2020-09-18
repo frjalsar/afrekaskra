@@ -103,6 +103,8 @@ def competitor_img_profile(request, CompetitorCode):
         with open(filename_profile, "rb") as f:
             return HttpResponse(f.read(), content_type="image/png")
 
+    raise Http404() # Ættum ekki að koma hingað
+
 @cache_page(60 * 15)
 def competitor_img_action(request, CompetitorCode):
     filename_action = './images/action_{:d}.jpg'.format(CompetitorCode)
@@ -111,10 +113,15 @@ def competitor_img_action(request, CompetitorCode):
             return HttpResponse(f.read(), content_type="image/jpeg")
     except IOError:
         #raise Http404()
-        blank = Image.new('RGBA', (2160, 150), (255,255,255,0))
-        response = HttpResponse(content_type="image/png")
-        blank.save(response, "PNG")
-        return response
+        #blank = Image.new('RGBA', (2160, 150), (255,255,255,0))
+        #response = HttpResponse(content_type="image/png")
+        #blank.save(response, "PNG")
+        #return response
+        filename_action = './images/action_default.jpg'
+        with open(filename_action, "rb") as f:
+            return HttpResponse(f.read(), content_type="image/jpeg")
+
+    raise Http404() # Ættum ekki að koma hingað
 
 @cache_page(60 * 15)
 def club_logo(request, ClubName):
