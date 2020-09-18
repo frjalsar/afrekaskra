@@ -1,10 +1,12 @@
 <template>
-  <div style="margin-top: -75px;">
+  <div style="margin-top: 0px;">
     <div v-if="!isReady">
       <pulse-loader :loading="!isReady" :color="color" :size="size"></pulse-loader>
       <p style="text-align:center">{{message}}</p>
     </div>
     <div id="competitor-view" v-if="isReady">
+      <!-- HEADER -->
+      <img class="card-img-top img-fluid" v-bind:src="'/api/img/action/' + competitorID" />
       <div class="d-flex flex-column bd-highlight mb-3">
         <div class="p-2 bd-highlight profile-div">
           <img
@@ -35,7 +37,12 @@
             <h2 class="club-text">{{competitor_info.Club}}</h2>
           </div>
         </div>
-        <img class="card-img-top img-fluid" v-bind:src="'/api/img/action/' + competitorID" />
+      </div>
+      <!-- INFO -->
+      <div>
+        <recordstable :competitorID="competitorID"></recordstable>
+        <pbtable :event_info="event_info" :competitorID="competitorID" ref="pbtable"></pbtable>
+        <piechart :event_info="event_info" ref="pieChart"></piechart>
       </div>
     </div>
   </div>
@@ -164,6 +171,7 @@ export default {
   height: 0;
   z-index: 1;
   position: relative;
+  top: -75px;
 }
 
 .profile-text {
@@ -171,7 +179,8 @@ export default {
   height: 0;
   z-index: 1;
   position: relative;
-  top: 150px;
+  top: -150px;
+  left: 25px;
 }
 
 .profile-text-name {
@@ -189,7 +198,7 @@ export default {
   height: 0;
   z-index: 1;
   position: relative;
-  top: -50px;
+  top: -100px;
   left: 160px;
 }
 </style>
