@@ -1,9 +1,11 @@
 <template>
   <div>
     <div v-if="loading">
+      <hr />
       <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
     </div>
     <div v-if="showRecordsTable">
+      <hr />
       <h2 class="display-4">
         <!-- Font size er 3.5 rem í Display-4 sem er 56px-->
         <img src="./ISL_Flag.svg" alt="Íslenski fáninn" height="56px" /> Íslandsmet

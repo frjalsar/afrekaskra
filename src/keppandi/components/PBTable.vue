@@ -1,5 +1,6 @@
 <template>
   <div>
+    <hr />
     <h2 class="display-4"><i class="fas fa-trophy"></i> Árangur</h2>
     <p>
       <i class="far fa-hand-pointer"></i>

@@ -19,6 +19,7 @@
           <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
         </div>
         <div class="p-2 bd-highlight profile-text profile-text-other h5">
+          {{competitor_info.Club}} -
           <i
             class="fas"
             v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"
@@ -33,18 +34,12 @@
             v-if="showClubLogo"
             style="max-width:75px;width:auto;"
           />
-          <div v-if="!showClubLogo" class="club-text h2">
-            <b>{{competitor_info.Club}}</b>
-          </div>
         </div>
       </div>
       <!-- INFO -->
       <div style="margin-top:-25px">
-        <hr>
         <recordstable :competitorID="competitorID"></recordstable>
-        <hr>
         <pbtable :event_info="event_info" :competitorID="competitorID" ref="pbtable"></pbtable>
-        <hr>
         <piechart :event_info="event_info" ref="pieChart"></piechart>
       </div>
     </div>
@@ -194,11 +189,6 @@ export default {
 .profile-text-other {
   color: #ffffff;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.75);
-}
-
-.club-text {
-  position: relative;
-  top: 35px;
 }
 
 .club-info {
