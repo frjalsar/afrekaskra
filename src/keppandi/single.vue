@@ -12,7 +12,7 @@
           <img
             class="rounded-circle border img-thumbnail img-fluid"
             v-bind:src="'/api/img/profile/' + competitorID"
-            width="125px"
+            style="max-width:125px;width:auto;"
           />
         </div>
         <div class="p-2 bd-highlight profile-text profile-text-name h2">
@@ -29,9 +29,9 @@
           <img
             class="rounded border img-thumbnail img-fluid img-club"
             v-bind:src="ClubNameUrl"
-            width="75px"
             @error="ClubLogoError"
             v-show="showClubLogo"
+            style="max-width:75px;width:auto;"
           />
           <div v-show="!showClubLogo">
             <h2 class="club-text">{{competitor_info.Club}}</h2>
