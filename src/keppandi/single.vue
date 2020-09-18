@@ -30,11 +30,11 @@
             class="rounded border img-thumbnail img-fluid img-club"
             v-bind:src="ClubNameUrl"
             @error="ClubLogoError"
-            v-show="showClubLogo"
+            v-if="showClubLogo"
             style="max-width:75px;width:auto;"
           />
-          <div v-show="!showClubLogo">
-            <h2 class="club-text">{{competitor_info.Club}}</h2>
+          <div v-if="!showClubLogo" class="club-text h2">
+            <b>{{competitor_info.Club}}</b>
           </div>
         </div>
       </div>
@@ -191,6 +191,11 @@ export default {
 .profile-text-other {
   color: #ffffff;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.75);
+}
+
+.club-text {
+  position: relative;
+  top: 35px;
 }
 
 .club-info {
