@@ -86,6 +86,7 @@ export default {
 <style scoped>
 .table {
   margin-bottom: 0;
+  width: 100%;
 }
 .td {
   text-align: center;
