@@ -11,14 +11,14 @@
           <div class="d-flex">
             <div class="p-2">
               <img
-                class="rounded-circle border border-light img-thumbnail img-fluid"
+                class="rounded-circle border img-thumbnail img-fluid"
                 v-bind:src="'/api/img/profile/' + competitorID"
                 width="150px"
               />
             </div>
             <div class="p-2">
               <img
-                class="rounded border border-light img-thumbnail img-fluid img-club"
+                class="rounded border img-thumbnail img-fluid img-club"
                 v-bind:src="ClubNameUrl"
                 width="100px"
                 @error="ClubLogoError"
