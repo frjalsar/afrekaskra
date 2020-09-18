@@ -30,6 +30,11 @@ export default new Router({
       component: () => import('./keppandi/single.vue')
     },
     {
+      path: '/layout/:competitorID',
+      name: 'LayoutTest',
+      component: () => import('./layout/single.vue')
+    },
+    {
       path: '/keppandi/:competitorID/:eventID',
       name: 'CompetitorEvent',
       component: () => import('./keppandi/event.vue')

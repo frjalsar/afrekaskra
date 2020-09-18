@@ -5,49 +5,37 @@
       <p style="text-align:center">{{message}}</p>
     </div>
     <div id="competitor-view" v-if="isReady">
-      <div class="card">
-        <img class="card-img-top img-fluid" v-bind:src="'/api/img/action/' + competitorID" />
-        <div class="card-header info-shift">
-          <div class="d-flex">
-            <div class="p-2">
-              <img
-                class="rounded-circle border img-thumbnail img-fluid"
-                v-bind:src="'/api/img/profile/' + competitorID"
-                width="150px"
-              />
-            </div>
-            <div class="p-2">
-              <img
-                class="rounded border img-thumbnail img-fluid img-club"
-                v-bind:src="ClubNameUrl"
-                width="100px"
-                @error="ClubLogoError"
-                v-show="showClubLogo"
-              />
-              <div v-show="!showClubLogo">
-                <h2 class="club-text">{{competitor_info.Club}}</h2>
-              </div>
-            </div>
-            <div class="p-2 flex-grow-1 align-self-center">
-              <h2 class="name-text">
-                <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
-              </h2>
-              <h5 class="yob-text">
-                <i
-                  class="fas"
-                  v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"
-                ></i>
-                {{competitor_info.YOB}}
-              </h5>
-            </div>
+      <div class="d-flex flex-column bd-highlight mb-3">
+        <div class="p-2 bd-highlight profile-div">
+          <img
+            class="rounded-circle border img-thumbnail img-fluid"
+            v-bind:src="'/api/img/profile/' + competitorID"
+            width="150px"
+          />
+        </div>
+        <div class="p-2 bd-highlight profile-text profile-text-name h2">
+          <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
+        </div>
+        <div class="p-2 bd-highlight profile-text profile-text-other h5">
+          <i
+            class="fas"
+            v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"
+          ></i>
+          {{competitor_info.YOB}}
+        </div>
+        <div class="p-2 bd-highlight club-info">
+          <img
+            class="rounded border img-thumbnail img-fluid img-club"
+            v-bind:src="ClubNameUrl"
+            width="100px"
+            @error="ClubLogoError"
+            v-show="showClubLogo"
+          />
+          <div v-show="!showClubLogo">
+            <h2 class="club-text">{{competitor_info.Club}}</h2>
           </div>
         </div>
-        <div class="card-body">
-          <recordstable :competitorID="competitorID"></recordstable>
-          <pbtable :event_info="event_info" :competitorID="competitorID" ref="pbtable"></pbtable>
-          <piechart :event_info="event_info" ref="pieChart"></piechart>
-        </div>
-        <!--<div class="card-footer text-muted text-center"></div>-->
+        <img class="card-img-top img-fluid" v-bind:src="'/api/img/action/' + competitorID" />
       </div>
     </div>
   </div>
@@ -57,9 +45,9 @@
 import axios from "axios";
 //import { Chart } from "highcharts-vue";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
-import PieChart from "./components/PieChart.vue";
-import PBTable from "./components/PBTable.vue";
-import RecordsTable from "./components/RecordsTable.vue";
+import PieChart from "../keppandi/components/PieChart.vue";
+import PBTable from "../keppandi/components/PBTable.vue";
+import RecordsTable from "../keppandi/components/RecordsTable.vue";
 
 export default {
   name: "KeppandiSingle",
@@ -167,42 +155,41 @@ export default {
   text-align: center;
 }
 
-/* Center card */
-.card {
-  margin: 0 auto; /* Added */
-  float: none; /* Added */
-  margin-bottom: 10px; /* Added */
+.action-div img {
+  width: 100%;
 }
 
-.info-shift {
+.profile-div {
+  line-height: 0;
+  height: 0;
+  z-index: 1;
   position: relative;
-  top: -75px;
-  margin-bottom: -75px;
 }
 
-.img-club {
+.profile-text {
+  line-height: 0;
+  height: 0;
+  z-index: 1;
   position: relative;
-  top: +25px;
+  top: 50px;
+  left: 175px;
 }
 
-.club-text {
-  position: relative;
-  top: 65px;
-}
-
-.yob-text {
-  position: relative;
-  bottom: 125px;
-  left: -275px;
+.profile-text-name {
   color: #ffffff;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.75);
 }
 
-.name-text {
-  position: relative;
-  bottom: 125px;
-  left: -275px;
+.profile-text-other {
   color: #ffffff;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.75);
+}
+
+.club-info {
+  line-height: 0;
+  height: 0;
+  z-index: 1;
+  position: relative;
+  top: 100px;
 }
 </style>
