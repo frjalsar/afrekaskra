@@ -20,7 +20,7 @@
               <img
                 class="img-thumbnail img-fluid img-club"
                 v-bind:src="ClubNameUrl"
-                width="125px"
+                width="100px"
                 @error="ClubLogoError"
                 v-show="showClubLogo"
               />
@@ -29,7 +29,7 @@
               </div>
             </div>
             <div class="p-2 flex-grow-1 align-self-center">
-              <h2 style="color:#FFFFFF;text-shadow: 0 0 3px rgba(0, 0, 0, .8);" class="name-text">
+              <h2 class="name-text">
                 <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
               </h2>
               <h5 class="yob-text">
@@ -198,5 +198,7 @@ export default {
 .name-text {
   position: relative;
   top: -15px;
+  color:#FFFFFF;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, .75);
 }
 </style>
