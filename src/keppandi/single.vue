@@ -39,9 +39,12 @@
         </div>
       </div>
       <!-- INFO -->
-      <div>
+      <div style="margin-top:-25px">
+        <hr>
         <recordstable :competitorID="competitorID"></recordstable>
+        <hr>
         <pbtable :event_info="event_info" :competitorID="competitorID" ref="pbtable"></pbtable>
+        <hr>
         <piechart :event_info="event_info" ref="pieChart"></piechart>
       </div>
     </div>
