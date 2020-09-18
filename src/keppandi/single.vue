@@ -193,7 +193,7 @@ export default {
 .yob-text {
   position: relative;
   bottom: 125px;
-  left: -275px;
+  right: 275px;
   color: #ffffff;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.75);
 }
@@ -201,7 +201,7 @@ export default {
 .name-text {
   position: relative;
   bottom: 125px;
-  left: -275px;
+  right: 275px;
   color: #ffffff;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.75);
 }
