@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin-top: -75px;">
     <div v-if="!isReady">
       <pulse-loader :loading="!isReady" :color="color" :size="size"></pulse-loader>
       <p style="text-align:center">{{message}}</p>
@@ -171,8 +171,7 @@ export default {
   height: 0;
   z-index: 1;
   position: relative;
-  top: 50px;
-  left: 175px;
+  top: 150px;
 }
 
 .profile-text-name {
@@ -190,6 +189,7 @@ export default {
   height: 0;
   z-index: 1;
   position: relative;
-  top: 100px;
+  top: -50px;
+  left: 160px;
 }
 </style>
