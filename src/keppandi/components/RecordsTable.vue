@@ -43,8 +43,8 @@
           </thead>
           <tbody>
             <tr v-for="(i, index) in sortedDataActive" v-show="(index < 5) || showAllActiveRecords">
-              <th scope="row">{{i.Event}}</th>
-              <td>{{i.Results.toFixed(2)}}</td>
+              <th scope="row">{{i.Event + ' [' + i.Units_symbol + ']'}}</th>
+              <td>{{i.Results_text}}</td>
               <td>{{i.Wind}}</td>
               <td>{{inout_text(i.Inout)}}</td>
               <td>{{i.Date}}</td>
@@ -97,8 +97,8 @@
               v-for="(i, index) in sortedDataunActive"
               v-show="(index < 5) || showAllunActiveRecords"
             >
-              <th scope="row">{{i.Event}}</th>
-              <td>{{i.Results.toFixed(2)}}</td>
+              <th scope="row">{{i.Event + ' [' + i.Units_symbol + ']'}}</th>
+              <td>{{i.Results_text}}</td>
               <td>{{i.Wind}}</td>
               <td>{{inout_text(i.Inout)}}</td>
               <td>{{i.Date}}</td>
@@ -119,6 +119,7 @@
 
 <script>
 import axios from "axios";
+import moment from "moment";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default {
@@ -177,7 +178,7 @@ export default {
 
       for (var i = 0; i < dataLen; i++) {
         if (this.record_data[i].isActive == true) {
-          data.push(this.record_data[i]);
+          data.push(this.create_result_text(this.record_data[i]));
         }
       }
 
@@ -199,7 +200,7 @@ export default {
 
       for (var i = 0; i < dataLen; i++) {
         if (this.record_data[i].isActive == false) {
-          data.push(this.record_data[i]);
+          data.push(this.create_result_text(this.record_data[i]));
         }
       }
 
@@ -262,13 +263,24 @@ export default {
     },
   },
   methods: {
-    inout_text: function(inout) {
-      if (inout === 0) {
-        return 'Úti'
+    create_result_text: function (data) {
+      if (data["Units"] == 3 || data["Units"] == 4) {
+        data["Results_text"] = moment.unix(data["Results"]).format("mm:ss,SS");
+      } else {
+        if (data["Electronic_timing"] == 0 && data['Units'] == 2) {
+          data["Results_text"] = parseFloat(data["Results"]).toFixed(1);
+        } else {
+          data["Results_text"] = parseFloat(data["Results"]).toFixed(2);
+        }
       }
-      else
-      {
-        return 'Inni'
+
+      return data;
+    },
+    inout_text: function (inout) {
+      if (inout === 0) {
+        return "Úti";
+      } else {
+        return "Inni";
       }
     },
     toggle_ActiveRecords: function (event) {

@@ -45,7 +45,10 @@ def results_to_float(in_str):
     dd = 0
     
     if (len(split) == 2): # hh:mm:ss,dd eða mm:ss,dd eða ss,dd
-        dd = float(split[1])/100
+        if (len(split[1]) == 1): # Ein aukastafur eftir kommu þýðir handtímataka
+            dd = float(split[1])/10 # Handtími
+        else:
+            dd = float(split[1])/100 # Rafmagnstími
     
     split = split[0].split(':')
     if (len(split) == 3): # hh:mm:ss

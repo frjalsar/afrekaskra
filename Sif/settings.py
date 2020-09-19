@@ -28,6 +28,7 @@ if 'SIF_ON_HEROKU' in os.environ:
     DEBUG = False
 else:
     DEBUG = True
+    print('DEBUG IS ON')
 
 #APPEND_SLASH = False
 

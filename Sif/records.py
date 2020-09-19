@@ -83,8 +83,8 @@ def Get_Competitor_Records(CompetitorCode):
         event_info = events.Get_Event_Info(event_id)
 
         wind_str = '{:+.1f}'.format(float(record.vindur))
-        results = common.results_to_float(record.árangur.replace(',', '.'))
-        results_str = record.árangur
+        results = common.results_to_float(q_afrek.árangur.replace(',', '.'))
+        results_str = q_afrek.árangur
         date_str = format_date(record.dagsetning_mets.date(), "d MMM yyyy", locale='is_IS').upper()
         active = record.virkt
         age = record.aldur_methafa
@@ -93,6 +93,16 @@ def Get_Competitor_Records(CompetitorCode):
         club = record.félag_methafa
         line_afrek = record.línunr_í_afrekum
         event = event_info['ShortName']
+        units = event_info['Units']
+        units_symbol = event_info['Units_symbol']
+        elec_time = q_afrek.rafmagnstímataka
+        print('MET')
+        print(event)
+        print(results)
+        print(record.árangur)
+        print(q_afrek.árangur)
+        print('END')
+
 
 
         record_info = {'Event': event,
@@ -104,7 +114,10 @@ def Get_Competitor_Records(CompetitorCode):
                        'Date': date_str,
                        'Results': results,
                        'Results_str': results_str,
-                       'Wind': wind_str
+                       'Wind': wind_str,
+                       'Units': units,
+                       'Units_symbol': units_symbol,
+                       'Electronic_timing': elec_time
                       }
 
         record_list.append(record_info)
