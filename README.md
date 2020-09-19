@@ -1,7 +1,8 @@
 # Afrekaskrá FRÍ
 
 ## How-to:
-1. sudo apt install libpq-dev unixodbc-dev libsqliteodbc python3-dev python3-pyodbc npm git build-essentials
+0. I used Anaconda 2020.07
+1. sudo apt install libpq-dev unixodbc-dev libsqliteodbc python3-dev npm git build-essentials
 2. git clone
 3. npm install
 4. npm run build
