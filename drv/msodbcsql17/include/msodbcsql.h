@@ -34,6 +34,7 @@
 #define SQLODBC_PRODUCT_NAME_FULL_VER_ANSI      "Microsoft ODBC Driver 17 for SQL Server"
 #define SQLODBC_PRODUCT_NAME_FULL_ANSI          "Microsoft ODBC Driver for SQL Server"
 #define SQLODBC_PRODUCT_NAME_SHORT_VER_ANSI     "ODBC Driver 17 for SQL Server"
+
 #define SQLODBC_PRODUCT_NAME_SHORT_ANSI         "ODBC Driver for SQL Server"
 
 #endif /* SQLODBC_VER >= 1700 */
@@ -66,6 +67,7 @@ extern "C" {
 #define SQL_COPT_SS_INTEGRATED_SECURITY                 (SQL_COPT_SS_BASE+3)  /* Force integrated security on login */
 #define SQL_COPT_SS_PRESERVE_CURSORS                    (SQL_COPT_SS_BASE+4)  /* Preserve server cursors after SQLTransact */
 #define SQL_COPT_SS_USER_DATA                           (SQL_COPT_SS_BASE+5)  /* dbgetuserdata/dbsetuserdata */
+#define SQL_COPT_SS_ENLIST_IN_XA                        SQL_ATTR_ENLIST_IN_XA /* Enlist in a XA transaction */
 #define SQL_COPT_SS_FALLBACK_CONNECT                    (SQL_COPT_SS_BASE+10) /* Enables FallBack connections */
 #define SQL_COPT_SS_QUOTED_IDENT                        (SQL_COPT_SS_BASE+17) /* Enable/Disable Quoted Identifiers */
 #define SQL_COPT_SS_ANSI_NPW                            (SQL_COPT_SS_BASE+18) /* Enable/Disable ANSI NULL, Padding and Warnings */
@@ -82,6 +84,8 @@ extern "C" {
 #define SQL_COPT_SS_INTEGRATED_AUTHENTICATION_METHOD    (SQL_COPT_SS_BASE+31) /* The integrated authentication method used for the connection */
 #define SQL_COPT_SS_MUTUALLY_AUTHENTICATED              (SQL_COPT_SS_BASE+32) /* Used to decide if the connection is mutually authenticated */
 #define SQL_COPT_SS_CLIENT_CONNECTION_ID                (SQL_COPT_SS_BASE+33) /* Post connection attribute used to get the ConnectionIDMET */
+#define SQL_COPT_SS_CONNECT_RETRY_COUNT                 (SQL_COPT_SS_BASE+34) /* Post connection attribute used to get ConnectRetryCount */
+#define SQL_COPT_SS_CONNECT_RETRY_INTERVAL              (SQL_COPT_SS_BASE+35) /* Post connection attribute used to get ConnectRetryInterval */
 /*
  * SQLSetStmtAttr Microsoft ODBC Driver for SQL Server specific defines.
  * Statement attributes
@@ -120,12 +124,14 @@ extern "C" {
 #define SQL_COPT_SS_CEKCACHETTL                     (SQL_COPT_SS_BASE_EX+14) /* Symmetric Key Cache TTL */
 #define SQL_COPT_SS_AUTHENTICATION                  (SQL_COPT_SS_BASE_EX+15) /* The authentication method used for the connection */
 #define SQL_COPT_SS_ACCESS_TOKEN                    (SQL_COPT_SS_BASE_EX+16) /* The authentication access token used for the connection */
-#define SQL_COPT_SS_USE_FMTONLY                     (SQL_COPT_SS_BASE_EX+17) /* The flag to SET FMTONLY ON/OFF */
+#define SQL_COPT_SS_USE_FMTONLY                     (SQL_COPT_SS_BASE_EX+17) /* The flag to Set FMTONLY ON/OFF */
 
 
 /* SQLSetConnectAttr MS driver additional specific defines. */
 #define SQL_COPT_SS_BASE_ADD                        1400
-#define SQL_COPT_SS_DATACLASSIFICATION_VERSION      (SQL_COPT_SS_BASE_ADD + 1) /* The flag to Set/Get DATACLASSIFICATION version support */
+#define SQL_COPT_SS_DATACLASSIFICATION_VERSION      (SQL_COPT_SS_BASE_ADD + 0) /* The flag to Set/Get DATACLASSIFICATION version support */
+#define SQL_COPT_SS_SPID                            (SQL_COPT_SS_BASE_ADD + 1) /* The flag to Get SPID */
+#define SQL_COPT_SS_AUTOBEGINTXN                    (SQL_COPT_SS_BASE_ADD + 2) /* Flag to set whether transactions are automatically started */
 
 
  /*
@@ -186,10 +192,8 @@ extern "C" {
 /* Data Classification version*/
 #define SQL_CA_SS_DATA_CLASSIFICATION_VERSION       (SQL_CA_SS_BASE+38) /*  retrieve data classification version */
 
-/* Defines for use with SQL_COPT_SS_PRESERVE_CURSORS */
-#define SQL_PC_OFF                          0L           /*  Cursors are closed on SQLTransact */
-#define SQL_PC_ON                           1L           /*  Cursors remain open on SQLTransact */
-#define SQL_PC_DEFAULT                      SQL_PC_OFF
+/* Defines returned by SQL_ATTR_CURSOR_TYPE/SQL_CURSOR_TYPE */
+#define SQL_CURSOR_FAST_FORWARD_ONLY        8            /*  Only returned by SQLGetStmtAttr/Option */
 /* Defines for use with SQL_COPT_SS_USE_PROC_FOR_PREP */
 #define SQL_UP_OFF                          0L           /*  Procedures won't be used for prepare */
 #define SQL_UP_ON                           1L           /*  Procedures will be used for prepare */
@@ -207,10 +211,20 @@ extern "C" {
 #define SQL_AU_RESET                        5L           /*  Reset the value to attribute not set to anything. */
 #define SQL_AU_AD_MSI                       6L           /*  Active Directory Manage Service Identity authentication is used */
 
+/* Defines for use with SQL_COPT_SS_PRESERVE_CURSORS */
+#define SQL_PC_OFF                          0L           /*  Cursors are closed on SQLTransact */
+#define SQL_PC_ON                           1L           /*  Cursors remain open on SQLTransact */
+#define SQL_PC_DEFAULT                      SQL_PC_OFF
+/* Defines for use with SQL_COPT_SS_USER_DATA */
+#define SQL_UD_NOTSET                       NULL         /*  No user data pointer set */
 /* Defines for use with SQL_COPT_SS_TRANSLATE */
 #define SQL_XL_OFF                          0L           /*  Code page translation is not performed */
 #define SQL_XL_ON                           1L           /*  Code page translation is performed */
 #define SQL_XL_DEFAULT                      SQL_XL_ON
+/* Defines for use with SQL_COPT_SS_FALLBACK_CONNECT - Pre-Connect Option only */
+#define SQL_FB_OFF                          0L           /*  FallBack connections are disabled */
+#define SQL_FB_ON                           1L           /*  FallBack connections are enabled */
+#define SQL_FB_DEFAULT                      SQL_FB_OFF
 /* Defines for use with SQL_COPT_SS_BCP - Pre-Connect Option only */
 #define SQL_BCP_OFF                         0L           /*  BCP is not allowed on connection */
 #define SQL_BCP_ON                          1L           /*  BCP is allowed on connection */
@@ -250,9 +264,14 @@ extern "C" {
 #define SQL_CE_DISABLED                     0L           /*  Disabled */
 #define SQL_CE_RESULTSETONLY                1L           /*  Decryption Only (resultsets and return values) */
 #define SQL_CE_ENABLED                      3L           /*  Enabled (both encryption and decryption) */
+/* Defines for use with SQL_COPT_SS_COLUMN_ENCRYPTION */
+#define SQL_COLUMN_ENCRYPTION_DISABLE       0L
+#define SQL_COLUMN_ENCRYPTION_ENABLE        1L
+#define SQL_COLUMN_ENCRYPTION_DEFAULT       SQL_COLUMN_ENCRYPTION_DISABLE
+/* Defines for use with SQL_COPT_SS_CEKCACHETTL */
+#define SQL_CEKCACHETTL_DEFAULT             7200L        /*  TTL value in seconds (2 hours) */
 /* SQL_SOPT_SS_NOCOUNT_STATUS */
 #define SQL_NC_OFF                          0L
-#define SQL_NC_ON                           1L
 #define SQL_NC_ON                           1L
 /* SQL_SOPT_SS_DEFER_PREPARE */
 #define SQL_DP_OFF                          0L
@@ -285,12 +304,10 @@ extern "C" {
 #define SQL_MARS_ENABLED_YES                1L
 /* SQL_TXN_ISOLATION_OPTION bitmasks */
 #define SQL_TXN_SS_SNAPSHOT                 0x00000020L
-/* SQL_COPT_SS_COLUMN_ENCRYPTION */
-#define SQL_COLUMN_ENCRYPTION_DISABLE       0L
-#define SQL_COLUMN_ENCRYPTION_ENABLE        1L
-#define SQL_COLUMN_ENCRYPTION_DEFAULT       SQL_COLUMN_ENCRYPTION_DISABLE
-/* SQL_COPT_SS_CEKCACHETTL */
-#define SQL_CEKCACHETTL_DEFAULT             7200L        /*  TTL value in seconds (2 hours) */
+/* SQL_AUTOBEGINTXN options */
+#define SQL_AUTOBEGINTXN_OFF                0UL
+#define SQL_AUTOBEGINTXN_ON                 1UL
+#define SQL_AUTOBEGINTXN_DEFAULT            SQL_AUTOBEGINTXN_ON
 
 /* The following are defines for SQL_CA_SS_COLUMN_SORT_ORDER */
 #define SQL_SS_ORDER_UNSPECIFIED            0L
@@ -316,11 +333,70 @@ extern "C" {
 
 /* Extended C Types range 4000 and above. Range of -100 thru 200 is reserved by Driver Manager. */
 #define SQL_C_TYPES_EXTENDED                0x04000L
+#define SQL_C_SS_TIME2                         (SQL_C_TYPES_EXTENDED+0)
+#define SQL_C_SS_TIMESTAMPOFFSET               (SQL_C_TYPES_EXTENDED+1)
 
-/*
- * SQL_SS_LENGTH_UNLIMITED is used to describe the max length of
- * VARCHAR(max), VARBINARY(max), NVARCHAR(max), and XML columns
- */
+#ifndef SQLNCLI_NO_BCP
+/* Define the symbol SQLNCLI_NO_BCP if you are not using BCP in your application
+   and you want to exclude the BCP-related definitions in this header file. */
+#ifndef SQLTEXT
+
+    /* SQL Server Data Type defines.
+       New types for SQL 6.0 and later servers */
+#define SQLTEXT                             0x23
+#define SQLVARBINARY                        0x25
+#define SQLINTN                             0x26
+#define SQLVARCHAR                          0x27
+#define SQLBINARY                           0x2d
+#define SQLIMAGE                            0x22
+#define SQLCHARACTER                        0x2f
+#define SQLINT1                             0x30
+#define SQLBIT                              0x32
+#define SQLINT2                             0x34
+#define SQLINT4                             0x38
+#define SQLMONEY                            0x3c
+#define SQLDATETIME                         0x3d
+#define SQLFLT8                             0x3e
+#define SQLFLTN                             0x6d
+#define SQLMONEYN                           0x6e
+#define SQLDATETIMN                         0x6f
+#define SQLFLT4                             0x3b
+#define SQLMONEY4                           0x7a
+#define SQLDATETIM4                         0x3a
+    /* New types for SQL 6.0 and later servers */
+#define SQLDECIMAL                          0x6a
+#define SQLNUMERIC                          0x6c
+    /* New types for SQL 7.0 and later servers */
+#define SQLUNIQUEID                         0x24
+#define SQLBIGCHAR                          0xaf
+#define SQLBIGVARCHAR                       0xa7
+#define SQLBIGBINARY                        0xad
+#define SQLBIGVARBINARY                     0xa5
+#define SQLBITN                             0x68
+#define SQLNCHAR                            0xef
+#define SQLNVARCHAR                         0xe7
+#define SQLNTEXT                            0x63
+    /* New types for SQL 2000 and later servers */
+#define SQLINT8                             0x7f
+#define SQLVARIANT                          0x62
+    /* New types for SQL 2005 and later servers */
+#define SQLUDT                              0xf0
+#define SQLXML                              0xf1
+    /* New types for SQL 2008 and later servers */
+#define SQLTABLE                            0xf3
+#define SQLDATEN                            0x28
+#define SQLTIMEN                            0x29
+#define SQLDATETIME2N                       0x2a
+#define SQLDATETIMEOFFSETN                  0x2b
+    /* Define old names */
+#define SQLDECIMALN                         0x6a
+#define SQLNUMERICN                         0x6c
+
+#endif /* SQLTEXT */
+#endif /* SQLNCLI_NO_BCP */
+
+    /* SQL_SS_LENGTH_UNLIMITED is used to describe the max length of
+       VARCHAR(max), VARBINARY(max), NVARCHAR(max), and XML columns */
 #define SQL_SS_LENGTH_UNLIMITED             0
 
 /*
@@ -546,6 +622,39 @@ typedef struct CEKeystoreProvider
     void (*Free)();
 } CEKEYSTOREPROVIDER;
 
+typedef struct CEKeystoreProvider2
+{
+    wchar_t *Name;
+    int (*Init)(CEKEYSTORECONTEXT *ctx, errFunc *onError);
+    int (*Read)(CEKEYSTORECONTEXT *ctx, errFunc *onError, void *data, unsigned int *len);
+    int (*Write)(CEKEYSTORECONTEXT *ctx, errFunc *onError, void *data, unsigned int len);
+    int (*DecryptCEK)(
+        CEKEYSTORECONTEXT *ctx,
+        errFunc *onError,
+        const wchar_t *keyPath,
+        const wchar_t *alg,
+        unsigned char *ecek,
+        unsigned short ecekLen,
+        unsigned char **cekOut,
+        unsigned short *cekLen);
+    int (*EncryptCEK)(
+        CEKEYSTORECONTEXT *ctx,
+        errFunc *onError,
+        const wchar_t *keyPath,
+        const wchar_t *alg,
+        unsigned char *cek,
+        unsigned short cekLen,
+        unsigned char **ecekOut,
+        unsigned short *ecekLen);
+    int (*VerifyCMKMetadata)(
+        CEKEYSTORECONTEXT *ctx,
+        errFunc *onError,
+        const wchar_t *keyPath,
+        unsigned char *signature,
+        unsigned short sigLen);
+    void *reserved;
+    void (*Free)();
+} CEKEYSTOREPROVIDER2;
 typedef struct CEKeystoreData
 {
     wchar_t *name;
@@ -555,22 +664,26 @@ typedef struct CEKeystoreData
 
 /* The following constants are for the Azure Key Vault configuration interface */
 #define AKV_CONFIG_FLAGS        0
-#define AKVCFG_AUTHMODE       0x0000000F
-#define AKVCFG_AUTHMODE_ACCESSTOKEN   0
-#define AKVCFG_AUTHMODE_CLIENTKEY     1
-#define AKVCFG_AUTHMODE_PASSWORD      2
-#define AKVCFG_AUTHMODE_INTEGRATED    3
-#define AKVCFG_AUTHMODE_CERTIFICATE   4
-#define AKVCFG_AUTHMODE_MSI           5
-#define AKVCFG_NOAUTORENEW    0x00000010
+ #define AKVCFG_AUTHMODE       0x0000000F
+  #define AKVCFG_AUTHMODE_ACCESSTOKEN   0
+  #define AKVCFG_AUTHMODE_CLIENTKEY     1
+  #define AKVCFG_AUTHMODE_PASSWORD      2
+  #define AKVCFG_AUTHMODE_INTEGRATED    3
+  #define AKVCFG_AUTHMODE_CERTIFICATE   4
+  #define AKVCFG_AUTHMODE_MSI           5
+ #define AKVCFG_NOAUTORENEW    0x00000010
 
 #define AKV_CONFIG_PRINCIPALID  1
 #define AKV_CONFIG_AUTHSECRET   2
+
 #define AKV_CONFIG_ACCESSTOKEN  3
 #define AKV_CONFIG_TOKENEXPIRY  4
+
 #define AKV_CONFIG_MAXRETRIES   5
 #define AKV_CONFIG_RETRYTIMEOUT 6
 #define AKV_CONFIG_RETRYWAIT    7
+
+#define AKV_CONFIG_TRUSTEDENDPOINTS 8
 
 #define AKV_CONFIG_RESET        255
 
