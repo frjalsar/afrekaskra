@@ -1,11 +1,46 @@
 <template>
-  <div style="margin-top: 0px;">
+  <div>
     <div v-if="!isReady">
       <pulse-loader :loading="!isReady" :color="color" :size="size"></pulse-loader>
       <p style="text-align:center">{{message}}</p>
     </div>
     <div id="competitor-view" v-if="isReady">
-      <!-- HEADER -->
+      <div class="action-div">
+        <img
+          class="img-fluid"
+          style="width:100%;height:auto;"
+          v-bind:src="'/api/img/action/' + competitorID"
+        />
+        <div class="topleft">
+          <h2>
+            <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
+          </h2>
+          <h5>
+            {{competitor_info.Club}} -
+            <i
+              class="fas"
+              v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"
+            ></i>
+            {{competitor_info.YOB}}
+          </h5>
+        </div>
+        <div class="bottomleft">
+          <img
+            class="rounded-circle border img-thumbnail img-fluid"
+            v-bind:src="'/api/img/profile/' + competitorID"
+            style="max-width:125px;width:auto;"
+          />
+          <img
+            class="rounded border img-thumbnail img-fluid img-club"
+            v-bind:src="ClubNameUrl"
+            @error="ClubLogoError"
+            v-if="showClubLogo"
+            style="max-width:75px;width:auto;"
+          />
+        </div>
+      </div>
+    </div>
+    <!--     <div id="competitor-view" v-if="isReady">
       <img class="card-img-top img-fluid" v-bind:src="'/api/img/action/' + competitorID" />
       <div class="d-flex flex-column bd-highlight mb-3">
         <div class="p-2 bd-highlight profile-div">
@@ -35,15 +70,15 @@
             style="max-width:75px;width:auto;"
           />
         </div>
-      </div>
-      <!-- INFO -->
-      <div style="margin-top:-25px">
-        <recordstable :competitorID="competitorID"></recordstable>
-        <pbtable :event_info="event_info" :competitorID="competitorID" ref="pbtable"></pbtable>
-        <piechart :event_info="event_info" ref="pieChart"></piechart>
-      </div>
+    </div>-->
+    <!-- INFO -->
+    <div>
+      <recordstable :competitorID="competitorID"></recordstable>
+      <pbtable :event_info="event_info" :competitorID="competitorID" ref="pbtable"></pbtable>
+      <piechart :event_info="event_info" ref="pieChart"></piechart>
     </div>
   </div>
+  <!--</div>-->
 </template>
 
 <script>
@@ -160,8 +195,8 @@ export default {
   text-align: center;
 }
 
-.action-div img {
-  width: 100%;
+.action-div {
+  position: relative;
 }
 
 .profile-div {
@@ -189,6 +224,22 @@ export default {
 .profile-text-other {
   color: #ffffff;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.75);
+}
+
+.topleft {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  font-size: 18px;
+  color: #ffffff;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.75);
+}
+
+.bottomleft {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+  font-size: 18px;
 }
 
 .club-info {
