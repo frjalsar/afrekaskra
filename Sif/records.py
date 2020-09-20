@@ -96,14 +96,6 @@ def Get_Competitor_Records(CompetitorCode):
         units = event_info['Units']
         units_symbol = event_info['Units_symbol']
         elec_time = q_afrek.rafmagnstímataka
-        print('MET')
-        print(event)
-        print(results)
-        print(record.árangur)
-        print(q_afrek.árangur)
-        print('END')
-
-
 
         record_info = {'Event': event,
                        'Club': club,
