@@ -39,7 +39,6 @@
           />
         </div>
       </div>
-    </div>
     <!--     <div id="competitor-view" v-if="isReady">
       <img class="card-img-top img-fluid" v-bind:src="'/api/img/action/' + competitorID" />
       <div class="d-flex flex-column bd-highlight mb-3">
@@ -76,6 +75,7 @@
       <recordstable :competitorID="competitorID"></recordstable>
       <pbtable :event_info="event_info" :competitorID="competitorID" ref="pbtable"></pbtable>
       <piechart :event_info="event_info" ref="pieChart"></piechart>
+    </div>
     </div>
   </div>
   <!--</div>-->
