@@ -31,7 +31,7 @@
             style="max-width:125px;width:auto;"
           />
           <img
-            class="rounded border img-thumbnail img-fluid img-club"
+            class="img-fluid img-club"
             v-bind:src="ClubNameUrl"
             @error="ClubLogoError"
             v-if="showClubLogo"
@@ -249,5 +249,9 @@ export default {
   position: relative;
   top: -100px;
   left: 160px;
+}
+
+.img-club {
+  background: transparent;
 }
 </style>
