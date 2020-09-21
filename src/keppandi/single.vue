@@ -24,17 +24,12 @@
         </div>
         <div class="bottomleft">
           <img
-            class="rounded-circle border img-thumbnail img-profile"
+            class="rounded-circle img-thumbnail img-profile"
             v-bind:src="'/api/img/profile/' + competitorID"
           />
         </div>
         <div class="bottomright">
-          <img
-            class="img-fluid img-club"
-            v-bind:src="ClubNameUrl"
-            @error="ClubLogoError"
-            v-if="showClubLogo"
-          />
+          <img class="img-club" v-bind:src="ClubNameUrl" @error="ClubLogoError" v-if="showClubLogo" />
         </div>
       </div>
       <!-- INFO -->
@@ -50,7 +45,6 @@
 
 <script>
 import axios from "axios";
-//import { Chart } from "highcharts-vue";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import PieChart from "../keppandi/components/PieChart.vue";
 import PBTable from "../keppandi/components/PBTable.vue";
@@ -59,7 +53,6 @@ import RecordsTable from "../keppandi/components/RecordsTable.vue";
 export default {
   name: "KeppandiSingle",
   components: {
-    //highcharts: Chart,
     piechart: PieChart,
     pbtable: PBTable,
     recordstable: RecordsTable,
@@ -81,13 +74,9 @@ export default {
     };
   },
   created() {
-    //console.log('Created')
     this.competitorID = this.$route.params.competitorID;
     this.get_data();
   },
-  //beforeDestroy() {
-  //  document.title = "Afrekaskrá FRÍ";
-  //},
   computed: {
     ClubNameUrl: function () {
       if (this.isReady === true) {
@@ -103,7 +92,6 @@ export default {
       this.showClubLogo = false;
     },
     get_data: function () {
-      //this.$parent.loading = true;
       this.message = "Næ í gögn ekki stökkva langt 😉";
 
       this.data = [];
@@ -134,9 +122,6 @@ export default {
           document.title = "Afrekaskrá FRÍ";
         })
         .finally(() => {
-          //this.$parent.loading = false;
-          //document.title = this.titleText
-          //this.$parent.do_stuff()
           this.isReady = true;
         });
     },
@@ -145,18 +130,6 @@ export default {
 </script>
 
 <style scoped>
-/* .table {
-  table-layout: fixed;
-  border-collapse: collapse;
-  width: 100%;
-}
-.td {
-  border: 1px solid #000;
-}
-.wide {
-  width: 300px;
-} */
-
 /* center spinner */
 .v-spinner {
   text-align: center;
@@ -170,23 +143,20 @@ export default {
   position: absolute;
   top: 8px;
   left: 16px;
-  font-size: 18px;
   color: #ffffff;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.75);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.75);
 }
 
 .bottomleft {
   position: absolute;
   bottom: 8px;
   left: 16px;
-  font-size: 18px;
 }
 
 .bottomright {
   position: absolute;
   bottom: 8px;
   right: 16px;
-  font-size: 18px;
 }
 
 .img-action {
