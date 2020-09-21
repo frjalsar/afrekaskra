@@ -192,12 +192,12 @@ export default {
 .img-club {
   background: transparent;
   max-width: 75px;
-  width: auto;
+  width: 50%;
 }
 
 .img-profile {
   max-width: 125px;
-  width: auto;
+  width: 50%;
 }
 
 .img-action {
