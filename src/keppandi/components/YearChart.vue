@@ -37,6 +37,9 @@ export default {
       };
     }
   },
+  // mounted() {
+  //   console.log(this.legaldata);
+  // },
   computed: {
     strFormat() {
       switch (this.event_info["Units"]) {
@@ -49,6 +52,19 @@ export default {
           break;
         default:
           return "{value}";
+      }
+    },
+    strFormatDataLabel() {
+      // %M minutes, %S seconds, %L fractions
+      switch (this.event_info["Units"]) {
+        case 3:
+          return "{point.y:%M:%S.%L}";
+          break;
+        case 4:
+          return "{point.y:%H:%M:%S.%L}";
+          break;
+        default:
+          return "{point.y}";
       }
     },
     chartOptions() {
@@ -104,14 +120,15 @@ export default {
           spline: {
             dataLabels: {
               enabled: true,
+              //format: this.strFormatDataLabel,
               //format: '{point.y:%M:%S.%L}',
               formatter: function () {
                 switch (ctx.event_info["Units"]) {
                   case 3:
-                    return moment.unix(this.y).format("mm:ss,SS");
+                    return moment.unix(this.y / 1000).format("mm:ss,SS");
                     break;
                   case 4:
-                    return moment.unix(this.y).format("hh:mm:ss,SS");
+                    return moment.unix(this.y / 1000).format("hh:mm:ss,SS");
                     break;
                   default:
                     return Highcharts.numberFormat(this.y, 2);

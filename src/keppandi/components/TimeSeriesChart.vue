@@ -21,18 +21,18 @@ export default {
   },
   methods: {
     GetData: function () {
-      console.log('Getting all competitor event data')
+      //console.log("Getting all competitor event data");
       var url =
         "/api/competitor/" + this.competitorID + "/" + this.eventID + "/all/";
       axios
         .all([axios.get(url)])
         .then(
           axios.spread((...response) => {
-            console.log(response[0]["data"]);
+            //console.log(response[0]["data"]);
           })
         )
         .catch((error) => {
-          console.log('Error getting all competitor event data')
+          //console.log("Error getting all competitor event data");
         })
         .finally(() => {
           //this.$parent.loading = false;
@@ -130,6 +130,22 @@ export default {
             format: this.strFormat,
           },
         },
+        tooltip: {
+          crosshairs: [false, false],
+          shared: true,
+          formatter: function () {
+            switch (ctx.event_info["Units"]) {
+              case 3:
+                return moment.unix(this.y / 1000).format("mm:ss,SS");
+                break;
+              case 4:
+                return moment.unix(this.y / 1000).format("hh:mm:ss,SS");
+                break;
+              default:
+                return Highcharts.numberFormat(this.y, 2);
+            }
+          },
+        },
         scrollbar: {
           enabled: false,
         },
@@ -160,10 +176,10 @@ export default {
             visible: true,
             //step: "center",
             type: "spline",
-            tooltip: {
-              //valueSuffix: " m",
-              valueDecimals: 2,
-            },
+            // tooltip: {
+            //   //valueSuffix: " m",
+            //   valueDecimals: 2,
+            // },
             marker: {
               enabled: true,
               fillColor: "#FFFFFF",

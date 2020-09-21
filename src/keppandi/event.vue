@@ -5,20 +5,30 @@
       <p style="text-align:center">{{message}}</p>
     </div>
     <div v-if="isReady">
-      <h2>
-        <i
-          class="fas"
-          v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"
-        ></i>
-        <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
-        <small class="text-muted">- {{competitor_info.Club}} ({{competitor_info.YOB}})</small>
-      </h2>
-      <h4>{{event_info.Name_ISL}}</h4>
-      <h5>
-        <router-link :to="{ path: '/keppandi/'+ competitorID }">
-          <i class="fas fa-user-circle"></i> Fara á prófíl síðu keppanda
-        </router-link>
-      </h5>
+      <div class="d-flex flex-row">
+        <div class="p-2">
+          <img
+            class="rounded-circle img-thumbnail img-profile"
+            v-bind:src="'/api/img/profile/' + competitorID"
+          />
+        </div>
+        <div class="p-2">
+          <h2>
+            <i
+              class="fas"
+              v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"
+            ></i>
+            <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
+            <small class="text-muted">- {{competitor_info.Club}} ({{competitor_info.YOB}})</small>
+          </h2>
+          <h4>{{event_info.Name_ISL}}</h4>
+          <h5>
+            <router-link :to="{ path: '/keppandi/'+ competitorID }">
+              <i class="fas fa-user-circle"></i> Fara á prófíl síðu keppanda
+            </router-link>
+          </h5>
+        </div>
+      </div>
       <div class="card">
         <div class="card-header">
           <ul class="nav nav-tabs card-header-tabs pull-right" id="myTab" role="tablist">
@@ -451,5 +461,29 @@ export default {
 .td {
   text-align: center;
   vertical-align: middle;
+}
+
+/* xs */
+.img-profile {
+  width: 50px;
+  height: auto;
+}
+/* sm */
+@media (min-width: 768px) {
+  .img-profile {
+    width: 75px;
+  }
+}
+/* md */
+@media (min-width: 992px) {
+  .img-profile {
+    width: 100px;
+  }
+}
+/* lg */
+@media (min-width: 1200px) {
+  .img-profile {
+    width: 125px;
+  }
 }
 </style>
