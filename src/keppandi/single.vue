@@ -1,16 +1,14 @@
 <template>
   <div>
+    <!-- LOADING -->
     <div v-if="!isReady">
       <pulse-loader :loading="!isReady" :color="color" :size="size"></pulse-loader>
       <p style="text-align:center">{{message}}</p>
     </div>
+    <!-- PROFILE -->
     <div id="competitor-view" v-if="isReady">
       <div class="action-div">
-        <img
-          class="img-fluid"
-          style="width:100%;height:auto;"
-          v-bind:src="'/api/img/action/' + competitorID"
-        />
+        <img class="img-fluid img-action" v-bind:src="'/api/img/action/' + competitorID" />
         <div class="topleft">
           <h2>
             <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
@@ -26,56 +24,25 @@
         </div>
         <div class="bottomleft">
           <img
-            class="rounded-circle border img-thumbnail img-fluid"
+            class="rounded-circle border img-thumbnail img-fluid img-profile"
             v-bind:src="'/api/img/profile/' + competitorID"
-            style="max-width:125px;width:auto;"
           />
+        </div>
+        <div class="bottomright">
           <img
             class="img-fluid img-club"
             v-bind:src="ClubNameUrl"
             @error="ClubLogoError"
             v-if="showClubLogo"
-            style="max-width:75px;width:auto;"
           />
         </div>
       </div>
-    <!--     <div id="competitor-view" v-if="isReady">
-      <img class="card-img-top img-fluid" v-bind:src="'/api/img/action/' + competitorID" />
-      <div class="d-flex flex-column bd-highlight mb-3">
-        <div class="p-2 bd-highlight profile-div">
-          <img
-            class="rounded-circle border img-thumbnail img-fluid"
-            v-bind:src="'/api/img/profile/' + competitorID"
-            style="max-width:125px;width:auto;"
-          />
-        </div>
-        <div class="p-2 bd-highlight profile-text profile-text-name h2">
-          <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
-        </div>
-        <div class="p-2 bd-highlight profile-text profile-text-other h5">
-          {{competitor_info.Club}} -
-          <i
-            class="fas"
-            v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"
-          ></i>
-          {{competitor_info.YOB}}
-        </div>
-        <div class="p-2 bd-highlight club-info">
-          <img
-            class="rounded border img-thumbnail img-fluid img-club"
-            v-bind:src="ClubNameUrl"
-            @error="ClubLogoError"
-            v-if="showClubLogo"
-            style="max-width:75px;width:auto;"
-          />
-        </div>
-    </div>-->
-    <!-- INFO -->
-    <div>
-      <recordstable :competitorID="competitorID"></recordstable>
-      <pbtable :event_info="event_info" :competitorID="competitorID" ref="pbtable"></pbtable>
-      <piechart :event_info="event_info" ref="pieChart"></piechart>
-    </div>
+      <!-- INFO -->
+      <div>
+        <recordstable :competitorID="competitorID"></recordstable>
+        <pbtable :event_info="event_info" :competitorID="competitorID" ref="pbtable"></pbtable>
+        <piechart :event_info="event_info" ref="pieChart"></piechart>
+      </div>
     </div>
   </div>
   <!--</div>-->
@@ -199,33 +166,6 @@ export default {
   position: relative;
 }
 
-.profile-div {
-  line-height: 0;
-  height: 0;
-  z-index: 1;
-  position: relative;
-  top: -75px;
-}
-
-.profile-text {
-  line-height: 0;
-  height: 0;
-  z-index: 1;
-  position: relative;
-  top: -150px;
-  left: 25px;
-}
-
-.profile-text-name {
-  color: #ffffff;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.75);
-}
-
-.profile-text-other {
-  color: #ffffff;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.75);
-}
-
 .topleft {
   position: absolute;
   top: 8px;
@@ -242,16 +182,26 @@ export default {
   font-size: 18px;
 }
 
-.club-info {
-  line-height: 0;
-  height: 0;
-  z-index: 1;
-  position: relative;
-  top: -100px;
-  left: 160px;
+.bottomright {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+  font-size: 18px;
 }
 
 .img-club {
   background: transparent;
+  max-width: 75px;
+  width: auto;
+}
+
+.img-profile {
+  max-width: 125px;
+  width: auto;
+}
+
+.img-action {
+  width: 100%;
+  height: auto;
 }
 </style>
