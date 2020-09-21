@@ -38,17 +38,18 @@ def results_to_float_old(in_str):
         return None
 
 def results_to_float(in_str):
-    split = str(in_str).replace(',', '.').split('.')
+    # Skiptum kommu út fyrir punkt. Sumir árangrar eru með kommu en aðrir með punkt.
+    split = str(in_str).replace(',', '.').split('.') # Splitta eftir kommu .dd.
     hh = 0
     mm = 0
     ss = 0
     dd = 0
     
-    if (len(split) == 2): # hh:mm:ss,dd eða mm:ss,dd eða ss,dd
+    if (len(split) == 2): # hh:mm:ss,dd eða mm:ss,dd eða ss,dd. Sem sagt eitthvað eftir kommu, ,dd
         if (len(split[1]) == 1): # Ein aukastafur eftir kommu þýðir handtímataka
-            dd = float(split[1])/10 # Handtími
+            dd = float(split[1])/10 # Handtími ,d
         else:
-            dd = float(split[1])/100 # Rafmagnstími
+            dd = float(split[1])/100 # Rafmagnstími ,dd
     
     split = split[0].split(':')
     if (len(split) == 3): # hh:mm:ss

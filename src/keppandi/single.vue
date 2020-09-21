@@ -24,7 +24,7 @@
         </div>
         <div class="bottomleft">
           <img
-            class="rounded-circle border img-thumbnail img-fluid img-profile"
+            class="rounded-circle border img-thumbnail img-profile"
             v-bind:src="'/api/img/profile/' + competitorID"
           />
         </div>
@@ -189,19 +189,57 @@ export default {
   font-size: 18px;
 }
 
-.img-club {
-  background: transparent;
-  max-width: 75px;
-  width: 50%;
-}
-
-.img-profile {
-  max-width: 125px;
-  width: 50%;
-}
-
 .img-action {
   width: 100%;
   height: auto;
+}
+
+/* xs */
+.img-club {
+  background: transparent;
+  width: 50px;
+  height: auto;
+}
+/* sm */
+@media (min-width: 768px) {
+  .img-club {
+    width: 75px;
+  }
+}
+/* md */
+@media (min-width: 992px) {
+  .img-club {
+    width: 100px;
+  }
+}
+/* lg */
+@media (min-width: 1200px) {
+  .img-club {
+    width: 125px;
+  }
+}
+
+/* xs */
+.img-profile {
+  width: 50px;
+  height: auto;
+}
+/* sm */
+@media (min-width: 768px) {
+  .img-profile {
+    width: 75px;
+  }
+}
+/* md */
+@media (min-width: 992px) {
+  .img-profile {
+    width: 100px;
+  }
+}
+/* lg */
+@media (min-width: 1200px) {
+  .img-profile {
+    width: 125px;
+  }
 }
 </style>
