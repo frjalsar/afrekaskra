@@ -57,7 +57,7 @@
           href="#"
           v-on:click.prevent="toggle_ActiveRecords($event)"
           v-if="showMoreLessButtonActive"
-        >{{textMoreLessActive}}</a>
+        ><b>{{textMoreLessActive}}</b></a>
         <p>
           <br />
         </p>
@@ -111,7 +111,7 @@
           href="#"
           v-on:click.prevent="toggle_unActiveRecords($event)"
           v-if="showMoreLessButtonunActive"
-        >{{textMoreLessunActive}}</a>
+        ><b>{{textMoreLessunActive}}</b></a>
       </div>
     </div>
   </div>
@@ -158,16 +158,16 @@ export default {
   computed: {
     textMoreLessActive: function () {
       if (this.showAllActiveRecords == false) {
-        return "Sýna meira";
+        return "Sýna fleiri virk met";
       } else {
-        return "Sýna minna";
+        return "Sýna færri virk met";
       }
     },
     textMoreLessunActive: function () {
       if (this.showAllunActiveRecords == false) {
-        return "Sýna meira";
+        return "Sýna fleiri óvirk met";
       } else {
-        return "Sýna minna";
+        return "Sýna færri óvirk met";
       }
     },
     activeRecords: function () {

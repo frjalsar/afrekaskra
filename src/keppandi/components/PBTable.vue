@@ -39,7 +39,7 @@
       href="#"
       v-on:click.prevent="toggle_showEvents($event)"
       v-if="showMoreLessButton"
-    >{{textMoreLess}}</a>
+    ><b>{{textMoreLess}}</b></a>
   </div>
 </template>
 
@@ -54,9 +54,9 @@ export default {
   computed: {
     textMoreLess: function () {
       if (this.showAllEvents == false) {
-        return "Sýna meira";
+        return "Sýna fleiri greinar";
       } else {
-        return "Sýna minna";
+        return "Sýna færri greinar";
       }
     },
     showMoreLessButton() {
