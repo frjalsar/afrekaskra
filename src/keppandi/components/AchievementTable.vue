@@ -17,6 +17,9 @@
           <th scope="col" @click="sort('Age')">
             <i class="fas fa-sort"></i>&nbsp;Aldur
           </th>
+          <th scope="col" @click="sort('Club')">
+            <i class="fas fa-sort"></i>&nbsp;Félag
+          </th>
           <th scope="col" @click="sort('competition_name')">
             <i class="fas fa-sort"></i>&nbsp;Heiti&nbsp;móts
           </th>
@@ -29,6 +32,7 @@
           <td v-bind:class="{'d-none': !hasWind}">{{i.Wind}}</td>
           <td>{{i.Date | formatDate}}</td>
           <td>{{i.Age}}</td>
+          <td>{{i.Club}}</td>
           <td>
             <a
               v-bind:href="'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' + i.competition_id"

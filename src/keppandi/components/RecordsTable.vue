@@ -57,6 +57,7 @@
           href="#"
           v-on:click.prevent="toggle_ActiveRecords($event)"
           v-if="showMoreLessButtonActive"
+          class="text-success"
         ><b>{{textMoreLessActive}}</b></a>
         <p>
           <br />
@@ -111,6 +112,7 @@
           href="#"
           v-on:click.prevent="toggle_unActiveRecords($event)"
           v-if="showMoreLessButtonunActive"
+          class="text-success"
         ><b>{{textMoreLessunActive}}</b></a>
       </div>
     </div>

@@ -43,6 +43,7 @@
       href="#"
       v-on:click.prevent="toggle_showEvents($event)"
       v-if="showMoreLessButton"
+      class="text-success"
     ><b>{{textMoreLess}}</b></a>
   </div>
 </template>
