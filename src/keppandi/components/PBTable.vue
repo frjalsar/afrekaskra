@@ -26,7 +26,11 @@
           @click.prevent="onClick && onClick(i)"
         >
           <!-- v-bind:style="{display: 'none'}" -->
-          <th scope="row">{{i.EventShortName}} [{{i.EventUnit}}]</th>
+          <th scope="row">
+            <router-link :to="{ name: 'CompetitorEvent', params: { competitorID: competitorID, eventID: i.EventID }}">
+            {{i.EventShortName}} [{{i.EventUnit}}]
+            </router-link>
+            </th>
           <td>{{i.PB_out}}</td>
           <td>{{i.PB_in}}</td>
           <td>{{i.SB_cur}}</td>

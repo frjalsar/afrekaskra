@@ -319,7 +319,7 @@
                   <td v-bind:class="{'d-none': !hasWind}">{{competitor.wind}}</td>
                   <td>
                     <router-link
-                      :to="{ path: '/keppandi/'+ competitor.competitor_code}"
+                      :to="{ name: 'CompetitorProfile', params: { competitorID: competitor.competitor_code }}"
                       class="p-2 text-dark"
                     >
                       <a>{{competitor.name}}</a>

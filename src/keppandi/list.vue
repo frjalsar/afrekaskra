@@ -35,7 +35,9 @@
               @click.prevent="onClick && onClick(athlete)"
             >
               <td class="d-none d-lg-table-cell">{{ athlete.CompetitorCode }}</td>
-              <td>{{ athlete.Name }}</td>
+              <td><router-link :to="{ name: 'CompetitorProfile', params: { competitorID: athlete.CompetitorCode }}">
+                {{ athlete.Name }}
+                </router-link></td>
               <td class="d-none d-md-table-cell">{{ athlete.YOB }}</td>
               <td>{{ athlete.Club }}</td>
             </tr>
