@@ -7,29 +7,31 @@
     <div v-if="isReady">
       <div class="d-flex flex-row">
         <div class="p-2">
-          <img
-            class="rounded-circle img-thumbnail img-profile"
-            v-bind:src="'/api/img/profile/' + competitorID"
-          />
+          <router-link :to="{ name: 'CompetitorProfile', params: { competitorID: competitorID }}">
+            <img
+              class="rounded-circle img-thumbnail img-profile"
+              v-bind:src="'/api/img/profile/' + competitorID"
+            />
+          </router-link>
         </div>
         <div class="p-2 align-self-center">
-          <h3 style="font-size:2.0vw;">
+          <h3 style="font-size:2.50vw;">
             <i
               class="fas"
               v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"
             ></i>
             <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
             <font
-              style="font-size:1.25vw;"
+              style="font-size:1.75vw;"
               class="text-muted"
             >- {{competitor_info.Club}} ({{competitor_info.YOB}})</font>
           </h3>
-          <h4 style="font-size:1.25vw;">{{event_info.Name_ISL}}</h4>
+          <h4 style="font-size:1.75vw;">{{event_info.Name_ISL}}</h4>
         </div>
       </div>
       <div class="d-flex flex-row">
         <h5>
-          <router-link :to="{ path: '/keppandi/'+ competitorID }">
+          <router-link :to="{ name: 'CompetitorProfile', params: { competitorID: competitorID }}">
             <i class="fas fa-user-circle"></i> Fara á prófíl síðu keppanda
           </router-link>
         </h5>
