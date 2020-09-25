@@ -31,10 +31,10 @@
             {{i.EventShortName}} [{{i.EventUnit}}]
             </router-link>
             </th>
-          <td>{{i.PB_out}}</td>
-          <td>{{i.PB_in}}</td>
-          <td>{{i.SB_cur}}</td>
-          <td>{{i.SB_last}}</td>
+          <td>{{ i.PB_out + i.PB_out_date }}</td>
+          <td>{{ i.PB_in + i.PB_in_date }}</td>
+          <td>{{ i.SB_cur }}</td>
+          <td>{{ i.SB_last }}</td>
           <!--<td>{{i.count}}</td>-->
         </tr>
       </tbody>

@@ -267,7 +267,10 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
         count = df_event['Árangur'].count()
 
         pb_out = ''
+        pb_out_date = datetime.datetime(1970, 1, 1)
+
         pb_in = ''
+        pb_in_date = datetime.datetime(1970, 1, 1)
 
         #try:
             # Finnum PB inni ef það er til
@@ -278,6 +281,7 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
                 idx = df_event_in['Árangur_float'].idxmin()
 
             pb_in = df_event_in['Árangur'][idx]
+            pb_in_date = df_event_in['dagsetning'][idx]
 
         # Finnum PB úti með löglegum árangri ef það er til
         if (df_event_nowind_out.empty == False):
@@ -287,6 +291,7 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
                 idx = df_event_nowind_out['Árangur_float'].idxmin()
 
             pb_out = df_event_nowind_out['Árangur'][idx]
+            pb_out_date = df_event_nowind_out['dagsetning'][idx]
 
         # Ef ekki þá athugum við ólöglegan árangur
         elif (df_event_out.empty == False):
@@ -296,6 +301,7 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
                 idx = df_event_out['Árangur_float'].idxmin()
 
             pb_out = df_event_out['Árangur'][idx] + ' ({:+.1f}'.format(df_event_out['Vindur'][idx]) + ' m/s)'
+            pb_out_date = df_event_out['dagsetning'][idx]
         #except:
             # Ef eitthvað klikkar þá sleppum við þessari grein
         #    pass
@@ -461,13 +467,25 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
 
         #print(sb_cur)
 
+        if (pb_out == ''):
+            pb_out_date_str = ''
+        else:
+            pb_out_date_str = ' (' + str(pb_out_date.year) + ')'
+
+        if (pb_in == ''):
+            pb_in_date_str = ''
+        else:
+            pb_in_date_str = ' (' + str(pb_in_date.year) + ')'
+
         # Bæta við í listan
         list_pb.append({'EventName': event_info['Name_ISL'],
                         'EventShortName': event_info['ShortName'],
                         'EventUnit': event_info['Units_symbol'],
                         'EventID': event_id,
                         'PB_out': pb_out,
+                        'PB_out_date': pb_out_date_str,
                         'PB_in': pb_in,
+                        'PB_in_date': pb_in_date_str,
                         'SB_cur': sb_cur,
                         'SB_last': sb_last,
                         'count': int(count)
