@@ -117,7 +117,7 @@ def Get_Competitor_Records(CompetitorCode):
         event_info = events.Get_Event_Info(event_id)
 
         inout = record.úti_inni
-        wind_str = common.wind_to_str(record.vindur, inout)
+        wind_str = common.wind_to_str(record.vindur, inout, event_info['HasWind'])
         results = common.results_to_float(q_afrek.árangur.replace(',', '.'))
         results_str = q_afrek.árangur
         date_str = format_date(record.dagsetning_mets.date(), "d MMM yyyy", locale='is_IS').upper()

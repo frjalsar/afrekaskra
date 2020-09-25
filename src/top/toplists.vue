@@ -320,7 +320,6 @@
                   <td>
                     <router-link
                       :to="{ name: 'CompetitorProfile', params: { competitorID: competitor.competitor_code }}"
-                      class="p-2 text-dark"
                     >
                       <a>{{competitor.name}}</a>
                     </router-link>

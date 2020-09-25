@@ -138,12 +138,12 @@ def club_logo(request, ClubName):
         except: # Ekkert virkar skila þá 404
             raise Http404()
 
-@cache_page(60 * 15)
+@cache_page(60 * 60 * 24)
 def competitor_records(request, CompetitorCode):
     Records = records.Get_Competitor_Records(CompetitorCode)
     return JsonResponse(Records, safe=False)
 
-@cache_page(60 * 60 * 3)
+@cache_page(60 * 60 * 6)
 def record_birthdays(request):
     Records = records.Get_Records_Birthdays()
     return JsonResponse(Records, safe=False)

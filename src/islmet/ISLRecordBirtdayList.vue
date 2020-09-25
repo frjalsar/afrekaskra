@@ -29,7 +29,6 @@
                 name: 'CompetitorProfile',
                 params: { competitorID: i.CompetitorID },
               }"
-              class="p-2 text-dark"
             >
               <a>{{ i.Name }}</a>
             </router-link>
@@ -65,7 +64,7 @@ export default {
 
       raw_record_data: [],
       loading: true,
-      message: '',
+      message: "",
     };
   },
   created() {
@@ -86,6 +85,13 @@ export default {
     },
   },
   methods: {
+    //0, # No units!
+    //'metrar': 1, # Meters
+    //'sek.': 2, # ss,dd
+    //'mín.': 3, # mm:ss
+    //'klst.': 4, # hh:mm:ss,dd
+    //'stig': 5, # Points
+    //'Ungl.stig': 6 # Points junior
     create_result_text: function (data) {
       if (data["Units"] == 3) {
         data["Results_text"] = moment.unix(data["Results"]).format("mm:ss,SS");
@@ -93,6 +99,8 @@ export default {
         data["Results_text"] = moment
           .unix(data["Results"])
           .format("hh:mm:ss,SS");
+      } else if (data["Units"] == 5 || data["Units"] == 6) {
+        data["Results_text"] = parseFloat(data["Results"]).toFixed(0);
       } else {
         if (data["Electronic_timing"] == 0 && data["Units"] == 2) {
           data["Results_text"] = parseFloat(data["Results"]).toFixed(1);

@@ -2,19 +2,29 @@
   <div>
     <div v-if="loading">
       <hr />
-      <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
+      <pulse-loader
+        :loading="loading"
+        :color="color"
+        :size="size"
+      ></pulse-loader>
     </div>
     <div v-if="showRecordsTable">
       <hr />
       <h2 class="display-4">
         <!-- Font size er 3.5 rem í Display-4 sem er 56px-->
-        <img src="./ISL_Flag.svg" alt="Íslenski fáninn" height="56px" /> Íslandsmet
+        <img src="./ISL_Flag.svg" alt="Íslenski fáninn" height="56px" />
+        Íslandsmet
       </h2>
-      <h4>Fjöldi skráðra Íslandsmeta er {{nrRecords}} þar af eru {{nrActiveRecords}} virk og {{nrUnActiveRecords}} óvirk.</h4>
+      <h4>
+        Fjöldi skráðra Íslandsmeta er {{ nrRecords }} þar af eru
+        {{ nrActiveRecords }} virk og {{ nrUnActiveRecords }} óvirk.
+      </h4>
       <!-- VIRK MET -->
       <div v-show="showActiveRecordsTable">
         <h5>Virk met</h5>
-        <table class="table table-striped table-hover table-responsive-sm table-sm">
+        <table
+          class="table table-striped table-hover table-responsive-sm table-sm"
+        >
           <col span="1" class="wide" />
           <thead>
             <tr>
@@ -42,14 +52,17 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(i, index) in sortedDataActive" v-show="(index < 5) || showAllActiveRecords">
-              <th scope="row">{{i.Event + ' [' + i.Units_symbol + ']'}}</th>
-              <td>{{i.Results_text}}</td>
-              <td>{{i.Wind}}</td>
-              <td>{{inout_text(i.Inout)}}</td>
-              <td>{{i.Date}}</td>
-              <td>{{i.Age}}</td>
-              <td>{{i.AgeGroup}}</td>
+            <tr
+              v-for="(i, index) in sortedDataActive"
+              v-show="index < 5 || showAllActiveRecords"
+            >
+              <th scope="row">{{ i.Event + " [" + i.Units_symbol + "]" }}</th>
+              <td>{{ i.Results_text }}</td>
+              <td>{{ i.Wind }}</td>
+              <td>{{ inout_text(i.Inout) }}</td>
+              <td>{{ i.Date }}</td>
+              <td>{{ i.Age }}</td>
+              <td>{{ i.AgeGroup }}</td>
             </tr>
           </tbody>
         </table>
@@ -58,7 +71,8 @@
           v-on:click.prevent="toggle_ActiveRecords($event)"
           v-if="showMoreLessButtonActive"
           class="text-success"
-        ><b>{{textMoreLessActive}}</b></a>
+          ><b>{{ textMoreLessActive }}</b></a
+        >
         <p>
           <br />
         </p>
@@ -66,7 +80,9 @@
       <!-- ÓVIRK MET -->
       <div v-show="showunActiveRecordsTable">
         <h5>Óvirk met</h5>
-        <table class="table table-striped table-hover table-responsive-sm table-sm">
+        <table
+          class="table table-striped table-hover table-responsive-sm table-sm"
+        >
           <col span="1" class="wide" />
           <thead>
             <tr>
@@ -96,15 +112,15 @@
           <tbody>
             <tr
               v-for="(i, index) in sortedDataunActive"
-              v-show="(index < 5) || showAllunActiveRecords"
+              v-show="index < 5 || showAllunActiveRecords"
             >
-              <th scope="row">{{i.Event + ' [' + i.Units_symbol + ']'}}</th>
-              <td>{{i.Results_text}}</td>
-              <td>{{i.Wind}}</td>
-              <td>{{inout_text(i.Inout)}}</td>
-              <td>{{i.Date}}</td>
-              <td>{{i.Age}}</td>
-              <td>{{i.AgeGroup}}</td>
+              <th scope="row">{{ i.Event + " [" + i.Units_symbol + "]" }}</th>
+              <td>{{ i.Results_text }}</td>
+              <td>{{ i.Wind }}</td>
+              <td>{{ inout_text(i.Inout) }}</td>
+              <td>{{ i.Date }}</td>
+              <td>{{ i.Age }}</td>
+              <td>{{ i.AgeGroup }}</td>
             </tr>
           </tbody>
         </table>
@@ -113,7 +129,8 @@
           v-on:click.prevent="toggle_unActiveRecords($event)"
           v-if="showMoreLessButtonunActive"
           class="text-success"
-        ><b>{{textMoreLessunActive}}</b></a>
+          ><b>{{ textMoreLessunActive }}</b></a
+        >
       </div>
     </div>
   </div>
@@ -266,10 +283,21 @@ export default {
   },
   methods: {
     create_result_text: function (data) {
+      //0, # No units!
+      //'metrar': 1, # Meters
+      //'sek.': 2, # ss,dd
+      //'mín.': 3, # mm:ss
+      //'klst.': 4, # hh:mm:ss,dd
+      //'stig': 5, # Points
+      //'Ungl.stig': 6 # Points junior
       if (data["Units"] == 3) {
         data["Results_text"] = moment.unix(data["Results"]).format("mm:ss,SS");
       } else if (data["Units"] == 4) {
-        data["Results_text"] = moment.unix(data["Results"]).format("hh:mm:ss,SS");
+        data["Results_text"] = moment
+          .unix(data["Results"])
+          .format("hh:mm:ss,SS");
+      } else if (data["Units"] == 5 || data["Units"] == 6) {
+        data["Results_text"] = parseFloat(data["Results"]).toFixed(0);
       } else {
         if (data["Electronic_timing"] == 0 && data["Units"] == 2) {
           data["Results_text"] = parseFloat(data["Results"]).toFixed(1);
