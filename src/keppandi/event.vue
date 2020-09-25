@@ -1,13 +1,22 @@
 <template>
   <div>
     <div v-if="!isReady">
-      <pulse-loader :loading="!isReady" :color="color" :size="size"></pulse-loader>
-      <p style="text-align:center">{{message}}</p>
+      <pulse-loader
+        :loading="!isReady"
+        :color="color"
+        :size="size"
+      ></pulse-loader>
+      <p style="text-align: center">{{ message }}</p>
     </div>
     <div v-if="isReady">
       <div class="d-flex flex-row">
         <div class="p-2">
-          <router-link :to="{ name: 'CompetitorProfile', params: { competitorID: competitorID }}">
+          <router-link
+            :to="{
+              name: 'CompetitorProfile',
+              params: { competitorID: competitorID },
+            }"
+          >
             <img
               class="rounded-circle img-thumbnail img-profile"
               v-bind:src="'/api/img/profile/' + competitorID"
@@ -15,30 +24,43 @@
           </router-link>
         </div>
         <div class="p-2 align-self-center">
-          <h3 style="font-size:2.50vw;">
+          <h3 style="font-size: 2.5vw">
             <i
               class="fas"
-              v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"
+              v-bind:class="{
+                'fa-male': competitor_info.Sex == 1,
+                'fa-female': competitor_info.Sex == 2,
+              }"
             ></i>
-            <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
-            <font
-              style="font-size:1.75vw;"
-              class="text-muted"
-            >- {{competitor_info.Club}} ({{competitor_info.YOB}})</font>
+            <b
+              >{{ competitor_info.FirstName }} {{ competitor_info.LastName }}</b
+            >
+            <font style="font-size: 1.75vw" class="text-muted"
+              >- {{ competitor_info.Club }} ({{ competitor_info.YOB }})</font
+            >
           </h3>
-          <h4 style="font-size:1.75vw;">{{event_info.Name_ISL}}</h4>
+          <h4 style="font-size: 1.75vw">{{ event_info.Name_ISL }}</h4>
         </div>
       </div>
       <div class="d-flex flex-row">
         <h5>
-          <router-link :to="{ name: 'CompetitorProfile', params: { competitorID: competitorID }}">
+          <router-link
+            :to="{
+              name: 'CompetitorProfile',
+              params: { competitorID: competitorID },
+            }"
+          >
             <i class="fas fa-user-circle"></i> Fara á prófíl síðu keppanda
           </router-link>
         </h5>
       </div>
       <div class="card">
         <div class="card-header">
-          <ul class="nav nav-tabs card-header-tabs pull-right" id="myTab" role="tablist">
+          <ul
+            class="nav nav-tabs card-header-tabs pull-right"
+            id="myTab"
+            role="tablist"
+          >
             <li class="nav-item">
               <a
                 class="nav-link active"
@@ -328,10 +350,13 @@ export default {
           strPost = "";
         }
 
-        if (this.event_info["Units"] == 3 || this.event_info["Units"] == 4) {
+        if (this.event_info["Units"] == 3) {
           my_data[i]["Results_text"] =
             moment.unix(my_data[i]["Results"]).format("mm:ss,SS") + strPost;
           //my_data[i]["Results"] = my_data[i]["Results"] * 10000; // Convert to ms for highcharts
+        } else if (this.event_info["Units"] == 4) {
+          my_data[i]["Results_text"] =
+            moment.unix(my_data[i]["Results"]).format("hh:mm:ss,SS") + strPost;
         } else {
           my_data[i]["Results_text"] = my_data[i]["Results"] + strPost;
         }

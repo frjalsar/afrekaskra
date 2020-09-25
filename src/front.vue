@@ -42,12 +42,11 @@
       <div class="card-header">Íslandsmet</div>
       <div class="card-body">
         <p class="card-text">
-          Todo: Setja inn listi yfir íslandsmet sem eiga afmælis á næstunni?
+          Todo: Listi yfir Íslandsmet sem voru nýlega sett?
         </p>
-        <p class="card-text">
-          Todo: Listi yfir íslandsmet sem voru nýlega sett?
-        </p>
-        <p class="card-text">Todo: Listi yfir þá sem eiga flest íslandsmet?</p>
+        <p class="card-text">Todo: Listi yfir elstu Íslandsmetin??</p>
+        <p class="card-text">Todo: Listi yfir þá sem eiga flest Íslandsmet?</p>
+        <ISLRecordBirtdayList />
       </div>
     </div>
     <!---->
@@ -67,9 +66,12 @@
 
 <script>
 import KeppandiList from "./keppandi/list.vue";
+import ISLRecordBirtdayList from "./islmet/ISLRecordBirtdayList.vue";
+
 export default {
   components: {
     KeppandiList,
+    ISLRecordBirtdayList,
   },
   mounted() {
     document.title = "Afrekaskrá FRÍ"; //Reset the title

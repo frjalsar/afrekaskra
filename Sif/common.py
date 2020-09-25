@@ -78,5 +78,11 @@ def results_to_float(in_str):
     # print('')
     return time_sec
 
-def wind_to_str(in_float):
-    return '{:+.1f}'.format(in_float)
+def wind_to_str(in_float, inout=None, hasWind=True):
+    if (inout == 1):
+        return ''
+    else:
+        if (hasWind == True):
+            return '{:+.1f}'.format(in_float)
+        else:
+            return ''

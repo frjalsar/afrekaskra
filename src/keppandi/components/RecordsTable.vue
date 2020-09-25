@@ -266,10 +266,12 @@ export default {
   },
   methods: {
     create_result_text: function (data) {
-      if (data["Units"] == 3 || data["Units"] == 4) {
+      if (data["Units"] == 3) {
         data["Results_text"] = moment.unix(data["Results"]).format("mm:ss,SS");
+      } else if (data["Units"] == 4) {
+        data["Results_text"] = moment.unix(data["Results"]).format("hh:mm:ss,SS");
       } else {
-        if (data["Electronic_timing"] == 0 && data['Units'] == 2) {
+        if (data["Electronic_timing"] == 0 && data["Units"] == 2) {
           data["Results_text"] = parseFloat(data["Results"]).toFixed(1);
         } else {
           data["Results_text"] = parseFloat(data["Results"]).toFixed(2);
