@@ -9,20 +9,20 @@
       ref="athleteSearch"
     />
     <!-- -->
-    <div class="row">
+    <div class="row" v-show="showSearchQ">
       <div class="col-md-12">
         <table class="table">
           <thead class="thead-light">
             <tr>
-              <th scope="col" class="d-none d-lg-table-cell">Númer</th>
+              <!--<th scope="col" class="d-none d-lg-table-cell">Númer</th>-->
               <th scope="col">Nafn</th>
-              <th scope="col" class="d-none d-md-table-cell">Fæðingarár</th>
               <th scope="col">Félag</th>
+              <th scope="col">Fæðingarár</th>
             </tr>
           </thead>
           <tbody>
             <tr v-if="loading">
-              <td colspan="4" align="center">
+              <td colspan="3" align="center">
                 <div v_if="loading">
                 <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
                 <p>{{message}}<p>
@@ -34,12 +34,12 @@
               :key="athlete.CompetitorCode"
               @click.prevent="onClick && onClick(athlete)"
             >
-              <td class="d-none d-lg-table-cell">{{ athlete.CompetitorCode }}</td>
+              <!--<td class="d-none d-lg-table-cell">{{ athlete.CompetitorCode }}</td>-->
               <td><router-link :to="{ name: 'CompetitorProfile', params: { competitorID: athlete.CompetitorCode }}">
                 {{ athlete.Name }}
                 </router-link></td>
-              <td class="d-none d-md-table-cell">{{ athlete.YOB }}</td>
-              <td>{{ athlete.Club }}</td>
+                <td>{{ athlete.Club }}</td>
+              <td>{{ athlete.YOB }}</td>
             </tr>
           </tbody>
         </table>
@@ -65,6 +65,7 @@ export default {
       margin: "2px",
       radius: "100%",
       loading: false,
+      showSearchQ: false,
 
       athletes: [],
       searchQ: "",
@@ -93,6 +94,7 @@ export default {
       // To clear box
       if (this.search.length === 0) {
         this.athletes = [];
+        this.showSearchQ = false;
       }
 
       //Only search on 3
@@ -111,6 +113,7 @@ export default {
       var url = this.global_API_URL + "/api/competitor?term=";
 
       this.loading = true;
+      this.showSearchQ = true;
       this.athletes = [];
 
       //this.cancelSearch();

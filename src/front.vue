@@ -5,7 +5,7 @@
         <h5 class="card-title">Velkominn til Sifjar</h5>
         <p>
           Sif heldur utan um afrekaskrá
-          <a href="http://www.fri.is">Frjálsíþróttasambands Íslands</a> (FRÍ) og
+          <a href="http://www.fri.is"><abbr title="Frjálsíþróttasambands Íslands">FRÍ</abbr></a> og
           er eiginkona <a href="http://thor.fri.is">Þórs</a> mótaforrits FRÍ.
           <!--Þór var skapaður af
           <a href="/keppandi/2487">Friðrik Þór</a> til að safna saman gögnum um íslenska keppendur í frjálsum íþróttum.-->

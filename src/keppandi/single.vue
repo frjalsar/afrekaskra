@@ -1,25 +1,41 @@
 <template>
   <div>
+    <div class="search-div">
+      <p>Sláðu inn nafn til að leita af öðrum keppanda</p>
+      <KeppandiList />
+    </div>
     <!-- LOADING -->
     <div v-if="!isReady">
-      <pulse-loader :loading="!isReady" :color="color" :size="size"></pulse-loader>
-      <p style="text-align:center">{{message}}</p>
+      <pulse-loader
+        :loading="!isReady"
+        :color="color"
+        :size="size"
+      ></pulse-loader>
+      <p style="text-align: center">{{ message }}</p>
     </div>
     <!-- PROFILE -->
     <div id="competitor-view" v-if="isReady">
       <div class="action-div">
-        <img class="img-fluid img-action" v-bind:src="'/api/img/action/' + competitorID" />
+        <img
+          class="img-fluid img-action"
+          v-bind:src="'/api/img/action/' + competitorID"
+        />
         <div class="topleft">
-          <h2 style="font-size:3.75vw;">
-            <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
+          <h2 style="font-size: 3.75vw">
+            <b
+              >{{ competitor_info.FirstName }} {{ competitor_info.LastName }}</b
+            >
           </h2>
-          <h5 style="font-size:2.75vw;">
-            {{competitor_info.Club}} -
+          <h5 style="font-size: 2.75vw">
+            {{ competitor_info.Club }} -
             <i
               class="fas"
-              v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"
+              v-bind:class="{
+                'fa-male': competitor_info.Sex == 1,
+                'fa-female': competitor_info.Sex == 2,
+              }"
             ></i>
-            {{competitor_info.YOB}}
+            {{ competitor_info.YOB }}
           </h5>
         </div>
         <div class="bottomleft">
@@ -29,13 +45,22 @@
           />
         </div>
         <div class="bottomright">
-          <img class="img-club" v-bind:src="ClubNameUrl" @error="ClubLogoError" v-if="showClubLogo" />
+          <img
+            class="img-club"
+            v-bind:src="ClubNameUrl"
+            @error="ClubLogoError"
+            v-if="showClubLogo"
+          />
         </div>
       </div>
       <!-- INFO -->
       <div>
         <recordstable :competitorID="competitorID"></recordstable>
-        <pbtable :event_info="event_info" :competitorID="competitorID" ref="pbtable"></pbtable>
+        <pbtable
+          :event_info="event_info"
+          :competitorID="competitorID"
+          ref="pbtable"
+        ></pbtable>
         <piechart :event_info="event_info" ref="pieChart"></piechart>
       </div>
     </div>
@@ -49,6 +74,7 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import PieChart from "../keppandi/components/PieChart.vue";
 import PBTable from "../keppandi/components/PBTable.vue";
 import RecordsTable from "../keppandi/components/RecordsTable.vue";
+import KeppandiList from "./list.vue";
 
 export default {
   name: "KeppandiSingle",
@@ -57,6 +83,7 @@ export default {
     pbtable: PBTable,
     recordstable: RecordsTable,
     PulseLoader,
+    KeppandiList,
   },
   data() {
     return {
@@ -133,6 +160,10 @@ export default {
 /* center spinner */
 .v-spinner {
   text-align: center;
+}
+
+.search-div {
+  margin-bottom: 10px;
 }
 
 .action-div {

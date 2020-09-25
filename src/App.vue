@@ -53,7 +53,7 @@
 <style>
 img.logo {
   margin-right: 10px;
-  width: 50px
+  width: 50px;
 }
 h1 {
   text-transform: uppercase;
