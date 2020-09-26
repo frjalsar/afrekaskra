@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="search-div">
+    <!-- <div class="search-div">
       <p>Sláðu inn nafn til að leita af öðrum keppanda</p>
       <KeppandiList />
-    </div>
+    </div> -->
     <!-- LOADING -->
     <div v-if="!isReady">
       <pulse-loader

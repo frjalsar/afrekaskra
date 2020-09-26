@@ -35,9 +35,12 @@
               @click.prevent="onClick && onClick(athlete)"
             >
               <!--<td class="d-none d-lg-table-cell">{{ athlete.CompetitorCode }}</td>-->
-              <td><router-link :to="{ name: 'CompetitorProfile', params: { competitorID: athlete.CompetitorCode }}">
+              <td>
+                <!--<a v-bind:href="'/keppandi/' + athlete.CompetitorCode">{{athlete.Name}}</a>-->
+                <router-link :to="{ name: 'CompetitorProfile', params: { competitorID: athlete.CompetitorCode }}">
                 {{ athlete.Name }}
-                </router-link></td>
+                </router-link>
+                </td>
                 <td>{{ athlete.Club }}</td>
               <td>{{ athlete.YOB }}</td>
             </tr>
@@ -151,3 +154,14 @@ export default {
   }
 };
 </script>
+
+<!--
+<style scoped>
+.search-div {
+  position: absolute;
+  z-index: 1;
+  background: white;
+  width: 100%;
+}
+</style>
+-->
