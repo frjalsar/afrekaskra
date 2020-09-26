@@ -1,6 +1,7 @@
 <template>
   <div>
     <table class="table table-striped table-hover table-responsive-sm table-sm">
+      <!--<caption>Listi yfir árangur</caption>-->
       <col span="1" class="wide" />
       <thead>
         <tr>

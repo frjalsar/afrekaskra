@@ -7,6 +7,7 @@
     <div v-if="!loading">
     <p>Eftirfarandi Íslandsmet eiga afmæli á næstunni</p>
     <table class="table table-striped table-hover table-responsive-sm table-sm">
+      <!--<caption>Listi yfir afmæli Íslandsmeta</caption>-->
       <col span="1" class="wide" />
       <thead>
         <tr>
@@ -22,7 +23,7 @@
       </thead>
       <tbody>
         <tr v-for="(i, index) in RecordData">
-          <th scope="row">{{ i.Event }}</th>
+          <th scope="row">{{ i.Event }} <small class="text-muted">{{i.Units_symbol }}</small></th>
           <td>
             <router-link
               :to="{
@@ -33,7 +34,7 @@
               <a>{{ i.Name }}</a>
             </router-link>
           </td>
-          <td>{{ i.Results_text + " " + i.Units_symbol }}</td>
+          <td>{{ i.Results_text }}</td>
           <td>{{ i.Wind }}</td>
           <td>{{ inout_text(i.Inout) }}</td>
           <td>{{ i.Date }}</td>

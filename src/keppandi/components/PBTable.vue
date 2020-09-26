@@ -7,6 +7,7 @@
       <small>Veldu grein í töflunni til að sjá meiri upplýsingar um hana.</small>
     </p>
     <table class="table table-striped table-hover table-responsive-sm table-sm">
+      <!--<caption>Listi yfir árangur</caption>-->
       <col span="1" class="wide" />
       <thead>
         <tr>
@@ -28,7 +29,7 @@
           <!-- v-bind:style="{display: 'none'}" -->
           <th scope="row">
             <router-link :to="{ name: 'CompetitorEvent', params: { competitorID: competitorID, eventID: i.EventID }}">
-            {{i.EventShortName}} [{{i.EventUnit}}]
+            {{i.EventShortName}} <small class="text-muted">{{i.EventUnit}}</small>
             </router-link>
             </th>
           <td>{{ i.PB_out}} <small class="text-muted" v-if="i.PB_out !== ''">({{i.PB_out_date}})</small></td>
@@ -44,7 +45,7 @@
       v-on:click.prevent="toggle_showEvents($event)"
       v-if="showMoreLessButton"
       class="text-success"
-    ><b>{{textMoreLess}}</b></a>
+    ><b><span v-html="textMoreLess"></span></b></a>
   </div>
 </template>
 
@@ -59,9 +60,9 @@ export default {
   computed: {
     textMoreLess: function () {
       if (this.showAllEvents == false) {
-        return "Sýna fleiri greinar";
+        return '<i class="fas fa-caret-down"></i> Sýna fleiri greinar';
       } else {
-        return "Sýna færri greinar";
+        return '<i class="fas fa-caret-up"></i> Sýna færri greinar';
       }
     },
     showMoreLessButton() {

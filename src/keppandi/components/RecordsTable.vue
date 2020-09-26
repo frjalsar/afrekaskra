@@ -25,6 +25,7 @@
         <table
           class="table table-striped table-hover table-responsive-sm table-sm"
         >
+        <!--<caption>Listi yfir virk Íslandsmet</caption>-->
           <col span="1" class="wide" />
           <thead>
             <tr>
@@ -56,7 +57,7 @@
               v-for="(i, index) in sortedDataActive"
               v-show="index < 5 || showAllActiveRecords"
             >
-              <th scope="row">{{ i.Event + " [" + i.Units_symbol + "]" }}</th>
+              <th scope="row">{{ i.Event }} <small class="text-muted">{{ i.Units_symbol }}</small></th>
               <td>{{ i.Results_text }}</td>
               <td>{{ i.Wind }}</td>
               <td>{{ inout_text(i.Inout) }}</td>
@@ -71,7 +72,7 @@
           v-on:click.prevent="toggle_ActiveRecords($event)"
           v-if="showMoreLessButtonActive"
           class="text-success"
-          ><b>{{ textMoreLessActive }}</b></a
+          ><b><span v-html="textMoreLessActive"></span></b></a
         >
         <p>
           <br />
@@ -83,6 +84,7 @@
         <table
           class="table table-striped table-hover table-responsive-sm table-sm"
         >
+        <!--<caption>Listi yfir óvirk Íslandsmet</caption>-->
           <col span="1" class="wide" />
           <thead>
             <tr>
@@ -114,7 +116,7 @@
               v-for="(i, index) in sortedDataunActive"
               v-show="index < 5 || showAllunActiveRecords"
             >
-              <th scope="row">{{ i.Event + " [" + i.Units_symbol + "]" }}</th>
+              <th scope="row">{{ i.Event }} <small class="text-muted">{{ i.Units_symbol }}</small></th>
               <td>{{ i.Results_text }}</td>
               <td>{{ i.Wind }}</td>
               <td>{{ inout_text(i.Inout) }}</td>
@@ -129,7 +131,7 @@
           v-on:click.prevent="toggle_unActiveRecords($event)"
           v-if="showMoreLessButtonunActive"
           class="text-success"
-          ><b>{{ textMoreLessunActive }}</b></a
+          ><b><span v-html="textMoreLessunActive"></span></b></a
         >
       </div>
     </div>
@@ -177,16 +179,16 @@ export default {
   computed: {
     textMoreLessActive: function () {
       if (this.showAllActiveRecords == false) {
-        return "Sýna fleiri virk met";
+        return '<i class="fas fa-caret-down"></i> Sýna fleiri virk met';
       } else {
-        return "Sýna færri virk met";
+        return '<i class="fas fa-caret-up"></i> Sýna færri virk met';
       }
     },
     textMoreLessunActive: function () {
       if (this.showAllunActiveRecords == false) {
-        return "Sýna fleiri óvirk met";
+        return '<i class="fas fa-caret-down"></i> Sýna fleiri óvirk met';
       } else {
-        return "Sýna færri óvirk met";
+        return '<i class="fas fa-caret-up"></i> Sýna færri óvirk met';
       }
     },
     activeRecords: function () {
