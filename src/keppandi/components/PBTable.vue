@@ -31,8 +31,8 @@
             {{i.EventShortName}} [{{i.EventUnit}}]
             </router-link>
             </th>
-          <td>{{ i.PB_out + i.PB_out_date }}</td>
-          <td>{{ i.PB_in + i.PB_in_date }}</td>
+          <td>{{ i.PB_out}} <small class="text-muted" v-if="i.PB_out !== ''">({{i.PB_out_date}})</small></td>
+          <td>{{ i.PB_in}} <small class="text-muted" v-if="i.PB_in !== ''">({{i.PB_in_date}})</small></td>
           <td>{{ i.SB_cur }}</td>
           <td>{{ i.SB_last }}</td>
           <!--<td>{{i.count}}</td>-->

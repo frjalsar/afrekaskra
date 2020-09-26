@@ -467,15 +467,15 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
 
         #print(sb_cur)
 
-        if (pb_out == ''):
-            pb_out_date_str = ''
-        else:
-            pb_out_date_str = ' (' + str(pb_out_date.year) + ')'
+        # if (pb_out == ''):
+        #     pb_out_date_str = ''
+        # else:
+        #     pb_out_date_str = str(pb_out_date.year)
 
-        if (pb_in == ''):
-            pb_in_date_str = ''
-        else:
-            pb_in_date_str = ' (' + str(pb_in_date.year) + ')'
+        # if (pb_in == ''):
+        #     pb_in_date_str = ''
+        # else:
+        #     pb_in_date_str = str(pb_in_date.year)
 
         # Bæta við í listan
         list_pb.append({'EventName': event_info['Name_ISL'],
@@ -483,9 +483,9 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
                         'EventUnit': event_info['Units_symbol'],
                         'EventID': event_id,
                         'PB_out': pb_out,
-                        'PB_out_date': pb_out_date_str,
+                        'PB_out_date': pb_out_date.year,
                         'PB_in': pb_in,
-                        'PB_in_date': pb_in_date_str,
+                        'PB_in_date': pb_in_date.year,
                         'SB_cur': sb_cur,
                         'SB_last': sb_last,
                         'count': int(count)
