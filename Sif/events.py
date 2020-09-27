@@ -10,19 +10,33 @@ from Sif import common
 EVENT_LIST_FILENAME = os.path.join(settings.BASE_DIR, 'Sif/event_list.pickle')
 df_event_list = pd.read_pickle(EVENT_LIST_FILENAME)
 
-def Get_Event_Info_by_ThordID(ThordID):
-    mask = (df_event_list['THORID_1'] == ThordID) | (df_event_list['THORID_2'] == ThordID)
-    df_event = df_event_list[mask]
+def Get_Event_Info_by_ThordID(ThordID, AgeGroup):
+    # Þrautir eru vessen því þær nota ekki sama kerfi og aðrar greinar.
+    if (ThordID == 'FIMMTARÞR'):
+        print('Fimmtarþraut')
+    elif (ThordID == 'KASTÞRAUT'):
+        print('Kastþraut')
+    elif (ThordID == 'SEXÞRAUT'):
+        print('Sexþraut')
+    elif (ThordID == 'SJÖÞRAUT'):
+        print('Sjöþraut')
+    elif (ThordID == 'SJÖÞRAUTGA'):
+        print('Sjöþraut gamla')
+    elif (ThordID == 'TUGÞRAUT'):
+        print('Tugþraut')
+    else:
+        mask = (df_event_list['THORID_1'] == ThordID)
+        df_event = df_event_list[mask]
 
-    try:
-        print(df_event.iloc[0])
-    except:
-        print('')
-        print('Villa við að finna')
-        print(ThordID)
-        print('')
+        try:
+            print(df_event.iloc[0])
+        except:
+            print('')
+            print('Villa við að finna')
+            print(ThordID)
+            print('')
 
-    return None
+    return df_event
 
 def Get_Event_Info(Event_id):
     try:
