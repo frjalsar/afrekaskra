@@ -22,12 +22,12 @@ def Get_Records_Birthdays():
                                                  'kyn', 'dagsetning_mets', 'árangur',
                                                  'vindur', 'methafi', 'heiti_methafa',
                                                  'félag_methafa', 'staður_mets', 'úti_inni',
-                                                 'aldur_methafa', 'aldursflokkur_frí'),
+                                                 'aldur_methafa', 'aldursflokkur_frí', 'flokkur'),
                                                  columns=['Lína', 'Línunr_í_afrekum', 'Grein',
                                                           'Kyn', 'Dagsetning mets', 'Árangur',
                                                           'Vindur', 'Methafi', 'Heiti methafa',
                                                           'Félag methafa', 'Staður mets', 'Úti_Inni',
-                                                          'Aldur methafa', 'Aldursflokkur'])
+                                                          'Aldur methafa', 'Aldursflokkur', 'Flokkur'])
 
     df['Day'] = df['Dagsetning mets'].dt.day
     df['Month'] = df['Dagsetning mets'].dt.month
@@ -59,8 +59,9 @@ def Get_Records_Birthdays():
             print(line_afrek)
             print('')
         
-        event_id = events.df_event_list[events.df_event_list['THORID_1'] == q_afrek.tákn_greinar].index.tolist()[0]
-        event_info = events.Get_Event_Info(event_id)
+        #event_id = events.df_event_list[events.df_event_list['THORID_1'] == q_afrek.tákn_greinar].index.tolist()[0]
+        #event_info = events.Get_Event_Info_by_ID(event_id)
+        event_info = events.Get_Event_Info_by_ThordID(q_afrek.grein, q_afrek.tákn_greinar, q_afrek.flokkur)
 
         inout = row['Úti_Inni']
         wind_str = common.wind_to_str(row['Vindur'], inout, event_info['HasWind'])
@@ -113,8 +114,14 @@ def Get_Competitor_Records(CompetitorCode):
             print(line_afrek)
             print('')
 
-        event_id = events.df_event_list[events.df_event_list['THORID_1'] == q_afrek.tákn_greinar].index.tolist()[0]
-        event_info = events.Get_Event_Info(event_id)
+        #event_id = events.df_event_list[events.df_event_list['THORID_1'] == q_afrek.tákn_greinar].index.tolist()[0]
+        #event_info = events.Get_Event_Info_by_ID(event_id)
+        #print(q_afrek.tákn_greinar)
+        #print(q_afrek.flokkur)
+        try:
+            event_info = events.Get_Event_Info_by_ThordID(q_afrek.grein, q_afrek.tákn_greinar, q_afrek.flokkur)
+        except:
+            continue
 
         inout = record.úti_inni
         wind_str = common.wind_to_str(record.vindur, inout, event_info['HasWind'])

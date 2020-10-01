@@ -10,35 +10,54 @@ from Sif import common
 EVENT_LIST_FILENAME = os.path.join(settings.BASE_DIR, 'Sif/event_list.pickle')
 df_event_list = pd.read_pickle(EVENT_LIST_FILENAME)
 
-def Get_Event_Info_by_ThordID(ThordID, AgeGroup):
-    # Þrautir eru vessen því þær nota ekki sama kerfi og aðrar greinar.
-    if (ThordID == 'FIMMTARÞR'):
-        print('Fimmtarþraut')
-    elif (ThordID == 'KASTÞRAUT'):
-        print('Kastþraut')
-    elif (ThordID == 'SEXÞRAUT'):
-        print('Sexþraut')
-    elif (ThordID == 'SJÖÞRAUT'):
-        print('Sjöþraut')
-    elif (ThordID == 'SJÖÞRAUTGA'):
-        print('Sjöþraut gamla')
-    elif (ThordID == 'TUGÞRAUT'):
-        print('Tugþraut')
-    else:
-        mask = (df_event_list['THORID_1'] == ThordID)
-        df_event = df_event_list[mask]
+def Get_Event_Info_by_ThordID(ThorID_2, ThorID_1, AgeGroup=''):
+    print('Get_Event_Info Start')
+    print(AgeGroup)
+    if (AgeGroup == ''):
+        AgeGroup = '-1'
 
-        try:
-            print(df_event.iloc[0])
-        except:
-            print('')
-            print('Villa við að finna')
-            print(ThordID)
-            print('')
+    Event_id_list = df_event_list[(df_event_list['THORID_2'] == ThorID_2) & (df_event_list['AgeGroup'] == AgeGroup)].index.tolist()
+    print(Event_id_list)
 
-    return df_event
+    if (len(Event_id_list) == 0):
+        Event_id_list = df_event_list[(df_event_list['THORID_2'] == ThorID_2) & (df_event_list['THORID_1'] == ThorID_1)].index.tolist()
 
-def Get_Event_Info(Event_id):
+
+    if (len(Event_id_list) > 1):
+        Event_id_list = df_event_list[(df_event_list['THORID_2'] == ThorID_2) & (df_event_list['THORID_1'] == ThorID_1)].index.tolist()
+        print(Event_id_list)
+        if (len(Event_id_list) > 1):
+            Event_id_list = df_event_list[(df_event_list['THORID_2'] == ThorID_2) & (df_event_list['AgeGroup'] == AgeGroup) & (df_event_list['THORID_1'] == ThorID_1)].index.tolist()
+            print(Event_id_list)
+            if (len(Event_id_list) > 1):
+                print('Get_Event_Info_by_ThordID: VARÚÐ leit skilaði fleirri en einni grein!!')
+                print(ThordID)
+                print(AgeGroup)
+                print(Event_id_list)
+
+    if (len(Event_id_list) == 0):
+        print('Get_Event_Info_by_ThordID: Villa fann ekki grein!')
+        print(ThorID_2)
+        print(ThorID_1)
+        print(AgeGroup)
+        raise Http404
+        #return None
+    
+    try:
+        Event_id = Event_id_list[0]
+    except:
+        print('')
+        print(ThorID_2)
+        print(ThorID_1)
+        print(AgeGroup)
+        print('')
+    Event_Info = Get_Event_Info_by_ID(Event_id)
+    
+    print('Get Event info end')
+    print('')
+    return Event_Info
+
+def Get_Event_Info_by_ID(Event_id):
     try:
         Units = df_event_list['Units'].values[Event_id]
         #0, # No units!
@@ -55,6 +74,9 @@ def Get_Event_Info(Event_id):
 
         EventShorterName = df_event_list['Name_ISL'].values[Event_id].replace('metra', 'm').replace('hlaup', '').replace('grind', 'gr.').replace('atrennu', 'atr.')
         Event_Info = {'THORID_1': df_event_list['THORID_1'].values[Event_id],
+                      'THORID_2': df_event_list['THORID_2'].values[Event_id],
+                      'Event_ID': Event_id,
+                      'AgeGroup': df_event_list['AgeGroup'].values[Event_id],
                       'Units': Units,
                       'Units_symbol': common.Units_symbol[Units],
                       'Minimize': minimize,

@@ -173,7 +173,7 @@ def Convert_Achievements_to_List(q, minimize_results, best_by_ath, units):
 # Out:
 #   A list of dictionaries containing information about each achievement.
 def Get_List_of_Achievements(CompetitorCode, Event_id):
-    THORID_1, _, _ = events.Get_Event_Info(Event_id)
+    THORID_1, _, _ = events.Get_Event_Info_by_ID(Event_id)
 
     q = AthlAfrek.objects.all().filter(keppandanúmer__iexact=CompetitorCode).filter(tákn_greinar__iexact=THORID_1)
     Achievements_list = Convert_Achievements_to_List(q)
@@ -216,12 +216,12 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
                                                  'árangur', 'vindur', 'félag',
                                                  'aldur_keppanda', 'heiti_móts', 'mót',
                                                  'dagsetning', 'rafmagnstímataka', 'úti_inni',
-                                                 'grein', 'tákn_greinar', 'vantar_vind'),
+                                                 'grein', 'tákn_greinar', 'vantar_vind', 'flokkur'),
                                                  columns=['lína', 'nafn', 'keppandanúmer',
                                                           'Árangur', 'Vindur', 'félag',
                                                           'aldur_keppanda', 'heiti_móts', 'mót',
                                                           'dagsetning', 'rafmagnstímataka', 'úti_inni',
-                                                          'grein', 'tákn_greinar', 'vantar_vind'])
+                                                          'grein', 'tákn_greinar', 'vantar_vind', 'flokkur'])
 
     # úti_inni: Úti = 0, Inni = 1
     df['Dagsetn.'] = pd.to_datetime(df['dagsetning'], dayfirst=True)
@@ -229,28 +229,41 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
     # Breytum öllum árangri yfir í rauntölur
     df['Árangur_float'] = df['Árangur'].map(common.results_to_float)
 
+    def Map_func(x):
+        print(x)
+        return events.Get_Event_Info_by_ThordID(x['grein'], x['tákn_greinar'], x['flokkur'])
+
     # Búa til lista yfir greinar
-    list_events = df['tákn_greinar'].copy() # copy til að búa til afrit
-    list_events.drop_duplicates(inplace=True) # Henda út endurtekningum
+    list_events = df[['grein', 'tákn_greinar', 'flokkur']].copy() # copy til að búa til afrit
+    list_events['Event_id'] = list_events.apply(Map_func, axis=1)
+    list_events.drop_duplicates(subset=['Event_id'], inplace=True) # Henda út endurtekningum
     list_events.reset_index(drop=True, inplace=True) # Endur númera index
+
+    print('list_events')
+    print(list_events)
+    print('')
 
     list_pb = []
     list_sb = []
-    for i in list_events:
+    for index, row in list_events.iterrows():
         #print(i)
+        #try:
+        #    event_id = events.df_event_list[events.df_event_list['THORID_1'] == i].index.tolist()[0]
+        #except:
+        #    print('ERROR gat ekki fundið grein')
+        #    print(i)
+        #    print(type(i))
+        #    pass
+        ##print(event_id)
+        #event_info = events.Get_Event_Info_by_ID(event_id)
+        ##print(event_info)
         try:
-            event_id = events.df_event_list[events.df_event_list['THORID_1'] == i].index.tolist()[0]
+            event_info = events.Get_Event_Info_by_ThordID(row['grein'], row['tákn_greinar'], row['flokkur'])
         except:
-            print('ERROR gat ekki fundið grein')
-            print(i)
-            print(type(i))
-            pass
-        #print(event_id)
-        event_info = events.Get_Event_Info(event_id)
-        #print(event_info)
+            continue
 
         # Flokka út Grein
-        df_event = df.loc[df['tákn_greinar'] == i].copy() # Búum til copy til að breyta
+        df_event = df.loc[(df['grein'] == row['grein']) & (df['flokkur'] == row['flokkur'])].copy() # Búum til copy til að breyta
         df_event.reset_index(drop=True, inplace=True) # Endur númera index
 
         # Úti árangur með löglegum vindi
@@ -481,7 +494,7 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
         list_pb.append({'EventName': event_info['Name_ISL'],
                         'EventShortName': event_info['ShortName'],
                         'EventUnit': event_info['Units_symbol'],
-                        'EventID': event_id,
+                        'EventID': event_info['Event_ID'],
                         'PB_out': pb_out,
                         'PB_out_date': pb_out_date.year,
                         'PB_in': pb_in,
@@ -500,9 +513,14 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
     return list_pb
 
 def Get_Competitor_Event(CompetitorCode, Event_id):
-    event_info = events.Get_Event_Info(Event_id)
-        
-    q = AthlAfrek.objects.all().filter(keppandanúmer__iexact=CompetitorCode, tákn_greinar__iexact=event_info['THORID_1']).order_by('dagsetning')
+    event_info = events.Get_Event_Info_by_ID(Event_id)
+
+    flokkur = event_info['AgeGroup']
+    if (flokkur == '-1'):
+        flokkur = ''
+    
+    q = AthlAfrek.objects.all().filter(keppandanúmer__iexact=CompetitorCode, grein__iexact=event_info['THORID_2'], flokkur__iexact=flokkur).order_by('dagsetning')
+    
     df = pd.DataFrame.from_records(q.values_list('árangur', 'vindur', 'félag',
                                                  'aldur_keppanda', 'heiti_móts', 'mót',
                                                  'dagsetning', 'rafmagnstímataka', 'úti_inni',
@@ -576,10 +594,11 @@ def Get_Competitor_Event(CompetitorCode, Event_id):
     return event_info, event_data, event_min_max_all, event_min_max_legal, event_progression
 
 def Get_List_of_Events(CompetitorCode=None, Event_id=None):
+    return None
     if (CompetitorCode == None):
-        q = AthlAfrek.objects.order_by('tákn_greinar').values_list('tákn_greinar', flat=True).distinct()
+        q = AthlAfrek.objects.order_by('tákn_greinar').values_list('grein', flat=True).distinct()
     else:
-        q = AthlAfrek.objects.values_list('tákn_greinar', flat=True).distinct().filter(keppandanúmer__iexact=CompetitorCode)
+        q = AthlAfrek.objects.values_list('grein', flat=True).distinct().filter(keppandanúmer__iexact=CompetitorCode)
 
     Event_list = []
     for event in q:
@@ -640,8 +659,11 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
             q = q.filter(flokkur=14)
 
     else:
-        Event_Info = events.Get_Event_Info(Event_id)
-        q = AthlAfrek.objects.all().filter(tákn_greinar__iexact=Event_Info['THORID_1'])
+        Event_Info = events.Get_Event_Info_by_ID(Event_id)
+        flokkur = Event_Info['AgeGroup']
+        if (flokkur == '-1'):
+            flokkur = ''
+        q = AthlAfrek.objects.all().filter(grein__iexact=Event_Info['THORID_2'], flokkur__iexact=flokkur)
 
     #--
     if (Event_Info['Minimize'] == True):
@@ -847,7 +869,7 @@ def filter_progression(df_event, event_max, event_unit):
     return pb_dates, pb, text_place
 
 def Get_Competitor_Event_Data_All(CompetitorCode, Event_id):
-    EventInfo = events.Get_Event_Info(Event_id)
+    EventInfo = events.Get_Event_Info_by_ID(Event_id)
     df = competitor.Get_Competitor_Event_DataFrame(CompetitorCode, Event_id, EventInfo)
 
     EventData = []

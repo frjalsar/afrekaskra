@@ -1,11 +1,52 @@
 from Sif import common
 import pandas as pd
+from datetime import datetime
 
 # Database
 # We only use AthlCompetitors for information about competitors
 # and AthlAfrek for the achievements.
 from Sif.models import AthlCompetitors, AthlAfrek, Competitors
 from django.db.models import Q
+from django.db import connection
+
+# Get_Competitor_Info
+# Looks upp information about a competitor from the AthlCompetitors table.
+# Inn:
+#  CompetitorCode: Fiffós ID code for the competitor
+# Out:
+#  Competitor_Info: A dictionary containing name, year of birth and club.
+def Get_Competitor_Info(CompetitorCode):
+    
+    # Look upp the competitor in the table. We want an exact match.
+    try:
+        q = AthlCompetitors.objects.get(pk=CompetitorCode) # pk means primary key which in this case is númer
+        #event_list = Get_List_of_Events(CompetitorCode=CompetitorCode, Event_id=None)
+        
+        # Make a Competitor dict with information about the competitor
+        Competitor_Info = {'CompetitorCode': CompetitorCode,
+                           'Name': q.nafn,
+                           'FirstName': q.nafn.split(' ', 1)[0],
+                           'LastName': q.nafn.split(' ', 1)[-1],
+                           'YOB': q.fæðingarár,
+                           'Club': q.félag,
+                           'Sex': q.kyn
+                           }
+    except AthlCompetitors.DoesNotExist:
+        raise Http404('Gat ekki fundið keppanda.')
+
+    return Competitor_Info
+
+def Get_Competitor_Achievements(CompetitorCode):
+    # Núverandi ár. Þarf til að kalla á stored procedure
+    CurrentYear = currentYear = datetime.now().year
+    
+    # Köllum á stored procedure sem heitir CompetitorsAchievements.
+    df = pd.read_sql_query("EXEC CompetitorsAchievements @CompetitorNo = ?, @YearFrom = 1800, @YearTo = ?, @OutdoorsIndoorsFilter = '%'", connection, params=[CompetitorCode, CurrentYear])
+
+    # Breytum öllum árangri yfir í rauntölur
+    df['Results_float'] = df['Results'].map(common.results_to_float)
+    return df
+
 
 # Skilar til baka Pandas data frame með öllum upplýsingum um ákveðna grein fyrir einhvern keppanda.
 def Get_Competitor_Event_DataFrame(CompetitorCode, Event_id, EventInfo):
