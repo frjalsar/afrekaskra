@@ -39,7 +39,7 @@ def Get_Event_Info(Event_id):
         else:
             minimize = False
 
-        EventShorterName = df_event_list['Name_ISL'].values[Event_id].replace('metra', 'm').replace('hlaup', '').replace('grind', 'gr.').replace('atrennu', 'atr.')
+        EventShorterName = df_event_list['Name_ISL'].values[Event_id].replace('metra', 'm').replace('boðhlaup', 'bh.').replace(' hlaup', ' ').replace('grind', 'gr.').replace('atrennu', 'atr.')
         Event_Info = {'THORID_1': df_event_list['THORID_1'].values[Event_id],
                       'Units': Units,
                       'Units_symbol': common.Units_symbol[Units],

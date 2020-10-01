@@ -65,17 +65,22 @@ def Get_Records_Birthdays():
         date_str = format_date(row['Dagsetn'].date(), "d MMM yyyy", locale='is_IS').upper()
         agegroup = row['AldursflFRÍ']
         club = row['Félag']
-        event = row['HeitiGreinar']
+
+        EventShorterName = row['HeitiGreinar'].replace('metra', 'm').replace('boðhlaup', 'bh.').replace('hlaup', '').replace('grind', 'gr.').replace('atrennu', 'atr.')
+        event = EventShorterName
         units = 0,
         units_symbol = '',
         competitorid = row['Keppandan']
+
+        # Nafnið kemur með ártalinu í lokinn. Klippum það út.
+        name = row['Nafn'].rsplit(' ', 1)[0]
 
         List_of_Records.append({'Event': event,
                                'Results': results,
                                'Results_str': results_str,
                                'Wind': wind_str,
                                'Sex': row['Ky'],
-                               'Name': row['Nafn'],
+                               'Name': name,
                                'Club': club,
                                'Place': row['Staður'],
                                'Inout': inout,
@@ -116,7 +121,9 @@ def Get_Competitor_Records(CompetitorCode):
         age = row['Age']
         agegroup = row['AgeGroup']
         club = row['Club']
-        event = row['EventName']
+
+        EventShorterName = row['EventName'].replace('metra', 'm').replace('boðhlaup', 'bh.').replace('hlaup', '').replace('grind', 'gr.').replace('atrennu', 'atr.')
+        event = EventShorterName
         units = 0
         units_symbol = ''
 
