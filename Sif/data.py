@@ -524,11 +524,13 @@ def Get_Competitor_Event(CompetitorCode, Event_id):
     df = pd.DataFrame.from_records(q.values_list('árangur', 'vindur', 'félag',
                                                  'aldur_keppanda', 'heiti_móts', 'mót',
                                                  'dagsetning', 'rafmagnstímataka', 'úti_inni',
-                                                 'grein', 'tákn_greinar', 'vantar_vind'),
+                                                 'grein', 'tákn_greinar', 'vantar_vind',
+                                                 'flokkur'),
                                                  columns=['árangur', 'vindur', 'félag',
                                                           'aldur_keppanda', 'heiti_móts', 'mót',
                                                           'dagsetning', 'rafmagnstímataka', 'úti_inni',
-                                                          'grein', 'tákn_greinar', 'vantar_vind'])
+                                                          'grein', 'tákn_greinar', 'vantar_vind',
+                                                          'flokkur'])
 
     # úti_inni: Úti = 0, Inni = 1
     df['dagsetning'] = pd.to_datetime(df['dagsetning'], dayfirst=True)
@@ -638,7 +640,7 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
                          1004: 'FIMMTARÞ15', # Fimmtarþraut pilta 15 ára
 
                          1011: 'SJÖÞRAUT',   # Sjöþraut
-                         1012: 'SJÖÞRAUT6K', # Sjöþraut (6Kg kúla) 
+                         1012: 'SJÖÞRAUT6K', # Sjöþraut (6Kg kúla)
                          1013: 'SJÖÞRAUT5K', # Sjöþraut (5Kg kúla)
                          1014: 'SJÖÞRAUT',   # Sjöþraut meyjaáhöld
 
