@@ -34,7 +34,7 @@
               <a>{{ i.Name }}</a>
             </router-link>
           </td>
-          <td>{{ i.Results_text }}</td>
+          <td>{{ i.Results_str }}</td>
           <td>{{ i.Wind }}</td>
           <td>{{ inout_text(i.Inout) }}</td>
           <td>{{ i.Date }}</td>
