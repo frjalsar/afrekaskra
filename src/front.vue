@@ -27,25 +27,25 @@
       </div>
     </div>
     <!---->
-    <div class="card mt-4">
+<!--    <div class="card mt-4">
       <div class="card-header">Top listar</div>
       <div class="card-body">
         <p class="card-text">
           Veldu grein hér að neðan og Sif sýnir þér 100 bestu afrek hvers árs
           eða frá upphafi.
         </p>
-        <p>To do: setja dropbox fyrir greinar</p>
+        <p>To do: setja inn link fyrir greinar</p>
       </div>
-    </div>
+    </div>-->
     <!---->
     <div class="card mt-4">
       <div class="card-header">Íslandsmet</div>
       <div class="card-body">
-        <p class="card-text">
+        <!--<p class="card-text">
           Todo: Listi yfir Íslandsmet sem voru nýlega sett?
-        </p>
-        <p class="card-text">Todo: Listi yfir elstu Íslandsmetin??</p>
-        <p class="card-text">Todo: Listi yfir þá sem eiga flest Íslandsmet?</p>
+        </p>-->
+        <!--<p class="card-text">Todo: Listi yfir elstu Íslandsmetin??</p>-->
+        <!--<p class="card-text">Todo: Listi yfir þá sem eiga flest Íslandsmet?</p>-->
         <ISLRecordBirtdayList />
       </div>
     </div>

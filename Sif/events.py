@@ -72,7 +72,7 @@ def Get_Event_Info_by_ID(Event_id):
         else:
             minimize = False
 
-        EventShorterName = df_event_list['Name_ISL'].values[Event_id].replace('metra', 'm').replace('hlaup', '').replace('grind', 'gr.').replace('atrennu', 'atr.')
+        EventShorterName = df_event_list['Name_ISL'].values[Event_id].replace('metra', 'm').replace('boðhlaup', 'bh.').replace(' hlaup', ' ').replace('grind', 'gr.').replace('atrennu', 'atr.')
         Event_Info = {'THORID_1': df_event_list['THORID_1'].values[Event_id],
                       'THORID_2': df_event_list['THORID_2'].values[Event_id],
                       'Event_ID': Event_id,
