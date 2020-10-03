@@ -10,6 +10,7 @@ from django.views.decorators.cache import cache_page
 from Sif import settings
 from Sif import data
 from Sif import records
+from Sif import competitor
 
 # Other
 import os
@@ -28,8 +29,8 @@ def Print_list_vertically(my_list):
 
 @cache_page(60 * 15)
 def competitor(request, CompetitorCode=None):
-    Competitor_info = data.Get_Competitor_Info(CompetitorCode)
-    Event_info = data.Get_Competitor_Events_Info(CompetitorCode)
+    Competitor_info = competitor.Get_Competitor_Info(CompetitorCode)
+    Event_info = competitor.Get_Competitor_Events_Info(CompetitorCode)
     return JsonResponse({'Competitor': Competitor_info, 'Events': Event_info}, safe=False)
 
 # Skilar öllum gögnum fyrir tiltekna grein.

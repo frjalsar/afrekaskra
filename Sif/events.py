@@ -6,13 +6,28 @@ import pandas as pd
 from Sif import settings
 from Sif import common
 
+from Sif.event_var import event_list, event_dict
+
 # Events
 EVENT_LIST_FILENAME = os.path.join(settings.BASE_DIR, 'Sif/event_list.pickle')
 df_event_list = pd.read_pickle(EVENT_LIST_FILENAME)
 
+#def Get_Event_Info_by_ID():
+#    return None
+
+def Get_Event_Info_by_Name(EventName):
+    try:
+        event_info = event_dict[EventName.replace(',', '.')]
+    except:
+        print('VILLA: Fann ekki grein {}'.format(EventName.replace(',', '.')))
+        event_info = event_dict['Óþekkt grein']
+        event_info['NAME_SHORT'] = EventName.replace(',', '.')
+    
+    return event_info
+
 def Get_Event_Info_by_ThordID(ThorID_2, ThorID_1, AgeGroup=''):
-    print('Get_Event_Info Start')
-    print(AgeGroup)
+    #print('Get_Event_Info Start')
+    #print(AgeGroup)
     if (AgeGroup == ''):
         AgeGroup = '-1'
 
@@ -53,8 +68,8 @@ def Get_Event_Info_by_ThordID(ThorID_2, ThorID_1, AgeGroup=''):
         print('')
     Event_Info = Get_Event_Info_by_ID(Event_id)
     
-    print('Get Event info end')
-    print('')
+    #print('Get Event info end')
+    #print('')
     return Event_Info
 
 def Get_Event_Info_by_ID(Event_id):

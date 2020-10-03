@@ -180,35 +180,6 @@ def Get_List_of_Achievements(CompetitorCode, Event_id):
 
     return Achievements_list
 
-# Get_Competitor_Info
-# Looks upp information about a competitor from the AthlCompetitors table.
-# Inn:
-#  CompetitorCode: Fiffós ID code for the competitor
-# Out:
-#  Competitor_Info: A dictionary containing name, year of birth and club.
-def Get_Competitor_Info(CompetitorCode):
-    
-    # Look upp the competitor in the table. We want an exact match.
-    try:
-        q = AthlCompetitors.objects.get(pk=CompetitorCode) # pk means primary key which in this case is númer
-        #event_list = Get_List_of_Events(CompetitorCode=CompetitorCode, Event_id=None)
-        
-        # Make a Competitor dict with information about the competitor
-        Competitor_Info = {'CompetitorCode': CompetitorCode,
-                           'Name': q.nafn,
-                           'FirstName': q.nafn.split(' ', 1)[0],
-                           'LastName': q.nafn.split(' ', 1)[-1],
-                           'YOB': q.fæðingarár,
-                           'Club': q.félag,
-                           'Sex': q.kyn
-                           #'Datetime': datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
-                           #'Events': event_list
-                           }
-    except AthlCompetitors.DoesNotExist:
-        raise Http404('Gat ekki fundið keppanda.')
-
-    return Competitor_Info
-
 def Get_Competitor_Events_Info(CompetitorCode=None):
     #print('Event_info for {:d}'.format(CompetitorCode))
     q = AthlAfrek.objects.all().filter(keppandanúmer__iexact=CompetitorCode)
@@ -230,7 +201,7 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
     df['Árangur_float'] = df['Árangur'].map(common.results_to_float)
 
     def Map_func(x):
-        print(x)
+        #print(x)
         return events.Get_Event_Info_by_ThordID(x['grein'], x['tákn_greinar'], x['flokkur'])
 
     # Búa til lista yfir greinar
@@ -239,9 +210,9 @@ def Get_Competitor_Events_Info(CompetitorCode=None):
     list_events.drop_duplicates(subset=['Event_id'], inplace=True) # Henda út endurtekningum
     list_events.reset_index(drop=True, inplace=True) # Endur númera index
 
-    print('list_events')
-    print(list_events)
-    print('')
+    #print('list_events')
+    #print(list_events)
+    #print('')
 
     list_pb = []
     list_sb = []

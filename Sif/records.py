@@ -66,10 +66,11 @@ def Get_Records_Birthdays():
         agegroup = row['AldursflFRÍ']
         club = row['Félag']
 
+        event_info = events.Get_Event_Info_by_Name(row['HeitiGreinar'])
         EventShorterName = row['HeitiGreinar'].replace('metra', 'm').replace('boðhlaup', 'bh.').replace('hlaup', '').replace('grind', 'gr.').replace('atrennu', 'atr.')
         event = EventShorterName
-        units = 0,
-        units_symbol = '',
+        units = event_info['UNIT']
+        units_symbol = event_info['UNIT_SYMBOL']
         competitorid = row['Keppandan']
 
         # Nafnið kemur með ártalinu í lokinn. Klippum það út.
@@ -122,10 +123,11 @@ def Get_Competitor_Records(CompetitorCode):
         agegroup = row['AgeGroup']
         club = row['Club']
 
+        event_info = events.Get_Event_Info_by_Name(row['EventName'])
         EventShorterName = row['EventName'].replace('metra', 'm').replace('boðhlaup', 'bh.').replace('hlaup', '').replace('grind', 'gr.').replace('atrennu', 'atr.')
         event = EventShorterName
-        units = 0
-        units_symbol = ''
+        units = event_info['UNIT']
+        units_symbol = event_info['UNIT_SYMBOL']
 
         record_info = {'Event': event,
                        'Club': club,
