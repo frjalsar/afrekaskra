@@ -1,4 +1,6 @@
 from Sif import common
+from Sif import events
+import numpy as np
 import pandas as pd
 from datetime import datetime
 
@@ -38,10 +40,10 @@ def Get_Competitor_Info(CompetitorCode):
 
 def Get_Competitor_Achievements(CompetitorCode):
     # Núverandi ár. Þarf til að kalla á stored procedure
-    CurrentYear = currentYear = datetime.now().year
+    CurrentYear = datetime.now().year
     
     # Köllum á stored procedure sem heitir CompetitorsAchievements.
-    df = pd.read_sql_query("EXEC CompetitorsAchievements @CompetitorNo = ?, @YearFrom = 1800, @YearTo = ?, @OutdoorsIndoorsFilter = '%'", connection, params=[CompetitorCode, CurrentYear])
+    df = pd.read_sql_query("EXEC CompetitorsAchievements @CompetitorNo = {:d}, @YearFrom = 1800, @YearTo = {:d}, @OutdoorsIndoorsFilter = '%'".format(CompetitorCode, CurrentYear), connection)
 
     # Breytum öllum árangri yfir í rauntölur
     df['Results_float'] = df['Results'].map(common.results_to_float)
@@ -51,17 +53,19 @@ def Get_Competitor_Events_Info(CompetitorCode):
     df = Get_Competitor_Achievements(CompetitorCode)
 
     # Búa til lista yfir greinar
-    list_events = df['EventName'].copy() # copy til að búa til afrit
-    list_events.drop_duplicates(inplace=True) # Henda út endurtekningum
+    list_events = df.copy() # copy til að búa til afrit
+    list_events.drop_duplicates(subset=['EventName'], inplace=True) # Henda út endurtekningum
     list_events.reset_index(drop=True, inplace=True) # Endur númera index
+    print(list_events)
 
     list_pb = []
     list_sb = []
     for index, row in list_events.iterrows():
-        try:
-            event_info = events.Get_Event_Info_by_Name(row['EventName'])
-        except:
-            continue
+        #try:
+        event_info = events.Get_Event_Info_by_Name(row['EventName'])
+        #except:
+        #    print('Hello')
+        #    continue
 
         # Flokka út Grein
         df_event = df.loc[df['EventName'] == row['EventName']].copy() # Búum til copy til að breyta
@@ -81,10 +85,10 @@ def Get_Competitor_Events_Info(CompetitorCode):
         count = df_event['Results'].count()
 
         pb_out = ''
-        pb_out_date = datetime.datetime(1970, 1, 1)
+        pb_out_date = datetime(1970, 1, 1)
 
         pb_in = ''
-        pb_in_date = datetime.datetime(1970, 1, 1)
+        pb_in_date = datetime(1970, 1, 1)
 
         #try:
             # Finnum PB inni ef það er til
@@ -120,12 +124,12 @@ def Get_Competitor_Events_Info(CompetitorCode):
             # Ef eitthvað klikkar þá sleppum við þessari grein
         #    pass
 
-        date_now = datetime.date.today()
-        date_from_cur = np.datetime64(datetime.datetime(date_now.year, 1, 1, 0, 0, 0)) # 1 jan þessi ári
+        date_now = datetime.today()
+        date_from_cur = np.datetime64(datetime(date_now.year, 1, 1, 0, 0, 0)) # 1 jan þessi ári
         date_to_cur = np.datetime64(date_now) # Í dag
 
-        date_from_last = np.datetime64(datetime.datetime(date_now.year-1, 1, 1, 0, 0, 0)) # 1 jan á seinasta ári
-        date_to_last = np.datetime64(datetime.datetime(date_now.year-1, 12, 31, 0, 0, 0)) # 31 des á seinasta ári
+        date_from_last = np.datetime64(datetime(date_now.year-1, 1, 1, 0, 0, 0)) # 1 jan á seinasta ári
+        date_to_last = np.datetime64(datetime(date_now.year-1, 12, 31, 0, 0, 0)) # 31 des á seinasta ári
 
         # Árangur með löglegum vindi
         mask = df_event['WindReading'] <= 2.0
@@ -207,10 +211,10 @@ def Get_Competitor_Events_Info(CompetitorCode):
             pass
 
         # Bæta við í listan
-        list_pb.append({'EventName': event_info['Name_ISL'],
-                        'EventShortName': event_info['ShortName'],
-                        'EventUnit': event_info['Units_symbol'],
-                        'EventID': event_info['Event_ID'],
+        list_pb.append({'EventName': row['EventName'],
+                        'EventShortName': event_info['NAME_SHORT'],
+                        'EventUnit': event_info['UNIT_SYMBOL'],
+                        'EventID': event_info['EVENT_ID'],
                         'PB_out': pb_out,
                         'PB_out_date': pb_out_date.year,
                         'PB_in': pb_in,
@@ -224,7 +228,7 @@ def Get_Competitor_Events_Info(CompetitorCode):
     # Þarf ekki því html taflan gerir þetta líka!!
     list_pb.sort(key=lambda dic: dic['count'], reverse=True)
 
-    #print(list_pb)
+    print(list_pb)
 
     return list_pb
 

@@ -28,7 +28,7 @@ def Print_list_vertically(my_list):
     return None
 
 @cache_page(60 * 15)
-def competitor(request, CompetitorCode=None):
+def get_competitor(request, CompetitorCode=None):
     Competitor_info = competitor.Get_Competitor_Info(CompetitorCode)
     Event_info = competitor.Get_Competitor_Events_Info(CompetitorCode)
     return JsonResponse({'Competitor': Competitor_info, 'Events': Event_info}, safe=False)

@@ -16,12 +16,14 @@ df_event_list = pd.read_pickle(EVENT_LIST_FILENAME)
 #    return None
 
 def Get_Event_Info_by_Name(EventName):
+    NameofEvent = EventName.replace(',', '.')
     try:
-        event_info = event_dict[EventName.replace(',', '.')]
+        event_info = event_dict[NameofEvent]
+        event_info['EVENT_ID'] = event_list.index(NameofEvent)
     except:
-        print('VILLA: Fann ekki grein {}'.format(EventName.replace(',', '.')))
+        print('VILLA: Fann ekki grein {}'.format(NameofEvent))
         event_info = event_dict['Óþekkt grein']
-        event_info['NAME_SHORT'] = EventName.replace(',', '.')
+        event_info['NAME_SHORT'] = NameofEvent
     
     return event_info
 
