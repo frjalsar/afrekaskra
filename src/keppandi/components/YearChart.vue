@@ -17,7 +17,7 @@ export default {
   // },
   created() {
     // Bæta við seríu með öllum árangri ef grein hefur vind.
-    if (this.event_info["HasWind"] == true) {
+    if (this.event_info["HAS_WIND"] == true) {
       this.chartOptions.series[1] = {
         name: "Allir árangrar",
         connectNulls: false,
@@ -42,7 +42,7 @@ export default {
   // },
   computed: {
     strFormat() {
-      switch (this.event_info["Units"]) {
+      switch (this.event_info["UNIT"]) {
         case 3:
           return "{value:%M:%S}"; //%H:%M:%S.%L
           //return "{value}"
@@ -56,7 +56,7 @@ export default {
     },
     strFormatDataLabel() {
       // %M minutes, %S seconds, %L fractions
-      switch (this.event_info["Units"]) {
+      switch (this.event_info["UNIT"]) {
         case 3:
           return "{point.y:%M:%S.%L}";
           break;
@@ -81,6 +81,9 @@ export default {
             align: "left",
           },
         },
+        //chart: {
+        //  plotBackgroundImage: require('../../bg-1.png'),
+        //},
         title: {
           text: "",
         },
@@ -123,7 +126,7 @@ export default {
               //format: this.strFormatDataLabel,
               //format: '{point.y:%M:%S.%L}',
               formatter: function () {
-                switch (ctx.event_info["Units"]) {
+                switch (ctx.event_info["UNIT"]) {
                   case 3:
                     return moment.unix(this.y / 1000).format("mm:ss,SS");
                     break;

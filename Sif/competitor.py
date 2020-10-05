@@ -228,7 +228,7 @@ def Get_Competitor_Events_Info(CompetitorCode):
     # Þarf ekki því html taflan gerir þetta líka!!
     list_pb.sort(key=lambda dic: dic['count'], reverse=True)
 
-    print(list_pb)
+    #print(list_pb)
 
     return list_pb
 
@@ -279,7 +279,7 @@ def Get_Competitor_Event_DataFrame(CompetitorCode, Event_id, EventInfo):
 
         df.iloc[index, df.columns.get_loc('árangur_str')]
 
-    print(df['árangur_float'])
+    #print(df['árangur_float'])
     return df
 
 def Get_Competitor_Event(CompetitorCode, EventID):
@@ -289,11 +289,11 @@ def Get_Competitor_Event(CompetitorCode, EventID):
     # Sía út þá grein sem beðið er um
     df_event = df[df['EventName'] == event_info['NAME_THOR']]
 
-    print(df_event)
+    #print(df_event)
 
     # Finna besta árangur eftir ári. Löglegur og ólöglegur.
-    year_arr_all, results_year_max_all, results_year_min_all, _, _, tooltip_str_max, tooltip_str_min = filter_year_best(df, True, False, event_info['UNIT_SYMBOL'])
-    df_legal = df.loc[df['WindReading'] <= 2.0]
+    year_arr_all, results_year_max_all, results_year_min_all, _, _, tooltip_str_max, tooltip_str_min = filter_year_best(df_event, True, False, event_info['UNIT_SYMBOL'])
+    df_legal = df_event.loc[df['WindReading'] <= 2.0]
     year_arr_legal, results_year_max_legal, results_year_min_legal, _, _, tooltip_str_legal_max, tooltip_str_legal_min = filter_year_best(df_legal, True, False, event_info['UNIT_SYMBOL'])
 
     event_min_max_all = {'Years': year_arr_all,
@@ -313,7 +313,7 @@ def Get_Competitor_Event(CompetitorCode, EventID):
     #print(event_min_max_legal)
     #print('')
 
-    pb_dates, pb, pb_tooltip = filter_progression(df, event_info['MAX'], event_info['UNIT_SYMBOL'])
+    pb_dates, pb, pb_tooltip = filter_progression(df_event, event_info['MAX'], event_info['UNIT_SYMBOL'])
 
     event_progression = {'Dates': pb_dates,
                          'PBs': pb,
@@ -321,7 +321,7 @@ def Get_Competitor_Event(CompetitorCode, EventID):
                         }
 
     event_data = []
-    for index, row in df.iterrows():
+    for index, row in df_event.iterrows():
         wind_str = '{:+.1f}'.format(row['WindReading'])
 
         #if (row.rafmagnstímataka == 0 and event_info['MAX'] == False):

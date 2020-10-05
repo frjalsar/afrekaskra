@@ -40,7 +40,7 @@
               >- {{ competitor_info.Club }} ({{ competitor_info.YOB }})</font
             >
           </h3>
-          <h4 style="font-size: 1.75vw">{{ event_info.Name_ISL }}</h4>
+          <h4 style="font-size: 1.75vw">{{ event_info.NAME_SHORT }}</h4>
         </div>
       </div>
       <div class="d-flex flex-row">
@@ -351,11 +351,11 @@ export default {
           strPost = "";
         }
 
-        if (this.event_info["Units"] == 3) {
+        if (this.event_info["UNIT"] == 3) {
           my_data[i]["Results_text"] =
             moment.unix(my_data[i]["Results"]).format("mm:ss,SS") + strPost;
           //my_data[i]["Results"] = my_data[i]["Results"] * 10000; // Convert to ms for highcharts
-        } else if (this.event_info["Units"] == 4) {
+        } else if (this.event_info["UNIT"] == 4) {
           my_data[i]["Results_text"] =
             moment.unix(my_data[i]["Results"]).format("hh:mm:ss,SS") + strPost;
         } else {
@@ -372,7 +372,7 @@ export default {
       var dataLen = this.event_data.length;
       let factor = 1;
 
-      if (this.event_info["Units"] == 3 || this.event_info["Units"] == 4) {
+      if (this.event_info["UNIT"] == 3 || this.event_info["UNIT"] == 4) {
         factor = 1000; // Highcharts wants time axis data in ms
       }
 
@@ -390,7 +390,7 @@ export default {
       var dataLen = this.progression_dates.length;
       let factor = 1;
 
-      if (this.event_info["Units"] == 3 || this.event_info["Units"] == 4) {
+      if (this.event_info["UNIT"] == 3 || this.event_info["UNIT"] == 4) {
         factor = 1000; // Highcharts wants time axis data in ms
       }
 
@@ -411,11 +411,11 @@ export default {
       var dataLen = this.event_years_all.length;
       let factor = 1;
 
-      if (this.event_info["HasWind"] == false) {
+      if (this.event_info["HAS_WIND"] == false) {
         return [];
       }
 
-      if (this.event_info["Units"] == 3 || this.event_info["Units"] == 4) {
+      if (this.event_info["UNIT"] == 3 || this.event_info["UNIT"] == 4) {
         factor = 1000; // Highcharts wants time axis data in ms
       }
 
@@ -451,7 +451,7 @@ export default {
       var dataLen = this.event_years_legal.length;
       let factor = 1;
 
-      if (this.event_info["Units"] == 3 || this.event_info["Units"] == 4) {
+      if (this.event_info["UNIT"] == 3 || this.event_info["UNIT"] == 4) {
         factor = 1000; // Highcharts vill tíma ásinn í ms
       }
 

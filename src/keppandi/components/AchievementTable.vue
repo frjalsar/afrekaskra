@@ -7,10 +7,10 @@
         <tr>
           <th scope="col" @click="sort('Results')">
             <i class="fas fa-sort"></i>
-            &nbsp;Árangur [{{event_info.Units_symbol}}]
+            &nbsp;Árangur <small class="text-muted">{{event_info.UNIT_SYMBOL}}</small>
           </th>
           <th scope="col" @click="sort('Wind')" v-bind:class="{'d-none': !hasWind}">
-            <i class="fas fa-sort"></i>&nbsp;Vindur
+            <i class="fas fa-sort"></i>&nbsp;Vindur <small class="text-muted">m/s</small>
           </th>
           <th scope="col" @click="sort('Date')">
             <i class="fas fa-sort"></i>&nbsp;Dags.
@@ -55,7 +55,7 @@ export default {
     };
   },
   created() {
-    if (this.event_info['Minimize'] === true) {
+    if (this.event_info['MAX'] === false) {
       this.currentSortDir = "asc";
     } else {
       this.currentSortDir = "desc";
@@ -85,7 +85,7 @@ export default {
       });
     },
     hasWind: function () {
-      if (this.event_info["HasWind"] === 1) {
+      if (this.event_info["HAS_WIND"] === true) {
         return true;
       } else {
         return false;

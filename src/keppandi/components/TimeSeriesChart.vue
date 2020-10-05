@@ -53,7 +53,7 @@ export default {
       });
     },
     strFormat() {
-      switch (this.event_info["Units"]) {
+      switch (this.event_info["UNIT"]) {
         case 3:
           return "{value:%M:%S}"; //%H:%M:%S.%L
           //return "{value}"
@@ -134,7 +134,7 @@ export default {
           crosshairs: [false, false],
           shared: true,
           formatter: function () {
-            switch (ctx.event_info["Units"]) {
+            switch (ctx.event_info["UNIT"]) {
               case 3:
                 return moment.unix(this.y / 1000).format("mm:ss,SS");
                 break;
@@ -155,7 +155,7 @@ export default {
               enabled: true,
               //format: '{point.y:%M:%S.%L}',
               formatter: function () {
-                switch (ctx.event_info["Units"]) {
+                switch (ctx.event_info["UNIT"]) {
                   case 3:
                     return moment.unix(this.y / 1000).format("mm:ss,SS");
                     break;
