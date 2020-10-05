@@ -2,6 +2,7 @@
   <div>
     <div v-if="loading">
       <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
+      <!--<img src="../fri-loading.gif" alt="Hleð síðu" width=100%>-->
       <!--<p style="text-align:center">{{message}}</p>-->
     </div>
     <div v-if="!loading">

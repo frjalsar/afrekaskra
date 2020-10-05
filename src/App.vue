@@ -4,7 +4,7 @@
       <a href="/#/">
         <img
           alt="Frjálsíþróttasamband Íslands"
-          src="./fri-logo.png"
+          src="./FRI-logo-new.jpg"
           class="logo"
         >
       </a>

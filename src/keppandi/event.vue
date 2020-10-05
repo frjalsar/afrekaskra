@@ -7,6 +7,7 @@
         :size="size"
       ></pulse-loader>
       <p style="text-align: center">{{ message }}</p>
+      <img src="../fri-loading.gif" alt="Hleð síðu" width=100%>
     </div>
     <div v-if="isReady">
       <div class="d-flex flex-row">
