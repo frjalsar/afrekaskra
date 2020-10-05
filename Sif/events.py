@@ -19,12 +19,18 @@ def Get_Event_Info_by_Name(EventName):
     NameofEvent = EventName.replace(',', '.')
     try:
         event_info = event_dict[NameofEvent]
+        event_info['NAME_THOR'] = NameofEvent
         event_info['EVENT_ID'] = event_list.index(NameofEvent)
     except:
         print('VILLA: Fann ekki grein {}'.format(NameofEvent))
         event_info = event_dict['Óþekkt grein']
         event_info['NAME_SHORT'] = NameofEvent
     
+    return event_info
+
+def Get_Event_Info_by_ID_New(EventID):
+    EventName = event_list[EventID]
+    event_info = Get_Event_Info_by_Name(EventName)
     return event_info
 
 def Get_Event_Info_by_ThordID(ThorID_2, ThorID_1, AgeGroup=''):

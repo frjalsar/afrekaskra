@@ -281,3 +281,181 @@ def Get_Competitor_Event_DataFrame(CompetitorCode, Event_id, EventInfo):
 
     print(df['árangur_float'])
     return df
+
+def Get_Competitor_Event(CompetitorCode, EventID):
+    df = Get_Competitor_Achievements(CompetitorCode)
+    event_info = events.Get_Event_Info_by_ID_New(EventID)
+
+    # Sía út þá grein sem beðið er um
+    df_event = df[df['EventName'] == event_info['NAME_THOR']]
+
+    print(df_event)
+
+    # Finna besta árangur eftir ári. Löglegur og ólöglegur.
+    year_arr_all, results_year_max_all, results_year_min_all, _, _, tooltip_str_max, tooltip_str_min = filter_year_best(df, True, False, event_info['UNIT_SYMBOL'])
+    df_legal = df.loc[df['WindReading'] <= 2.0]
+    year_arr_legal, results_year_max_legal, results_year_min_legal, _, _, tooltip_str_legal_max, tooltip_str_legal_min = filter_year_best(df_legal, True, False, event_info['UNIT_SYMBOL'])
+
+    event_min_max_all = {'Years': year_arr_all,
+                         'Max': results_year_max_all,
+                         'Min': results_year_min_all,
+                         'Tooltip_max': tooltip_str_max,
+                         'Tooltip_min': tooltip_str_min
+                        }
+
+    event_min_max_legal = {'Years': year_arr_legal,
+                           'Max': results_year_max_legal,
+                           'Min': results_year_min_legal,
+                           'Tooltip_max': tooltip_str_legal_max,
+                           'Tooltip_min': tooltip_str_legal_min,
+                          }
+
+    #print(event_min_max_legal)
+    #print('')
+
+    pb_dates, pb, pb_tooltip = filter_progression(df, event_info['MAX'], event_info['UNIT_SYMBOL'])
+
+    event_progression = {'Dates': pb_dates,
+                         'PBs': pb,
+                         'Tooltip': pb_tooltip
+                        }
+
+    event_data = []
+    for index, row in df.iterrows():
+        wind_str = '{:+.1f}'.format(row['WindReading'])
+
+        #if (row.rafmagnstímataka == 0 and event_info['MAX'] == False):
+        #    result_str = '{:.1f}'.format(row.árangur_float)
+        #else:
+        if (event_info['UNIT'] == 5):
+            result_str = '{:.0f}'.format(row['Results_float'])
+        else:
+            result_str = '{:.2f}'.format(row['Results_float'])
+
+        if (row['OutdoorsOrIndoors'] == 'Úti'):
+            OutorInn = 0
+        else:
+            OutorInn = 1        
+
+        event_data.append({'Results': result_str,
+                           'Wind': wind_str,
+                           'Club': row['Club'],
+                           'OutIn': OutorInn,
+                           'competition_name': row['CompetitionName'],
+                           'competition_id': row['CompetitionCode'],
+                           'Age': row['Age'],
+                           'Date': row['AchievementDate'] #format_date(row['dagsetning'], "d MMM yyyy",locale='is_IS').upper(),
+                           #'ElectricTiming': row['rafmagnstímataka'],
+                           #'MissingWind': row['vantar_vind']
+                           })
+
+    return event_info, event_data, event_min_max_all, event_min_max_legal, event_progression
+
+    #-------------------------------------------------------------------------------
+def filter_year_best(df_event_data, event_max, event_time_axis, event_unit):
+    year_max = df_event_data['AchievementDate'].max().year
+    year_min = df_event_data['AchievementDate'].min().year
+
+    results_year_max = []
+    results_year_min = []
+    results_avg = []
+    results_std = []
+    year_arr = []
+    #org_str = []
+    more_str_max = []
+    more_str_min = []
+    #avg_str = []
+
+    if (df_event_data.empty == True):
+        return year_arr, results_year_max, results_year_min, results_avg, results_std
+
+    for i in range(year_min, year_max+1):
+        df_event_year = df_event_data.loc[df_event_data['AchievementDate'].dt.year == i]
+        if (df_event_year.empty == False):
+            mean_f = df_event_year['Results_float'].mean()
+            std_f = df_event_year['Results_float'].std()
+
+            if (event_time_axis == False):
+                results_avg.append( mean_f )
+                results_std.append( std_f )
+                #avg_str.append( '{.2f} ± {.2f}'.format(mean_f, std_f) + ' ' + event_unit )
+                #results_std.append( df_event_year['Árangur_float'].std() / np.sqrt(df_event_year['Árangur_float'].count()) ) # Standard error
+            else:
+                results_avg.append( float_to_datetime(mean_f) )
+                results_std.append( std_f )
+                #avg_str.append( float_to_datetime(mean_f) + event_unit + ' ± {.2f} s'.format(std_f) )
+                #results_std.append( df_event_year['Árangur_float'].std() / np.sqrt(df_event_year['Árangur_float'].count()) ) # Standard error
+
+            if (event_max == True):
+                idx_best = df_event_year['Results_float'].idxmax()
+                idx_worst = df_event_year['Results_float'].idxmin()
+                #org_str.append(df_event_year['Árangur'][idx_best])
+                results_year_max.append(df_event_year['Results_float'][idx_best])
+                results_year_min.append(df_event_year['Results_float'][idx_worst])
+            else:
+                idx_best = df_event_year['Results_float'].idxmin()
+                idx_worst = df_event_year['Result_float'].idxmax()
+                #org_str.append(df_event_year['Árangur'][idx_best])
+
+                if (event_time_axis == True):
+                    results_year_max.append(df_event_year['Árangur_dt'][idx_best])
+                    results_year_min.append(df_event_year['Árangur_dt'][idx_worst])
+                else:
+                    results_year_max.append(df_event_year['Results_float'][idx_best])
+                    results_year_min.append(df_event_year['Results_float'][idx_worst])
+
+            wind_str = '{:+.1f}'.format(df_event_year['WindReading'][idx_best])
+            more_str_max.append(df_event_year['Results'][idx_best] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + df_event_year['CompetitionName'][idx_best] + '<br>' + df_event_year['AchievementDate'][idx_best].strftime("%d-%m-%Y"))
+            more_str_min.append(df_event_year['Results'][idx_worst] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + df_event_year['CompetitionName'][idx_worst] + '<br>' + df_event_year['AchievementDate'][idx_worst].strftime("%d-%m-%Y"))
+        else:
+            # Við fáum villu ef við reynum að taka min/max og enginn árangur er til fyrir árið
+            results_year_max.append(None)
+            results_year_min.append(None)
+            results_std.append(None)
+            results_avg.append(None)
+            #org_str.append('')
+            more_str_max.append('')
+            more_str_min.append('')
+
+        year_arr.append(i)
+
+    return year_arr, results_year_max, results_year_min, results_avg, results_std, more_str_max, more_str_min
+
+def filter_progression(df_event, event_max, event_unit):
+    # Tökum út vind árangur
+    df_event_nowind = df_event.loc[df_event['WindReading'] <= 2.0]
+
+    # Röðum eftir dags. og árangri
+    df_sorted = df_event_nowind.sort_values(by=['AchievementDate', 'Results_float'], ascending=[True, True], inplace=False)
+    df_sorted.reset_index(drop=True, inplace=True)
+
+    # Athugum hvort það sé til löglegur árangur.
+    # Ef ekki notum þá vind árangur.
+    if (df_sorted.empty == True):
+        df_sorted = df_event.sort_values(by=['AchievementDate', 'Results_float'], ascending=[True, True], inplace=False)
+
+    # Finnum fyrsta afrekið
+    last_row = df_sorted.iloc[0]
+
+    pb = [last_row['Results_float']]
+    pb_dates = [last_row['AchievementDate']]
+    wind_str = '{:+.1f}'.format(last_row['WindReading'])
+    text_place = [last_row['Results'] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + last_row['CompetitionName'] + '<br>' + last_row['AchievementDate'].strftime("%d-%m-%Y")]
+
+    for idx, row in df_sorted.iterrows():
+        if (event_max == True):
+            if ( (row['Results_float'] >= last_row['Results_float']) and (row['AchievementDate'] > last_row['AchievementDate']) ):
+                last_row = row
+                pb.append(row['Results_float'])
+                pb_dates.append(row['AchievementDate'])
+                wind_str = '{:+.1f}'.format(row['WindReading'])
+                text_place.append(row['Results'] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + row['CompetitionName'] + '<br>' + row['AchievementDate'].strftime("%d-%m-%Y"))
+        else:
+            if ( (row['Results_float'] <= last_row['Results_float']) and (row['AchievementDate'] > last_row['AchievementDate']) ):
+                last_row = row
+                pb.append(row['Results_float'])
+                pb_dates.append(row['AchievementDate'])
+                wind_str = '{:+.1f}'.format(row['WindReading'])
+                text_place.append(row['Results'] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + row['CompetitionName'] + '<br>' + row['AchievementDate'].strftime("%d-%m-%Y"))
+
+    return pb_dates, pb, text_place

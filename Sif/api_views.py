@@ -40,8 +40,8 @@ def competitor_event_all(request, CompetitorCode, Event_id):
 
 @cache_page(60 * 15)
 def competitor_event(request, CompetitorCode=None, Event_id=None):
-    Competitor_info = data.Get_Competitor_Info(CompetitorCode)
-    Event_info, Event_data, Event_min_max_all, Event_min_max_legal, Event_progession  = data.Get_Competitor_Event(CompetitorCode, Event_id)
+    Competitor_info = competitor.Get_Competitor_Info(CompetitorCode)
+    Event_info, Event_data, Event_min_max_all, Event_min_max_legal, Event_progession  = competitor.Get_Competitor_Event(CompetitorCode, Event_id)
     #print(Event_min_max['Min'])
     return JsonResponse({'Competitor': Competitor_info,
                          'EventInfo': Event_info,
