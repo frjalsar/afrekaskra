@@ -100,9 +100,9 @@ def competitor_img_profile(request, CompetitorCode):
         with open(filename_profile, "rb") as f:
             return HttpResponse(f.read(), content_type="image/jpeg")
     except IOError:
-        filename_profile = './images/profile_default.png'
+        filename_profile = './images/profile_default.jpg'
         with open(filename_profile, "rb") as f:
-            return HttpResponse(f.read(), content_type="image/png")
+            return HttpResponse(f.read(), content_type="image/jpeg")
 
     raise Http404() # Ættum ekki að koma hingað
 

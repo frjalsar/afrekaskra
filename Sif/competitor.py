@@ -56,7 +56,7 @@ def Get_Competitor_Events_Info(CompetitorCode):
     list_events = df.copy() # copy til að búa til afrit
     list_events.drop_duplicates(subset=['EventName'], inplace=True) # Henda út endurtekningum
     list_events.reset_index(drop=True, inplace=True) # Endur númera index
-    print(list_events)
+    #print(list_events)
 
     list_pb = []
     list_sb = []
