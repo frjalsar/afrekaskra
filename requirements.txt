@@ -13,7 +13,7 @@ pyodbc==4.0.30
 python-dateutil==2.8.1
 pytz==2020.1
 six==1.15.0
-sqlparse==0.4.0
+sqlparse==0.4.1
 style==1.1.6
 update==0.0.1
 whitenoise==5.2.0
