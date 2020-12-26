@@ -11,7 +11,7 @@ Pillow==8.0.1
 psycopg2==2.8.6
 pyodbc==4.0.30
 python-dateutil==2.8.1
-pytz==2020.4
+pytz==2020.5
 six==1.15.0
 sqlparse==0.4.1
 style==1.1.6
