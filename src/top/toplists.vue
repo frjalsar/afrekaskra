@@ -395,9 +395,9 @@ export default {
       ],
       events_throw: [
         {id: 152, type: 2, name: 'Kringlukast (2,0 kg)'},
+        {id: 159, type: 2, name: 'Kringlukast (1,75kg)'},
         {id: 153, type: 2, name: 'Kringlukast (1,5 kg)'},
         {id: 154, type: 2, name: 'Kringlukast (1,0 kg)'},
-        {id: 159, type: 2, name: 'Kringlukast (1,75kg)'},
         {id: 162, type: 2, name: 'Kúluvarp (7,26 kg)'},
         {id: 165, type: 2, name: 'Kúluvarp (6,0 kg)'},
         {id: 166, type: 2, name: 'Kúluvarp (5,0 kg)'},
