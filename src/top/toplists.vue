@@ -371,7 +371,7 @@ export default {
       isLegalActive: true,
       isISLActive: true,
 
-      event_id: 154, // Event_id
+      event_id: 179, // Event_id
       event_type: 1, //Jumps = 1, Throws = 2, Sprint = 3, Hurdles = 4, Middle = 5, Long = 6, -athlon = 7
       outin: 2, // Outdoor = 0, Indoor = 1
       gender: 2, // Women = 2, Men = 1
@@ -385,79 +385,79 @@ export default {
       bestbyath: 1,
 
       events_jump: [
-        { id: 124, type: 1, name: "Hástökk" },
-        { id: 125, type: 1, name: "Hástökk án atr." },
-        { id: 154, type: 1, name: "Langstökk" },
-        { id: 155, type: 1, name: "Langstökk án atr." },
-        { id: 204, type: 1, name: "Þrístökk" },
-        { id: 205, type: 1, name: "Þrístökk án atr."},
-        { id: 197, type: 1, name: "Stangarstökk" },
+        {id: 143, type: 1, name: 'Hástökk'},
+        {id: 144, type: 1, name: 'Hástökk án atrennu'},
+        {id: 179, type: 1, name: 'Langstökk'},
+        {id: 180, type: 1, name: 'Langstökk án atrennu'},
+        {id: 239, type: 1, name: 'Stangarstökk'},
+        {id: 252, type: 1, name: 'Þrístökk'},
+        {id: 253, type: 1, name: 'Þrístökk án atrennu'}
       ],
       events_throw: [
-        { id: 129, type: 2, name: "Kringlukast (2,0 kg)" },
-        { id: 130, type: 2, name: "Kringlukast (1,5 kg)" },
-        { id: 131, type: 2, name: "Kringlukast (1,0 kg)" },
-        { id: 135, type: 2, name: "Kringlukast (1,75kg)" },
-        { id: 138, type: 2, name: "Kúluvarp (7,26 kg)" },
-        { id: 139, type: 2, name: "Kúluvarp (6,00 kg)" },
-        { id: 140, type: 2, name: "Kúluvarp (5,0 kg)" },
-        { id: 142, type: 2, name: "Kúluvarp (4,0 kg)" },
-        { id: 144, type: 2, name: "Kúluvarp (3,0 kg)" },
-        { id: 143, type: 2, name: "Kúluvarp (2,0 kg)" },
-        { id: 176, type: 2, name: "Sleggjukast (7,26 kg)" },
-        { id: 183, type: 2, name: "Sleggjukast (6,0 kg)" },
-        { id: 181, type: 2, name: "Sleggjukast (5,0 kg)" },
-        { id: 177, type: 2, name: "Sleggjukast (4,0 kg)" },
-        { id: 179, type: 2, name: "Sleggjukast (3,0 kg)" },
-        { id: 178, type: 2, name: "Sleggjukast (2,0 kg)" },
-        { id: 187, type: 2, name: "Spjótkast (800 gr)" },
-        { id: 189, type: 2, name: "Spjótkast (600 gr)" },
-        { id: 191, type: 2, name: "Spjótkast (500 gr)" },
-        { id: 190, type: 2, name: "Spjótkast (400 gr)" }
+        {id: 152, type: 2, name: 'Kringlukast (2,0 kg)'},
+        {id: 153, type: 2, name: 'Kringlukast (1,5 kg)'},
+        {id: 154, type: 2, name: 'Kringlukast (1,0 kg)'},
+        {id: 159, type: 2, name: 'Kringlukast (1,75kg)'},
+        {id: 162, type: 2, name: 'Kúluvarp (7,26 kg)'},
+        {id: 165, type: 2, name: 'Kúluvarp (6,0 kg)'},
+        {id: 166, type: 2, name: 'Kúluvarp (5,0 kg)'},
+        {id: 168, type: 2, name: 'Kúluvarp (4,0 kg)'},
+        {id: 167, type: 2, name: 'Kúluvarp (3,0 kg)'},
+        {id: 163, type: 2, name: 'Kúluvarp (2,0 kg)'},
+        {id: 212, type: 2, name: 'Sleggjukast (7,26 kg)'},
+        {id: 214, type: 2, name: 'Sleggjukast (6,0 kg)'},
+        {id: 220, type: 2, name: 'Sleggjukast (5,0 kg)'},
+        {id: 216, type: 2, name: 'Sleggjukast (4,0 kg)'},
+        {id: 217, type: 2, name: 'Sleggjukast (3,0 kg)'},
+        {id: 213, type: 2, name: 'Sleggjukast (2,0 kg)'},
+        {id: 226, type: 2, name: 'Spjótkast (800 gr)'},
+        {id: 227, type: 2, name: 'Spjótkast (600 gr)'},
+        {id: 228, type: 2, name: 'Spjótkast (500 gr)'},
+        {id: 230, type: 2, name: 'Spjótkast (400 gr)'}
       ],
       events_sprint: [
-        { id: 74, type: 3, name: "60 m" },
-        { id: 6, type: 3, name: "100 m" },
-        { id: 25, type: 3, name: "200 m" },
-        { id: 31, type: 3, name: "300 m" },
-        { id: 44, type: 3, name: "400 m" },
-        { id: 50, type: 3, name: "4x100 m boðhlaup" },
-        { id: 52, type: 3, name: "4x200 m boðhlaup" },
-        { id: 54, type: 3, name: "4x400 m boðhlaup" },
-        { id: 5, type: 3, name: "1000 m boðhlaup" }
+        {id: 82, type: 3, name: '60 metra hlaup'}
+        {id: 6, type: 3, name: '100 metra hlaup'},
+        {id: 27, type: 3, name: '200 metra hlaup'},
+        {id: 33, type: 3, name: '300 metra hlaup'},
+        {id: 48, type: 3, name: '400 metra hlaup'},
+        {id: 55, type: 3, name: '4x100 metra boðhlaup'},
+        {id: 57, type: 3, name: '4x200 metra boðhlaup'},
+        {id: 59, type: 3, name: '4x400 metra boðhlaup'},
+        {id: 5, type: 3, name: '1000 metra boðhlaup'},
       ],
       events_hurdle: [
-        { id: 11, type: 4, name: "100 m gr. (91,4 cm)" },
-        { id: 7, type: 4, name: "100 m gr. (84 cm)" },
-        { id: 8, type: 4, name: "100 m gr. (76,2 cm)" },
-        { id: 15, type: 4, name: "110 m gr. (106,7 cm)" },
-        { id: 17, type: 4, name: "110 m gr. (99,1 cm)" },
-        { id: 16, type: 4, name: "110 m gr. (91,4 cm)" },
-        { id: 45, type: 4, name: "400 m gr. (91,4 cm)" },
-        { id: 46, type: 4, name: "400 m gr. (84 cm)" },
-        { id: 47, type: 4, name: "400 m gr. (76,2 cm)" },
-        { id: 75, type: 4, name: "60 m gr. (106,7 cm)" },
-        { id: 78, type: 4, name: "60 m gr. (99,1 cm)" },
-        { id: 77, type: 4, name: "60 m gr. (91,4 cm)" },
-        { id: 82, type: 4, name: "60 m gr. (84,0 cm)" },
-        { id: 80, type: 4, name: "60 m gr. (76,2 cm)" }
+        {id: 11, type: 4, name: '100 metra gr. (91,4 cm)'},
+        {id: 7, type: 4, name: '100 metra gr. (84 cm)'},
+        {id: 8, type: 4, name: '100 metra gr. (76,2 cm)'},
+        {id: 15, type: 4, name: '110 metra gr. (106,7 cm)'},
+        {id: 16, type: 4, name: '110 metra gr. (99,1 cm)'},
+        {id: 17, type: 4, name: '110 metra gr. (91,4 cm)'},
+        {id: 49, type: 4, name: '400 metra gr. (91,4 cm)'},
+        {id: 50, type: 4, name: '400 metra gr. (84 cm)'},
+        {id: 52, type: 4, name: '400 metra gr. (76,2 cm)'},
+        {id: 83, type: 4, name: '60 metra grind (106,7cm)'},
+        {id: 91, type: 4, name: '60 metra grind (99,1 cm)'},
+        {id: 85, type: 4, name: '60 metra grind (91,4cm)'},
+        {id: 86, type: 4, name: '60 metra grind (84,0 cm)'},
+        {id: 89, type: 4, name: '60 metra grind (76,2 cm)'}
       ],
       events_middle: [
-        { id: 73, type: 5, name: "600 m" },
-        { id: 86, type: 5, name: "800 m" },
-        { id: 18, type: 5, name: "1500 m" },
-        { id: 28, type: 5, name: "3000 m" },
-        { id: 30, type: 5, name: "3000 m hindrun" }
+        {id: 81, type: 5, name: '600 metra hlaup'},
+        {id: 97, type: 5, name: '800 metra hlaup'},
+        {id: 19, type: 5, name: '1500 metra hlaup'},
+        {id: 30, type: 5, name: '3000 metra hlaup'},
+        {id: 32, type: 5, name: '3000 metra hindrun'},
       ],
       events_long: [
-        { id: 57, type: 6, name: "5000 metra hlaup" },
-        { id: 3, type: 6, name: "10.000 metra hlaup" },
-        { id: 13, type: 6, name: "10 km götuhlaup" },
-        { id: 12, type: 6, name: "10 km götuhlaup (flögutímar)" },
-        { id: 122, type: 6, name: "Hálft maraþon" },
-        { id: 123, type: 6, name: "Hálft maraþon (flögutímar)" },
-        { id: 166, type: 6, name: "Maraþon" },
-        { id: 167, type: 6, name: "Maraþon (flögutímar)" }
+        {id: 62, type: 6, name: '5000 metra hlaup'},
+        {id: 3, type: 6, name: '10.000 metra hlaup'},
+        {id: 13, type: 6, name: '10 km götuhlaup'},
+        {id: 12, type: 6, name: '10 km götuhlaup (flögutímar)'},
+        {id: 141, type: 6, name: 'Hálft maraþon'},
+        {id: 142, type: 6, name: 'Hálft maraþon (flögutímar)'},
+        {id: 194, type: 6, name: 'Maraþon'},
+        {id: 195, type: 6, name: 'Maraþon (flögutímar)'},
       ],
       events_athlon: [
         { id: 1001, type: 7, name: "Fimmtarþraut" },
@@ -536,8 +536,10 @@ export default {
     inoutText: function() {
       if (this.outin == 1) {
         return "innanhús"
-      } else {
+      } else if (this.outin == 0) {
         return "utanhús"
+      } else {
+        return "innan og utanhús"
       }
     },
     eventText: function() {

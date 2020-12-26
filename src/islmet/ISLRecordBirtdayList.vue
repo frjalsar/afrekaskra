@@ -24,7 +24,7 @@
       </thead>
       <tbody>
         <tr v-for="(i, index) in RecordData">
-          <th scope="row">{{ i.Event }} <small class="text-muted">{{i.Units_symbol }}</small></th>
+          <th scope="row">{{ i.Event }}</th>
           <td>
             <router-link
               :to="{
@@ -35,7 +35,7 @@
               <a>{{ i.Name }}</a>
             </router-link>
           </td>
-          <td>{{ i.Results_text }}</td>
+          <td>{{ i.Results_text }} <small class="text-muted">{{i.Units_symbol }}</small></td>
           <td class="d-none d-lg-table-cell">{{ i.Wind }}</td>
           <td class="d-none d-md-table-cell">{{ inout_text(i.Inout) }}</td>
           <td>{{ i.Date }}</td>

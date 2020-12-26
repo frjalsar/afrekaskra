@@ -604,6 +604,7 @@ def Get_Competitor_Data(CompetitorCode):
     return None
 
 def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal, ISL, BestByAth):
+    print('Hi Top List')
     if (Event_id > 1000): # Ef Event_id ef yfir 1000 þá er þetta þrautagrein. Þurfum að meðhöndla þær sérstaklega.
         Athlon_events = {1001: 'FIMMTARÞR',  # Fimmtarþraut
                          1002: 'FIMMTUNG',   # Fimmtarþr. unglingastig
@@ -633,10 +634,13 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
 
     else:
         Event_Info = events.Get_Event_Info_by_ID(Event_id)
+        #Event_Info = event.Get_Event_Info_by_ID_New(Event_id)
         flokkur = Event_Info['AgeGroup']
         if (flokkur == '-1'):
             flokkur = ''
         q = AthlAfrek.objects.all().filter(grein__iexact=Event_Info['THORID_2'], flokkur__iexact=flokkur)
+
+    print(Event_Info)
 
     #--
     if (Event_Info['Minimize'] == True):
