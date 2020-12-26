@@ -47,6 +47,9 @@ def Get_Competitor_Achievements(CompetitorCode):
 
     # Breytum öllum árangri yfir í rauntölur
     df['Results_float'] = df['Results'].map(common.results_to_float)
+
+    # Breyta kommu í punkt
+    df['EventName'] = df.EventName.str.replace(',', '.')
     return df
 
 def Get_Competitor_Events_Info(CompetitorCode):
@@ -289,8 +292,6 @@ def Get_Competitor_Event(CompetitorCode, EventID):
     # Sía út þá grein sem beðið er um
     df_event = df[df['EventName'] == event_info['NAME_THOR']]
 
-    #print(df_event)
-
     # Finna besta árangur eftir ári. Löglegur og ólöglegur.
     year_arr_all, results_year_max_all, results_year_min_all, _, _, tooltip_str_max, tooltip_str_min = filter_year_best(df_event, True, False, event_info['UNIT_SYMBOL'])
     df_legal = df_event.loc[df['WindReading'] <= 2.0]
@@ -367,7 +368,7 @@ def filter_year_best(df_event_data, event_max, event_time_axis, event_unit):
     #avg_str = []
 
     if (df_event_data.empty == True):
-        return year_arr, results_year_max, results_year_min, results_avg, results_std
+        return year_arr, results_year_max, results_year_min, results_avg, results_std, more_str_max, more_str_min
 
     for i in range(year_min, year_max+1):
         df_event_year = df_event_data.loc[df_event_data['AchievementDate'].dt.year == i]
@@ -435,7 +436,13 @@ def filter_progression(df_event, event_max, event_unit):
         df_sorted = df_event.sort_values(by=['AchievementDate', 'Results_float'], ascending=[True, True], inplace=False)
 
     # Finnum fyrsta afrekið
-    last_row = df_sorted.iloc[0]
+    try:
+        last_row = df_sorted.iloc[0]
+    except:
+        pb_dates = []
+        pb = []
+        text_place = []
+        return pb_dates, pb, text_place
 
     pb = [last_row['Results_float']]
     pb_dates = [last_row['AchievementDate']]
