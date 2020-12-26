@@ -416,7 +416,7 @@ export default {
         {id: 230, type: 2, name: 'Spjótkast (400 gr)'}
       ],
       events_sprint: [
-        {id: 82, type: 3, name: '60 metra hlaup'}
+        {id: 82, type: 3, name: '60 metra hlaup'},
         {id: 6, type: 3, name: '100 metra hlaup'},
         {id: 27, type: 3, name: '200 metra hlaup'},
         {id: 33, type: 3, name: '300 metra hlaup'},
