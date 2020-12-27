@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="card mt-4">
+    <div class="card bg-light mt-4">
       <div class="card-body">
-        <h5 class="card-title">Velkominn til Sifjar</h5>
+        <h4 class="card-title">Velkominn til Sifjar</h4>
         <p>
           Sif heldur utan um afrekaskrá
           <a href="http://www.fri.is"><abbr title="Frjálsíþróttasambands Íslands">FRÍ</abbr></a> og
@@ -16,8 +16,8 @@
       </div>
     </div>
     <!---->
-    <div class="card mt-4">
-      <div class="card-header">Finna íþróttamann</div>
+    <div class="card bg-light mt-4">
+      <h4 class="card-header">Finna íþróttamann</h4>
       <div class="card-body">
         <p class="card-text">
           Byrjaðu að slá inn nafn íþróttamanns og Sif hjálpar þér að finna hana
@@ -38,8 +38,8 @@
       </div>
     </div>-->
     <!---->
-    <div class="card mt-4">
-      <div class="card-header">Íslandsmet</div>
+    <div class="card bg-light mt-4">
+      <h4 class="card-header">Íslandsmet</h4>
       <div class="card-body">
         <!--<p class="card-text">
           Todo: Listi yfir Íslandsmet sem voru nýlega sett?
@@ -50,8 +50,8 @@
       </div>
     </div>
     <!---->
-    <div class="card mt-4">
-      <div class="card-header">Fyrirspurn</div>
+    <div class="card bg-light mt-4">
+      <h4 class="card-header">Fyrirspurn</h4>
       <div class="card-body">
         <p class="card-text">
           Ertu með flóknari fyrirspurn. Prófaðu að spyrja Þór með því að smella

@@ -29,25 +29,25 @@
           <col span="1" class="wide" />
           <thead>
             <tr>
-              <th scope="col" @click="sort('Event')">
+              <th scope="col" @click="sort_active('Event')">
                 <i class="fas fa-sort"></i>&nbsp;Grein
               </th>
-              <th scope="col" @click="sort('Results')">
+              <th scope="col" @click="sort_active('Results')">
                 <i class="fas fa-sort"></i>&nbsp;Árangur
               </th>
-              <th scope="col" @click="sort('Wind')">
+              <th scope="col" @click="sort_active('Wind')">
                 <i class="fas fa-sort"></i>&nbsp;Vindur
               </th>
-              <th scope="col" @click="sort('inout')">
+              <th scope="col" @click="sort_active('Inout')">
                 <i class="fas fa-sort"></i>&nbsp;Úti/Inni
               </th>
-              <th scope="col" @click="sort('Date')">
+              <th scope="col" @click="sort_active('Date')">
                 <i class="fas fa-sort"></i>&nbsp;Dags.
               </th>
-              <th scope="col" @click="sort('Age')">
+              <th scope="col" @click="sort_active('Age')">
                 <i class="fas fa-sort"></i>&nbsp;Aldur
               </th>
-              <th scope="col" @click="sort('AgeGroup')">
+              <th scope="col" @click="sort_active('AgeGroup')">
                 <i class="fas fa-sort"></i>&nbsp;Aldursfl.
               </th>
             </tr>
@@ -88,25 +88,25 @@
           <col span="1" class="wide" />
           <thead>
             <tr>
-              <th scope="col" @click="sort('Event')">
+              <th scope="col" @click="sort_unactive('Event')">
                 <i class="fas fa-sort"></i>&nbsp;Grein
               </th>
-              <th scope="col" @click="sort('Results')">
+              <th scope="col" @click="sort_unactive('Results')">
                 <i class="fas fa-sort"></i>&nbsp;Árangur
               </th>
-              <th scope="col" @click="sort('Wind')">
+              <th scope="col" @click="sort_unactive('Wind')">
                 <i class="fas fa-sort"></i>&nbsp;Vindur
               </th>
-              <th scope="col" @click="sort('inout')">
+              <th scope="col" @click="sort_unactive('Inout')">
                 <i class="fas fa-sort"></i>&nbsp;Úti/Inni
               </th>
-              <th scope="col" @click="sort('Date')">
+              <th scope="col" @click="sort_unactive('Date')">
                 <i class="fas fa-sort"></i>&nbsp;Dags.
               </th>
-              <th scope="col" @click="sort('Age')">
+              <th scope="col" @click="sort_unactive('Age')">
                 <i class="fas fa-sort"></i>&nbsp;Aldur
               </th>
-              <th scope="col" @click="sort('AgeGroup')">
+              <th scope="col" @click="sort_unactive('AgeGroup')">
                 <i class="fas fa-sort"></i>&nbsp;Aldursfl.
               </th>
             </tr>
@@ -155,8 +155,10 @@ export default {
       margin: "2px",
       radius: "100%",
 
-      currentSort: "Age",
-      currentSortDir: "desc",
+      currentSortUnActive: "Age",
+      currentSortDirUnActive: "desc",
+      currentSortActive: "Age",
+      currentSortDirActive: "desc",
       showAllActiveRecords: false,
       showAllunActiveRecords: false,
       record_data: [],
@@ -240,20 +242,20 @@ export default {
       //console.log("Sorting data");
       return this.unactiveRecords.sort((a, b) => {
         let modifier = 1;
-        if (this.currentSortDir === "desc") modifier = -1;
+        if (this.currentSortDirUnActive === "desc") modifier = -1;
 
         if (
-          this.currentSort == "Results" ||
-          this.currentSort == "Wind" ||
-          this.currentSort == "Age"
+          this.currentSortUnActive == "Results" ||
+          this.currentSortUnActive == "Wind" ||
+          this.currentSortUnActive == "Age"
         ) {
-          if (parseFloat(a[this.currentSort]) < parseFloat(b[this.currentSort]))
+          if (parseFloat(a[this.currentSortUnActive]) < parseFloat(b[this.currentSortUnActive]))
             return -1 * modifier;
-          if (parseFloat(a[this.currentSort]) > parseFloat(b[this.currentSort]))
+          if (parseFloat(a[this.currentSortUnActive]) > parseFloat(b[this.currentSortUnActive]))
             return 1 * modifier;
         } else {
-          if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-          if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+          if (a[this.currentSortUnActive] < b[this.currentSortUnActive]) return -1 * modifier;
+          if (a[this.currentSortUnActive] > b[this.currentSortUnActive]) return 1 * modifier;
         }
 
         return 0;
@@ -263,20 +265,20 @@ export default {
       //console.log("Sorting data");
       return this.activeRecords.sort((a, b) => {
         let modifier = 1;
-        if (this.currentSortDir === "desc") modifier = -1;
+        if (this.currentSortDirActive === "desc") modifier = -1;
 
         if (
-          this.currentSort == "Results" ||
-          this.currentSort == "Wind" ||
-          this.currentSort == "Age"
+          this.currentSortActive == "Results" ||
+          this.currentSortActive == "Wind" ||
+          this.currentSortActive == "Age"
         ) {
-          if (parseFloat(a[this.currentSort]) < parseFloat(b[this.currentSort]))
+          if (parseFloat(a[this.currentSortActive]) < parseFloat(b[this.currentSortActive]))
             return -1 * modifier;
-          if (parseFloat(a[this.currentSort]) > parseFloat(b[this.currentSort]))
+          if (parseFloat(a[this.currentSortActive]) > parseFloat(b[this.currentSortActive]))
             return 1 * modifier;
         } else {
-          if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-          if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+          if (a[this.currentSortActive] < b[this.currentSortActive]) return -1 * modifier;
+          if (a[this.currentSortActive] > b[this.currentSortActive]) return 1 * modifier;
         }
 
         return 0;
@@ -323,12 +325,23 @@ export default {
     toggle_unActiveRecords: function (event) {
       this.showAllunActiveRecords = !this.showAllunActiveRecords;
     },
-    sort: function (s) {
+    sort_active: function (s) {
       //if s == current sort, reverse
-      if (s === this.currentSort) {
-        this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
+      if (s === this.currentSortActive) {
+        this.currentSortDirActive = this.currentSortDirActive === "asc" ? "desc" : "asc";
       }
-      this.currentSort = s;
+      this.currentSortActive = s;
+
+      //console.log("Sort");
+      //console.log(this.currentSort);
+      //console.log(this.currentSortDir);
+    },
+    sort_unactive: function (s) {
+      //if s == current sort, reverse
+      if (s === this.currentSortUnActive) {
+        this.currentSortDirUnActive = this.currentSortDirUnActive === "asc" ? "desc" : "asc";
+      }
+      this.currentSortUnActive = s;
 
       //console.log("Sort");
       //console.log(this.currentSort);
