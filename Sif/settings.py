@@ -118,7 +118,6 @@ else:
     }
 
 # Logging
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -212,5 +211,5 @@ STATICFILES_DIRS = (
 #STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Activate Django-Heroku. We have our own database settings and we set the private key ourselves.
-django_heroku.settings(locals(), databases=False, secret_key=False)
+django_heroku.settings(locals(), databases=False, secret_key=False, logging=False)
 
