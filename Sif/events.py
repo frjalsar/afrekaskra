@@ -25,6 +25,7 @@ def Get_Event_Info_by_Name(EventName):
         print('VILLA: Fann ekki grein {}'.format(NameofEvent))
         event_info = event_dict['Óþekkt grein']
         event_info['NAME_SHORT'] = NameofEvent
+        event_info['EVENT_ID'] = 1
     
     return event_info
 

@@ -75,7 +75,7 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import PieChart from "../keppandi/components/PieChart.vue";
 import PBTable from "../keppandi/components/PBTable.vue";
 import RecordsTable from "../keppandi/components/RecordsTable.vue";
-import KeppandiList from "./list.vue";
+import KeppandiSearch from "./components/Search.vue";
 
 export default {
   name: "KeppandiSingle",
@@ -84,7 +84,7 @@ export default {
     pbtable: PBTable,
     recordstable: RecordsTable,
     PulseLoader,
-    KeppandiList,
+    KeppandiSearch,
   },
   data() {
     return {

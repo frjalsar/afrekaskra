@@ -64,11 +64,11 @@ def Get_Competitor_Events_Info(CompetitorCode):
     list_pb = []
     list_sb = []
     for index, row in list_events.iterrows():
-        #try:
-        event_info = events.Get_Event_Info_by_Name(row['EventName'])
-        #except:
-        #    print('Hello')
-        #    continue
+        try:
+            event_info = events.Get_Event_Info_by_Name(row['EventName'])
+        except:
+            print('Hello')
+            continue
 
         # Flokka út Grein
         df_event = df.loc[df['EventName'] == row['EventName']].copy() # Búum til copy til að breyta

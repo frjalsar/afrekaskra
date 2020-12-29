@@ -23,7 +23,7 @@
           Byrjaðu að slá inn nafn íþróttamanns og Sif hjálpar þér að finna hana
           eða hann.
         </p>
-        <KeppandiList />
+        <KeppandiSearch />
       </div>
     </div>
     <!---->
@@ -65,12 +65,12 @@
 </template>
 
 <script>
-import KeppandiList from "./keppandi/list.vue";
+import KeppandiSearch from "./keppandi/components/Search.vue";
 import ISLRecordBirtdayList from "./islmet/ISLRecordBirtdayList.vue";
 
 export default {
   components: {
-    KeppandiList,
+    KeppandiSearch,
     ISLRecordBirtdayList,
   },
   mounted() {

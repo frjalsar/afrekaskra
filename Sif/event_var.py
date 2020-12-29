@@ -186,6 +186,7 @@ u'Spjótkast (500 gr)',
 u'Spjótkast (600 gr)',
 u'Spjótkast (600 gr) fyrir 1997',
 u'Spjótkast (700gr)',
+u'Spjótkast (700 gr)',
 u'Spjótkast (800 gr)',
 u'Spjótkast (Fyrir 1986)',
 u'Spjótkast (Fyrir 1998)',
@@ -1884,6 +1885,15 @@ u'Spjótkast (600 gr) fyrir 1997':
 'HAS_WIND': False,
 'NAME_SHORT': 'Spjótkast (600 g) f. 1997',
 'NAME_ENG': 'Javelin (600 g) f. 1997'
+},
+#
+u'Spjótkast (700 gr)':
+{'UNIT': 1,
+'UNIT_SYMBOL': 'm',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Spjótkast (700 g)',
+'NAME_ENG': 'Javelin (700 g)'
 },
 #
 u'Spjótkast (700gr)':
