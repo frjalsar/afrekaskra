@@ -34,7 +34,15 @@
         </thead>
         <tbody>
           <tr v-for="(i, index) in club_history">
-            <th scope="row">{{ i.club }}</th>
+            <th scope="row">
+              <img
+                class="img-club"
+                v-bind:src="'/api/img/club/' + i.club"
+                @error="ClubLogoError"
+                v-if="showClubLogo"
+              />&nbsp;&nbsp;
+              {{ i.club }}
+            </th>
             <td>{{ i.from | formatDate }}</td>
             <td>{{ i.to | formatDate }}</td>
           </tr>
@@ -62,9 +70,16 @@ export default {
       margin: "2px",
       radius: "100%",
       loading: false,
+      showClubLogo: true,
 
       history: [],
     };
+  },
+  methods: {
+    ClubLogoError: function () {
+      // Fela Club logo ef við fáum villu á það.
+      this.showClubLogo = false;
+    },
   },
 };
 </script>
@@ -73,5 +88,9 @@ export default {
 /* center spinner */
 .v-spinner {
   text-align: center;
+}
+
+.img-club {
+  height: 25px;
 }
 </style>
