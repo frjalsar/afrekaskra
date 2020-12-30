@@ -63,6 +63,7 @@
           ref="pbtable"
         ></pbtable>
         <piechart :event_info="event_info" ref="pieChart"></piechart>
+        <clubhistory></clubhistory>
       </div>
     </div>
   </div>
@@ -76,6 +77,7 @@ import PieChart from "../keppandi/components/PieChart.vue";
 import PBTable from "../keppandi/components/PBTable.vue";
 import RecordsTable from "../keppandi/components/RecordsTable.vue";
 import KeppandiSearch from "./components/Search.vue";
+import ClubHistory from "./components/ClubHistory.vue";
 
 export default {
   name: "KeppandiSingle",
@@ -85,6 +87,7 @@ export default {
     recordstable: RecordsTable,
     PulseLoader,
     KeppandiSearch,
+    clubhistory: ClubHistory,
   },
   data() {
     return {
