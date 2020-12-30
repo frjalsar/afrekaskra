@@ -29,9 +29,12 @@ def Print_list_vertically(my_list):
 
 @cache_page(60 * 15)
 def get_competitor(request, CompetitorCode=None):
+    df = competitor.Get_Competitor_Achievements(CompetitorCode)
     Competitor_info = competitor.Get_Competitor_Info(CompetitorCode)
-    Event_info = competitor.Get_Competitor_Events_Info(CompetitorCode)
-    return JsonResponse({'Competitor': Competitor_info, 'Events': Event_info}, safe=False)
+    Event_info = competitor.Get_Competitor_Events_Info(df)
+    club_list, club_history = competitor.Get_Club_By_Year(df)
+    print(club_history)
+    return JsonResponse({'Competitor': Competitor_info, 'Events': Event_info, 'Clubs': club_history}, safe=False)
 
 # Skilar öllum gögnum fyrir tiltekna grein.
 def competitor_event_all(request, CompetitorCode, Event_id):

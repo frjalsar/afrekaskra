@@ -2,7 +2,7 @@ from Sif import common
 from Sif import events
 import numpy as np
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Database
 # We only use AthlCompetitors for information about competitors
@@ -38,6 +38,25 @@ def Get_Competitor_Info(CompetitorCode):
 
     return Competitor_Info
 
+
+    # DECLARE @AchieveMents TABLE (
+	# EventName nvarchar(100),
+	# OutdoorsOrIndoors nvarchar(10),
+	# Results nvarchar(20),
+    # AchievementDate datetime,
+	# Venue nvarchar(50),
+	# Club nvarchar(20),
+	# Age int,
+	# WindReading decimal(38,1),
+	# CompetitionName nvarchar(50),
+	# CompetitionCode nvarchar(20),
+	# Placing nvarchar(10),
+	# Remarks nvarchar(200),
+	# EventSortOrder decimal(38,20),
+	# AchievementSortOrder decimal(30,20),
+	# Series nvarchar(150),
+	# RequiresWindMeter int,
+	# WindReadingText nvarchar(20));
 def Get_Competitor_Achievements(CompetitorCode):
     # Núverandi ár. Þarf til að kalla á stored procedure
     CurrentYear = datetime.now().year
@@ -52,8 +71,9 @@ def Get_Competitor_Achievements(CompetitorCode):
     df['EventName'] = df.EventName.str.replace(',', '.')
     return df
 
-def Get_Competitor_Events_Info(CompetitorCode):
-    df = Get_Competitor_Achievements(CompetitorCode)
+#def Get_Competitor_Events_Info(CompetitorCode):
+def Get_Competitor_Events_Info(df):
+    #df = Get_Competitor_Achievements(CompetitorCode)
 
     # Búa til lista yfir greinar
     list_events = df.copy() # copy til að búa til afrit
@@ -466,3 +486,39 @@ def filter_progression(df_event, event_max, event_unit):
                 text_place.append(row['Results'] + ' ' + event_unit + ' (' + wind_str + ' m/s)<br>' + row['CompetitionName'] + '<br>' + row['AchievementDate'].strftime("%d-%m-%Y"))
 
     return pb_dates, pb, text_place
+
+def Get_Club_By_Year(df_comp):
+    year_max = df_comp['AchievementDate'].max().year
+    year_min = df_comp['AchievementDate'].min().year
+
+    club_list = {}
+
+    for i in range(year_min, year_max+1):
+        df_year = df_comp.loc[df_comp['AchievementDate'].dt.year == i]
+        try:
+            club = df_year.mode().iloc[0]['Club']
+            club_list[i] = club
+            last_club = club
+        except:
+            club_list[i] = last_club
+            pass
+
+    club_registry = []
+
+    # Fyrsta félagið
+    cur_date = df_comp['AchievementDate'].min().to_pydatetime() # Pandas returns timestamp not datetime
+    cur_club = club_list[year_min]
+
+    for year in club_list:
+        next_club = club_list[year]
+        if (next_club != cur_club):
+            next_date = datetime(year, 1, 1)
+            club_registry.append({'from': cur_date, 'to': next_date-timedelta(days=1), 'club': cur_club})
+            cur_club = next_club
+            cur_date = next_date
+
+    if (year == year_max):
+        next_date = None
+        club_registry.append({'from': cur_date, 'to': next_date, 'club': next_club})
+
+    return club_list, club_registry

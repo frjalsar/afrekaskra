@@ -63,7 +63,7 @@
           ref="pbtable"
         ></pbtable>
         <piechart :event_info="event_info" ref="pieChart"></piechart>
-        <clubhistory></clubhistory>
+        <clubhistory :club_history="club_history"></clubhistory>
       </div>
     </div>
   </div>
@@ -98,6 +98,7 @@ export default {
 
       competitor_info: [],
       event_info: [],
+      club_history: [],
       isReady: false,
       competitorID: null,
       message: "",
@@ -135,6 +136,7 @@ export default {
           axios.spread((...response) => {
             this.competitor_info = response[0]["data"]["Competitor"];
             this.event_info = response[0]["data"]["Events"];
+            this.club_history = response[0]["data"]["Clubs"]
             //console.log("Got data");
 
             document.title =

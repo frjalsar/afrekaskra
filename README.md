@@ -1,7 +1,7 @@
 # Afrekaskrá FRÍ
 
 ## How-to:
-0. I used Anaconda 2020.07
+0. Install Python. I used Anaconda 2020.07
 1. sudo apt install libpq-dev unixodbc-dev libsqliteodbc python3-dev npm git build-essentials
 2. git clone
 3. npm install
