@@ -15,11 +15,12 @@
           <th scope="col">Grein</th>
           <th scope="col">Methafi</th>
           <th scope="col">Árangur</th>
-          <th scope="col" class="d-none d-lg-table-cell">Vindur</th>
-          <th scope="col" class="d-none d-md-table-cell">Úti/Inni</th>
-          <th scope="col">Dags.</th>
           <th scope="col">Aldur mets</th>
+          <th scope="col">Vindur</th>
+          <th scope="col">Úti/Inni</th>
+          <th scope="col">Dags.</th>
           <th scope="col">Aldursfl.</th>
+          <th scope="col">Félag</th>
         </tr>
       </thead>
       <tbody>
@@ -36,11 +37,12 @@
             </router-link>
           </td>
           <td>{{ i.Results_text }} <small class="text-muted">{{i.Units_symbol }}</small></td>
-          <td class="d-none d-lg-table-cell">{{ i.Wind }}</td>
-          <td class="d-none d-md-table-cell">{{ inout_text(i.Inout) }}</td>
-          <td>{{ i.Date }}</td>
           <td>{{ i.Age_record }}</td>
+          <td>{{ i.Wind }}</td>
+          <td>{{ inout_text(i.Inout) }}</td>
+          <td>{{ i.Date }}</td>
           <td>{{ i.AgeGroup }}</td>
+          <td>{{ i.Club }}</td>
         </tr>
       </tbody>
     </table>

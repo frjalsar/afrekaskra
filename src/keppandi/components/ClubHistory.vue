@@ -14,7 +14,7 @@
       <p>
         <small
           >Félagasaga er byggð á skráðum afrekum. Stundum eru afrek skráð á
-          hérðaðssamband, landslið eða lið í bikarkeppni, en ekki félag
+          hérðaðssamband, ÍSÍ, landslið eða lið í bikarkeppni, en ekki félag
           keppanda. Því getur félagasaga verið röng í sumum tilfellum.
           Félagaskipti birtast ekki hér fyrr en keppt hefur verið fyrir nýja
           félagið.
