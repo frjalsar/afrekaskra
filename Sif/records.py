@@ -52,7 +52,12 @@ def Get_Records_Birthdays():
 
     List_of_Records = []
 
-    for index, row in result.head(n=15).iterrows():
+    if (dt.date.today().month == 12) and (dt.date.today().day >= 28):
+        N = 85 # Rosalega mörg met sem eru sett 30 og 31. des
+    else:
+        N = 15 # Vanalega er 15 nóg
+
+    for index, row in result.head(n=N).iterrows():
         record_age = row['Record_age']
         if (record_age == 0): # Metið var sett í ár en afmælið er á næsta ári.
             record_age = 1
