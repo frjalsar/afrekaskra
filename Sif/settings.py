@@ -181,6 +181,11 @@ LOGGING = {
 #     },
 # ]
 
+# Force HTTPS if on Heroku
+if 'SIF_ON_HEROKU' in os.environ:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+
 # Disable admin panel
 ADMIN_ENABLED = False
 
