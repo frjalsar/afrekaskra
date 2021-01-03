@@ -133,7 +133,7 @@ export default {
           this.cancelSource = null;
           this.loading = false;
           //console.log(this.$refs)
-          this.$refs.athleteSearch.scrollIntoView({ scrollBehavior: 'smooth' });
+          //this.$refs.athleteSearch.scrollIntoView({ scrollBehavior: 'smooth' });
         })
         .catch(error => {
           //console.log("ERROR");
