@@ -701,7 +701,7 @@ def Get_Club_List_Thor():
                           'region': row['Héraðssamband']})
     return club_list
 
-def Get_Competitor_List(s, club, startsWith):
+def Get_Competitor_List(s, club, startsWith, yob):
 
     #names_q = Competitors.objects.using('competitor_list').all()
     names_q = AthlCompetitors.objects.all()
@@ -710,8 +710,12 @@ def Get_Competitor_List(s, club, startsWith):
 
     if (club is not None):
         names_q = names_q.filter(Q(félag__icontains=club))
+
+    if ((yob is not None) and (yob.isdigit() == True)):
+        names_q = names_q.filter(Q(fæðingarár__icontains=yob))
+        
     
-    if (club is None and startsWith is None):
+    if (club is None and startsWith is None and yob is None):
         for i in s.split(' '):
             if (len(i) >= 2):
                 if (i.isdigit() == True): # Athuga hvort þetta er tala

@@ -1,12 +1,12 @@
 <template>
   <div>
     <div>
-    <h1 class="text-center mb-4">Iðkendur</h1>
-    <SearchPanel
-      :clubs="clubs"
-      :settings="settings"
-      @change="setQueryParams"
-    />
+      <h1 class="text-center mb-4">Iðkendur</h1>
+      <SearchPanel
+        :clubs="clubs"
+        :settings="settings"
+        @change="setQueryParams"
+      />
     </div>
     <div class="row">
       <div class="col-md-12">
@@ -33,7 +33,16 @@
               <td class="d-none d-lg-table-cell">
                 {{ athlete.CompetitorCode }}
               </td>
-              <td>{{ athlete.Name }}</td>
+              <td>
+                <router-link
+                  :to="{
+                    name: 'CompetitorProfile',
+                    params: { competitorID: athlete.CompetitorCode },
+                  }"
+                >
+                  {{ athlete.Name }}
+                </router-link>
+              </td>
               <td class="d-none d-md-table-cell">
                 {{ athlete.YOB }}
               </td>
@@ -64,7 +73,7 @@ export default {
       busy: false,
       athletes: [],
       clubs: [],
-      message: '',
+      message: "",
     };
   },
   computed: {
@@ -75,7 +84,6 @@ export default {
   mounted() {
     var url = this.global_API_URL + "/api/clubs";
     this.search();
-    
 
     // agent
     //   .get(process.env.FRI_API_URL + '/api/clubs')
@@ -108,21 +116,18 @@ export default {
       var url = this.global_API_URL + "/api/competitor";
       this.busy = true;
       this.athletes = [];
-      console.log('Leita')
       return axios
-        .get(url, {params: this.$route.query})
-      .then((response) => {
-        this.athletes = response["data"];
-        this.busy = false;
-        console.log('Gögn')
-      })
-      .catch((error) => {
-        console.log('Villa')
-        this.message = "Villa frá vefþjóni (" + error + ") 😭";
-      })
-      .finally(() => {
-        this.busy = false;
-      });
+        .get(url, { params: this.$route.query })
+        .then((response) => {
+          this.athletes = response["data"];
+          this.busy = false;
+        })
+        .catch((error) => {
+          this.message = "Villa frá vefþjóni (" + error + ") 😭";
+        })
+        .finally(() => {
+          this.busy = false;
+        });
       // return agent
       //   .get(process.env.FRI_API_URL + '/api/athletes')
       //   .query(this.$route.query)

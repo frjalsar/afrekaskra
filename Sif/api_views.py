@@ -70,7 +70,8 @@ def competitor_list(request):
     s = request.GET.get('search', '') # Hvað notandinn sló inn í boxið
     club = request.GET.get('clubId', None)
     startsWith = request.GET.get('startsWith', None)
-    list_of_competitors = data.Get_Competitor_List(s, club, startsWith)
+    yob = request.GET.get('yob', None)
+    list_of_competitors = data.Get_Competitor_List(s, club, startsWith, yob)
     return JsonResponse(list_of_competitors, safe=False)
     #else:
     #    return HttpResponseServerError('<h1>Server Error (500)</h1>', content_type='text/html')

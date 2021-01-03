@@ -112,7 +112,8 @@ if 'SIF_ON_HEROKU' in os.environ:
         'LOCATION': os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','),
         'OPTIONS': {
                     'username': os.environ.get('MEMCACHEDCLOUD_USERNAME'),
-                    'password': os.environ.get('MEMCACHEDCLOUD_PASSWORD')
+                    'password': os.environ.get('MEMCACHEDCLOUD_PASSWORD'),
+                    'server_max_value_length': 1024 * 1024 * 1,
             }
         }
     }

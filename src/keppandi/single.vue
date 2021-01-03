@@ -12,7 +12,7 @@
         :size="size"
       ></pulse-loader>
       <p style="text-align: center">{{ message }}</p>
-      <img src="../fri-loading-1.gif" alt="Hleð síðu" width=100%>
+      <img src="../assets/fri-loading-1.gif" alt="Hleð síðu" width=100%>
     </div>
     <!-- PROFILE -->
     <div id="competitor-view" v-if="isReady">
