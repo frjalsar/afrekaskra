@@ -30,6 +30,8 @@ else:
     DEBUG = True
     print('DEBUG IS ON')
 
+#DEBUG = False
+
 #APPEND_SLASH = False
 
 ALLOWED_HOSTS = [] # The django_heroku package takes care of this.

@@ -25,6 +25,8 @@ import os
 from Sif import views
 from Sif import api_views
 
+handler404 = 'Sif.views.view_404'
+
 urlpatterns = [
     # Views
     #path('admin/', admin.site.urls),
@@ -48,6 +50,8 @@ urlpatterns = [
     path(r'api/img/club/<str:ClubName>/', api_views.club_logo),
     path(r'api/records/<int:CompetitorCode>/', api_views.competitor_records),
     path(r'api/records/birthdays/', api_views.record_birthdays)
+
+    #re_path('[^api/*]', TemplateView.as_view(template_name='index.html')) # Senda allt sem fer ekki á API á index.html
 ]
 
 #if 'SIF_LOCAL' in os.environ:
