@@ -113,7 +113,8 @@ export default {
     //   // }
     // },
     search() {
-      var url = this.global_API_URL + "/api/competitor?term=";
+      //var url = this.global_API_URL + "/api/competitor?search=";
+      var url = this.global_API_URL + "/api/competitor";
 
       this.loading = true;
       this.showSearchQ = true;
@@ -124,8 +125,9 @@ export default {
 
       //console.log("Searching for " + this.searchQ);
       axios
-        .get(url + this.searchQ, {
-        cancelToken: this.cancelSource.token })
+        .get(url, {
+        cancelToken: this.cancelSource.token,
+        params: {search: this.searchQ}})
         .then(response => {
           //console.log("RESPONSE");
           //console.log(response);
@@ -133,7 +135,7 @@ export default {
           this.cancelSource = null;
           this.loading = false;
           //console.log(this.$refs)
-          //this.$refs.athleteSearch.scrollIntoView({ scrollBehavior: 'smooth' });
+          //this.$refs.athleteSearch.scrollIntoView();
         })
         .catch(error => {
           //console.log("ERROR");

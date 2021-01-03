@@ -3,8 +3,15 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+//Ef production mode þá notum við history mode, annars hash mode fyrir dev.
+if (Vue.config.devtools == true) {
+  var my_mode = 'hash'
+} else {
+  var my_mode = 'history'
+}
+
 export default new Router({
-  mode: 'history',
+  mode: my_mode,
   routes: [
     {
       path: '/',
@@ -22,7 +29,7 @@ export default new Router({
     {
       path: '/keppandi',
       name: 'CompetitorList',
-      component: () => import('./keppandi/list.vue')
+      component: () => import('./keppandi/SearchList.vue')
     },
     {
       path: '/keppandi/:competitorID',

@@ -21,7 +21,7 @@
       <div class="card-body">
         <p class="card-text">
           Byrjaðu að slá inn nafn íþróttamanns og Sif hjálpar þér að finna hana
-          eða hann.
+          eða hann. Smelltu <router-link :to="{ path: 'keppandi' }">hér</router-link> til að fá upp ýtarlegri leit.
         </p>
         <KeppandiSearch />
       </div>

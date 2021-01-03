@@ -5,6 +5,7 @@ from django.http import Http404
 # and AthlAfrek for the achievements.
 from Sif.models import AthlCompetitors, AthlAfrek, Competitors
 from django.db.models import Q
+from django.db import connection
 
 # Settings
 from Sif import settings
@@ -689,18 +690,39 @@ def Get_Club_List():
 
     return list_of_clubs
 
-def Get_Competitor_List(q):
+def Get_Club_List_Thor():
+    club_data = pd.read_sql_query("EXEC ClubsForUser @UserLogin=''", connection)
+
+    club_list = []
+    for index, row in club_data.iterrows():
+        club_list.append({'id': index,
+                          'thorId': row.Club,
+                          'fullName': row.NameOfClub,
+                          'region': row['Héraðssamband']})
+    return club_list
+
+def Get_Competitor_List(s, club, startsWith):
 
     #names_q = Competitors.objects.using('competitor_list').all()
     names_q = AthlCompetitors.objects.all()
+    if (startsWith is not None):
+        names_q = names_q.filter(Q(nafn__startswith=startsWith))
 
-    for i in q.split(' '):
-        if (len(i) >= 2):
-            if (i.isdigit() == True): # Athuga hvort þetta er tala
-                if (len(i) == 4): # Ef 4 stafa þá túlkum við þetta sem fæðingarár annars hunsum við.
-                    names_q = names_q.filter(Q(fæðingarár__icontains=i))
-            else:
-                names_q = names_q.filter(Q(nafn__icontains=i) | Q(félag__icontains=i))
+    if (club is not None):
+        names_q = names_q.filter(Q(félag__icontains=club))
+    
+    if (club is None and startsWith is None):
+        for i in s.split(' '):
+            if (len(i) >= 2):
+                if (i.isdigit() == True): # Athuga hvort þetta er tala
+                    if (len(i) == 4): # Ef 4 stafa þá túlkum við þetta sem fæðingarár annars hunsum við.
+                        names_q = names_q.filter(Q(fæðingarár__icontains=i))
+                else:
+                    names_q = names_q.filter(Q(nafn__icontains=i) | Q(félag__icontains=i))
+    else:
+        for i in s.split(' '):
+            if (len(i) >= 2):
+                names_q = names_q.filter(Q(nafn__icontains=i))
 
     #names_q = names_q.filter(Q(nafn__icontains=q) | Q(félag__icontains=q) | Q(fæðingarár__icontains=q) )
 

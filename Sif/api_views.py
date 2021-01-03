@@ -67,17 +67,18 @@ def competitor_event(request, CompetitorCode=None, Event_id=None):
 
 @cache_page(60 * 15)
 def competitor_list(request):
-    #if request.is_ajax():
-    q = request.GET.get('term', '') # Hvað notandinn sló inn í boxið
-    #print('SEARCH ' + q)
-    list_of_competitors = data.Get_Competitor_List(q)
+    s = request.GET.get('search', '') # Hvað notandinn sló inn í boxið
+    club = request.GET.get('clubId', None)
+    startsWith = request.GET.get('startsWith', None)
+    list_of_competitors = data.Get_Competitor_List(s, club, startsWith)
     return JsonResponse(list_of_competitors, safe=False)
     #else:
     #    return HttpResponseServerError('<h1>Server Error (500)</h1>', content_type='text/html')
 
 @cache_page(60 * 15)
 def club_list(request):
-    list_of_clubs = data.Get_Club_List()
+    #list_of_clubs = data.Get_Club_List()
+    list_of_clubs = data.Get_Club_List_Thor()
     return JsonResponse(list_of_clubs, safe=False)
 
 @cache_page(60 * 15)
