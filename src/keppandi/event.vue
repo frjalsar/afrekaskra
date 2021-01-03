@@ -51,7 +51,7 @@
               params: { competitorID: competitorID },
             }"
           >
-            <i class="fas fa-user-circle"></i> Fara á prófíl síðu keppanda
+            <i class="fas fa-user-circle"></i> Fara á prófíl síðu iðkanda
           </router-link>
         </h5>
       </div>

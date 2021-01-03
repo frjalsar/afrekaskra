@@ -27,7 +27,7 @@ def Print_list_vertically(my_list):
         print(i)
     return None
 
-@cache_page(60 * 15)
+@cache_page(60 * 60 * 6)
 def get_competitor(request, CompetitorCode=None):
     df = competitor.Get_Competitor_Achievements(CompetitorCode)
     Competitor_info = competitor.Get_Competitor_Info(CompetitorCode)
@@ -41,7 +41,7 @@ def competitor_event_all(request, CompetitorCode, Event_id):
     EventData_all = data.Get_Competitor_Event_Data_All(CompetitorCode, Event_id)
     return JsonResponse(EventData_all, safe=False)
 
-@cache_page(60 * 15)
+@cache_page(60 * 60 * 6)
 def competitor_event(request, CompetitorCode=None, Event_id=None):
     Competitor_info = competitor.Get_Competitor_Info(CompetitorCode)
     Event_info, Event_data, Event_min_max_all, Event_min_max_legal, Event_progession  = competitor.Get_Competitor_Event(CompetitorCode, Event_id)
@@ -65,7 +65,7 @@ def competitor_event(request, CompetitorCode=None, Event_id=None):
                          },
                          safe=True)
 
-@cache_page(60 * 15)
+@cache_page(60 * 60 * 24)
 def competitor_list(request):
     s = request.GET.get('search', '') # Hvað notandinn sló inn í boxið
     club = request.GET.get('clubId', None)
@@ -75,29 +75,28 @@ def competitor_list(request):
     #else:
     #    return HttpResponseServerError('<h1>Server Error (500)</h1>', content_type='text/html')
 
-@cache_page(60 * 15)
+@cache_page(60 * 60 * 24)
 def club_list(request):
     #list_of_clubs = data.Get_Club_List()
     list_of_clubs = data.Get_Club_List_Thor()
     return JsonResponse(list_of_clubs, safe=False)
 
-@cache_page(60 * 15)
+@cache_page(60 * 60 * 6)
 def events(request, Event_id=None):
     event_list = data.Get_List_of_Events(CompetitorCode=None, Event_id=Event_id)
     #print(event_list)
     return JsonResponse(event_list, safe=False)
 
-@cache_page(60 * 15)
+@cache_page(60 * 60 * 6)
 def competitor_achievements(request, CompetitorCode, Event_id):
     Achievements_list = data.Get_List_of_Achievements(CompetitorCode, Event_id)
     return JsonResponse(Achievements_list, safe=False)
 
-@cache_page(60 * 15)
+@cache_page(60 * 60 * 6)
 def Get_Top_100(request, Event_id, IndoorOutDoor, Gender, Year, AgeStart, AgeEnd, Legal, ISL, BestByAth):
     Top_list, Event_Info = data.Top_100_List(Event_id=Event_id, Year=Year, IndoorOutDoor=IndoorOutDoor, Gender=Gender, AgeStart=AgeStart, AgeEnd=AgeEnd, Legal=Legal, ISL=ISL, BestByAth=BestByAth)
     return JsonResponse({'TopList': Top_list, 'EventInfo': Event_Info}, safe=False)
 
-@cache_page(60 * 15)
 def competitor_img_profile(request, CompetitorCode):
     filename_profile = './images/profile_{:d}.jpg'.format(CompetitorCode)
     try:
@@ -110,7 +109,6 @@ def competitor_img_profile(request, CompetitorCode):
 
     raise Http404() # Ættum ekki að koma hingað
 
-@cache_page(60 * 15)
 def competitor_img_action(request, CompetitorCode):
     filename_action = './images/action_{:d}.jpg'.format(CompetitorCode)
     try:
@@ -128,7 +126,6 @@ def competitor_img_action(request, CompetitorCode):
 
     raise Http404() # Ættum ekki að koma hingað
 
-@cache_page(60 * 15)
 def club_logo(request, ClubName):
     ClubName_decode = urllib.parse.unquote(ClubName).lower()
     try: # Reyna png

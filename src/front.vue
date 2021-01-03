@@ -17,10 +17,10 @@
     </div>
     <!---->
     <div class="card bg-light mt-4">
-      <h4 class="card-header">Finna íþróttamann</h4>
+      <h4 class="card-header">Finna iðkanda</h4>
       <div class="card-body">
         <p class="card-text">
-          Byrjaðu að slá inn nafn íþróttamanns og Sif hjálpar þér að finna hana
+          Byrjaðu að slá inn nafn iðkanda og Sif hjálpar þér að finna hana
           eða hann. Smelltu <router-link :to="{ path: 'keppandi' }">hér</router-link> til að fá upp ýtarlegri leit.
         </p>
         <KeppandiSearch />
