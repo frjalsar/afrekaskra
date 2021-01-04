@@ -4,7 +4,7 @@
       :value="searchQ"
       type="text"
       class="form-control text-center"
-      placeholder="Leita (t.d. Kristinn Torfa FH)"
+      placeholder="Sláðu inn nafn"
       @input="searchInput"
       ref="athleteSearch"
     />
