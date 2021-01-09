@@ -12,7 +12,10 @@
         :size="size"
       ></pulse-loader>
       <p style="text-align: center">{{ message }}</p>
-      <img src="../assets/fri-loading-1.gif" alt="Hleð síðu" width=100%>
+      <!--<img src="../assets/fri-loading-1.gif" alt="Hleð síðu" width=100%>-->
+      <video autoplay loop muted playsinline width="100%">
+        <source src="../assets/fri-loading-1.webm" type="video/webm" />
+      </video>
     </div>
     <!-- PROFILE -->
     <div id="competitor-view" v-if="isReady">
@@ -136,7 +139,7 @@ export default {
           axios.spread((...response) => {
             this.competitor_info = response[0]["data"]["Competitor"];
             this.event_info = response[0]["data"]["Events"];
-            this.club_history = response[0]["data"]["Clubs"]
+            this.club_history = response[0]["data"]["Clubs"];
             //console.log("Got data");
 
             document.title =

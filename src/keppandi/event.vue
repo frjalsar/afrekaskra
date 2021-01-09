@@ -7,7 +7,10 @@
         :size="size"
       ></pulse-loader>
       <p style="text-align: center">{{ message }}</p>
-      <img src="../assets/fri-loading-2.gif" alt="Hleð síðu" width=100%>
+      <!--<img src="../assets/fri-loading-2.gif" alt="Hleð síðu" width="100%" />-->
+      <video autoplay loop muted playsinline width="100%">
+        <source src="../assets/fri-loading-2.webm" type="video/webm" />
+      </video>
     </div>
     <div v-if="isReady">
       <div class="d-flex flex-row">

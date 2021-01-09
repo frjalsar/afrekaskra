@@ -10,10 +10,13 @@ u'50 metra grind (91.4 cm)',
 u'50 metra grind (100.0 cm)',
 u'50 metra grind (106.7 cm)',
 u'60 metra grind (68 cm)',
+u'60 metra grind (76.0 cm)',
 u'60 metra grind (76.2 cm)',
+u'60 metra grind (76.2 cm) 6gr',
 u'60 metra grind (84 cm)',
 u'60 metra grind (84.0 cm)',
 u'60 metra grind (91.4 cm)',
+u'60 metra grind (91.4cm)',
 u'60 metra grind (99.1 cm)',
 u'60 metra grind (100.0 cm)',
 u'60 metra grind (106.7cm)',
@@ -39,6 +42,7 @@ u'20km brautarhlaup',
 u'300 metra grind (68 cm)',
 u'300 metra grind (76.2 cm)',
 u'300 metra grind (84 cm)',
+u'300 metra grind (84.0 cm)',
 u'300 metra grind (91.4 cm)',
 u'300 metra hlaup',
 u'400 metra grind (76 cm)',
@@ -64,6 +68,8 @@ u'1 míla',
 u'2 mílur',
 u'3 km ganga',
 u'3 km götuhlaup',
+u'4 km víðavangshlaup',
+u'8 km víðavangshlaup',
 u'10 km ganga',
 u'10 km götuhlaup',
 u'10 km götuhlaup (flögutímar)',
@@ -104,6 +110,7 @@ u'Fimmtarþraut pilta 15 ára',
 u'Fimmtarþraut stúlkna 15 ára',
 u'Fimmtarþraut (50m hlaup)',
 u'Fimmtarþraut öldunga 45',
+u'Fimmtarþraut 3k kúla. 6grindur',
 u'Sexþraut (meyjaáhöld)',
 u'Sexþraut',
 u'Sexþraut (með 50m)',
@@ -111,6 +118,10 @@ u'Hálft maraþon',
 u'Hálft maraþon (flögutímar)',
 u'Kastþraut Sl.Kú.Kr.Sp.Lóð',
 u'Kastþraut Sl.Kú.Kr.Sp.Lóð1588',
+u'Kastþraut Sl.Kú.Kr.Sp.Lóð 50+',
+u'Kastþraut Sl.Kú.Kr.Sp.Lóð 60+',
+u'Kastþraut Sl.Kú.Kr.Sp.Lóð 70+',
+u'Kastþraut Sl.Kú.Kr.Sp.Lóð 80+',
 u'Beggja handa kastþraut',
 u'Beggja handa kastþraut 17 ára',
 u'Beggja handa kastþraut 19 ára',
@@ -138,6 +149,7 @@ u'Kúluvarp (5.0 kg)',
 u'Kúluvarp (5.5 kg)',
 u'Kúluvarp (6.0 kg)',
 u'Kúluvarp (6.00 kg)',
+u'Kúluvarp (6.25kg)',
 u'Kúluvarp (7.26 kg)',
 u'Kúluvarp 3kg beggja handa',
 u'Kúluvarp 4kg beggja handa',
@@ -159,6 +171,8 @@ u'Lóðkast (11.34 kg)',
 u'Maraþon',
 u'Maraþon (flögutímar)',
 u'Fjórþraut (2kg kúla) ungl.stig',
+u'Fjórþraut (2kg kúla)',
+u'Fjórþraut (3kg kúla)',
 u'Níuþraut',
 u'Áttþraut (drengjaáhöld)',
 u'Sjöþraut',
@@ -183,6 +197,7 @@ u'Sleggjukast (6.25 kg)',
 u'Sleggjukast (7.26 kg)',
 u'Spjótkast (400 gr)',
 u'Spjótkast (500 gr)',
+u'Spjótkast (500 gr.)',
 u'Spjótkast (600 gr)',
 u'Spjótkast (600 gr) fyrir 1997',
 u'Spjótkast (700gr)',
@@ -250,6 +265,7 @@ u'55 metra grindahlaup':
 'NAME_SHORT': '55 m gr.',
 'NAME_ENG': '50 mH'
 },
+#
 u'50 metra grind (68 cm)':
 {'UNIT': 2,
 'UNIT_SYMBOL': 's',
@@ -313,6 +329,15 @@ u'50 metra grind (106.7 cm)':
 'NAME_ENG': '50 mH (106.7 cm)'
 },
 #
+u'60 metra grind (76.0 cm)':
+{'UNIT': 2,
+'UNIT_SYMBOL': 's',
+'MAX': False,
+'HAS_WIND': True,
+'NAME_SHORT': '60 m gr. (76.0 cm)',
+'NAME_ENG': '60 mH (76.0 cm)'
+},
+#
 u'60 metra grind (76.2 cm)':
 {'UNIT': 2,
 'UNIT_SYMBOL': 's',
@@ -320,6 +345,15 @@ u'60 metra grind (76.2 cm)':
 'HAS_WIND': True,
 'NAME_SHORT': '60 m gr. (76.2 cm)',
 'NAME_ENG': '60 mH (76.2 cm)'
+},
+#
+u'60 metra grind (76.2 cm) 6gr':
+{'UNIT': 2,
+'UNIT_SYMBOL': 's',
+'MAX': False,
+'HAS_WIND': True,
+'NAME_SHORT': '60 m gr. (76.2 cm) 6gr',
+'NAME_ENG': '60 mH (76.2 cm) 6gr'
 },
 #
 u'60 metra grind (84 cm)':
@@ -347,6 +381,15 @@ u'60 metra grind (91.4 cm)':
 'HAS_WIND': True,
 'NAME_SHORT': '60 m gr. (91.4 cm)',
 'NAME_ENG': '60 mH (91.4 cm)'
+},
+#
+u'60 metra grind (91.4cm)':
+{'UNIT': 2,
+'UNIT_SYMBOL': 's',
+'MAX': False,
+'HAS_WIND': True,
+'NAME_SHORT': '60 m gr. (91.4cm)',
+'NAME_ENG': '60 mH (91.4cm)'
 },
 #
 u'60 metra grind (99.1 cm)':
@@ -574,6 +617,15 @@ u'300 metra grind (84 cm)':
 'NAME_ENG': '300 mH (84 cm)'
 },
 #
+u'300 metra grind (84.0 cm)':
+{'UNIT': 2,
+'UNIT_SYMBOL': 's',
+'MAX': False,
+'HAS_WIND': False,
+'NAME_SHORT': '300 m gr. (84.0 cm)',
+'NAME_ENG': '300 mH (84.0 cm)'
+},
+#
 u'300 metra grind (91.4 cm)':
 {'UNIT': 2,
 'UNIT_SYMBOL': 's',
@@ -779,6 +831,24 @@ u'3 km götuhlaup':
 'HAS_WIND': False,
 'NAME_SHORT': '3 km götuhlaup',
 'NAME_ENG': '3 km streetrace'
+},
+#
+u'4 km víðavangshlaup':
+{'UNIT': 3,
+'UNIT_SYMBOL': 'm:s',
+'MAX': False,
+'HAS_WIND': False,
+'NAME_SHORT': '4 km víðavangshlaup',
+'NAME_ENG': '4 km víðavangshlaup'
+},
+#
+u'8 km víðavangshlaup':
+{'UNIT': 3,
+'UNIT_SYMBOL': 'm:s',
+'MAX': False,
+'HAS_WIND': False,
+'NAME_SHORT': '8 km víðavangshlaup',
+'NAME_ENG': '8 km víðavangshlaup'
 },
 #
 u'10 km ganga':
@@ -1159,6 +1229,15 @@ u'Fimmtarþraut öldunga 45':
 'NAME_ENG': 'Fimmtarþraut öldunga 45'
 },
 #
+u'Fimmtarþraut 3k kúla. 6grindur':
+{'UNIT': 2,
+'UNIT_SYMBOL': 's',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Fimmtarþraut 3k kúla. 6grindur',
+'NAME_ENG': 'Fimmtarþraut 3k kúla. 6grindur'
+},
+#
 u'Sexþraut (meyjaáhöld)':
 {'UNIT': 2,
 'UNIT_SYMBOL': 's',
@@ -1211,6 +1290,42 @@ u'Kastþraut Sl.Kú.Kr.Sp.Lóð':
 'HAS_WIND': False,
 'NAME_SHORT': 'Kastþraut Sl.Kú.Kr.Sp.Lóð',
 'NAME_ENG': 'Kastþraut Sl.Kú.Kr.Sp.Lóð'
+},
+#
+u'Kastþraut Sl.Kú.Kr.Sp.Lóð 50+':
+{'UNIT': 5,
+'UNIT_SYMBOL': 'stig',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Kastþraut Sl.Kú.Kr.Sp.Lóð 50+',
+'NAME_ENG': 'Kastþraut Sl.Kú.Kr.Sp.Lóð 50+'
+},
+#
+u'Kastþraut Sl.Kú.Kr.Sp.Lóð 60+':
+{'UNIT': 5,
+'UNIT_SYMBOL': 'stig',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Kastþraut Sl.Kú.Kr.Sp.Lóð 60+',
+'NAME_ENG': 'Kastþraut Sl.Kú.Kr.Sp.Lóð 60+'
+},
+#
+u'Kastþraut Sl.Kú.Kr.Sp.Lóð 70+':
+{'UNIT': 5,
+'UNIT_SYMBOL': 'stig',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Kastþraut Sl.Kú.Kr.Sp.Lóð 70+',
+'NAME_ENG': 'Kastþraut Sl.Kú.Kr.Sp.Lóð 70+'
+},
+#
+u'Kastþraut Sl.Kú.Kr.Sp.Lóð 80+':
+{'UNIT': 5,
+'UNIT_SYMBOL': 'stig',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Kastþraut Sl.Kú.Kr.Sp.Lóð 80+',
+'NAME_ENG': 'Kastþraut Sl.Kú.Kr.Sp.Lóð 80+'
 },
 #
 u'Kastþraut Sl.Kú.Kr.Sp.Lóð1588':
@@ -1465,6 +1580,15 @@ u'Kúluvarp (6.00 kg)':
 'NAME_ENG': 'Shot put (6.00 kg)'
 },
 #
+u'Kúluvarp (6.25kg)':
+{'UNIT': 1,
+'UNIT_SYMBOL': 'm',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Kúluvarp (6.25kg)',
+'NAME_ENG': 'Shot put (6.25 kg)'
+},
+#
 u'Kúluvarp (7.26 kg)':
 {'UNIT': 1,
 'UNIT_SYMBOL': 'm',
@@ -1608,6 +1732,7 @@ u'Lóðkast (9.08 kg)':
 'NAME_SHORT': 'Lóðkast (9.08 kg)',
 'NAME_ENG': 'Weight throw (9.08 kg)'
 },
+#
 u'Lóðkast (10.0 kg)':
 {'UNIT': 1,
 'UNIT_SYMBOL': 'm',
@@ -1651,6 +1776,24 @@ u'Fjórþraut (2kg kúla) ungl.stig':
 'HAS_WIND': False,
 'NAME_SHORT': 'Fjórþraut (2kg kúla) ungl.stig',
 'NAME_ENG': 'Fjórþraut (2kg kúla) ungl.stig'
+},
+#
+u'Fjórþraut (2kg kúla)':
+{'UNIT': 5,
+'UNIT_SYMBOL': 'stig',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Fjórþraut (2kg kúla)',
+'NAME_ENG': 'Fjórþraut (2kg kúla)'
+},
+#
+u'Fjórþraut (3kg kúla)':
+{'UNIT': 5,
+'UNIT_SYMBOL': 'stig',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Fjórþraut (3kg kúla)',
+'NAME_ENG': 'Fjórþraut (3kg kúla)'
 },
 #
 u'Níuþraut':
@@ -1867,6 +2010,15 @@ u'Spjótkast (500 gr)':
 'HAS_WIND': False,
 'NAME_SHORT': 'Spjótkast (500 g)',
 'NAME_ENG': 'Javelin (500 g)'
+},
+#
+u'Spjótkast (500 gr.)':
+{'UNIT': 1,
+'UNIT_SYMBOL': 'm',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Spjótkast (500 gr.)',
+'NAME_ENG': 'Javelin (500 gr.)'
 },
 #
 u'Spjótkast (600 gr)':

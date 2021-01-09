@@ -33,7 +33,6 @@ def get_competitor(request, CompetitorCode=None):
     Competitor_info = competitor.Get_Competitor_Info(CompetitorCode)
     Event_info = competitor.Get_Competitor_Events_Info(df)
     club_list, club_history = competitor.Get_Club_By_Year(df)
-    print(club_history)
     return JsonResponse({'Competitor': Competitor_info, 'Events': Event_info, 'Clubs': club_history}, safe=False)
 
 # Skilar öllum gögnum fyrir tiltekna grein.
