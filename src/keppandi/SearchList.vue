@@ -16,7 +16,7 @@
               <th scope="col" class="d-none d-lg-table-cell">Númer</th>
               <th scope="col">Nafn</th>
               <th scope="col" class="d-none d-md-table-cell">Fæðingarár</th>
-              <th scope="col" class="d-none d-md-table-cell">Félag</th>
+              <th scope="col" class="">Félag</th>
             </tr>
           </thead>
           <tbody>
@@ -46,7 +46,7 @@
               <td class="d-none d-md-table-cell">
                 {{ athlete.YOB }}
               </td>
-              <td class="d-none d-md-table-cell">
+              <td class="">
                 {{ athlete.Club }}
               </td>
             </tr>

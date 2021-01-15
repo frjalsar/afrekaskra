@@ -131,6 +131,14 @@
               role="tabpanel"
               aria-labelledby="bestbyyear-tab"
             >
+              <p>
+                Grafið sýnir besta árangur í greininni á hverju ári. Hægt er að
+                velja að taka með líka óleglegan árangur með því að smella á
+                "Allir árangrar" undir grafinu. Á símum er best að skoða grafið
+                í lóðréttum ham.&nbsp;&nbsp;<i
+                  class="fas fa-mobile-alt fa-rotate-270"
+                ></i>
+              </p>
               <yearchart
                 :alldata="yearAllData"
                 :legaldata="yearLegalData"
@@ -145,6 +153,12 @@
               role="tabpanel"
               aria-labelledby="timeseries-tab"
             >
+              <p>
+                Grafið sýnir allra árangra í greininni í tímaröð. Á símum er
+                best að skoða grafið í lóðréttum ham.&nbsp;&nbsp;<i
+                  class="fas fa-mobile-alt fa-rotate-270"
+                ></i>
+              </p>
               <timeserieschart
                 :data="timeData"
                 :event_info="event_info"
@@ -160,6 +174,12 @@
               role="tabpanel"
               aria-labelledby="progression-tab"
             >
+              <p>
+                Grafið sýnir bætingar á löglegum árangri í greininni. Á símum er
+                best að skoða grafið í lóðréttum ham.&nbsp;&nbsp;<i
+                  class="fas fa-mobile-alt fa-rotate-270"
+                ></i>
+              </p>
               <progressionchart
                 :data="progressionData"
                 :event_info="event_info"
@@ -170,6 +190,10 @@
           </div>
         </div>
       </div>
+      <br />
+      <p>
+        Taflan hér að neðan sýnir alla árangrar íþróttamannsins í greininni.
+      </p>
       <achievementtable
         :event_info="event_info"
         :showAllEvents="showAllEvents"

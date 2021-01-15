@@ -39,7 +39,7 @@
           to="/keppandi"
           class="p-2 text-dark"
         >
-          Keppandi
+          Iðkandi
         </router-link>
     </div>
     <div class="container">
