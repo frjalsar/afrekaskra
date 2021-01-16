@@ -3,8 +3,14 @@
     <hr />
     <h2 class="display-4"><i class="fas fa-trophy"></i> Árangur</h2>
     <p>
+      Taflan sýnir persónulegan besta árangur ásamt best árangri síðustu tvö ár.
+      Sýndur er löglegur árangur nema í þeim tilvikum þegar engin löglegur
+      árangur finnst.
+      <br />
       <i class="far fa-hand-pointer"></i>
-      <small>Veldu grein í töflunni til að sjá meiri upplýsingar um hana.</small>
+      <small
+        >Veldu grein í töflunni til að sjá meiri upplýsingar um hana.</small
+      >
     </p>
     <table class="table table-striped table-hover table-responsive-sm table-sm">
       <!--<caption>Listi yfir árangur</caption>-->
@@ -15,25 +21,41 @@
           <th scope="col">PB úti</th>
           <th scope="col">PB inni</th>
           <th scope="col">SB {{ new Date().getFullYear() }}</th>
-          <th scope="col">SB {{ new Date().getFullYear()-1 }}</th>
+          <th scope="col">SB {{ new Date().getFullYear() - 1 }}</th>
           <!--<th scope="col">Fjöldi</th>-->
         </tr>
       </thead>
       <tbody>
         <tr
           v-for="(i, index) in event_info"
-          v-show="(index < 5) || showAllEvents"
+          v-show="index < 5 || showAllEvents"
           :key="i.Event"
           @click.prevent="onClick && onClick(i)"
         >
           <!-- v-bind:style="{display: 'none'}" -->
           <th scope="row">
-            <router-link :to="{ name: 'CompetitorEvent', params: { competitorID: competitorID, eventID: i.EventID }}">
-            {{i.EventShortName}} <small class="text-muted">{{i.EventUnit}}</small>
+            <router-link
+              :to="{
+                name: 'CompetitorEvent',
+                params: { competitorID: competitorID, eventID: i.EventID },
+              }"
+            >
+              {{ i.EventShortName }}
+              <small class="text-muted">{{ i.EventUnit }}</small>
             </router-link>
-            </th>
-          <td>{{ i.PB_out}} <small class="text-muted" v-if="i.PB_out !== ''">({{i.PB_out_date}})</small></td>
-          <td>{{ i.PB_in}} <small class="text-muted" v-if="i.PB_in !== ''">({{i.PB_in_date}})</small></td>
+          </th>
+          <td>
+            {{ i.PB_out }}
+            <small class="text-muted" v-if="i.PB_out !== ''"
+              >({{ i.PB_out_date }})</small
+            >
+          </td>
+          <td>
+            {{ i.PB_in }}
+            <small class="text-muted" v-if="i.PB_in !== ''"
+              >({{ i.PB_in_date }})</small
+            >
+          </td>
           <td>{{ i.SB_cur }}</td>
           <td>{{ i.SB_last }}</td>
           <!--<td>{{i.count}}</td>-->
@@ -45,7 +67,8 @@
       v-on:click.prevent="toggle_showEvents($event)"
       v-if="showMoreLessButton"
       class="text-success"
-    ><b><span v-html="textMoreLess"></span></b></a>
+      ><b><span v-html="textMoreLess"></span></b
+    ></a>
   </div>
 </template>
 
@@ -71,7 +94,7 @@ export default {
       } else {
         return false;
       }
-    }
+    },
   },
   methods: {
     onClick(item) {
