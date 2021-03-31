@@ -39,7 +39,8 @@ def results_to_float_old(in_str):
 
 def results_to_float(in_str):
     # Skiptum kommu út fyrir punkt. Sumir árangrar eru með kommu en aðrir með punkt.
-    split = str(in_str).replace(',', '.').split('.') # Splitta eftir kommu .dd.
+    split = str(in_str).replace(',', '.').split(' ')[0].split('.') # Splitta eftir kommu .dd. 
+       # Splittum líka á bili ' ', því SQL procedure var breytt til að innihalda texta á eftir árangri
     hh = 0
     mm = 0
     ss = 0
@@ -63,7 +64,7 @@ def results_to_float(in_str):
         try:
             ss = float(split[0])
         except ValueError: # Some results are stored as DNF.
-            ss = -1.0 
+            ss = -1.0
         
     time_sec = hh*3600 + mm*60 + ss + dd
     # print('')

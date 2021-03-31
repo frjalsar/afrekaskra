@@ -210,6 +210,7 @@ extern "C" {
 #define SQL_AU_AD_PASSWORD                  3L           /*  Active Directory password authentication is used */
 #define SQL_AU_RESET                        5L           /*  Reset the value to attribute not set to anything. */
 #define SQL_AU_AD_MSI                       6L           /*  Active Directory Manage Service Identity authentication is used */
+#define SQL_AU_AD_SPA                       7L           /*  Active Directory Service Principal authentication is used */
 
 /* Defines for use with SQL_COPT_SS_PRESERVE_CURSORS */
 #define SQL_PC_OFF                          0L           /*  Cursors are closed on SQLTransact */
@@ -330,6 +331,8 @@ extern "C" {
 #define SQL_SS_TYPE_DEFAULT                         0L
 #define SQL_SS_TYPE_SMALLDATETIME                   1L
 #define SQL_SS_TYPE_DATETIME                        2L
+#define SQL_SS_TYPE_MONEY                           3L
+#define SQL_SS_TYPE_SMALLMONEY                      4L
 
 /* Extended C Types range 4000 and above. Range of -100 thru 200 is reserved by Driver Manager. */
 #define SQL_C_TYPES_EXTENDED                0x04000L

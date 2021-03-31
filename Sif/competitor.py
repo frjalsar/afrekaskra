@@ -63,7 +63,6 @@ def Get_Competitor_Achievements(CompetitorCode):
     
     # Köllum á stored procedure sem heitir CompetitorsAchievements.
     df = pd.read_sql_query("EXEC CompetitorsAchievements @CompetitorNo = {:d}, @YearFrom = 1800, @YearTo = {:d}, @OutdoorsIndoorsFilter = '%'".format(CompetitorCode, CurrentYear), connection)
-
     # Breytum öllum árangri yfir í rauntölur
     df['Results_float'] = df['Results'].map(common.results_to_float)
 
