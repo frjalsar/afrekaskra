@@ -81,7 +81,7 @@ def results_to_float(in_str):
 
 #Units_symbol = {1: 'm', 2: 's', 3: 'mm:ss,dd', 4: 'hh:mm:ss,dd', 5: 'stig', 6: 'stig'}
 def results_to_str(in_float, Units, ElectricTiming):
-    if (in_float < 0.0):
+    if (in_float < 0.0): # Engin árangur
         return ''
 
     if (Units == 1): # m
@@ -89,9 +89,9 @@ def results_to_str(in_float, Units, ElectricTiming):
 
     elif (Units == 2): # s
         if (ElectricTiming == True):
-            return '{:.1f}'.format(in_float)
-        else:
             return '{:.2f}'.format(in_float)
+        else:
+            return '{:.1f}'.format(in_float)
 
     elif (Units == 3): # mm:ss,dd
         ss = in_float
