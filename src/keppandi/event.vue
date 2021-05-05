@@ -448,7 +448,7 @@ export default {
 
       for (var i = 0; i < dataLen; i++) {
         //console.log(this.event_tooltip[i]);
-        if (this.event_info.Minimize === true) {
+        if (this.event_info.MAX === false) {
           let c =
             this.event_min_all[i] === null
               ? null
@@ -484,7 +484,7 @@ export default {
 
       for (var i = 0; i < dataLen; i++) {
         //console.log(this.event_tooltip[i]);
-        if (this.event_info.Minimize === true) {
+        if (this.event_info.MAX === false) {
           let c =
             this.event_min_legal[i] === null
               ? null
