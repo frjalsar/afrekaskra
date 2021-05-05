@@ -86,7 +86,7 @@ def Get_Competitor_Events_Info(df):
         try:
             event_info = events.Get_Event_Info_by_Name(row['EventName'])
         except:
-            print('Hello')
+            print('Hello error')
             continue
 
         # Flokka út Grein
@@ -106,10 +106,10 @@ def Get_Competitor_Events_Info(df):
         # Telja hve oft viðkomandi hefur keppt í þessari grein
         count = df_event['Results'].count()
 
-        pb_out = ''
+        pb_out = -1.0
         pb_out_date = datetime(1970, 1, 1)
 
-        pb_in = ''
+        pb_in = -1.0
         pb_in_date = datetime(1970, 1, 1)
 
         #try:
@@ -179,7 +179,7 @@ def Get_Competitor_Events_Info(df):
         #mask_last_nowind = np.logical_and(df_event_nowind['dagsetning'] < date_to_last, date_from_last < df_event_nowind['dagsetning'])
         df_event_nowind_sb_last = df_event_nowind.loc[df_event['AchievementDate'].dt.year == (date_now.year-1)]
 
-        sb_cur = ''
+        sb_cur = -1.0
         try:
             # Finnum SB inni ef það er til
             if (df_event_nowind_sb_cur.empty == False):
@@ -203,10 +203,11 @@ def Get_Competitor_Events_Info(df):
                 sb_cur = df_event_sb_cur['Results_float'][idx] + ' (' + wind_str + ' m/s)'
         except:
             # Ef eitthvað klikkar þá sleppum við þessari grein
+            print('Error')
         #    sub_cur = ''
             pass
 
-        sb_last = ''
+        sb_last = -1.0
         try:
             # Finnum SB úti með löglegum árangri ef það er til
             if (df_event_nowind_sb_last.empty == False):
@@ -228,7 +229,7 @@ def Get_Competitor_Events_Info(df):
                 sb_last = df_event_sb_last['Results_float'][idx] + ' (' + wind_str + ' m/s)'
         except:
             # Ef eitthvað klikkar þá sleppum við þessari grein
-            #print('Error')
+            print('Error')
             #sb_last = ''
             pass
 
@@ -237,12 +238,12 @@ def Get_Competitor_Events_Info(df):
                         'EventShortName': event_info['NAME_SHORT'],
                         'EventUnit': event_info['UNIT_SYMBOL'],
                         'EventID': event_info['EVENT_ID'],
-                        'PB_out': pb_out,
+                        'PB_out': common.results_to_str(pb_out, event_info['UNIT'], True),
                         'PB_out_date': pb_out_date.year,
-                        'PB_in': pb_in,
+                        'PB_in': common.results_to_str(pb_in, event_info['UNIT'], True),
                         'PB_in_date': pb_in_date.year,
-                        'SB_cur': sb_cur,
-                        'SB_last': sb_last,
+                        'SB_cur': common.results_to_str(sb_cur, event_info['UNIT'], True),
+                        'SB_last': common.results_to_str(sb_last, event_info['UNIT'], True),
                         'count': int(count)
                         })
 

@@ -79,6 +79,45 @@ def results_to_float(in_str):
     # print('')
     return time_sec
 
+#Units_symbol = {1: 'm', 2: 's', 3: 'mm:ss,dd', 4: 'hh:mm:ss,dd', 5: 'stig', 6: 'stig'}
+def results_to_str(in_float, Units, ElectricTiming):
+    if (in_float < 0.0):
+        return ''
+
+    if (Units == 1): # m
+        return '{:.2f}'.format(in_float)
+
+    elif (Units == 2): # s
+        if (ElectricTiming == True):
+            return '{:.1f}'.format(in_float)
+        else:
+            return '{:.2f}'.format(in_float)
+
+    elif (Units == 3): # mm:ss,dd
+        ss = in_float
+        mm = int(ss // 60)
+        ss = ss % 60
+
+        return '{:02d}:{:.2f}'.format(mm, ss)
+
+    elif (Units == 4): # hh:mm:ss,dd
+        ss = in_float
+        hh = int(ss // (60*60))
+        ss = ss % (60*60)
+        mm = int(ss // 60)
+        ss = ss % 60
+
+        return '{:02d}:{:02d}:{:.2f}'.format(hh, mm, ss)
+
+    elif (Units == 5): # points
+        return '{:.0f}'.format(in_float)
+
+    elif (Units == 6): # points
+        return '{:.0f}'.format(in_float)
+        
+    else:
+        raise ValueError
+
 def wind_to_str(in_float, inout=None, hasWind=True):
     if (inout == 1):
         return ''
