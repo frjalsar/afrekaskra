@@ -106,10 +106,10 @@ def Get_Competitor_Events_Info(df):
         # Telja hve oft viðkomandi hefur keppt í þessari grein
         count = df_event['Results'].count()
 
-        pb_out = -1.0
+        pb_out = ''
         pb_out_date = datetime(1970, 1, 1)
 
-        pb_in = -1.0
+        pb_in = ''
         pb_in_date = datetime(1970, 1, 1)
 
         #try:
@@ -120,7 +120,7 @@ def Get_Competitor_Events_Info(df):
             else:
                 idx = df_event_in['Results_float'].idxmin()
 
-            pb_in = df_event_in['Results_float'][idx]
+            pb_in = common.results_to_str(df_event_in['Results_float'][idx], event_info['UNIT'], True)
             pb_in_date = df_event_in['AchievementDate'][idx]
 
         # Finnum PB úti með löglegum árangri ef það er til
@@ -130,7 +130,7 @@ def Get_Competitor_Events_Info(df):
             else:
                 idx = df_event_nowind_out['Results_float'].idxmin()
 
-            pb_out = df_event_nowind_out['Results_float'][idx]
+            pb_out = common.results_to_str(df_event_nowind_out['Results_float'][idx], event_info['UNIT'], True)
             pb_out_date = df_event_nowind_out['AchievementDate'][idx]
 
         # Ef ekki þá athugum við ólöglegan árangur
@@ -140,7 +140,7 @@ def Get_Competitor_Events_Info(df):
             else:
                 idx = df_event_out['Results_float'].idxmin()
 
-            pb_out = df_event_out['Results_float'][idx] + ' ({:+.1f}'.format(df_event_out['WindReading'][idx]) + ' m/s)'
+            pb_out = common.results_to_str(df_event_out['Results_float'][idx], event_info['UNIT'], True) + ' ({:+.1f}'.format(df_event_out['WindReading'][idx]) + ' m/s)'
             pb_out_date = df_event_out['AchievementDate'][idx]
         #except:
             # Ef eitthvað klikkar þá sleppum við þessari grein
@@ -179,7 +179,7 @@ def Get_Competitor_Events_Info(df):
         #mask_last_nowind = np.logical_and(df_event_nowind['dagsetning'] < date_to_last, date_from_last < df_event_nowind['dagsetning'])
         df_event_nowind_sb_last = df_event_nowind.loc[df_event['AchievementDate'].dt.year == (date_now.year-1)]
 
-        sb_cur = -1.0
+        sb_cur = ''
         try:
             # Finnum SB inni ef það er til
             if (df_event_nowind_sb_cur.empty == False):
@@ -189,7 +189,7 @@ def Get_Competitor_Events_Info(df):
                 else:
                     idx = df_event_nowind_sb_cur['Results_float'].idxmin()
                     
-                sb_cur = df_event_nowind_sb_cur['Results_float'][idx]
+                sb_cur = common.results_to_str(df_event_nowind_sb_cur['Results_float'][idx], event_info['UNIT'], True)
                 #print(sb_cur)
 
                 # Ef ekki þá athugum við ólöglegan árangur
@@ -200,14 +200,14 @@ def Get_Competitor_Events_Info(df):
                     idx = df_event_sb_cur['Results_float'].idxmin()
                     
                 wind_str = '{:+.1f}'.format(df_event_sb_cur['WindReading'][idx])
-                sb_cur = df_event_sb_cur['Results_float'][idx] + ' (' + wind_str + ' m/s)'
+                sb_cur = common.results_to_str(df_event_sb_cur['Results_float'][idx], event_info['UNIT'], True) + ' (' + wind_str + ' m/s)'
         except:
             # Ef eitthvað klikkar þá sleppum við þessari grein
             print('Error')
         #    sub_cur = ''
             pass
 
-        sb_last = -1.0
+        sb_last = ''
         try:
             # Finnum SB úti með löglegum árangri ef það er til
             if (df_event_nowind_sb_last.empty == False):
@@ -216,7 +216,7 @@ def Get_Competitor_Events_Info(df):
                 else:
                     idx = df_event_nowind_sb_last['Results_float'].idxmin()
 
-                sb_last = df_event_nowind_sb_last['Results_float'][idx]
+                sb_last = common.results_to_str(df_event_nowind_sb_last['Results_float'][idx], event_info['UNIT'], True)
 
             # Ef ekki þá athugum við ólöglegan árangur
             elif (df_event_sb_last.empty == False):
@@ -226,7 +226,7 @@ def Get_Competitor_Events_Info(df):
                     idx = df_event_sb_last['Results_float'].idxmin()
 
                 wind_str = '{:+.1f}'.format(df_event_sb_last['WindReading'][idx])
-                sb_last = df_event_sb_last['Results_float'][idx] + ' (' + wind_str + ' m/s)'
+                sb_last = common.results_to_str(df_event_sb_last['Results_float'][idx], event_info['UNIT'], True) + ' (' + wind_str + ' m/s)'
         except:
             # Ef eitthvað klikkar þá sleppum við þessari grein
             print('Error')
@@ -238,12 +238,12 @@ def Get_Competitor_Events_Info(df):
                         'EventShortName': event_info['NAME_SHORT'],
                         'EventUnit': event_info['UNIT_SYMBOL'],
                         'EventID': event_info['EVENT_ID'],
-                        'PB_out': common.results_to_str(pb_out, event_info['UNIT'], True),
+                        'PB_out': pb_out,
                         'PB_out_date': pb_out_date.year,
-                        'PB_in': common.results_to_str(pb_in, event_info['UNIT'], True),
+                        'PB_in': pb_in,
                         'PB_in_date': pb_in_date.year,
-                        'SB_cur': common.results_to_str(sb_cur, event_info['UNIT'], True),
-                        'SB_last': common.results_to_str(sb_last, event_info['UNIT'], True),
+                        'SB_cur': sb_cur,
+                        'SB_last': sb_last,
                         'count': int(count)
                         })
 
