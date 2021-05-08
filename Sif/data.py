@@ -695,14 +695,14 @@ def Top_List():
         try:
             Top_Women.append({'Name'          : Top_W[0]['name'],
                               'CompetitorID'  : Top_W[0]['competitor_code'],
-                              'Results'       : Top_W[0]['results'],
+                              'Results'       : common.results_to_str(float(Top_W[0]['results']), Event_info_W['Units'], True),
                               'OutInn'        : Top_W[0]['outdoor_indoor'],
                               'Club'          : Top_W[0]['club'],
                               'EventName'     : Event_info_W['ShortName'],
                               'EventID'       : event_id,
                               'Units_symbol'  : Event_info_W['Units_symbol']
                               })
-        except:
+        except IndexError: # Index error þýðir líklegast að engin árangur fannst
             pass
 
     # -- Men
@@ -713,14 +713,14 @@ def Top_List():
 
             Top_Men.append({'Name'          : Top_M[0]['name'],
                             'CompetitorID'  : Top_M[0]['competitor_code'],
-                            'Results'       : Top_M[0]['results'],
+                            'Results'       : common.results_to_str(float(Top_M[0]['results']), Event_info_W['Units'], True),
                             'OutInn'        : Top_M[0]['outdoor_indoor'],
                             'Club'          : Top_M[0]['club'],
                             'EventName'     : Event_info_M['ShortName'],
                             'EventID'       : event_id,
                             'Units_symbol'  : Event_info_M['Units_symbol']
                             })
-        except:
+        except IndexError: # Index error þýðir líklegast að engin árangur fannst
             pass
 
     return Top_Women, Top_Men
