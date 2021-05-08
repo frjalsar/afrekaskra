@@ -98,8 +98,8 @@ def Get_Top_100(request, Event_id, IndoorOutDoor, Gender, Year, AgeStart, AgeEnd
     return JsonResponse({'TopList': Top_list, 'EventInfo': Event_Info}, safe=False)
 
 def Get_Top_List(request):
-    Top_list = data.Top_List()
-    return JsonResponse({'TopList': Top_list}, safe=False)
+    Top_list_Women, Top_list_Men = data.Top_List()
+    return JsonResponse({'Women': Top_list_Women, 'Men': Top_list_Men}, safe=False)
 
 def competitor_img_profile(request, CompetitorCode):
     filename_profile = './images/profile_{:d}.jpg'.format(CompetitorCode)

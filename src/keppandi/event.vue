@@ -532,7 +532,7 @@ export default {
 @media (min-width: 768px) {
   .img-profile {
     width: 75px;
-  }
+  };
 }
 /* md */
 @media (min-width: 992px) {

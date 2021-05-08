@@ -104,7 +104,7 @@ def Get_Event_Info_by_ID(Event_id):
                       'Units': Units,
                       'Units_symbol': common.Units_symbol[Units],
                       'Minimize': minimize,
-                      'ShortName': EventShorterName, #df_event_list['ShortName'].values[Event_id],
+                      'ShortName': EventShorterName.strip(), #df_event_list['ShortName'].values[Event_id],
                       'Name_ISL': df_event_list['Name_ISL'].values[Event_id],
                       'HasWind': df_event_list['Wind'].values[Event_id]}
     except:

@@ -680,14 +680,50 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
     return Achievements_list[:N], Event_Info
 
 def Top_List():
-    All_Events = []
+    Top_Women = []
+    Top_Men = []
 
-    LJ_M,  = Top_100_List(179, 2021, 2, 1, 0, 99, True, True, True, 1)
-    LJ_W = Top_100_List(179, 2021, 2, 2, 0, 99, True, True, True, 1)
+    Women_Events = [82, 6, 27, 48, 97, 19, 30, 62, 179, 252, 143, 239]
+    Men_Events   = [82, 6, 27, 48, 97, 19, 30, 62, 179, 252, 143, 239]
 
-    All_Events.append(LJ_M)
-    All_Events.append(LJ_W)
-    return All_Events
+    current_year = datetime.datetime.now().year
+
+    # -- Women
+    for event_id in Women_Events:
+        Top_W, Event_info_W = Top_100_List(event_id, current_year, 2, 2, 0, 99, True, True, True, 1)
+
+        try:
+            Top_Women.append({'Name'          : Top_W[0]['name'],
+                              'CompetitorID'  : Top_W[0]['competitor_code'],
+                              'Results'       : Top_W[0]['results'],
+                              'OutInn'        : Top_W[0]['outdoor_indoor'],
+                              'Club'          : Top_W[0]['club'],
+                              'EventName'     : Event_info_W['ShortName'],
+                              'EventID'       : event_id,
+                              'Units_symbol'  : Event_info_W['Units_symbol']
+                              })
+        except:
+            pass
+
+    # -- Men
+    for event_id in Men_Events:
+        Top_M, Event_info_M = Top_100_List(event_id, current_year, 2, 1, 0, 99, True, True, True, 1)
+
+        try:
+
+            Top_Men.append({'Name'          : Top_M[0]['name'],
+                            'CompetitorID'  : Top_M[0]['competitor_code'],
+                            'Results'       : Top_M[0]['results'],
+                            'OutInn'        : Top_M[0]['outdoor_indoor'],
+                            'Club'          : Top_M[0]['club'],
+                            'EventName'     : Event_info_M['ShortName'],
+                            'EventID'       : event_id,
+                            'Units_symbol'  : Event_info_M['Units_symbol']
+                            })
+        except:
+            pass
+
+    return Top_Women, Top_Men
 
 def Get_Club_List():
     df_clubs = pd.read_csv(CLUB_LIST_FILENAME)

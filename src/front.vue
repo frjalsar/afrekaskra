@@ -30,10 +30,6 @@
     <div class="card bg-light mt-4">
       <h4 class="card-header">Top listar</h4>
       <div class="card-body">
-        <p class="card-text">
-          Veldu grein hér að neðan og Sif sýnir þér 100 bestu afrek hvers árs
-          eða frá upphafi.
-        </p>
         <p>To do: setja inn link fyrir greinar</p>
         <FrontTopList />
       </div>
