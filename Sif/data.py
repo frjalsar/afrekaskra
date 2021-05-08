@@ -604,7 +604,7 @@ def Get_Competitor_Data(CompetitorCode):
     Test_List_of_Events(CompetitorCode=CompetitorCode, Event_id = None)
     return None
 
-def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal, ISL, BestByAth):
+def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal, ISL, BestByAth, N=100):
     if (Event_id > 1000): # Ef Event_id ef yfir 1000 þá er þetta þrautagrein. Þurfum að meðhöndla þær sérstaklega.
         Athlon_events = {1001: 'FIMMTARÞR',  # Fimmtarþraut
                          1002: 'FIMMTUNG',   # Fimmtarþr. unglingastig
@@ -677,7 +677,17 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
     #Achievements_list = Convert_Achievements_to_List(q, minimize_results, BestByAth, Units)
     Achievements_list = Convert_Achievements_to_List_PD(q, BestByAth, Event_Info)
 
-    return Achievements_list[:100], Event_Info
+    return Achievements_list[:N], Event_Info
+
+def Top_List():
+    All_Events = []
+
+    LJ_M,  = Top_100_List(179, 2021, 2, 1, 0, 99, True, True, True, 1)
+    LJ_W = Top_100_List(179, 2021, 2, 2, 0, 99, True, True, True, 1)
+
+    All_Events.append(LJ_M)
+    All_Events.append(LJ_W)
+    return All_Events
 
 def Get_Club_List():
     df_clubs = pd.read_csv(CLUB_LIST_FILENAME)

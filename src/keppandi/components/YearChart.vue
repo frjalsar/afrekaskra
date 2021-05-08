@@ -15,7 +15,18 @@ export default {
   //     strFormat: "{value:%M:%S}", // "{value:%M:%S}"
   //   };
   // },
+  data() {
+    return {
+      window: {
+        width: 0,
+        height: 0,
+      },
+      isyvisible: true,
+    };
+  },
   created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
     // Bæta við seríu með öllum árangri ef grein hefur vind.
     if (this.event_info["HAS_WIND"] == true) {
       this.chartOptions.series[1] = {
@@ -37,9 +48,24 @@ export default {
       };
     }
   },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+  },
   // mounted() {
   //   console.log(this.legaldata);
   // },
+  methods: {
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+      if (this.window.width < 800) {
+        this.isyvisible = false;
+      } else {
+        this.isyvisible = true;
+      }
+      console.log(this.isyvisible)
+    },
+  },
   computed: {
     strFormat() {
       switch (this.event_info["UNIT"]) {
@@ -91,6 +117,7 @@ export default {
           enabled: true,
         },
         yAxis: {
+          visible: this.isyvisible,
           title: {
             text: "Árangur",
           },

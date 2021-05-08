@@ -27,16 +27,17 @@
       </div>
     </div>
     <!---->
-<!--    <div class="card mt-4">
-      <div class="card-header">Top listar</div>
+    <div class="card bg-light mt-4">
+      <h4 class="card-header">Top listar</h4>
       <div class="card-body">
         <p class="card-text">
           Veldu grein hér að neðan og Sif sýnir þér 100 bestu afrek hvers árs
           eða frá upphafi.
         </p>
         <p>To do: setja inn link fyrir greinar</p>
+        <FrontTopList />
       </div>
-    </div>-->
+    </div>
     <!---->
     <div class="card bg-light mt-4">
       <h4 class="card-header">Íslandsmet</h4>
@@ -67,11 +68,13 @@
 <script>
 import KeppandiSearch from "./keppandi/components/Search.vue";
 import ISLRecordBirtdayList from "./islmet/ISLRecordBirtdayList.vue";
+import FrontTopList from "./top/FrontTopList.vue";
 
 export default {
   components: {
     KeppandiSearch,
     ISLRecordBirtdayList,
+    FrontTopList,
   },
   mounted() {
     document.title = "Afrekaskrá FRÍ"; //Reset the title

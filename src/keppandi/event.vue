@@ -76,7 +76,7 @@
                 aria-selected="true"
                 v-on:click="onTabClick"
               >
-                <i class="fas fa-chart-line"></i> Ársbest
+                Ársbest
               </a>
             </li>
             <li class="nav-item">
@@ -90,7 +90,7 @@
                 aria-selected="false"
                 v-on:click="onTabClick"
               >
-                <i class="fas fa-chart-line"></i> Tímaröð
+                Tímaröð
               </a>
             </li>
             <li class="nav-item">
@@ -104,7 +104,7 @@
                 aria-selected="false"
                 v-on:click="onTabClick"
               >
-                <i class="fas fa-chart-line"></i> Bætingar
+                Bætingar
               </a>
             </li>
             <!--           <li class="nav-item">

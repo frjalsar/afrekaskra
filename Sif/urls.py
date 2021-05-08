@@ -43,6 +43,7 @@ urlpatterns = [
     path(r'api/events/<int:Event_id>/', api_views.events, name ='api_events'),
     path(r'api/achievements/<int:CompetitorCode>/<int:Event_id>/', api_views.competitor_achievements, name='api_achievements'),
     path(r'api/top_list/<int:Event_id>/<int:IndoorOutDoor>/<int:Gender>/<int:Year>/<int:AgeStart>/<int:AgeEnd>/<int:Legal>/<int:ISL>/<int:BestByAth>/', api_views.Get_Top_100, name='api_top100'),
+    path(r'api/top_front/', api_views.Get_Top_List, name='api_top1'),
     path(r'api/competitor/', api_views.competitor_list, name='api_competitor_list'),
     path(r'api/clubs/', api_views.club_list, name='api_club_list'),
     path(r'api/img/profile/<int:CompetitorCode>/', api_views.competitor_img_profile),
