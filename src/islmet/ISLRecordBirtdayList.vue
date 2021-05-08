@@ -2,7 +2,9 @@
   <div>
     <div v-if="loading">
       <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
-      <!--<img src="../fri-loading.gif" alt="Hleð síðu" width=100%>-->
+      <video autoplay loop muted playsinline width="100%">
+        <source src="../assets/iceland.webm" type="video/webm" />
+      </video>
       <!--<p style="text-align:center">{{message}}</p>-->
     </div>
     <div v-if="!loading">
