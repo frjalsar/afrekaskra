@@ -653,7 +653,7 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
         if (flokkur == '-1'):
             flokkur = ''
         q = AthlAfrek.objects.all().filter(grein__iexact=Event_Info['THORID_2'], tákn_greinar__iexact=Event_Info['THORID_1'])
-        print(Event_Info)
+        #print(Event_Info)
 
     #--
     if (Event_Info['Minimize'] == True):
@@ -709,8 +709,8 @@ def Top_List():
                     1011, 1021 # Þraut
                     ]
 
-    #current_year = datetime.datetime.now().year
-    current_year = 2020
+    current_year = datetime.datetime.now().year
+    #current_year = 2020
 
     # -- Women
     for event_id in Women_Events:
