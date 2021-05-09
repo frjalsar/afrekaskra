@@ -620,13 +620,27 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
                          1022: 'TUGÞRAU17',  # Tugþraut 16-17 ára
                          1023: 'TUGÞRRU20'}  # Tugþraut U20 (Norðurlönd)
 
+        Athlon_events_Name = {1001: 'Fimmtarþraut',  # Fimmtarþraut
+                         1002: 'Fimmtarþr. unglingastig',   # Fimmtarþr. unglingastig
+                         1003: 'Fimmtarþraut (76cm grind)', # Fimmtarþraut (76cm grind)
+                         1004: 'Fimmtarþraut pilta 15 ára', # Fimmtarþraut pilta 15 ára
+
+                         1011: 'Sjöþraut',   # Sjöþraut
+                         1012: 'Sjöþraut (6Kg kúla)', # Sjöþraut (6Kg kúla)
+                         1013: 'Sjöþraut (5Kg kúla)', # Sjöþraut (5Kg kúla)
+                         1014: 'Sjöþraut meyjaáhöld',   # Sjöþraut meyjaáhöld
+
+                         1021: 'Tugþraut',   # Tugþraut
+                         1022: 'Tugþraut 16-17 ára',  # Tugþraut 16-17 ára
+                         1023: 'Tugþraut U20 (Norðurlönd)'}  # Tugþraut U20 (Norðurlönd)
+
         THORID_2 = Athlon_events[Event_id]
 
         Event_Info = {'THORID_1': '',
                       'Units': 5,
                       'Units_symbol': 'Stig',
                       'Minimize': False,
-                      'ShortName': '',
+                      'ShortName': Athlon_events_Name[Event_id],
                       'HasWind': 0}
         q = AthlAfrek.objects.all().filter(grein__iexact=THORID_2)
         if ((Event_id == 1002) or (Event_id == 1014)):
@@ -638,7 +652,8 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
         flokkur = Event_Info['AgeGroup']
         if (flokkur == '-1'):
             flokkur = ''
-        q = AthlAfrek.objects.all().filter(grein__iexact=Event_Info['THORID_2'], flokkur__iexact=flokkur)
+        q = AthlAfrek.objects.all().filter(grein__iexact=Event_Info['THORID_2'], tákn_greinar__iexact=Event_Info['THORID_1'])
+        print(Event_Info)
 
     #--
     if (Event_Info['Minimize'] == True):
@@ -683,14 +698,23 @@ def Top_List():
     Top_Women = []
     Top_Men = []
 
-    Women_Events = [82, 6, 27, 48, 97, 19, 30, 62, 179, 252, 143, 239]
-    Men_Events   = [82, 6, 27, 48, 97, 19, 30, 62, 179, 252, 143, 239]
+    Women_Events = [82, 86, 6, 7, 27, 48, 52, 97, 19, 30, 62, # Hlaup
+                    179, 252, 143, 239, # Stökk
+                    227, 168, 216, 164, # Köst
+                    1001, 1011 # Þraut
+                    ] 
+    Men_Events   = [82, 83, 6, 15, 27, 48, 49, 97, 19, 30, 62, # Hlaup
+                    179, 252, 143, 239, # Stökk
+                    226, 162, 212, 152, # Köst
+                    1011, 1021 # Þraut
+                    ]
 
-    current_year = datetime.datetime.now().year
+    #current_year = datetime.datetime.now().year
+    current_year = 2020
 
     # -- Women
     for event_id in Women_Events:
-        Top_W, Event_info_W = Top_100_List(event_id, current_year, 2, 2, 0, 99, True, True, True, 1)
+        Top_W, Event_info_W = Top_100_List(event_id, current_year, 2, 2, 0, 99, True, 0, True, 1)
 
         try:
             Top_Women.append({'Name'          : Top_W[0]['name'],
@@ -707,7 +731,7 @@ def Top_List():
 
     # -- Men
     for event_id in Men_Events:
-        Top_M, Event_info_M = Top_100_List(event_id, current_year, 2, 1, 0, 99, True, True, True, 1)
+        Top_M, Event_info_M = Top_100_List(event_id, current_year, 2, 1, 0, 99, True, 0, True, 1)
 
         try:
 
