@@ -713,7 +713,7 @@ def Top_List():
 
             Top_Men.append({'Name'          : Top_M[0]['name'],
                             'CompetitorID'  : Top_M[0]['competitor_code'],
-                            'Results'       : common.results_to_str(float(Top_M[0]['results']), Event_info_W['Units'], True),
+                            'Results'       : common.results_to_str(float(Top_M[0]['results']), Event_info_M['Units'], True),
                             'OutInn'        : Top_M[0]['outdoor_indoor'],
                             'Club'          : Top_M[0]['club'],
                             'EventName'     : Event_info_M['ShortName'],
