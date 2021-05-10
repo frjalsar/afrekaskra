@@ -6,7 +6,7 @@ django-bmemcached==0.3.0
 django-heroku==0.3.1
 django-mssql-backend==2.8.1
 gunicorn==20.1.0
-numpy==1.20.2
+numpy==1.20.3
 pandas==1.2.4
 Pillow==8.2.0
 psycopg2==2.8.6
