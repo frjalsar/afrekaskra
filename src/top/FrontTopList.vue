@@ -19,7 +19,9 @@
       </thead>
       <tbody>
         <tr v-for="(i, index) in women_data">
-          <th scope="row">{{ i.EventName }}</th>
+          <th scope="row">
+            <router-link v-bind:to="{name: 'TopList', query: {g:'2', e:i.EventID, t:i.EventType} }">{{ i.EventName }}</router-link>
+          </th>
           <td>
             <router-link
               :to="{
@@ -49,7 +51,9 @@
       </thead>
       <tbody>
         <tr v-for="(i, index) in men_data">
-          <th scope="row">{{ i.EventName }}</th>
+          <th scope="row">
+            <router-link v-bind:to="{name: 'TopList', query: {g:'1', e:i.EventID, t:i.EventType} }">{{ i.EventName }}</router-link>
+          </th>
           <td>
             <router-link
               :to="{
@@ -110,10 +114,10 @@ export default {
           axios.spread((...response) => {
             this.women_data = response[0]["data"]["Women"];
             this.men_data = response[0]["data"]["Men"];
-            console.log("Got data");
-            console.log(response[0]);
-            console.log("Women data");
-            console.log(this.women_data);
+            //console.log("Got data");
+            //console.log(response[0]);
+            //console.log("Women data");
+            //console.log(this.women_data);
           })
         )
         .catch((error) => {

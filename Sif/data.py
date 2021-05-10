@@ -698,6 +698,12 @@ def Top_List():
     Top_Women = []
     Top_Men = []
 
+    Event_Type = [3, 4, 3, 4, 3, 3, 4, 3, 3, 3, 3, 3, 3, # Hlaup og grind
+                  1, 1, 1, 1, # Stökk
+                  2, 2, 2, 2, # Köst
+                  7, 7 # Þraut
+                  ]
+
     Women_Events = [82, 86, 6, 7, 27, 48, 52, 97, 19, 30, 62, 55, 59, # Hlaup
                     179, 252, 143, 239, # Stökk
                     227, 168, 216, 164, # Köst
@@ -713,7 +719,7 @@ def Top_List():
     #current_year = 2020
 
     # -- Women
-    for event_id in Women_Events:
+    for event_id, event_t in zip(Women_Events, Event_Type):
         Top_W, Event_info_W = Top_100_List(event_id, current_year, 2, 2, 0, 99, True, 0, True, 1)
 
         try:
@@ -724,13 +730,14 @@ def Top_List():
                               'Club'          : Top_W[0]['club'],
                               'EventName'     : Event_info_W['ShortName'],
                               'EventID'       : event_id,
+                              'EventType'     : event_t,
                               'Units_symbol'  : Event_info_W['Units_symbol']
                               })
         except IndexError: # Index error þýðir líklegast að engin árangur fannst
             pass
 
     # -- Men
-    for event_id in Men_Events:
+    for event_id, event_t in zip(Men_Events, Event_Type):
         Top_M, Event_info_M = Top_100_List(event_id, current_year, 2, 1, 0, 99, True, 0, True, 1)
 
         try:
@@ -742,6 +749,7 @@ def Top_List():
                             'Club'          : Top_M[0]['club'],
                             'EventName'     : Event_info_M['ShortName'],
                             'EventID'       : event_id,
+                            'EventType'     : event_t,
                             'Units_symbol'  : Event_info_M['Units_symbol']
                             })
         except IndexError: # Index error þýðir líklegast að engin árangur fannst

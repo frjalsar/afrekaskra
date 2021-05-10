@@ -20,6 +20,7 @@ export default new Router({
     },
     {
       path: '/top',
+      name: 'TopList',
       component: () => import('./top/toplists.vue')
     },
     // {
