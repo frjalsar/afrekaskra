@@ -30,7 +30,6 @@
     <div class="card bg-light mt-4">
       <h4 class="card-header">Top listar</h4>
       <div class="card-body">
-        <p>To do: setja inn link fyrir greinar</p>
         <FrontTopList />
       </div>
     </div>
