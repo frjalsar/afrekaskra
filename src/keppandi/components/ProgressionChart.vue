@@ -10,6 +10,34 @@ import moment from "moment";
 
 export default {
   props: ["data", "event_info"],
+  data() {
+    return {
+      window: {
+        width: 0,
+        height: 0,
+      },
+      isyvisible: true,
+    };
+  },
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+  },
+  methods: {
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+      if (this.window.width < 800) {
+        this.isyvisible = false;
+      } else {
+        this.isyvisible = true;
+      }
+      console.log(this.isyvisible);
+    },
+  },
   computed: {
     strFormat() {
       switch (this.event_info["UNIT"]) {
@@ -39,6 +67,7 @@ export default {
           enabled: false,
         },
         yAxis: {
+          visible: this.isyvisible,
           title: {
             text: "Árangur",
           },
@@ -63,10 +92,10 @@ export default {
               formatter: function () {
                 switch (ctx.event_info["UNIT"]) {
                   case 3:
-                    return moment.unix(this.y/1000).format("mm:ss,SS");
+                    return moment.unix(this.y / 1000).format("mm:ss,SS");
                     break;
                   case 4:
-                    return moment.unix(this.y/1000).format("hh:mm:ss,SS");
+                    return moment.unix(this.y / 1000).format("hh:mm:ss,SS");
                     break;
                   default:
                     return Highcharts.numberFormat(this.y, 2);
