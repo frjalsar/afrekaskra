@@ -18,7 +18,7 @@
       </video>
     </div>
     <!-- PROFILE -->
-    <div id="competitor-view" v-if="isReady">
+    <div id="competitor-view" v-show="isReady">
       <div class="action-div">
         <img
           class="img-fluid img-action"
