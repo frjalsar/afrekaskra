@@ -18,7 +18,7 @@
       </video>
     </div>
     <!-- PROFILE -->
-    <div id="competitor-view" v-show="isReady">
+    <div id="competitor-view" v-if="isReady">
       <div class="action-div">
         <img
           class="img-fluid img-action"
@@ -125,6 +125,7 @@ export default {
     ClubLogoError: function () {
       // Fela Club logo ef við fáum villu á það.
       this.showClubLogo = false;
+      console.log('Club logo error')
     },
     get_data: function () {
       this.message = "Næ í gögn ekki stökkva langt 😉";
