@@ -6,7 +6,7 @@
     <div v-if="!loading">
       <p>Hér sjást bestu afrek ársins. Smelltu á grein í listanum til að sjá top 100 listann fyrir árið eða frá upphafi. Smelltu á nafn til að sjá upplýsingar um keppandann.</p>
       <!---->
-      <h3>Konur</h3>
+      <h3><i class="fas fa-female"></i> Konur</h3>
     <table class="table table-striped table-hover table-responsive-sm table-sm">
       <!--<caption>Listi yfir afmæli Íslandsmeta</caption>-->
       <col span="1" class="wide" />
@@ -38,7 +38,7 @@
     </table>
     <!---->
     <br>
-      <h3>Karlar</h3>
+      <h3><i class="fas fa-male"></i> Karlar</h3>
     <table class="table table-striped table-hover table-responsive-sm table-sm">
       <!--<caption>Listi yfir afmæli Íslandsmeta</caption>-->
       <col span="1" class="wide" />

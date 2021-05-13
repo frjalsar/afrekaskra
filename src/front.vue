@@ -2,7 +2,7 @@
   <div>
     <div class="card bg-light mt-4">
       <div class="card-body">
-        <h4 class="card-title">Afrekaskrá Frjálsíþróttasambands Íslands</h4>
+        <h4 class="card-title"><img src="./assets/FRI-logo-new.jpg" style="height: 1.25em;">Afrekaskrá Frjálsíþróttasambands Íslands</h4>
         <p>
           Hér er haldið utan tölfræði á afrekum í frjálsum íþróttum. Öll gögn koma úr <a href="http://thor.fri.is">Þór</a>
           mótaforriti <a href="http://www.fri.is">FRÍ</a>.
@@ -11,7 +11,7 @@
     </div>
     <!---->
     <div class="card bg-light mt-4">
-      <h4 class="card-header">Finna iðkanda</h4>
+      <h4 class="card-header"><i class="fas fa-user"></i> Finna iðkanda</h4>
       <div class="card-body">
         <p class="card-text">
           Byrjaðu að slá inn nafn iðkanda og afrekaskráin hjálpar þér að finna hana
@@ -22,14 +22,14 @@
     </div>
     <!---->
     <div class="card bg-light mt-4">
-      <h4 class="card-header">Top listar</h4>
+      <h4 class="card-header"><i class="fas fa-list-ol"></i> Top listar</h4>
       <div class="card-body">
         <FrontTopList />
       </div>
     </div>
     <!---->
     <div class="card bg-light mt-4">
-      <h4 class="card-header">Íslandsmet</h4>
+      <h4 class="card-header"><i class="fas fa-flag"></i> Íslandsmet</h4>
       <div class="card-body">
         <!--<p class="card-text">
           Todo: Listi yfir Íslandsmet sem voru nýlega sett?
@@ -40,7 +40,7 @@
       </div>
     </div>
     <!---->
-    <div class="card bg-light mt-4">
+    <!--<div class="card bg-light mt-4">
       <h4 class="card-header">Fyrirspurn</h4>
       <div class="card-body">
         <p class="card-text">
@@ -50,7 +50,7 @@
           >.
         </p>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
