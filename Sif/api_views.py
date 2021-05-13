@@ -64,7 +64,7 @@ def competitor_event(request, CompetitorCode=None, Event_id=None):
                          },
                          safe=True)
 
-@cache_page(60 * 60 * 24)
+@cache_page(60 * 60 * 48)
 def competitor_list(request):
     s = request.GET.get('search', '') # Hvað notandinn sló inn í boxið
     club = request.GET.get('clubId', None)
@@ -92,7 +92,7 @@ def competitor_achievements(request, CompetitorCode, Event_id):
     Achievements_list = data.Get_List_of_Achievements(CompetitorCode, Event_id)
     return JsonResponse(Achievements_list, safe=False)
 
-@cache_page(60 * 60 * 6)
+@cache_page(60 * 60 * 12)
 def Get_Top_100(request, Event_id, IndoorOutDoor, Gender, Year, AgeStart, AgeEnd, Legal, ISL, BestByAth):
     Top_list, Event_Info = data.Top_100_List(Event_id=Event_id, Year=Year, IndoorOutDoor=IndoorOutDoor, Gender=Gender, AgeStart=AgeStart, AgeEnd=AgeEnd, Legal=Legal, ISL=ISL, BestByAth=BestByAth)
     return JsonResponse({'TopList': Top_list, 'EventInfo': Event_Info}, safe=False)
@@ -150,7 +150,7 @@ def competitor_records(request, CompetitorCode):
     Records = records.Get_Competitor_Records(CompetitorCode)
     return JsonResponse(Records, safe=False)
 
-@cache_page(60 * 60 * 6)
+@cache_page(60 * 60 * 12)
 def record_birthdays(request):
     Records = records.Get_Records_Birthdays()
     return JsonResponse(Records, safe=False)
