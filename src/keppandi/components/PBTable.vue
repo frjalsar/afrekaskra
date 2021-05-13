@@ -5,7 +5,7 @@
     <p>
       Taflan sýnir persónulegan besta árangur (PB) innan og utanhús ásamt besta
       árangri á síðustu tveimur árum (SB). Sýndur er löglegur árangur nema í
-      þeim tilvikum þegar engin löglegur árangur finnst.
+      þeim tilvikum þegar engin löglegur árangur er til.
       <br />
       <i class="far fa-hand-pointer"></i>
       <small
