@@ -162,7 +162,7 @@ def Get_Competitor_Events_Info(df):
 
         # Þetta ár
         #mask_cur = np.logical_and(df_event['dagsetning'] < date_to_cur, date_from_cur < df_event['dagsetning'])
-        df_event_sb_cur = df_event.loc[df_event['AchievementDate'].dt.year == 2020]
+        df_event_sb_cur = df_event.loc[df_event['AchievementDate'].dt.year == date_now.year]
         #print(df_event_sb_cur)
         #if (df_event_sb_cur.empty == False):
         #    print(df_event_sb_cur)
