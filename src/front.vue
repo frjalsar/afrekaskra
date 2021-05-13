@@ -2,7 +2,7 @@
   <div>
     <div class="card bg-light mt-4">
       <div class="card-body">
-        <h4 class="card-title"><img src="./assets/FRI-logo-new.jpg" style="height: 1.25em;">Afrekaskrá Frjálsíþróttasambands Íslands</h4>
+        <h4 class="card-title"><img src="./assets/FRI-Logo-Black-RGB.png" style="height: 1em;vertical-align: baseline;"> Afrekaskrá Frjálsíþróttasambands Íslands</h4>
         <p>
           Hér er haldið utan tölfræði á afrekum í frjálsum íþróttum. Öll gögn koma úr <a href="http://thor.fri.is">Þór</a>
           mótaforriti <a href="http://www.fri.is">FRÍ</a>.

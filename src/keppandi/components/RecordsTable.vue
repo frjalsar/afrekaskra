@@ -11,9 +11,7 @@
     <div v-if="showRecordsTable">
       <hr />
       <h2 class="display-4">
-        <!-- Font size er 3.5 rem í Display-4 sem er 56px-->
-        <img src="./ISL_Flag.svg" alt="Íslenski fáninn" height="56px" />
-        Íslandsmet
+        <i class="fas fa-flag"></i> Íslandsmet
       </h2>
       <h4>
         Fjöldi skráðra Íslandsmeta er {{ nrRecords }} þar af eru
