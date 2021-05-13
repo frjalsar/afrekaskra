@@ -698,25 +698,28 @@ def Top_List():
     Top_Women = []
     Top_Men = []
 
-    Event_Type = [3, 4, 3, 4, 3, 3, 4, 3, 3, 3, 3, 3, 3, # Hlaup og grind
+    Event_Type = [3, 4, 3, 4, 3, 3, 4,
+                  5, 5, 5, 6, 3, 3, # Hlaup og grind
                   1, 1, 1, 1, # Stökk
                   2, 2, 2, 2, # Köst
                   7, 7 # Þraut
                   ]
 
-    Women_Events = [82, 86, 6, 7, 27, 48, 52, 97, 19, 30, 62, 55, 59, # Hlaup
+    Women_Events = [82, 86, 6, 7, 27, 48, 52,
+                    97, 19, 30, 62, 55, 59, # Hlaup
                     179, 252, 143, 239, # Stökk
-                    227, 168, 216, 164, # Köst
+                    227, 168, 216, 154, # Köst
                     1001, 1011 # Þraut
                     ] 
-    Men_Events   = [82, 83, 6, 15, 27, 48, 49, 97, 19, 30, 62, 55, 59, # Hlaup
+    Men_Events   = [82, 83, 6, 15, 27, 48, 49,
+                    97, 19, 30, 62, 55, 59, # Hlaup
                     179, 252, 143, 239, # Stökk
                     226, 162, 212, 152, # Köst
                     1011, 1021 # Þraut
                     ]
 
-    current_year = datetime.datetime.now().year
-    #current_year = 2020
+    #current_year = datetime.datetime.now().year
+    current_year = 2020
 
     # -- Women
     for event_id, event_t in zip(Women_Events, Event_Type):
