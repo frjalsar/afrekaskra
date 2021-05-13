@@ -460,15 +460,15 @@ export default {
         {id: 195, type: 6, name: 'Maraþon (flögutímar)'},
       ],
       events_athlon: [
-        { id: 1001, type: 7, name: "Fimmtarþraut" },
+        { id: 1001, type: 7, name: "Fimmtarþraut [KO]" },
         { id: 1002, type: 7, name: "Fimmtarþr. unglingastig" },
         { id: 1003, type: 7, name: "Fimmtarþraut (76 cm gr.)" },
         { id: 1004, type: 7, name: "Fimmtarþraut pilta 15 ára" },
-        { id: 1011, type: 7, name: "Sjöþraut" },
+        { id: 1011, type: 7, name: "Sjöþraut [KO, KA]" },
         { id: 1012, type: 7, name: "Sjöþraut (6 kg kúla)" },
         { id: 1013, type: 7, name: "Sjöþraut (5 kg kúla)" },
         { id: 1014, type: 7, name: "Sjöþraut meyjaáhöld" },
-        { id: 1021, type: 7, name: "Tugþraut" },
+        { id: 1021, type: 7, name: "Tugþraut [KA]" },
         { id: 1022, type: 7, name: "Tugþraut 16-17 ára" },
         { id: 1023, type: 7, name: "Tugþraut U20 (Norðurlönd)" }
       ],
