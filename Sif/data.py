@@ -718,8 +718,8 @@ def Top_List():
                     1011, 1021 # Þraut
                     ]
 
-    #current_year = datetime.datetime.now().year
-    current_year = 2020
+    current_year = datetime.datetime.now().year
+    #current_year = 2020
 
     # -- Women
     for event_id, event_t in zip(Women_Events, Event_Type):
