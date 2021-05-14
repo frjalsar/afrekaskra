@@ -8,6 +8,7 @@ import HighchartsVue from "highcharts-vue";
 import StockModule from "highcharts/modules/stock";
 import Exporting from 'highcharts/modules/exporting';
 import OfflineExporting from "highcharts/modules/offline-exporting";
+import VueGtag from "vue-gtag";
 
 Vue.config.productionTip = true
 
@@ -30,6 +31,10 @@ Vue.mixin({
     }
   }
 })
+
+Vue.use(VueGtag, {
+  config: { id: "G-ZHPYDECZRM" }
+});
 
 new Vue({
   router,
