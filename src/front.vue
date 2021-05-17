@@ -2,7 +2,7 @@
   <div>
     <div class="card bg-light mt-4">
       <div class="card-body">
-        <h4 class="card-title"><img src="./assets/FRI-Logo-Black-RGB.png" style="height: 1em;vertical-align: baseline;"> Sif afrekaskrá FRÍ</h4>
+        <h4 class="card-title"><img src="./assets/FRI-Logo-Black-RGB.png" style="height: 1em;vertical-align: baseline;"> Sif - afrekaskrá FRÍ</h4>
         <p>
           Sif heldur utan um afrekaskrá
           <a href="http://www.fri.is"><abbr title="Frjálsíþróttasambands Íslands">FRÍ</abbr></a> og

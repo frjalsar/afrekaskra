@@ -13,7 +13,7 @@
         class="mr-md-auto title-link"
       >
         <h5 class="my-0 font-weight-normal">
-          Afrekaskrá FRÍ
+          Sif - Afrekaskrá FRÍ
         </h5>
       </a>
       <nav class="my-2 my-md-0 mr-md-3">
