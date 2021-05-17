@@ -24,9 +24,7 @@
         <router-link
           to="/islmet"
           class="p-2 text-dark"
-        >
-          Íslandsmet
-        </router-link>
+        >Íslandsmet</router-link>
 <!--         <router-link
           to="/arsbest"
           class="p-2 text-dark"
