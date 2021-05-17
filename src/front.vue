@@ -23,7 +23,7 @@
     </div>
     <!---->
     <div class="card bg-light mt-4">
-      <h4 class="card-header"><i class="fas fa-list-ol"></i> Top listar</h4>
+      <h4 class="card-header"><i class="fas fa-list-ol"></i> Topplistar</h4>
       <div class="card-body">
         <FrontTopList />
       </div>

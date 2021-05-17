@@ -12,4 +12,4 @@ class Command(BaseCommand):
         # Clear the cache
         cache.clear()
         self.stdout.write(self.style.SUCCESS('Successfully cleared cache'))
-        
+        cache.close()

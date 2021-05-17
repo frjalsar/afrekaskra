@@ -21,7 +21,7 @@
           to="/top"
           class="p-2 text-dark"
         >
-          Top listar
+          Topplistar
         </router-link>
         <router-link
           to="/islmet"
