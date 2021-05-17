@@ -27,7 +27,7 @@ def Print_list_vertically(my_list):
         print(i)
     return None
 
-@cache_page(60 * 60 * 6)
+@cache_page(60 * 60 * 0)
 def get_competitor(request, CompetitorCode=None):
     df = competitor.Get_Competitor_Achievements(CompetitorCode)
     Competitor_info = competitor.Get_Competitor_Info(CompetitorCode)
@@ -40,7 +40,7 @@ def competitor_event_all(request, CompetitorCode, Event_id):
     EventData_all = data.Get_Competitor_Event_Data_All(CompetitorCode, Event_id)
     return JsonResponse(EventData_all, safe=False)
 
-@cache_page(60 * 60 * 6)
+@cache_page(60 * 60 * 0)
 def competitor_event(request, CompetitorCode=None, Event_id=None):
     Competitor_info = competitor.Get_Competitor_Info(CompetitorCode)
     Event_info, Event_data, Event_min_max_all, Event_min_max_legal, Event_progession  = competitor.Get_Competitor_Event(CompetitorCode, Event_id)
@@ -81,18 +81,18 @@ def club_list(request):
     list_of_clubs = data.Get_Club_List_Thor()
     return JsonResponse(list_of_clubs, safe=False)
 
-@cache_page(60 * 60 * 6)
+@cache_page(60 * 60 * 0)
 def events(request, Event_id=None):
     event_list = data.Get_List_of_Events(CompetitorCode=None, Event_id=Event_id)
     #print(event_list)
     return JsonResponse(event_list, safe=False)
 
-@cache_page(60 * 60 * 6)
+@cache_page(60 * 60 * 0)
 def competitor_achievements(request, CompetitorCode, Event_id):
     Achievements_list = data.Get_List_of_Achievements(CompetitorCode, Event_id)
     return JsonResponse(Achievements_list, safe=False)
 
-@cache_page(60 * 60 * 12)
+@cache_page(60 * 60 * 0)
 def Get_Top_100(request, Event_id, IndoorOutDoor, Gender, Year, AgeStart, AgeEnd, Legal, ISL, BestByAth):
     Top_list, Event_Info = data.Top_100_List(Event_id=Event_id, Year=Year, IndoorOutDoor=IndoorOutDoor, Gender=Gender, AgeStart=AgeStart, AgeEnd=AgeEnd, Legal=Legal, ISL=ISL, BestByAth=BestByAth)
     return JsonResponse({'TopList': Top_list, 'EventInfo': Event_Info}, safe=False)
