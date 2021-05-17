@@ -26,7 +26,7 @@ BEGIN
  DECLARE @AchieveMents TABLE (
 	EventName nvarchar(100),
 	OutdoorsOrIndoors nvarchar(10),
-	Results nvarchar(50),
+	Results nvarchar(250),
     AchievementDate datetime,
 	Venue nvarchar(50),
 	Club nvarchar(20),

@@ -6,6 +6,7 @@ u'55 metra grindahlaup',
 u'50 metra grind (68 cm)',
 u'50 metra grind (76.2 cm)',
 u'50 metra grind (84 cm)',
+u'50 metra grind (84.0 cm)',
 u'50 metra grind (91.4 cm)',
 u'50 metra grind (100.0 cm)',
 u'50 metra grind (106.7 cm)',
@@ -41,6 +42,7 @@ u'2000 metra hlaup',
 u'20km brautarhlaup',
 u'300 metra grind (68 cm)',
 u'300 metra grind (76.2 cm)',
+u'300 metra grind (76.0 cm)',
 u'300 metra grind (84 cm)',
 u'300 metra grind (84.0 cm)',
 u'300 metra grind (91.4 cm)',
@@ -110,6 +112,9 @@ u'Fimmtarþraut pilta 15 ára',
 u'Fimmtarþraut stúlkna 15 ára',
 u'Fimmtarþraut (50m hlaup)',
 u'Fimmtarþraut öldunga 45',
+u'Fimmtarþraut öldunga 50',
+u'Fimmtarþraut öldunga 60',
+u'Fimmtarþraut öldunga 70',
 u'Fimmtarþraut 3k kúla. 6grindur',
 u'Sexþraut (meyjaáhöld)',
 u'Sexþraut',
@@ -184,6 +189,7 @@ u'Sjöþraut (sveinaáhöld)',
 u'Sjöþraut stúlknaáhöld (grind)',
 u'Sjöþraut (6Kg kúla)',
 u'Sjöþraut (5Kg kúla)',
+u'Sjöþraut 50-59 ára',
 u'Skutlukast stelpna',
 u'Skutlukast stráka',
 u'Skutlukast',
@@ -219,7 +225,10 @@ u'Tugþraut U18 (Norðurlönd)',
 u'Tugþraut U20 (Norðurlönd)',
 u'Tugþraut drengjaáhöld',
 u'Tugþraut sveinaáhöld',
-u'Tugþraut unglingaáhöld'
+u'Tugþraut unglingaáhöld',
+u'Tugþraut 50-59 ára',
+u'Tugþraut 60-69 ára',
+u'Tugþraut 70-79 ára',
 ]
 
 #0, # No units!
@@ -276,6 +285,15 @@ u'50 metra grind (68 cm)':
 },
 #
 u'50 metra grind (84 cm)':
+{'UNIT': 2,
+'UNIT_SYMBOL': 's',
+'MAX': False,
+'HAS_WIND': True,
+'NAME_SHORT': '50 m gr. (84 cm)',
+'NAME_ENG': '50 mH (84 cm)'
+},
+#
+u'50 metra grind (84.0 cm)':
 {'UNIT': 2,
 'UNIT_SYMBOL': 's',
 'MAX': False,
@@ -606,6 +624,15 @@ u'300 metra grind (76.2 cm)':
 'HAS_WIND': False,
 'NAME_SHORT': '300 m gr. (76.2 cm)',
 'NAME_ENG': '300 mH (76.2 cm)'
+},
+#
+u'300 metra grind (76.0 cm)':
+{'UNIT': 2,
+'UNIT_SYMBOL': 's',
+'MAX': False,
+'HAS_WIND': False,
+'NAME_SHORT': '300 m gr. (76.0 cm)',
+'NAME_ENG': '300 mH (76.0 cm)'
 },
 #
 u'300 metra grind (84 cm)':
@@ -1221,12 +1248,39 @@ u'Fimmtarþraut (50m hlaup)':
 },
 #
 u'Fimmtarþraut öldunga 45':
-{'UNIT': 2,
-'UNIT_SYMBOL': 's',
+{'UNIT': 5,
+'UNIT_SYMBOL': 'stig',
 'MAX': True,
 'HAS_WIND': False,
 'NAME_SHORT': 'Fimmtarþraut öldunga 45',
 'NAME_ENG': 'Fimmtarþraut öldunga 45'
+},
+#
+u'Fimmtarþraut öldunga 50':
+{'UNIT': 5,
+'UNIT_SYMBOL': 'stig',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Fimmtarþraut öldunga 50',
+'NAME_ENG': 'Fimmtarþraut öldunga 50'
+},
+#
+u'Fimmtarþraut öldunga 60':
+{'UNIT': 5,
+'UNIT_SYMBOL': 'stig',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Fimmtarþraut öldunga 60',
+'NAME_ENG': 'Fimmtarþraut öldunga 60'
+},
+#
+u'Fimmtarþraut öldunga 70':
+{'UNIT': 5,
+'UNIT_SYMBOL': 'stig',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Fimmtarþraut öldunga 70',
+'NAME_ENG': 'Fimmtarþraut öldunga 70'
 },
 #
 u'Fimmtarþraut 3k kúla. 6grindur':
@@ -1895,6 +1949,15 @@ u'Sjöþraut (5Kg kúla)':
 'NAME_ENG': 'Heptathlon (5Kg kúla)'
 },
 #
+u'Sjöþraut 50-59 ára':
+{'UNIT': 5,
+'UNIT_SYMBOL': 'stig',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Sjöþraut 50-59 ára',
+'NAME_ENG': 'Heptathlon age 50-59'
+},
+#
 u'Skutlukast stelpna':
 {'UNIT': 1,
 'UNIT_SYMBOL': 'm',
@@ -2171,7 +2234,7 @@ u'Tugþraut Piltar 16-17 ára':
 'MAX': True,
 'HAS_WIND': False,
 'NAME_SHORT': 'Tugþraut Piltar 16-17 ára',
-'NAME_ENG': 'Decathlon Piltar 16-17 ára'
+'NAME_ENG': 'Decathlon Boys age 16-17'
 },
 #
 u'Tugþraut U18 (Norðurlönd)':
@@ -2217,5 +2280,32 @@ u'Tugþraut unglingaáhöld':
 'HAS_WIND': False,
 'NAME_SHORT': 'Tugþraut unglingaáhöld',
 'NAME_ENG': 'Decathlon unglingaáhöld'
+},
+#
+u'Tugþraut 50-59 ára':
+{'UNIT': 5,
+'UNIT_SYMBOL': 'stig',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Tugþraut 50-59 ára',
+'NAME_ENG': 'Decathlon age 50-59'
+},
+#
+u'Tugþraut 60-69 ára':
+{'UNIT': 5,
+'UNIT_SYMBOL': 'stig',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Tugþraut 60-69 ára',
+'NAME_ENG': 'Decathlon age 60-69'
+},
+#
+u'Tugþraut 70-79 ára':
+{'UNIT': 5,
+'UNIT_SYMBOL': 'stig',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Tugþraut 70-79 ára',
+'NAME_ENG': 'Decathlon age 70-79'
 }
 }
