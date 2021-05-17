@@ -451,6 +451,7 @@ export default {
       ],
       events_long: [
         {id: 62, type: 6, name: '5000 metra hlaup'},
+        {id: 79, type: 6, name: '5 km götuhlaup'},
         {id: 3, type: 6, name: '10.000 metra hlaup'},
         {id: 13, type: 6, name: '10 km götuhlaup'},
         {id: 12, type: 6, name: '10 km götuhlaup (flögutímar)'},

@@ -263,13 +263,19 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
     if (Event_Info['Minimize'] == True):
         #order_by_str = 'árangur'
         if (Legal == 1):
-            electime = 1
             # Gagnagrunurinn er með dálk sem heitir löglegt. En það virðist ekki vera hægt að treysta honum.
             # Ólögleigir árangrar eru flokkaðir sem vindur > 2.0, vantar vind og/eða handtímataka
-            q = q.filter(vindur__lte=2.00, rafmagnstímataka=electime, vantar_vind=0)
+            if (Event_Info['Units'] == 2): # Eining er sek
+                electime = 1
+                q = q.filter(rafmagnstímataka=electime)
+            if (Event_Info['HasWind'] == True):
+                q = q.filter(vindur__lte=2.00, vantar_vind=0)
+            #q = q.filter(vindur__lte=2.00, vantar_vind=0)
     else: # Dálkurinn með rafmagnstímataka getur verið hvað sem er í greinum sem eru ekki með tímatöku.
         if (Legal == 1):
-            q = q.filter(vindur__lte=2.00, vantar_vind=0)
+            if (Event_Info['HasWind'] == True):
+                q = q.filter(vindur__lte=2.00, vantar_vind=0)
+
     #    order_by_str = '-árangur'
 
     q = q.filter(kyn=Gender, aldur_keppanda__range=[AgeStart, AgeEnd])

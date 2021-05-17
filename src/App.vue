@@ -20,9 +20,7 @@
         <router-link
           to="/top"
           class="p-2 text-dark"
-        >
-          Topplistar
-        </router-link>
+        >Topplistar</router-link>
         <router-link
           to="/islmet"
           class="p-2 text-dark"
@@ -38,9 +36,7 @@
         <router-link
           to="/keppandi"
           class="p-2 text-dark"
-        >
-          Iðkandi
-        </router-link>
+        >Iðkandi</router-link>
     </div>
     <div class="container">
       <div class="my-5 p-3 bg-white rounded shadow">
