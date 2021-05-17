@@ -9,11 +9,7 @@ class Command(BaseCommand):
     help = 'Clear the cache'
 
     def handle(self, *args, **options):
+        # Clear the cache
         cache.clear()
         self.stdout.write(self.style.SUCCESS('Successfully cleared cache'))
-
-        # Renew cache for front page
-        c = Client()
-        response = c.get(r'api/top_front/')
-        response = c.get(r'api/records/birthdays/')
         
