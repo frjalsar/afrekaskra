@@ -2,10 +2,11 @@
   <div>
     <div class="card bg-light mt-4">
       <div class="card-body">
-        <h4 class="card-title"><img src="./assets/FRI-Logo-Black-RGB.png" style="height: 1em;vertical-align: baseline;"> Afrekaskrá FRÍ</h4>
+        <h4 class="card-title"><img src="./assets/FRI-Logo-Black-RGB.png" style="height: 1em;vertical-align: baseline;"> Sif afrekaskrá FRÍ</h4>
         <p>
-          Hér er haldið utan tölfræði á afrekum í frjálsum íþróttum. Öll gögn koma úr <a href="http://thor.fri.is">Þór</a>
-          mótaforriti <a href="http://www.fri.is">Frjálsíþróttasambands Íslands</a>.
+          Sif heldur utan um afrekaskrá
+          <a href="http://www.fri.is"><abbr title="Frjálsíþróttasambands Íslands">FRÍ</abbr></a> og
+          er eiginkona <a href="http://thor.fri.is">Þórs</a> mótaforrits Frjálsíþróttasambands Íslands.
         </p>
       </div>
     </div>
@@ -14,7 +15,7 @@
       <h4 class="card-header"><i class="fas fa-user"></i> Finna iðkanda</h4>
       <div class="card-body">
         <p class="card-text">
-          Byrjaðu að slá inn nafn iðkanda og afrekaskráin hjálpar þér að finna hana
+          Byrjaðu að slá inn nafn iðkanda og Sif hjálpar þér að finna hana
           eða hann. Smelltu <router-link :to="{ path: 'keppandi' }">hér</router-link> til að fá upp ýtarlegri leit.
         </p>
         <KeppandiSearch />
