@@ -35,7 +35,7 @@ export default {
       } else {
         this.isyvisible = true;
       }
-      console.log(this.isyvisible);
+      //console.log(this.isyvisible);
     },
   },
   computed: {

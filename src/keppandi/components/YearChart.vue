@@ -27,26 +27,6 @@ export default {
   created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
-    // Bæta við seríu með öllum árangri ef grein hefur vind.
-    if (this.event_info["HAS_WIND"] == true) {
-      this.chartOptions.series[1] = {
-        name: "Allir árangrar",
-        connectNulls: false,
-        visible: false,
-        type: "spline",
-        /*tooltip: {
-              //valueSuffix: " m",
-              valueDecimals: 2
-            }, */
-        marker: {
-          enabled: true,
-          fillColor: "#FFFFFF",
-          lineWidth: 2,
-          lineColor: null, // inherit from series
-        },
-        data: this.alldata,
-      };
-    }
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
@@ -63,7 +43,30 @@ export default {
       } else {
         this.isyvisible = true;
       }
-      console.log(this.isyvisible)
+      //console.log(this.isyvisible)
+      this.addAllData();
+    },
+    addAllData() {
+      // Bæta við seríu með öllum árangri ef grein hefur vind.
+      if (this.event_info["HAS_WIND"] == true) {
+        this.chartOptions.series[1] = {
+          name: "Allir árangrar",
+          connectNulls: false,
+          visible: false,
+          type: "spline",
+          /*tooltip: {
+              //valueSuffix: " m",
+              valueDecimals: 2
+            }, */
+          marker: {
+            enabled: true,
+            fillColor: "#FFFFFF",
+            lineWidth: 2,
+            lineColor: null, // inherit from series
+          },
+          data: this.alldata,
+        };
+      }
     },
   },
   computed: {
