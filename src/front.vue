@@ -15,8 +15,8 @@
       <h4 class="card-header"><i class="fas fa-user"></i> Finna iðkanda</h4>
       <div class="card-body">
         <p class="card-text">
-          Byrjaðu að slá inn nafn iðkanda og Sif hjálpar þér að finna hana
-          eða hann. Smelltu <router-link :to="{ path: 'keppandi' }">hér</router-link> til að fá upp ýtarlegri leit.
+          Byrjaðu að slá inn nafn iðkanda og Sif hjálpar þér að finna viðkomandi.
+          Smelltu <router-link :to="{ path: 'keppandi' }">hér</router-link> til að fá upp ýtarlegri leit.
         </p>
         <KeppandiSearch />
       </div>

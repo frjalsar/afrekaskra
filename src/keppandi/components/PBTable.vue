@@ -3,9 +3,9 @@
     <hr />
     <h2 class="display-4"><i class="fas fa-trophy"></i> Árangur</h2>
     <p>
-      Taflan sýnir persónulegan besta árangur (PB) innan og utanhús ásamt besta
+      Taflan sýnir besta persónulegan árangur (PB) innan og utanhúss ásamt besta
       árangri á síðustu tveimur árum (SB). Sýndur er löglegur árangur nema í
-      þeim tilvikum þegar engin löglegur árangur er til.
+      þeim tilvikum þegar enginn löglegur árangur er til.
       <br />
       <i class="far fa-hand-pointer"></i>
       <small
