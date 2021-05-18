@@ -18,11 +18,11 @@
       </a>
       <nav class="my-2 my-md-0 mr-md-3">
         <router-link
-          to="/top"
+          :to="{name: 'TopList'}"
           class="p-2 text-dark"
         >Topplistar</router-link>
         <router-link
-          to="/islmet"
+          :to="{name: 'IcelandicRecords'}"
           class="p-2 text-dark"
         >Íslandsmet</router-link>
 <!--         <router-link
@@ -32,7 +32,7 @@
           Ársbest
         </router-link> -->
         <router-link
-          to="/keppandi"
+          :to="{name: 'CompetitorList'}"
           class="p-2 text-dark"
         >Iðkandi</router-link>
     </div>
