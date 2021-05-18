@@ -16,20 +16,10 @@ import datetime as dt
 import pandas as pd
 from django.db import connection
 
-def Get_Records_Birthdays():
-    #q = AthlMetaskrFr.objects.all().filter(virkt__iexact=1) #.filter(Q(aldursflokkur_frí__iexact='KO') | Q(aldursflokkur_frí__iexact='KA'))
-
-    #df = pd.DataFrame.from_records(q.values_list('lína', 'línunr_í_afrekum', 'grein',
-    #                                             'kyn', 'dagsetning_mets', 'árangur',
-    #                                             'vindur', 'methafi', 'heiti_methafa',
-    #                                             'félag_methafa', 'staður_mets', 'úti_inni',
-    #                                             'aldur_methafa', 'aldursflokkur_frí'),
-    #                                             columns=['Lína', 'Línunr_í_afrekum', 'Grein',
-    #                                                      'Kyn', 'Dagsetning mets', 'Árangur',
-    #                                                      'Vindur', 'Methafi', 'Heiti methafa',
-    #                                                      'Félag methafa', 'Staður mets', 'Úti_Inni',
-    #                                                      'Aldur methafa', 'Aldursflokkur'])
-
+# Return all Icelandic records in all agegroups.
+#['KA', 'PI22', 'PI19', 'PI17', 'PI15', 'PI14', 'PI13', 'PI12']
+#['KO', 'ST22', 'ST19', 'ST17', 'ST15', 'ST14', 'ST13', 'ST12']
+def Get_All_National_Records():
     df = pd.read_sql_query("EXEC Islandsmet", connection)
 
     df = df.astype({"KrefsVindm": bool, "ÚtiInni": int})
@@ -38,6 +28,11 @@ def Get_Records_Birthdays():
     df['Day'] = df['Dagsetn'].dt.day
     df['Month'] = df['Dagsetn'].dt.month
     df['Year'] = df['Dagsetn'].dt.year
+
+    return df
+
+def Get_Records_Birthdays():
+    df = Get_All_National_Records()
 
     month = dt.datetime.now().month
     day = dt.datetime.now().day
