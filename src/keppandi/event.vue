@@ -132,8 +132,9 @@
               aria-labelledby="bestbyyear-tab"
             >
               <p>
-                Grafið sýnir besta árangur í greininni á hverju ári. Hægt er að
-                velja að taka með líka óleglegan árangur með því að smella á
+                Grafið sýnir besta árangur í greininni á hverju ári.
+                Ef mældur er vindur í greininni er hægt að
+                velja að taka líka með ólöglegan árangur með því að smella á
                 "Allir árangrar" undir grafinu. Á símum er best að skoða grafið
                 í lóðréttum ham.&nbsp;&nbsp;<i
                   class="fas fa-mobile-alt fa-rotate-270"
@@ -154,7 +155,7 @@
               aria-labelledby="timeseries-tab"
             >
               <p>
-                Grafið sýnir allra árangra í greininni í tímaröð. Á símum er
+                Grafið sýnir alla árangra í greininni í tímaröð. Á símum er
                 best að skoða grafið í lóðréttum ham.&nbsp;&nbsp;<i
                   class="fas fa-mobile-alt fa-rotate-270"
                 ></i>
@@ -192,7 +193,7 @@
       </div>
       <br />
       <p>
-        Taflan hér að neðan sýnir alla árangrar íþróttamannsins í greininni.
+        Taflan hér að neðan sýnir alla árangra íþróttamannsins í greininni.
       </p>
       <achievementtable
         :event_info="event_info"
