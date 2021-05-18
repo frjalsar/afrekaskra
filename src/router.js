@@ -49,9 +49,8 @@ export default new Router({
     },
     {
       path: '/islmet',
-      beforeEnter(to, from, next) {
-        window.location = "http://mot.fri.is/MotFRI/Islandsmet.aspx"
-      }
+      name: 'IcelandicRecords',
+      component: () => import('./islmet/list.vue')
   },
     // {
     //   path: '/islmet',
