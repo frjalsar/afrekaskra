@@ -22,7 +22,9 @@ from django.db import connection
 def Get_All_National_Records():
     df = pd.read_sql_query("EXEC Islandsmet", connection)
 
-    df = df.astype({"KrefsVindm": bool, "ÚtiInni": int})
+    df = df.astype({"KrefsVindm": bool,
+                    "ÚtiInni": int
+                   })
     df['Dagsetn'] = pd.to_datetime(df['Dagsetn'], yearfirst=True)
 
     df['Day'] = df['Dagsetn'].dt.day

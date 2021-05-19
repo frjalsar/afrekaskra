@@ -1,3 +1,4 @@
+from threading import Event
 from django.http import HttpResponse, HttpResponseServerError, Http404, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -11,11 +12,13 @@ from Sif import settings
 from Sif import data
 from Sif import records
 from Sif import competitor
+from Sif import events
 
 # Other
 import os
 import urllib
 from PIL import Image
+from babel.dates import format_date, format_datetime, format_time
 
 # Database
 # We only use AthlCompetitors for information about competitors
@@ -82,7 +85,7 @@ def club_list(request):
     return JsonResponse(list_of_clubs, safe=False)
 
 @cache_page(60 * 60 * 0)
-def events(request, Event_id=None):
+def events_list(request, Event_id=None):
     event_list = data.Get_List_of_Events(CompetitorCode=None, Event_id=Event_id)
     #print(event_list)
     return JsonResponse(event_list, safe=False)
@@ -170,42 +173,45 @@ def national_records(request):
     #df_records = national_records_all(request)
     df_records = records.Get_All_National_Records()
     #df_masters = national_records_masters(request)
-    df_masters = records.Get_All_Master_Records()
+    #df_masters = records.Get_All_Master_Records()
 
     List_of_Records = []
 
     # Adults and 12-22 year old
     for index, row in df_records.iterrows():
         if (row['Nafn'] != None): # Aðgerðin í gagnagrunninum virðist skila út NULL á milli aldursflokka
+            Event_Info = events.Get_Event_Info_by_Name(row['HeitiGreinar'])
             List_of_Records.append({
-                'Event': row['HeitiGreinar'],
+                'Event': Event_Info['NAME_SHORT'],
                 'Results': row['Arangur'],
                 'Wind': row['Vindur'],
                 'Name': row['Nafn'],
                 'Club': row['Félag'],
                 'Place': row['Staður'],
-                'Date': row['Dagsetn'],
-                'CompetitorCode': row['Keppandan'],
+                'Date': format_date(row['Dagsetn'].date(), "d MMM yyyy", locale='is_IS').upper(),
+                'CompetitorID': row['Keppandan'],
                 'AgeGroup': row['AldursflFRÍ'],
                 'Sex': row['Ky'],
-                'InOut': row['ÚtiInni']
+                'InOut': row['ÚtiInni'],
+                'Units_symbol': Event_Info['UNIT_SYMBOL']
             })
     
-    # Masters records
-    for index, row in df_masters.iterrows():
-        if (row['Nafn'] != None):
-            List_of_Records.append({
-                'Event': row['HeitiGr'],
-                'Results': row['Árang'],
-                'Wind': row['Vindur'],
-                'Name': row['Nafn'],
-                'Club': row['Félag'],
-                'Place': row['Staður'],
-                'Date': row['Dags'],
-                'CompetitorCode': row['Keppandan'],
-                'AgeGroup': row['Aldursflokkuröldunga'],
-                'Sex': row['Ky'],
-                'InOut': row['ÚtiInni']
-            })
+    # # Masters records
+    # for index, row in df_masters.iterrows():
+    #     if (row['Nafn'] != None):
+    #         Event_Info = events.Get_Event_Info_by_Name(row['HeitiGr'])
+    #         List_of_Records.append({
+    #             'Event': row['HeitiGr'],
+    #             'Results': row['Árang'],
+    #             'Wind': row['Vindur'],
+    #             'Name': row['Nafn'],
+    #             'Club': row['Félag'],
+    #             'Place': row['Staður'],
+    #             'Date': format_date(row['Dags'].date(), "d MMM yyyy", locale='is_IS').upper(),
+    #             'CompetitorID': row['Keppandan'],
+    #             'AgeGroup': row['Aldursflokkuröldunga'],
+    #             'Sex': row['Ky'],
+    #             'InOut': int(row['ÚtiInni'])
+    #         })
 
     return JsonResponse(List_of_Records, safe=False)

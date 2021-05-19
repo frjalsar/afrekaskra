@@ -21,7 +21,7 @@ export default new Router({
     {
       path: '/top',
       name: 'TopList',
-      component: () => import('./top/toplists.vue')
+      component: () => import('./top/TopLists.vue')
     },
     // {
     //   path: '/arsbest',
