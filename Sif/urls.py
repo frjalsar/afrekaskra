@@ -53,7 +53,8 @@ urlpatterns = [
     path(r'api/img/action/<int:CompetitorCode>/', api_views.competitor_img_action),
     path(r'api/img/club/<str:ClubName>/', api_views.club_logo),
     path(r'api/records/<int:CompetitorCode>/', api_views.competitor_records),
-    path(r'api/records/birthdays/', api_views.record_birthdays)
+    path(r'api/records/birthdays/', api_views.record_birthdays),
+    path(r'api/records/', api_views.national_records)
 
     #re_path('[^api/*]', TemplateView.as_view(template_name='index.html')) # Senda allt sem fer ekki á API á index.html
 ]

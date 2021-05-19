@@ -52,10 +52,10 @@ export default new Router({
       name: 'IcelandicRecords',
       component: () => import('./islmet/list.vue')
   },
-    // {
-    //   path: '/islmet',
-    //   component: () => import('./islmet/list.vue')
-    // },
+    {
+      path: '/islmet_sif',
+      component: () => import('./islmet/ISLRecordList.vue')
+    },
     {
       path: '*',
       component: () => import('./404.vue')

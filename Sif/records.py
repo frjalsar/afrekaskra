@@ -31,6 +31,23 @@ def Get_All_National_Records():
 
     return df
 
+def Get_All_Master_Records():
+    df_men_in = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 1, @KarlarKonur = 1, @SelectedCompetitorCode = NULL", connection)
+    df_men_out = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 0, @KarlarKonur = 1, @SelectedCompetitorCode = NULL", connection)
+
+    df_women_in = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 1, @KarlarKonur = 2, @SelectedCompetitorCode = NULL", connection)
+    df_women_out = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 0, @KarlarKonur = 2, @SelectedCompetitorCode = NULL", connection)
+    
+    df = pd.concat([df_men_in, df_men_out, df_women_in, df_women_out])
+    
+    df = df.astype({"ÚtiInni": int})
+    df['Dags'] = pd.to_datetime(df['Dags'], yearfirst=True)
+    
+    df['Day'] = df['Dags'].dt.day
+    df['Month'] = df['Dags'].dt.month
+    df['Year'] = df['Dags'].dt.year
+    return df
+
 def Get_Records_Birthdays():
     df = Get_All_National_Records()
 

@@ -154,3 +154,58 @@ def competitor_records(request, CompetitorCode):
 def record_birthdays(request):
     Records = records.Get_Records_Birthdays()
     return JsonResponse(Records, safe=False)
+
+@cache_page(60 * 60 * 12)
+def national_records_all(request):
+    df = records.Get_All_National_Records()
+    return df
+
+@cache_page(60 * 60 * 24 * 7)
+def national_records_masters(request):
+    df = records.Get_All_Master_Records()
+    return df
+
+@cache_page(60 * 60 * 12)
+def national_records(request):
+    #df_records = national_records_all(request)
+    df_records = records.Get_All_National_Records()
+    #df_masters = national_records_masters(request)
+    df_masters = records.Get_All_Master_Records()
+
+    List_of_Records = []
+
+    # Adults and 12-22 year old
+    for index, row in df_records.iterrows():
+        if (row['Nafn'] != None): # Aðgerðin í gagnagrunninum virðist skila út NULL á milli aldursflokka
+            List_of_Records.append({
+                'Event': row['HeitiGreinar'],
+                'Results': row['Arangur'],
+                'Wind': row['Vindur'],
+                'Name': row['Nafn'],
+                'Club': row['Félag'],
+                'Place': row['Staður'],
+                'Date': row['Dagsetn'],
+                'CompetitorCode': row['Keppandan'],
+                'AgeGroup': row['AldursflFRÍ'],
+                'Sex': row['Ky'],
+                'InOut': row['ÚtiInni']
+            })
+    
+    # Masters records
+    for index, row in df_masters.iterrows():
+        if (row['Nafn'] != None):
+            List_of_Records.append({
+                'Event': row['HeitiGr'],
+                'Results': row['Árang'],
+                'Wind': row['Vindur'],
+                'Name': row['Nafn'],
+                'Club': row['Félag'],
+                'Place': row['Staður'],
+                'Date': row['Dags'],
+                'CompetitorCode': row['Keppandan'],
+                'AgeGroup': row['Aldursflokkuröldunga'],
+                'Sex': row['Ky'],
+                'InOut': row['ÚtiInni']
+            })
+
+    return JsonResponse(List_of_Records, safe=False)
