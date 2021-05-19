@@ -127,7 +127,7 @@ export default {
     get_data: function () {
       this.message = "Næ í gögn ekki stökkva langt 😉";
 
-      this.data = [];
+      this.raw_record_data = [];
       //console.log('Getting data')
 
       var url = "/api/records/birthdays/";
