@@ -1,5 +1,7 @@
 <template>
   <div>
+      <div class="card">
+  <div class="card-header">
     <div class="custom-control custom-radio">
       <input
         type="radio"
@@ -111,6 +113,8 @@
         </div>
       </div>
     </div>
+    </div>
+    <div class="card-body">
     <div v-if="loading">
       <hr />
       <pulse-loader
@@ -121,7 +125,7 @@
     </div>
     <br />
     <div v-if="!loading">
-      <h1>{{ header_text }}</h1>
+      <h2 v-html="header_text"></h2>
       <table
         class="table table-striped table-hover table-responsive-sm table-sm"
       >
@@ -132,11 +136,11 @@
             <th scope="col">Grein</th>
             <th scope="col">Methafi</th>
             <th scope="col">Árangur</th>
-            <th scope="col">Vindur</th>
-            <th scope="col">Úti/Inni</th>
-            <th scope="col">Dags.</th>
+            <th scope="col" v-show="inout===0">Vindur</th>
+            <!--<th class="d-none d-xl-table-cell" scope="col">Úti/Inni</th>-->
+            <th class="d-none d-md-table-cell" scope="col">Dags.</th>
             <!--<th scope="col">Aldursfl.</th>-->
-            <th scope="col">Félag</th>
+            <th class="d-none d-xl-table-cell" scope="col">Félag</th>
           </tr>
         </thead>
         <tbody>
@@ -159,16 +163,18 @@
               {{ i.Results }}
               <small class="text-muted">{{ i.Units_symbol }}</small>
             </td>
-            <td>{{ i.Wind }}</td>
-            <td>{{ inout_text(i.InOut) }}</td>
-            <td>{{ i.Date }}</td>
+            <td v-show="inout===0">{{ i.Wind }}</td>
+            <!--<td class="d-none d-xl-table-cell">{{ inout_text(i.InOut) }}</td>-->
+            <td class="d-none d-md-table-cell">{{ i.Date }}</td>
             <!--<td>{{ i.AgeGroup }}</td>-->
-            <td>{{ i.Club }}</td>
+            <td class="d-none d-xl-table-cell">{{ i.Club }}</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
+  </div>
+</div>
 </template>
 
 <script>
@@ -195,54 +201,54 @@ export default {
       gender: 2,
 
       men_agegroups: [
-        ["KA", "Karlar"],
-        ["PI22", "Piltar 20-22 ára"],
-        ["PI19", "Piltar 18-19 ára"],
-        ["PI17", "Piltar 16-17 ára"],
-        ["PI15", "Piltar 15 ára"],
-        ["PI14", "Piltar 14 ára"],
-        ["PI13", "Piltar 13 ára"],
-        ["PI12", "Piltar 12 ára"],
+        ["KA", "<i class='fas fa-male'></i> Karlar"],
+        ["PI22", "<i class='fas fa-male'></i> Piltar 20-22 ára"],
+        ["PI19", "<i class='fas fa-male'></i> Piltar 18-19 ára"],
+        ["PI17", "<i class='fas fa-male'></i> Piltar 16-17 ára"],
+        ["PI15", "<i class='fas fa-male'></i> Piltar 15 ára"],
+        ["PI14", "<i class='fas fa-male'></i> Piltar 14 ára"],
+        ["PI13", "<i class='fas fa-male'></i> Piltar 13 ára"],
+        ["PI12", "<i class='fas fa-male'></i> Piltar 12 ára"],
       ],
       women_agegroups: [
-        ["KO", "Konur"],
-        ["ST22", "Stúlkur 20-22 ára"],
-        ["ST19", "Stúlkur 18-19 ára"],
-        ["ST17", "Stúlkur 16-17 ára"],
-        ["ST15", "Stúlkur 15 ára"],
-        ["ST14", "Stúlkur 14 ára"],
-        ["ST13", "Stúlkur 13 ára"],
-        ["ST12", "Stúlkur 12 ára"],
+        ["KO", "<i class='fas fa-female'></i> Konur"],
+        ["ST22", "<i class='fas fa-female'></i> Stúlkur 20-22 ára"],
+        ["ST19", "<i class='fas fa-female'></i> Stúlkur 18-19 ára"],
+        ["ST17", "<i class='fas fa-female'></i> Stúlkur 16-17 ára"],
+        ["ST15", "<i class='fas fa-female'></i> Stúlkur 15 ára"],
+        ["ST14", "<i class='fas fa-female'></i> Stúlkur 14 ára"],
+        ["ST13", "<i class='fas fa-female'></i> Stúlkur 13 ára"],
+        ["ST12", "<i class='fas fa-female'></i> Stúlkur 12 ára"],
       ],
       master_mengroups: [
-        ["KA030-34", "Öldungar Karlar 30-34 ára"],
-        ["KA035-39", "Öldungar Karlar 35-39 ára"],
-        ["KA040-44", "Öldungar Karlar 40-44 ára"],
-        ["KA045-49", "Öldungar Karlar 45-49 ára"],
-        ["KA050-54", "Öldungar Karlar 50-54 ára"],
-        ["KA055-59", "Öldungar Karlar 55-59 ára"],
-        ["KA060-64", "Öldungar Karlar 60-64 ára"],
-        ["KA065-69", "Öldungar Karlar 65-69 ára"],
-        ["KA070-74", "Öldungar Karlar 70-74 ára"],
-        ["KA075-79", "Öldungar Karlar 75-79 ára"],
-        ["KA080-84", "Öldungar Karlar 80-84 ára"],
-        ["KA085-89", "Öldungar Karlar 85-89 ára"],
-        ["KA090-94", "Öldungar Karlar 90-94 ára"],
+        ["KA030-34", "Öldungar <i class='fas fa-male'></i> Karlar 30-34 ára"],
+        ["KA035-39", "Öldungar <i class='fas fa-male'></i> Karlar 35-39 ára"],
+        ["KA040-44", "Öldungar <i class='fas fa-male'></i> Karlar 40-44 ára"],
+        ["KA045-49", "Öldungar <i class='fas fa-male'></i> Karlar 45-49 ára"],
+        ["KA050-54", "Öldungar <i class='fas fa-male'></i> Karlar 50-54 ára"],
+        ["KA055-59", "Öldungar <i class='fas fa-male'></i> Karlar 55-59 ára"],
+        ["KA060-64", "Öldungar <i class='fas fa-male'></i> Karlar 60-64 ára"],
+        ["KA065-69", "Öldungar <i class='fas fa-male'></i> Karlar 65-69 ára"],
+        ["KA070-74", "Öldungar <i class='fas fa-male'></i> Karlar 70-74 ára"],
+        ["KA075-79", "Öldungar <i class='fas fa-male'></i> Karlar 75-79 ára"],
+        ["KA080-84", "Öldungar <i class='fas fa-male'></i> Karlar 80-84 ára"],
+        ["KA085-89", "Öldungar <i class='fas fa-male'></i> Karlar 85-89 ára"],
+        ["KA090-94", "Öldungar <i class='fas fa-male'></i> Karlar 90-94 ára"],
       ],
       master_womengroups: [
-        ["KO030-34", "Öldungar Konur 30-34 ára"],
-        ["KO035-39", "Öldungar Konur 35-39 ára"],
-        ["KO040-44", "Öldungar Konur 40-44 ára"],
-        ["KO045-49", "Öldungar Konur 45-49 ára"],
-        ["KO050-54", "Öldungar Konur 50-54 ára"],
-        ["KO055-59", "Öldungar Konur 55-59 ára"],
-        ["KO060-64", "Öldungar Konur 60-64 ára"],
-        ["KO065-69", "Öldungar Konur 65-69 ára"],
-        ["KO070-74", "Öldungar Konur 70-74 ára"],
-        ["KO075-79", "Öldungar Konur 75-79 ára"],
-        ["KO080-84", "Öldungar Konur 80-84 ára"],
-        ["KO085-89", "Öldungar Konur 85-89 ára"],
-        ["KO090-94", "Öldungar Konur 90-94 ára"],
+        ["KO030-34", "Öldungar <i class='fas fa-female'></i> Konur 30-34 ára"],
+        ["KO035-39", "Öldungar <i class='fas fa-female'></i> Konur 35-39 ára"],
+        ["KO040-44", "Öldungar <i class='fas fa-female'></i> Konur 40-44 ára"],
+        ["KO045-49", "Öldungar <i class='fas fa-female'></i> Konur 45-49 ára"],
+        ["KO050-54", "Öldungar <i class='fas fa-female'></i> Konur 50-54 ára"],
+        ["KO055-59", "Öldungar <i class='fas fa-female'></i> Konur 55-59 ára"],
+        ["KO060-64", "Öldungar <i class='fas fa-female'></i> Konur 60-64 ára"],
+        ["KO065-69", "Öldungar <i class='fas fa-female'></i> Konur 65-69 ára"],
+        ["KO070-74", "Öldungar <i class='fas fa-female'></i> Konur 70-74 ára"],
+        ["KO075-79", "Öldungar <i class='fas fa-female'></i> Konur 75-79 ára"],
+        ["KO080-84", "Öldungar <i class='fas fa-female'></i> Konur 80-84 ára"],
+        ["KO085-89", "Öldungar <i class='fas fa-female'></i> Konur 85-89 ára"],
+        ["KO090-94", "Öldungar <i class='fas fa-female'></i> Konur 90-94 ára"],
       ],
     };
   },
@@ -251,7 +257,7 @@ export default {
   },
   computed: {
     header_text() {
-      return this.agegroup_text + " " + this.inout_text_long;
+      return this.agegroup_text + " - " + this.inout_text_long;
     },
     inout_text_long() {
       if (this.inout === 0) {
@@ -292,9 +298,7 @@ export default {
       this.gender = Number(event.target.value);
     },
     agegroup_change: function (event) {
-        console.log(event)
       this.agegroup_value = Number(event.originalTarget.id);
-      console.log(this.agegroup_value)
     },
     get_data: function () {
       this.message = "Næ í gögn ekki stökkva langt 😉";
