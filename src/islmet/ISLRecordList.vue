@@ -43,7 +43,7 @@
                 v-on:change="gender_change($event)"
               />
               <label class="custom-control-label" for="MenRadio"
-                >Karlar / Piltar</label
+                >Karlar</label
               >
             </div>
             <div class="custom-control custom-radio">
@@ -57,7 +57,7 @@
                 checked
               />
               <label class="custom-control-label" for="WomenRadio"
-                >Konur / Stúlkur</label
+                >Konur</label
               >
             </div>
           </div>
@@ -409,7 +409,8 @@ export default {
       this.gender = Number(event.target.value);
     },
     agegroup_change: function (event) {
-      this.agegroup_value = Number(event.originalTarget.id);
+      //console.log(event)
+      this.agegroup_value = Number(event.target.id);
 
       // If we switch groups make sure to show or hide the loading screen if we don't have the data.
       if (this.agegroup_value < this.men_agegroups.length) {
