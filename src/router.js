@@ -50,10 +50,6 @@ export default new Router({
     {
       path: '/islmet',
       name: 'IcelandicRecords',
-      component: () => import('./islmet/list.vue')
-  },
-    {
-      path: '/islmet_sif',
       component: () => import('./islmet/ISLRecordList.vue')
     },
     {
