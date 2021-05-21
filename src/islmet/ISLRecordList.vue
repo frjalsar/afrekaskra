@@ -76,10 +76,11 @@
                 <button
                   id="btnGroupDrop1"
                   type="button"
-                  class="btn btn-secondary dropdown-toggle"
+                  class="btn dropdown-toggle"
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
+                  v-bind:class="[agegroup_value < 8 ? 'btn-primary': 'btn-secondary']"
                 >
                   Aldursflokkur
                 </button>
@@ -88,14 +89,14 @@
                   aria-labelledby="btnGroupDrop1"
                   v-on:click="agegroup_change($event)"
                 >
-                  <a class="dropdown-item" href="#" id="0">Fullorðnir</a>
-                  <a class="dropdown-item" href="#" id="1">20-22 ára</a>
-                  <a class="dropdown-item" href="#" id="2">18-19 ára</a>
-                  <a class="dropdown-item" href="#" id="3">16-17 ára</a>
-                  <a class="dropdown-item" href="#" id="4">15 ára</a>
-                  <a class="dropdown-item" href="#" id="5">14 ára</a>
-                  <a class="dropdown-item" href="#" id="6">13 ára</a>
-                  <a class="dropdown-item" href="#" id="7">12 ára</a>
+                  <a class="dropdown-item" href="#" id="0" v-bind:class="{active: agegroup_value===0}">Fullorðnir</a>
+                  <a class="dropdown-item" href="#" id="1" v-bind:class="{active: agegroup_value===1}">20-22 ára</a>
+                  <a class="dropdown-item" href="#" id="2" v-bind:class="{active: agegroup_value===2}">18-19 ára</a>
+                  <a class="dropdown-item" href="#" id="3" v-bind:class="{active: agegroup_value===3}">16-17 ára</a>
+                  <a class="dropdown-item" href="#" id="4" v-bind:class="{active: agegroup_value===4}">15 ára</a>
+                  <a class="dropdown-item" href="#" id="5" v-bind:class="{active: agegroup_value===5}">14 ára</a>
+                  <a class="dropdown-item" href="#" id="6" v-bind:class="{active: agegroup_value===6}">13 ára</a>
+                  <a class="dropdown-item" href="#" id="7" v-bind:class="{active: agegroup_value===7}">12 ára</a>
                 </div>
               </div>
               <div
@@ -106,10 +107,11 @@
                 <button
                   id="btnGroupDrop2"
                   type="button"
-                  class="btn btn-secondary dropdown-toggle"
+                  class="btn dropdown-toggle"
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
+                  v-bind:class="[agegroup_value >= 8 ? 'btn-primary': 'btn-secondary']"
                 >
                   Öldungaflokkar
                 </button>
@@ -118,19 +120,19 @@
                   aria-labelledby="btnGroupDrop2"
                   v-on:click="agegroup_change($event)"
                 >
-                  <a class="dropdown-item" href="#" id="8">30-34 ára</a>
-                  <a class="dropdown-item" href="#" id="9">35-39 ára</a>
-                  <a class="dropdown-item" href="#" id="10">40-44 ára</a>
-                  <a class="dropdown-item" href="#" id="11">45-49 ára</a>
-                  <a class="dropdown-item" href="#" id="12">50-54 ára</a>
-                  <a class="dropdown-item" href="#" id="13">55-59 ára</a>
-                  <a class="dropdown-item" href="#" id="14">60-64 ára</a>
-                  <a class="dropdown-item" href="#" id="15">65-69 ára</a>
-                  <a class="dropdown-item" href="#" id="16">70-74 ára</a>
-                  <a class="dropdown-item" href="#" id="17">75-79 ára</a>
-                  <a class="dropdown-item" href="#" id="18">80-84 ára</a>
-                  <a class="dropdown-item" href="#" id="19">85-89 ára</a>
-                  <a class="dropdown-item" href="#" id="20">90-94 ára</a>
+                  <a class="dropdown-item" href="#" id="8" v-bind:class="{active: agegroup_value===8}">30-34 ára</a>
+                  <a class="dropdown-item" href="#" id="9" v-bind:class="{active: agegroup_value===9}">35-39 ára</a>
+                  <a class="dropdown-item" href="#" id="10" v-bind:class="{active: agegroup_value===10}">40-44 ára</a>
+                  <a class="dropdown-item" href="#" id="11" v-bind:class="{active: agegroup_value===11}">45-49 ára</a>
+                  <a class="dropdown-item" href="#" id="12" v-bind:class="{active: agegroup_value===12}">50-54 ára</a>
+                  <a class="dropdown-item" href="#" id="13" v-bind:class="{active: agegroup_value===13}">55-59 ára</a>
+                  <a class="dropdown-item" href="#" id="14" v-bind:class="{active: agegroup_value===14}">60-64 ára</a>
+                  <a class="dropdown-item" href="#" id="15" v-bind:class="{active: agegroup_value===15}">65-69 ára</a>
+                  <a class="dropdown-item" href="#" id="16" v-bind:class="{active: agegroup_value===16}">70-74 ára</a>
+                  <a class="dropdown-item" href="#" id="17" v-bind:class="{active: agegroup_value===17}">75-79 ára</a>
+                  <a class="dropdown-item" href="#" id="18" v-bind:class="{active: agegroup_value===18}">80-84 ára</a>
+                  <a class="dropdown-item" href="#" id="19" v-bind:class="{active: agegroup_value===19}">85-89 ára</a>
+                  <a class="dropdown-item" href="#" id="20" v-bind:class="{active: agegroup_value===20}">90-94 ára</a>
                 </div>
               </div>
             </div>
