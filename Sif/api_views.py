@@ -195,23 +195,34 @@ def national_records(request):
                 'InOut': row['ÚtiInni'],
                 'Units_symbol': Event_Info['UNIT_SYMBOL']
             })
+
+    return JsonResponse(List_of_Records, safe=False)
+
+@cache_page(60 * 60 * 24)
+def national_records_masters(request):
+    #df_records = national_records_all(request)
+    #df_records = records.Get_All_National_Records()
+    #df_masters = national_records_masters(request)
+    df_masters = records.Get_All_Master_Records()
+
+    List_of_Records = []
     
-    # # Masters records
-    # for index, row in df_masters.iterrows():
-    #     if (row['Nafn'] != None):
-    #         Event_Info = events.Get_Event_Info_by_Name(row['HeitiGr'])
-    #         List_of_Records.append({
-    #             'Event': row['HeitiGr'],
-    #             'Results': row['Árang'],
-    #             'Wind': row['Vindur'],
-    #             'Name': row['Nafn'],
-    #             'Club': row['Félag'],
-    #             'Place': row['Staður'],
-    #             'Date': format_date(row['Dags'].date(), "d MMM yyyy", locale='is_IS').upper(),
-    #             'CompetitorID': row['Keppandan'],
-    #             'AgeGroup': row['Aldursflokkuröldunga'],
-    #             'Sex': row['Ky'],
-    #             'InOut': int(row['ÚtiInni'])
-    #         })
+    # Masters records
+    for index, row in df_masters.iterrows():
+        if (row['Nafn'] != None):
+            Event_Info = events.Get_Event_Info_by_Name(row['HeitiGr'])
+            List_of_Records.append({
+                'Event': row['HeitiGr'],
+                'Results': row['Árang'],
+                'Wind': row['Vindur'],
+                'Name': row['Nafn'],
+                'Club': row['Félag'],
+                'Place': row['Staður'],
+                'Date': format_date(row['Dags'].date(), "d MMM yyyy", locale='is_IS').upper(),
+                'CompetitorID': row['Keppandan'],
+                'AgeGroup': row['Aldursflokkuröldunga'],
+                'Sex': row['Ky'],
+                'InOut': int(row['ÚtiInni'])
+            })
 
     return JsonResponse(List_of_Records, safe=False)
