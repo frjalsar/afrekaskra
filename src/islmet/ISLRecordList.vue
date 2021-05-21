@@ -215,6 +215,7 @@ export default {
       radius: "100%",
 
       loading: true,
+      loading_all: true,
       loading_master: true,
       agegroup_value: 0,
       inout: 0,
@@ -364,6 +365,11 @@ export default {
     },
     agegroup_change: function (event) {
       this.agegroup_value = Number(event.originalTarget.id);
+      if ((this.agegroup_value < this.men_agegroups.length) && (this.loading_all == true)) {
+          this.loading = true
+      } else {
+          this.loading = false
+      }
       if ((this.agegroup_value >= this.men_agegroups.length) && (this.loading_master == true)) {
           this.loading = true
       }
@@ -381,7 +387,7 @@ export default {
         .then(
           axios.spread((...response) => {
             this.all_record_data = response[0]["data"];
-            console.log("Got data");
+            //console.log("Got data");
           })
         )
         .catch((error) => {
@@ -389,16 +395,18 @@ export default {
           console.log("Error getting data");
         })
         .finally(() => {
+          this.loading_all = false;
           this.loading = false;
         });
-
+    
+      //console.log('Getting masters data')
       var url = "/api/records/masters";
       axios
         .all([axios.get(url)])
         .then(
           axios.spread((...response) => {
             this.masters_record_data = response[0]["data"];
-            console.log("Got masters data");
+            //console.log("Got masters data");
           })
         )
         .catch((error) => {
@@ -407,7 +415,9 @@ export default {
         })
         .finally(() => {
           this.loading_master = false;
+          if (this.loading_all == false) {
           this.loading = false;
+          }
         });
     },
   },
