@@ -193,7 +193,11 @@
                 <!--<td class="d-none d-xl-table-cell">{{ inout_text(i.InOut) }}</td>-->
                 <td class="d-none d-md-table-cell">{{ i.Date }}</td>
                 <!--<td>{{ i.AgeGroup }}</td>-->
-                <td class="d-none d-xl-table-cell">{{ i.Club }}</td>
+                <td class="d-none d-xl-table-cell">{{ i.Club }}&nbsp;&nbsp;<img
+                class="img-club"
+                v-bind:src="'/api/img/club/' + i.Club"
+                alt=""
+              /></td>
               </tr>
             </tbody>
           </table>
@@ -487,5 +491,9 @@ export default {
 /* center spinner */
 .v-spinner {
   text-align: center;
+}
+
+.img-club {
+  height: 25px;
 }
 </style>

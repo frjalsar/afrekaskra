@@ -44,7 +44,11 @@
           <td>{{ inout_text(i.Inout) }}</td>
           <td>{{ i.Date }}</td>
           <td>{{ i.AgeGroup }}</td>
-          <td>{{ i.Club }}</td>
+          <td>{{ i.Club }}&nbsp;&nbsp;<img
+                class="img-club"
+                v-bind:src="'/api/img/club/' + i.Club"
+                alt=""
+              /></td>
         </tr>
       </tbody>
     </table>
@@ -154,5 +158,9 @@ export default {
 <style scoped>
 .v-spinner {
   text-align: center;
+}
+
+.img-club {
+  height: 25px;
 }
 </style>
