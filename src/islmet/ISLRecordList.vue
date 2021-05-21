@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-header">
         <div class="row">
-          <div class="col-sm">
+          <div class="col-6 col-md-4">
             <div class="custom-control custom-radio">
               <input
                 type="radio"
@@ -32,7 +32,7 @@
               >
             </div>
           </div>
-          <div class="col-sm">
+          <div class="col-6 col-md-4">
             <div class="custom-control custom-radio">
               <input
                 type="radio"
@@ -61,7 +61,7 @@
               >
             </div>
           </div>
-          <div class="col-sm">
+          <div class="col-12 col-md-4">
             <div
               class="btn-toolbar"
               role="toolbar"
