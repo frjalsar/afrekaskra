@@ -113,7 +113,11 @@
                 >
                   Öldungaflokkar
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop2" v-on:click="agegroup_change($event)">
+                <div
+                  class="dropdown-menu"
+                  aria-labelledby="btnGroupDrop2"
+                  v-on:click="agegroup_change($event)"
+                >
                   <a class="dropdown-item" href="#" id="8">30-34 ára</a>
                   <a class="dropdown-item" href="#" id="9">35-39 ára</a>
                   <a class="dropdown-item" href="#" id="10">40-44 ára</a>
@@ -260,19 +264,58 @@ export default {
         ["KA090-94", "Öldungar - <i class='fas fa-male'></i> Karlar 90-94 ára"],
       ],
       master_womengroups: [
-        ["KO030-34", "Öldungar - <i class='fas fa-female'></i> Konur 30-34 ára"],
-        ["KO035-39", "Öldungar - <i class='fas fa-female'></i> Konur 35-39 ára"],
-        ["KO040-44", "Öldungar - <i class='fas fa-female'></i> Konur 40-44 ára"],
-        ["KO045-49", "Öldungar - <i class='fas fa-female'></i> Konur 45-49 ára"],
-        ["KO050-54", "Öldungar - <i class='fas fa-female'></i> Konur 50-54 ára"],
-        ["KO055-59", "Öldungar - <i class='fas fa-female'></i> Konur 55-59 ára"],
-        ["KO060-64", "Öldungar - <i class='fas fa-female'></i> Konur 60-64 ára"],
-        ["KO065-69", "Öldungar - <i class='fas fa-female'></i> Konur 65-69 ára"],
-        ["KO070-74", "Öldungar - <i class='fas fa-female'></i> Konur 70-74 ára"],
-        ["KO075-79", "Öldungar - <i class='fas fa-female'></i> Konur 75-79 ára"],
-        ["KO080-84", "Öldungar - <i class='fas fa-female'></i> Konur 80-84 ára"],
-        ["KO085-89", "Öldungar - <i class='fas fa-female'></i> Konur 85-89 ára"],
-        ["KO090-94", "Öldungar - <i class='fas fa-female'></i> Konur 90-94 ára"],
+        [
+          "KO030-34",
+          "Öldungar - <i class='fas fa-female'></i> Konur 30-34 ára",
+        ],
+        [
+          "KO035-39",
+          "Öldungar - <i class='fas fa-female'></i> Konur 35-39 ára",
+        ],
+        [
+          "KO040-44",
+          "Öldungar - <i class='fas fa-female'></i> Konur 40-44 ára",
+        ],
+        [
+          "KO045-49",
+          "Öldungar - <i class='fas fa-female'></i> Konur 45-49 ára",
+        ],
+        [
+          "KO050-54",
+          "Öldungar - <i class='fas fa-female'></i> Konur 50-54 ára",
+        ],
+        [
+          "KO055-59",
+          "Öldungar - <i class='fas fa-female'></i> Konur 55-59 ára",
+        ],
+        [
+          "KO060-64",
+          "Öldungar - <i class='fas fa-female'></i> Konur 60-64 ára",
+        ],
+        [
+          "KO065-69",
+          "Öldungar - <i class='fas fa-female'></i> Konur 65-69 ára",
+        ],
+        [
+          "KO070-74",
+          "Öldungar - <i class='fas fa-female'></i> Konur 70-74 ára",
+        ],
+        [
+          "KO075-79",
+          "Öldungar - <i class='fas fa-female'></i> Konur 75-79 ára",
+        ],
+        [
+          "KO080-84",
+          "Öldungar - <i class='fas fa-female'></i> Konur 80-84 ára",
+        ],
+        [
+          "KO085-89",
+          "Öldungar - <i class='fas fa-female'></i> Konur 85-89 ára",
+        ],
+        [
+          "KO090-94",
+          "Öldungar - <i class='fas fa-female'></i> Konur 90-94 ára",
+        ],
       ],
     };
   },
@@ -342,11 +385,11 @@ export default {
                 record_list.push(this.org_record_data[i])
             }
         } */
-        if (this.agegroup_value < this.men_agegroups.length) {
-            return this.all_record_data;
-        } else {
-            return this.masters_record_data;
-        }
+      if (this.agegroup_value < this.men_agegroups.length) {
+        return this.all_record_data;
+      } else {
+        return this.masters_record_data;
+      }
     },
   },
   methods: {
@@ -365,13 +408,13 @@ export default {
     },
     agegroup_change: function (event) {
       this.agegroup_value = Number(event.originalTarget.id);
-      if ((this.agegroup_value < this.men_agegroups.length) && (this.loading_all == true)) {
-          this.loading = true
-      } else {
-          this.loading = false
-      }
-      if ((this.agegroup_value >= this.men_agegroups.length) && (this.loading_master == true)) {
-          this.loading = true
+
+      // If we switch groups make sure to show or hide the loading screen if we don't have the data.
+      if (this.agegroup_value < this.men_agegroups.length) {
+        this.loading = this.loading_all
+      } 
+      if (this.agegroup_value >= this.men_agegroups.length) {
+        this.loading = this.loading_master
       }
     },
     get_data: function () {
@@ -398,7 +441,7 @@ export default {
           this.loading_all = false;
           this.loading = false;
         });
-    
+
       //console.log('Getting masters data')
       var url = "/api/records/masters";
       axios
@@ -416,7 +459,7 @@ export default {
         .finally(() => {
           this.loading_master = false;
           if (this.loading_all == false) {
-          this.loading = false;
+            this.loading = false;
           }
         });
     },
