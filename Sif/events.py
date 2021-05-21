@@ -16,13 +16,14 @@ df_event_list = pd.read_pickle(EVENT_LIST_FILENAME)
 #    return None
 
 def Get_Event_Info_by_Name(EventName):
-    NameofEvent = EventName.replace(',', '.')
+    NameofEvent = EventName.replace(',', '.').replace('(f)', '(flögutímar)')
     try:
         event_info = event_dict[NameofEvent]
         event_info['NAME_THOR'] = NameofEvent
         event_info['EVENT_ID'] = event_list.index(NameofEvent)
     except:
         print('VILLA: Fann ekki grein {}'.format(NameofEvent))
+        print(NameofEvent)
         event_info = event_dict['Óþekkt grein']
         event_info['NAME_SHORT'] = NameofEvent
         event_info['EVENT_ID'] = 1
@@ -54,7 +55,7 @@ def Get_Event_Info_by_ThordID(ThorID_2, ThorID_1, AgeGroup=''):
             Event_id_list = df_event_list[(df_event_list['THORID_2'] == ThorID_2) & (df_event_list['AgeGroup'] == AgeGroup) & (df_event_list['THORID_1'] == ThorID_1)].index.tolist()
             print(Event_id_list)
             if (len(Event_id_list) > 1):
-                print('Get_Event_Info_by_ThordID: VARÚÐ leit skilaði fleirri en einni grein!!')
+                print('Get_Event_Info_by_ThordID: VARÚÐ leit skilaði fleiri en einni grein!!')
                 print(ThordID)
                 print(AgeGroup)
                 print(Event_id_list)

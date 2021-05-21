@@ -212,7 +212,7 @@ def national_records_masters(request):
         if (row['Nafn'] != None):
             Event_Info = events.Get_Event_Info_by_Name(row['HeitiGr'])
             List_of_Records.append({
-                'Event': row['HeitiGr'],
+                'Event': Event_Info['NAME_SHORT'],
                 'Results': row['Árang'],
                 'Wind': row['Vindur'],
                 'Name': row['Nafn'],
@@ -222,7 +222,8 @@ def national_records_masters(request):
                 'CompetitorID': row['Keppandan'],
                 'AgeGroup': row['Aldursflokkuröldunga'],
                 'Sex': row['Ky'],
-                'InOut': int(row['ÚtiInni'])
+                'InOut': int(row['ÚtiInni']),
+                'Units_symbol': Event_Info['UNIT_SYMBOL']
             })
 
     return JsonResponse(List_of_Records, safe=False)
