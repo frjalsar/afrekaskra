@@ -61,7 +61,7 @@
               >
             </div>
           </div>
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-4" style="margin-top: auto;margin-bottom: auto;">
             <div
               class="btn-toolbar"
               role="toolbar"
