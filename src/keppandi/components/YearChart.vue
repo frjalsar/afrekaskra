@@ -27,6 +27,7 @@ export default {
   created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
+    this.addAllData();
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
