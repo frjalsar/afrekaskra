@@ -38,13 +38,13 @@ export default {
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
-      if (this.window.width < 800) {
-        this.isyvisible = false;
-      } else {
-        this.isyvisible = true;
-      }
+      //if (this.window.width < 800) {
+      //  this.isyvisible = false;
+      //} else {
+      //  this.isyvisible = true;
+      //}
       //console.log(this.isyvisible)
-      this.addAllData();
+      //this.addAllData();
     },
     addAllData() {
       // Bæta við seríu með öllum árangri ef grein hefur vind.
@@ -103,16 +103,19 @@ export default {
           enabled: false,
         },
         exporting: {
-          enabled: true,
+          enabled: false,
         },
         navigation: {
           buttonOptions: {
             align: "left",
           },
         },
-        //chart: {
+        chart: {
         //  plotBackgroundImage: require('../../bg-1.png'),
-        //},
+            scrollablePlotArea: {
+            minWidth: 550
+        }
+        },
         title: {
           text: "",
         },
@@ -122,9 +125,13 @@ export default {
         yAxis: {
           visible: this.isyvisible,
           title: {
-            text: "Árangur",
+            //text: "Árangur",
+            text: null,
           },
           labels: {
+            align: 'left',
+            x: 3,
+            y: 16,
             format: this.strFormat,
           },
         },
