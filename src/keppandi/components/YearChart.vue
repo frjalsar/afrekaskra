@@ -127,6 +127,8 @@ export default {
           visible: this.isyvisible,
           startOnTick: false,
           endOnTick: false,
+          maxPadding: 0.1,
+          minPadding: 0.1,
           title: {
             //text: "Árangur",
             text: null,
