@@ -125,6 +125,8 @@ export default {
         },
         yAxis: {
           visible: this.isyvisible,
+          startOnTick: false,
+          endOnTick: false,
           title: {
             //text: "Árangur",
             text: null,
