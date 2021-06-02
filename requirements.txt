@@ -18,5 +18,4 @@ six==1.16.0
 sqlparse==0.4.1
 style==1.1.6
 uhashring==2.1
-update==0.0.1
 whitenoise==5.2.0
