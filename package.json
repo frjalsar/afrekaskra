@@ -33,6 +33,7 @@
     "vue": "^2.6.12",
     "vue-gtag": "^1.16.1",
     "vue-hot-reload-api": "^2.3.4",
+    "vue-meta": "^2.4.0",
     "vue-router": "^3.5.1",
     "vue-spinner": "^1.0.4"
   },
