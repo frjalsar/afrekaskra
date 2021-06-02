@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>(404) Síða fannst ekki. / Page not found.</h1>
+    <h1>(404) Síða fannst ekki. / (404) Page not found.</h1>
   </div>
 </template>
 
