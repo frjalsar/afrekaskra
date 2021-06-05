@@ -1,2 +1,2 @@
 release: python manage.py clearcache
-web: bin/start-nginx unicorn -c config/gunicorn.conf.py Sif.wsgi
+web: bin/start-nginx gunicorn -c config/gunicorn.conf.py Sif.wsgi
