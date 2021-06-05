@@ -223,4 +223,3 @@ STATICFILES_DIRS = (
 
 # Activate Django-Heroku. We have our own database settings and we set the private key ourselves.
 django_heroku.settings(locals(), databases=False, secret_key=False, logging=False)
-
