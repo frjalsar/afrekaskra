@@ -71,6 +71,9 @@ worker_class = 'sync'
 worker_connections = 1000
 timeout = 30
 keepalive = 2
+preload_app = True # KT
+
+errorlog = '-'
 
 #
 #   spew - Install a trace function that spews every line of Python
