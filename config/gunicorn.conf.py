@@ -73,8 +73,6 @@ timeout = 30
 keepalive = 2
 preload_app = True # KT
 
-errorlog = '-'
-
 #
 #   spew - Install a trace function that spews every line of Python
 #       that is executed when running the server. This is the
@@ -127,10 +125,6 @@ spew = False
 #
 
 daemon = False
-raw_env = [
-    'DJANGO_SECRET_KEY=something',
-    'SPAM=eggs',
-]
 pidfile = None
 umask = 0
 user = None
