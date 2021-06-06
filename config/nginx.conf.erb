@@ -32,7 +32,7 @@ http {
 
 	server {
 		listen <%= ENV["PORT"] %>;
-		server_name _ sif.fri.is sif-dev.herokuapp.com;
+		server_name sif.fri.is sif-dev.herokuapp.com;
 		keepalive_timeout 5;
 
 		root /app/dist/;
