@@ -32,7 +32,14 @@ http {
 
 	server {
 		listen <%= ENV["PORT"] %>;
-		server_name _;
+		server_name afrek.fri.is afrekaskra.fri.is fri-afrekaskra.herokuapp.com;
+
+		return 301 $scheme://sif.fri.is$request_uri;
+	}
+
+	server {
+		listen <%= ENV["PORT"] %>;
+		server_name _ sif.fri.is;
 		keepalive_timeout 5;
 
 		root /app/dist/;
