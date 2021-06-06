@@ -32,14 +32,7 @@ http {
 
 	server {
 		listen <%= ENV["PORT"] %>;
-		server_name afrek.fri.is afrekaskra.fri.is fri-afrekaskra.herokuapp.com;
-
-		return 301 $scheme://sif.fri.is$request_uri;
-	}
-
-	server {
-		listen <%= ENV["PORT"] %>;
-		server_name _ sif.fri.is;
+		server_name _ sif.fri.is sif-dev.herokuapp.com;
 		keepalive_timeout 5;
 
 		root /app/dist/;
@@ -87,5 +80,12 @@ http {
 			proxy_pass http://app_server;
 		}
 		
+	}
+	
+	server {
+		listen <%= ENV["PORT"] %>;
+		server_name afrek.fri.is afrekaskra.fri.is fri-afrekaskra.herokuapp.com;
+
+		return 301 $scheme://sif.fri.is$request_uri;
 	}
 }
