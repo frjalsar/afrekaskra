@@ -49,15 +49,15 @@ http {
 		}
 
 		location /islmet/ {
-    		try_files $uri $uri/ /index.html?$args;
+    		try_files $uri $uri/ /index.html;
 		}
 
-		location /keppandi/ {
-    		try_files $uri $uri/ /index.html?$args;
+		location ~ /keppandi/\d+$ {
+			try_files $uri $uri/ /index.html;
 		}
 
-		location /top/ {
-    		try_files $uri $uri/ /index.html?$args;
+		location /top {
+    		try_files $uri $uri/ /index.html;
 		}
 
 		location /api/ {
