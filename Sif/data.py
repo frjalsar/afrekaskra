@@ -238,9 +238,9 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
         if (Legal == 1):
             # Gagnagrunurinn er með dálk sem heitir löglegt. En það virðist ekki vera hægt að treysta honum.
             # Ólögleigir árangrar eru flokkaðir sem vindur > 2.0, vantar vind og/eða handtímataka
-            if (Event_Info['Units'] == 2): # Eining er sek, sem sagt spretthlaup þá viljum við rafmagnstíma
-                electime = 1
-                q = q.filter(rafmagnstímataka=electime)
+            #if (Event_Info['Units'] == 2): # Eining er sek, sem sagt spretthlaup þá viljum við rafmagnstíma
+            #    electime = 1
+            #    q = q.filter(rafmagnstímataka=electime)
             if (Event_Info['HasWind'] == True):
                 q = q.filter(vindur__lte=2.00, vantar_vind=0)
             #q = q.filter(vindur__lte=2.00, vantar_vind=0)
