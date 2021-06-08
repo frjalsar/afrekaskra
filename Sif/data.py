@@ -85,7 +85,6 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
         else:
             ElecTime = False
         result_str = common.results_to_str(row.árangur_float, Event_Info['Units'], ElecTime)
-        print(result_str)
 
         Achievement_info = {'name': row.nafn,
                             'results': result_str,
