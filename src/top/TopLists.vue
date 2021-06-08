@@ -773,48 +773,48 @@ export default {
       //'klst.': 4, # hh:mm:ss,dd
       //'stig': 5, # Points
       //'Ungl.stig': 6 # Points junior
-      if (unit === 3 || unit === 4) {
-        var dataLen = my_data.length;
-        for (var i = 0; i < dataLen; i++) {
-          var f = Number(my_data[i]["results"]);
-          if (unit === 4) {
-            // This unit has hours
-            var h = Math.floor(f / 3600);
-            f = f - h * 3600;
-          } else {
-            var h = 0;
-          }
-          var m = Math.floor(f / 60);
-          var s = f - m * 60;
-          var s_str;
-          var m_str;
-          var h_str;
+      // if (unit === 3 || unit === 4) {
+      //   var dataLen = my_data.length;
+      //   for (var i = 0; i < dataLen; i++) {
+      //     var f = Number(my_data[i]["results"]);
+      //     if (unit === 4) {
+      //       // This unit has hours
+      //       var h = Math.floor(f / 3600);
+      //       f = f - h * 3600;
+      //     } else {
+      //       var h = 0;
+      //     }
+      //     var m = Math.floor(f / 60);
+      //     var s = f - m * 60;
+      //     var s_str;
+      //     var m_str;
+      //     var h_str;
 
-          if (s < 10) {
-            s_str = "0" + s.toFixed(2);
-          } else {
-            s_str = s.toFixed(2);
-          }
+      //     if (s < 10) {
+      //       s_str = "0" + s.toFixed(2);
+      //     } else {
+      //       s_str = s.toFixed(2);
+      //     }
 
-          if (m < 10) {
-            m_str = "0" + m.toFixed(0);
-          } else {
-            m_str = m.toFixed(0);
-          }
+      //     if (m < 10) {
+      //       m_str = "0" + m.toFixed(0);
+      //     } else {
+      //       m_str = m.toFixed(0);
+      //     }
 
-          if (h < 10) {
-            h_str = "0" + h.toFixed(0);
-          } else {
-            h_str = h.toFixed(0);
-          }
+      //     if (h < 10) {
+      //       h_str = "0" + h.toFixed(0);
+      //     } else {
+      //       h_str = h.toFixed(0);
+      //     }
 
-          if (unit === 3) {
-            my_data[i]["results"] = m_str + ":" + s_str;
-          } else {
-            my_data[i]["results"] = h_str + ":" + m_str + ":" + s_str;
-          }
-        }
-      }
+      //     if (unit === 3) {
+      //       my_data[i]["results"] = m_str + ":" + s_str;
+      //     } else {
+      //       my_data[i]["results"] = h_str + ":" + m_str + ":" + s_str;
+      //     }
+      //   }
+      // }
 
       return my_data;
     },

@@ -85,6 +85,7 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
         else:
             ElecTime = False
         result_str = common.results_to_str(row.árangur_float, Event_Info['Units'], ElecTime)
+        print(result_str)
 
         Achievement_info = {'name': row.nafn,
                             'results': result_str,
@@ -330,7 +331,6 @@ def Top_List():
                               'EventType'     : event_t,
                               'Units_symbol'  : Event_info_W['Units_symbol']
                               })
-            print(Top_W[0]['results'])
         except IndexError: # Index error þýðir líklegast að engin árangur fannst
             pass
 
