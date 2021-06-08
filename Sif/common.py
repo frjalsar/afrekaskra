@@ -91,7 +91,7 @@ def results_to_str(in_float, Units, ElectricTiming):
         if (ElectricTiming == True):
             return '{:.2f}'.format(in_float)
         else:
-            return '{:.1f}'.format(in_float)
+            return '{:.1f}'.format(in_float) + 'h'
 
     elif (Units == 3): # mm:ss,dd
         ss = in_float

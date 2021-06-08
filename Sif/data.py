@@ -72,13 +72,19 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
         date_str = format_date(row.dagsetning.date(), "d MMM yyyy",locale='is_IS').upper()
         wind_str = '{:+.1f}'.format(row.vindur)
 
-        if (row.rafmagnstímataka == 0 and Event_Info['Minimize'] == True):
-            result_str = '{:.1f}'.format(row.árangur_float)
+        # if (row.rafmagnstímataka == 0 and Event_Info['Minimize'] == True):
+        #     result_str = '{:.1f}'.format(row.árangur_float)
+        # else:
+        #     if (Event_Info['Units'] == 5):
+        #         result_str = '{:.0f}'.format(row.árangur_float)
+        #     else:
+        #         result_str = '{:.2f}'.format(row.árangur_float)
+
+        if (row.rafmagnstímataka == 1):
+            ElecTime = True
         else:
-            if (Event_Info['Units'] == 5):
-                result_str = '{:.0f}'.format(row.árangur_float)
-            else:
-                result_str = '{:.2f}'.format(row.árangur_float)
+            ElecTime = False
+        result_str = common.results_to_str(row.árangur_float, Event_Info['Units'], ElecTime)
 
         Achievement_info = {'name': row.nafn,
                             'results': result_str,
@@ -309,9 +315,14 @@ def Top_List():
         Top_W, Event_info_W = Top_100_List(event_id, current_year, 2, 2, 0, 99, True, 0, True, 1)
 
         try:
+            # if (Top_W[0]['electronic_timing'] == 1):
+            #     ElecTime = True
+            # else:
+            #     ElecTime = False
             Top_Women.append({'Name'          : Top_W[0]['name'],
                               'CompetitorID'  : Top_W[0]['competitor_code'],
-                              'Results'       : common.results_to_str(float(Top_W[0]['results']), Event_info_W['Units'], True),
+                              #'Results'       : common.results_to_str(float(Top_W[0]['results']), Event_info_W['Units'], ElecTime),
+                              'Results'       : Top_W[0]['results'],
                               'OutInn'        : Top_W[0]['outdoor_indoor'],
                               'Club'          : Top_W[0]['club'],
                               'EventName'     : Event_info_W['ShortName'],
@@ -319,6 +330,7 @@ def Top_List():
                               'EventType'     : event_t,
                               'Units_symbol'  : Event_info_W['Units_symbol']
                               })
+            print(Top_W[0]['results'])
         except IndexError: # Index error þýðir líklegast að engin árangur fannst
             pass
 
@@ -327,10 +339,14 @@ def Top_List():
         Top_M, Event_info_M = Top_100_List(event_id, current_year, 2, 1, 0, 99, True, 0, True, 1)
 
         try:
-
+            # if (Top_M[0]['electronic_timing'] == 1):
+            #     ElecTime = True
+            # else:
+            #     ElecTime = False
             Top_Men.append({'Name'          : Top_M[0]['name'],
                             'CompetitorID'  : Top_M[0]['competitor_code'],
-                            'Results'       : common.results_to_str(float(Top_M[0]['results']), Event_info_M['Units'], True),
+                            #'Results'       : common.results_to_str(float(Top_M[0]['results']), Event_info_M['Units'], ElecTime),
+                            'Results'       : Top_M[0]['results'],
                             'OutInn'        : Top_M[0]['outdoor_indoor'],
                             'Club'          : Top_M[0]['club'],
                             'EventName'     : Event_info_M['ShortName'],
