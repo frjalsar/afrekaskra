@@ -17,7 +17,8 @@
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
-                >{{eventText}}</a>
+                  >{{ eventText }}</a
+                >
                 <ul
                   v-on:click="event_change($event)"
                   class="dropdown-menu"
@@ -25,113 +26,127 @@
                 >
                   <li class="dropdown-submenu">
                     <a
-                      v-bind:class="{active: (event_type===1)}"
+                      v-bind:class="{ active: event_type === 1 }"
                       class="dropdown-item dropdown-toggle"
-                    >Stökkgreinar</a>
+                      >Stökkgreinar</a
+                    >
                     <ul class="dropdown-menu">
                       <li v-for="i in events_jump">
                         <a
-                          v-bind:class="{active: (event_id===i.id)}"
+                          v-bind:class="{ active: event_id === i.id }"
                           :id="i.id"
                           :data-event-type="i.type"
                           class="dropdown-item"
-                        >{{i.name}}</a>
+                          >{{ i.name }}</a
+                        >
                       </li>
                     </ul>
                   </li>
                   <li class="dropdown-submenu">
                     <a
-                      v-bind:class="{active: (event_type===2)}"
+                      v-bind:class="{ active: event_type === 2 }"
                       class="dropdown-item dropdown-toggle"
-                    >Kastgreinar</a>
+                      >Kastgreinar</a
+                    >
                     <ul class="dropdown-menu">
                       <li v-for="i in events_throw">
                         <a
-                          v-bind:class="{active: (event_id===i.id)}"
+                          v-bind:class="{ active: event_id === i.id }"
                           :id="i.id"
                           :data-event-type="i.type"
                           class="dropdown-item"
-                        >{{i.name}}</a>
+                          >{{ i.name }}</a
+                        >
                       </li>
                     </ul>
                   </li>
                   <li class="dropdown-submenu">
                     <a
-                      v-bind:class="{active: (event_type===3)}"
+                      v-bind:class="{ active: event_type === 3 }"
                       class="dropdown-item dropdown-toggle"
-                    >Spretthlaup</a>
+                      >Spretthlaup</a
+                    >
                     <ul class="dropdown-menu">
                       <li v-for="i in events_sprint">
                         <a
-                          v-bind:class="{active: (event_id===i.id)}"
+                          v-bind:class="{ active: event_id === i.id }"
                           :id="i.id"
                           :data-event-type="i.type"
                           class="dropdown-item"
-                        >{{i.name}}</a>
+                          >{{ i.name }}</a
+                        >
                       </li>
                     </ul>
                   </li>
                   <li class="dropdown-submenu">
                     <a
-                      v-bind:class="{active: (event_type===4)}"
+                      v-bind:class="{ active: event_type === 4 }"
                       class="dropdown-item dropdown-toggle"
-                    >Grindarhlaup</a>
+                      >Grindarhlaup</a
+                    >
                     <ul class="dropdown-menu">
                       <li v-for="i in events_hurdle">
                         <a
-                          v-bind:class="{active: (event_id===i.id)}"
+                          v-bind:class="{ active: event_id === i.id }"
                           :id="i.id"
                           :data-event-type="i.type"
                           class="dropdown-item"
-                        >{{i.name}}</a>
+                          >{{ i.name }}</a
+                        >
                       </li>
                     </ul>
                   </li>
                   <li class="dropdown-submenu">
                     <a
-                      v-bind:class="{active: (event_type===5)}"
+                      v-bind:class="{ active: event_type === 5 }"
                       class="dropdown-item dropdown-toggle"
-                    >Millivegalengdir</a>
+                      >Millivegalengdir</a
+                    >
                     <ul class="dropdown-menu">
                       <li v-for="i in events_middle">
                         <a
-                          v-bind:class="{active: (event_id===i.id)}"
+                          v-bind:class="{ active: event_id === i.id }"
                           :id="i.id"
                           :data-event-type="i.type"
                           class="dropdown-item"
-                        >{{i.name}}</a>
+                          >{{ i.name }}</a
+                        >
                       </li>
                     </ul>
                   </li>
                   <li class="dropdown-submenu">
                     <a
-                      v-bind:class="{active: (event_type===6)}"
+                      v-bind:class="{ active: event_type === 6 }"
                       class="dropdown-item dropdown-toggle"
-                    >Langhlaup</a>
+                      >Langhlaup</a
+                    >
                     <ul class="dropdown-menu">
                       <li v-for="i in events_long">
                         <a
-                          v-bind:class="{active: (event_id===i.id)}"
+                          v-bind:class="{ active: event_id === i.id }"
                           :id="i.id"
                           :data-event-type="i.type"
                           class="dropdown-item"
-                        >{{i.name}}</a>
+                          >{{ i.name }}</a
+                        >
                       </li>
                     </ul>
                   </li>
                   <li class="dropdown-submenu">
                     <a
-                      v-bind:class="{active: (event_type===7)}"
+                      v-bind:class="{ active: event_type === 7 }"
                       class="dropdown-item dropdown-toggle"
-                    >Þrautagreinar</a>
+                      >Þrautagreinar</a
+                    >
                     <ul class="dropdown-menu">
                       <li v-for="i in events_athlon">
                         <a
-                          v-bind:class="{active: (event_id===i.id)}"
+                          v-bind:class="{ active: event_id === i.id }"
                           :id="i.id"
                           :data-event-type="i.type"
                           class="dropdown-item"
-                        >{{i.name}}</a>
+                          >{{ i.name }}</a
+                        >
                       </li>
                     </ul>
                   </li>
@@ -145,10 +160,21 @@
                   role="button"
                   aria-haspopup="true"
                   aria-expanded="false"
-                >{{sexText}}</a>
+                  >{{ sexText }}</a
+                >
                 <div class="dropdown-menu" id="sexDropdown">
-                  <a v-on:click="toogle_sex($event, 2)" class="dropdown-item" id="1">Konur</a>
-                  <a v-on:click="toogle_sex($event, 1)" class="dropdown-item" id="2">Karlar</a>
+                  <a
+                    v-on:click="toogle_sex($event, 2)"
+                    class="dropdown-item"
+                    id="1"
+                    >Konur</a
+                  >
+                  <a
+                    v-on:click="toogle_sex($event, 1)"
+                    class="dropdown-item"
+                    id="2"
+                    >Karlar</a
+                  >
                 </div>
               </li>
               <!---->
@@ -159,19 +185,26 @@
                   role="button"
                   aria-haspopup="true"
                   aria-expanded="false"
-                >{{yearText}}</a>
+                  >{{ yearText }}</a
+                >
                 <div
                   v-on:click="year_change($event)"
                   class="dropdown-menu dropdown-menu-long"
                   id="activeyearDropdown"
                 >
-                  <a v-bind:class="{active: year===0}" class="dropdown-item" id="0">Öll ár</a>
                   <a
-                    v-bind:class="{active: year===i}"
+                    v-bind:class="{ active: year === 0 }"
+                    class="dropdown-item"
+                    id="0"
+                    >Öll ár</a
+                  >
+                  <a
+                    v-bind:class="{ active: year === i }"
                     v-for="i in year_list"
                     class="dropdown-item"
                     :id="i"
-                  >{{i}}</a>
+                    >{{ i }}</a
+                  >
                 </div>
               </li>
               <!---->
@@ -182,14 +215,20 @@
                   role="button"
                   aria-haspopup="true"
                   aria-expanded="false"
-                >{{ageText}}</a>
-                <div v-on:click="age_change($event)" class="dropdown-menu" id="ageDropdown">
+                  >{{ ageText }}</a
+                >
+                <div
+                  v-on:click="age_change($event)"
+                  class="dropdown-menu"
+                  id="ageDropdown"
+                >
                   <a
                     v-for="i in ageGroups"
-                    v-bind:class="{active: ageGroup===i.id}"
+                    v-bind:class="{ active: ageGroup === i.id }"
                     class="dropdown-item"
                     :id="i.id"
-                  >{{i.name}}</a>
+                    >{{ i.name }}</a
+                  >
                 </div>
               </li>
               <!---->
@@ -208,10 +247,9 @@
                     id="customSwitch2"
                     :checked="isBestByAthActive"
                   />
-                  <label
-                    class="custom-control-label"
-                    for="customSwitch2"
-                  >Birta bara besta afrek íþróttamanns</label>
+                  <label class="custom-control-label" for="customSwitch2"
+                    >Birta bara besta afrek íþróttamanns</label
+                  >
                 </div>
               </div>
               <div class="col-md-4 col-sm-12 mb-3 text-center">
@@ -223,7 +261,9 @@
                     id="customSwitch1"
                     :checked="!isLegalActive"
                   />
-                  <label class="custom-control-label" for="customSwitch1">Birta ólöglegan árangur</label>
+                  <label class="custom-control-label" for="customSwitch1"
+                    >Birta ólöglegan árangur</label
+                  >
                 </div>
               </div>
               <div class="col-md-4 col-sm-12 mb-3 text-center">
@@ -235,7 +275,9 @@
                     id="customSwitch3"
                     :checked="!isISLActive"
                   />
-                  <label class="custom-control-label" for="customSwitch3">Birta öll þjóðerni</label>
+                  <label class="custom-control-label" for="customSwitch3"
+                    >Birta öll þjóðerni</label
+                  >
                 </div>
               </div>
             </div>
@@ -249,7 +291,10 @@
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                   <label
                     class="btn"
-                    v-bind:class="{'btn-primary': (outin===1), 'btn-secondary': (outin!==1)}"
+                    v-bind:class="{
+                      'btn-primary': outin === 1,
+                      'btn-secondary': outin !== 1,
+                    }"
                   >
                     <input
                       v-on:click="toogle_innout($event, 1)"
@@ -257,11 +302,15 @@
                       name="options"
                       id="option1"
                       autocomplete="off"
-                    /> Innanhús
+                    />
+                    Innanhús
                   </label>
                   <label
                     class="btn"
-                    v-bind:class="{'btn-primary': (outin===2), 'btn-secondary': (outin!==2)}"
+                    v-bind:class="{
+                      'btn-primary': outin === 2,
+                      'btn-secondary': outin !== 2,
+                    }"
                   >
                     <input
                       v-on:click="toogle_innout($event, 2)"
@@ -269,11 +318,15 @@
                       name="options"
                       id="option2"
                       autocomplete="off"
-                    /> Innan og utanhús
+                    />
+                    Innan og utanhús
                   </label>
                   <label
                     class="btn"
-                    v-bind:class="{'btn-primary': (outin===0), 'btn-secondary': (outin!==0)}"
+                    v-bind:class="{
+                      'btn-primary': outin === 0,
+                      'btn-secondary': outin !== 0,
+                    }"
                   >
                     <input
                       v-on:click="toogle_innout($event, 0)"
@@ -281,7 +334,8 @@
                       name="options"
                       id="option3"
                       autocomplete="off"
-                    /> Utanhús
+                    />
+                    Utanhús
                   </label>
                 </div>
               </div>
@@ -304,7 +358,9 @@
                 <tr>
                   <th class="d-none d-sm-table-cell" scope="col">#</th>
                   <th scope="col">Árangur</th>
-                  <th v-bind:class="{'d-none': !hasWind}" scope="col">Vindur</th>
+                  <th v-bind:class="{ 'd-none': !hasWind }" scope="col">
+                    Vindur
+                  </th>
                   <th scope="col">Nafn</th>
                   <th class="d-none d-sm-table-cell" scope="col">Aldur</th>
                   <th class="d-none d-sm-table-cell" scope="col">Félag</th>
@@ -314,30 +370,52 @@
               </thead>
               <tbody>
                 <tr v-for="(competitor, index) in data">
-                  <th class="d-none d-sm-table-cell" scope="row">{{index+1}}</th>
-                  <td>{{competitor.results}}</td>
-                  <td v-bind:class="{'d-none': !hasWind}">{{competitor.wind}}</td>
+                  <th class="d-none d-sm-table-cell" scope="row">
+                    {{ index + 1 }}
+                  </th>
+                  <td>{{ competitor.results }}</td>
+                  <td v-bind:class="{ 'd-none': !hasWind }">
+                    {{ competitor.wind }}
+                  </td>
                   <td>
                     <router-link
-                      :to="{ name: 'CompetitorProfile', params: { competitorID: competitor.competitor_code }}"
+                      :to="{
+                        name: 'CompetitorProfile',
+                        params: { competitorID: competitor.competitor_code },
+                      }"
                     >
-                      <a>{{competitor.name}}</a>
+                      <a>{{ competitor.name }}</a>
                     </router-link>
                     <!--<a v-bind:href="'/keppandi/' + competitor.competitor_code">{{competitor.name}}</a>-->
                   </td>
-                  <td class="d-none d-sm-table-cell">{{competitor.age}}</td>
-                  <td class="d-none d-sm-table-cell">{{competitor.club}}</td>
+                  <td class="d-none d-sm-table-cell">{{ competitor.age }}</td>
+                  <td class="d-none d-sm-table-cell">
+                    {{ competitor.club }}
+                    <img
+                      class="img-club"
+                      v-bind:src="'/api/img/club/' + competitor.club"
+                      alt=""
+                    />
+                  </td>
                   <td class="d-none d-xl-table-cell">
                     <a
-                      v-bind:href="'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' + competitor.competition_id"
-                    >{{competitor.competition_name}}</a>
+                      v-bind:href="
+                        'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' +
+                        competitor.competition_id
+                      "
+                      >{{ competitor.competition_name }}</a
+                    >
                   </td>
-                  <td class="d-none d-md-table-cell">{{competitor.date}}</td>
+                  <td class="d-none d-md-table-cell">{{ competitor.date }}</td>
                 </tr>
               </tbody>
             </table>
-            <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
-            <p align="center">{{message}}</p>
+            <pulse-loader
+              :loading="loading"
+              :color="color"
+              :size="size"
+            ></pulse-loader>
+            <p align="center">{{ message }}</p>
             <!-- ------------------------------------------------------------------------------------------------------------------------------------------------- -->
           </div>
         </div>
@@ -353,7 +431,7 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 export default {
   name: "TopLists",
   components: {
-    PulseLoader
+    PulseLoader,
   },
   data() {
     return {
@@ -385,80 +463,80 @@ export default {
       bestbyath: 1,
 
       events_jump: [
-        {id: 143, type: 1, name: 'Hástökk'},
-        {id: 144, type: 1, name: 'Hástökk án atrennu'},
-        {id: 179, type: 1, name: 'Langstökk'},
-        {id: 180, type: 1, name: 'Langstökk án atrennu'},
-        {id: 239, type: 1, name: 'Stangarstökk'},
-        {id: 252, type: 1, name: 'Þrístökk'},
-        {id: 253, type: 1, name: 'Þrístökk án atrennu'}
+        { id: 143, type: 1, name: "Hástökk" },
+        { id: 144, type: 1, name: "Hástökk án atrennu" },
+        { id: 179, type: 1, name: "Langstökk" },
+        { id: 180, type: 1, name: "Langstökk án atrennu" },
+        { id: 239, type: 1, name: "Stangarstökk" },
+        { id: 252, type: 1, name: "Þrístökk" },
+        { id: 253, type: 1, name: "Þrístökk án atrennu" },
       ],
       events_throw: [
-        {id: 152, type: 2, name: 'Kringlukast (2,0 kg) [KA]'},
-        {id: 159, type: 2, name: 'Kringlukast (1,75kg) [P19]'},
-        {id: 153, type: 2, name: 'Kringlukast (1,5 kg) [P17]'},
-        {id: 154, type: 2, name: 'Kringlukast (1,0 kg) [KO, P15]'},
-        {id: 162, type: 2, name: 'Kúluvarp (7,26 kg) [KA]'},
-        {id: 165, type: 2, name: 'Kúluvarp (6,0 kg) [P19]'},
-        {id: 166, type: 2, name: 'Kúluvarp (5,0 kg) [P17]'},
-        {id: 168, type: 2, name: 'Kúluvarp (4,0 kg) [KO, P15]'},
-        {id: 167, type: 2, name: 'Kúluvarp (3,0 kg) [S15]'},
-        {id: 163, type: 2, name: 'Kúluvarp (2,0 kg) [S13]'},
-        {id: 212, type: 2, name: 'Sleggjukast (7,26 kg) [KA]'},
-        {id: 214, type: 2, name: 'Sleggjukast (6,0 kg) [P19]'},
-        {id: 220, type: 2, name: 'Sleggjukast (5,0 kg) [P15]'},
-        {id: 216, type: 2, name: 'Sleggjukast (4,0 kg) [KO]'},
-        {id: 217, type: 2, name: 'Sleggjukast (3,0 kg) [S17]'},
-        {id: 213, type: 2, name: 'Sleggjukast (2,0 kg)'},
-        {id: 226, type: 2, name: 'Spjótkast (800 gr) [KA]'},
-        {id: 227, type: 2, name: 'Spjótkast (600 gr) [KO, P15]'},
-        {id: 228, type: 2, name: 'Spjótkast (500 gr) [S17]'},
-        {id: 230, type: 2, name: 'Spjótkast (400 gr) [S15]'}
+        { id: 152, type: 2, name: "Kringlukast (2,0 kg) [KA]" },
+        { id: 159, type: 2, name: "Kringlukast (1,75kg) [P19]" },
+        { id: 153, type: 2, name: "Kringlukast (1,5 kg) [P17]" },
+        { id: 154, type: 2, name: "Kringlukast (1,0 kg) [KO, P15]" },
+        { id: 162, type: 2, name: "Kúluvarp (7,26 kg) [KA]" },
+        { id: 165, type: 2, name: "Kúluvarp (6,0 kg) [P19]" },
+        { id: 166, type: 2, name: "Kúluvarp (5,0 kg) [P17]" },
+        { id: 168, type: 2, name: "Kúluvarp (4,0 kg) [KO, P15]" },
+        { id: 167, type: 2, name: "Kúluvarp (3,0 kg) [S15]" },
+        { id: 163, type: 2, name: "Kúluvarp (2,0 kg) [S13]" },
+        { id: 212, type: 2, name: "Sleggjukast (7,26 kg) [KA]" },
+        { id: 214, type: 2, name: "Sleggjukast (6,0 kg) [P19]" },
+        { id: 220, type: 2, name: "Sleggjukast (5,0 kg) [P15]" },
+        { id: 216, type: 2, name: "Sleggjukast (4,0 kg) [KO]" },
+        { id: 217, type: 2, name: "Sleggjukast (3,0 kg) [S17]" },
+        { id: 213, type: 2, name: "Sleggjukast (2,0 kg)" },
+        { id: 226, type: 2, name: "Spjótkast (800 gr) [KA]" },
+        { id: 227, type: 2, name: "Spjótkast (600 gr) [KO, P15]" },
+        { id: 228, type: 2, name: "Spjótkast (500 gr) [S17]" },
+        { id: 230, type: 2, name: "Spjótkast (400 gr) [S15]" },
       ],
       events_sprint: [
-        {id: 82, type: 3, name: '60 metra hlaup'},
-        {id: 6, type: 3, name: '100 metra hlaup'},
-        {id: 27, type: 3, name: '200 metra hlaup'},
-        {id: 33, type: 3, name: '300 metra hlaup'},
-        {id: 48, type: 3, name: '400 metra hlaup'},
-        {id: 55, type: 3, name: '4x100 metra boðhlaup'},
-        {id: 57, type: 3, name: '4x200 metra boðhlaup'},
-        {id: 59, type: 3, name: '4x400 metra boðhlaup'},
-        {id: 5, type: 3, name: '1000 metra boðhlaup'},
+        { id: 82, type: 3, name: "60 metra hlaup" },
+        { id: 6, type: 3, name: "100 metra hlaup" },
+        { id: 27, type: 3, name: "200 metra hlaup" },
+        { id: 33, type: 3, name: "300 metra hlaup" },
+        { id: 48, type: 3, name: "400 metra hlaup" },
+        { id: 55, type: 3, name: "4x100 metra boðhlaup" },
+        { id: 57, type: 3, name: "4x200 metra boðhlaup" },
+        { id: 59, type: 3, name: "4x400 metra boðhlaup" },
+        { id: 5, type: 3, name: "1000 metra boðhlaup" },
       ],
       events_hurdle: [
-        {id: 11, type: 4, name: '100 metra gr. (91,4 cm)'},
-        {id: 7, type: 4, name: '100 metra gr. (84 cm) [KO]'},
-        {id: 8, type: 4, name: '100 metra gr. (76,2 cm)'},
-        {id: 15, type: 4, name: '110 metra gr. (106,7 cm) [KA]'},
-        {id: 16, type: 4, name: '110 metra gr. (99,1 cm) [P19]'},
-        {id: 17, type: 4, name: '110 metra gr. (91,4 cm) [P17]'},
-        {id: 49, type: 4, name: '400 metra gr. (91,4 cm) [KA]'},
-        {id: 50, type: 4, name: '400 metra gr. (84 cm)'},
-        {id: 52, type: 4, name: '400 metra gr. (76,2 cm) [KO]'},
-        {id: 83, type: 4, name: '60 metra grind (106,7cm) [KA]'},
-        {id: 91, type: 4, name: '60 metra grind (99,1 cm) [P19]'},
-        {id: 85, type: 4, name: '60 metra grind (91,4cm) [P17]'},
-        {id: 86, type: 4, name: '60 metra grind (84,0 cm) [KO]'},
-        {id: 89, type: 4, name: '60 metra grind (76,2 cm) [S17]'}
+        { id: 11, type: 4, name: "100 metra gr. (91,4 cm)" },
+        { id: 7, type: 4, name: "100 metra gr. (84 cm) [KO]" },
+        { id: 8, type: 4, name: "100 metra gr. (76,2 cm)" },
+        { id: 15, type: 4, name: "110 metra gr. (106,7 cm) [KA]" },
+        { id: 16, type: 4, name: "110 metra gr. (99,1 cm) [P19]" },
+        { id: 17, type: 4, name: "110 metra gr. (91,4 cm) [P17]" },
+        { id: 49, type: 4, name: "400 metra gr. (91,4 cm) [KA]" },
+        { id: 50, type: 4, name: "400 metra gr. (84 cm)" },
+        { id: 52, type: 4, name: "400 metra gr. (76,2 cm) [KO]" },
+        { id: 83, type: 4, name: "60 metra grind (106,7cm) [KA]" },
+        { id: 91, type: 4, name: "60 metra grind (99,1 cm) [P19]" },
+        { id: 85, type: 4, name: "60 metra grind (91,4cm) [P17]" },
+        { id: 86, type: 4, name: "60 metra grind (84,0 cm) [KO]" },
+        { id: 89, type: 4, name: "60 metra grind (76,2 cm) [S17]" },
       ],
       events_middle: [
-        {id: 81, type: 5, name: '600 metra hlaup'},
-        {id: 97, type: 5, name: '800 metra hlaup'},
-        {id: 19, type: 5, name: '1500 metra hlaup'},
-        {id: 30, type: 5, name: '3000 metra hlaup'},
-        {id: 32, type: 5, name: '3000 metra hindrun'},
+        { id: 81, type: 5, name: "600 metra hlaup" },
+        { id: 97, type: 5, name: "800 metra hlaup" },
+        { id: 19, type: 5, name: "1500 metra hlaup" },
+        { id: 30, type: 5, name: "3000 metra hlaup" },
+        { id: 32, type: 5, name: "3000 metra hindrun" },
       ],
       events_long: [
-        {id: 62, type: 6, name: '5000 metra hlaup'},
-        {id: 79, type: 6, name: '5 km götuhlaup'},
-        {id: 3, type: 6, name: '10.000 metra hlaup'},
-        {id: 13, type: 6, name: '10 km götuhlaup'},
-        {id: 12, type: 6, name: '10 km götuhlaup (flögutímar)'},
-        {id: 141, type: 6, name: 'Hálft maraþon'},
-        {id: 142, type: 6, name: 'Hálft maraþon (flögutímar)'},
-        {id: 194, type: 6, name: 'Maraþon'},
-        {id: 195, type: 6, name: 'Maraþon (flögutímar)'},
+        { id: 62, type: 6, name: "5000 metra hlaup" },
+        { id: 79, type: 6, name: "5 km götuhlaup" },
+        { id: 3, type: 6, name: "10.000 metra hlaup" },
+        { id: 13, type: 6, name: "10 km götuhlaup" },
+        { id: 12, type: 6, name: "10 km götuhlaup (flögutímar)" },
+        { id: 141, type: 6, name: "Hálft maraþon" },
+        { id: 142, type: 6, name: "Hálft maraþon (flögutímar)" },
+        { id: 194, type: 6, name: "Maraþon" },
+        { id: 195, type: 6, name: "Maraþon (flögutímar)" },
       ],
       events_athlon: [
         { id: 1001, type: 7, name: "Fimmtarþraut [KO]" },
@@ -471,7 +549,7 @@ export default {
         { id: 1014, type: 7, name: "Sjöþraut meyjaáhöld" },
         { id: 1021, type: 7, name: "Tugþraut [KA]" },
         { id: 1022, type: 7, name: "Tugþraut 16-17 ára" },
-        { id: 1023, type: 7, name: "Tugþraut U20 (Norðurlönd)" }
+        { id: 1023, type: 7, name: "Tugþraut U20 (Norðurlönd)" },
       ],
       ageGroups: [
         { id: 0, name: "Allir aldursflokkar", ageStart: 0, ageEnd: 999 },
@@ -495,8 +573,8 @@ export default {
         { id: 19, name: "Öldungar 80-84 ára", ageStart: 80, ageEnd: 84 },
         { id: 20, name: "Öldungar 85-89 ára", ageStart: 85, ageEnd: 89 },
         { id: 21, name: "Öldungar 90-94 ára", ageStart: 90, ageEnd: 94 },
-        { id: 22, name: "Öldungar 95+ ára", ageStart: 95, ageEnd: 999 }
-      ]
+        { id: 22, name: "Öldungar 95+ ára", ageStart: 95, ageEnd: 999 },
+      ],
     };
   },
   //beforeDestroy() {
@@ -525,21 +603,21 @@ export default {
     document.body.appendChild(scriptTag);
   },
   computed: {
-    testPar: function() {
+    testPar: function () {
       //return 'Hello'
       return this.$route.params.test;
     },
-    ageText: function() {
+    ageText: function () {
       return this.ageGroups[this.ageGroup].name;
     },
-    yearText: function() {
+    yearText: function () {
       if (this.year === 0) {
         return "Öll ár";
       } else {
         return this.year.toString();
       }
     },
-    sexText: function() {
+    sexText: function () {
       if (this.gender === 1) {
         var sexText = "Karlar";
       } else {
@@ -548,55 +626,52 @@ export default {
 
       return sexText;
     },
-    inoutText: function() {
+    inoutText: function () {
       if (this.outin == 1) {
-        return "innanhús"
+        return "innanhús";
       } else if (this.outin == 0) {
-        return "utanhús"
+        return "utanhús";
       } else {
-        return "innan og utanhús"
+        return "innan og utanhús";
       }
     },
-    eventText: function() {
+    eventText: function () {
       if (this.event_type === 1) {
-        var index = this.events_jump.findIndex(p => p.id == this.event_id);
+        var index = this.events_jump.findIndex((p) => p.id == this.event_id);
         return this.events_jump[index].name;
       } else if (this.event_type === 2) {
-        var index = this.events_throw.findIndex(p => p.id == this.event_id);
+        var index = this.events_throw.findIndex((p) => p.id == this.event_id);
         return this.events_throw[index].name;
       } else if (this.event_type === 3) {
-        var index = this.events_sprint.findIndex(p => p.id == this.event_id);
+        var index = this.events_sprint.findIndex((p) => p.id == this.event_id);
         return this.events_sprint[index].name;
       } else if (this.event_type === 4) {
-        var index = this.events_hurdle.findIndex(p => p.id == this.event_id);
+        var index = this.events_hurdle.findIndex((p) => p.id == this.event_id);
         return this.events_hurdle[index].name;
       } else if (this.event_type === 5) {
-        var index = this.events_middle.findIndex(p => p.id == this.event_id);
+        var index = this.events_middle.findIndex((p) => p.id == this.event_id);
         return this.events_middle[index].name;
       } else if (this.event_type === 6) {
-        var index = this.events_long.findIndex(p => p.id == this.event_id);
+        var index = this.events_long.findIndex((p) => p.id == this.event_id);
         return this.events_long[index].name;
       } else if (this.event_type === 7) {
-        var index = this.events_athlon.findIndex(p => p.id == this.event_id);
+        var index = this.events_athlon.findIndex((p) => p.id == this.event_id);
         return this.events_athlon[index].name;
       }
     },
-    titleText: function() {
+    titleText: function () {
       var my_str =
         "Afrekaskrá FRÍ - " +
         this.eventText +
         " " +
         this.sexText +
         " " +
-        this.inoutText
-        " í " +
-        this.ageText +
-        " fyrir " +
-        this.yearText;
+        this.inoutText;
+      " í " + this.ageText + " fyrir " + this.yearText;
 
       return my_str;
     },
-    hasWind: function() {
+    hasWind: function () {
       if (this.outin === 0 || this.outin === 2) {
         // We are outdoor. Does the current selected event have wind?
         if (this.event["HasWind"] === 1) {
@@ -607,7 +682,7 @@ export default {
       } else {
         return false; // We are indoor, no wind
       }
-    }
+    },
   },
   created() {
     var year_start = 1909;
@@ -669,7 +744,7 @@ export default {
     this.get_data(null);
   },
   methods: {
-    get_data: function(event) {
+    get_data: function (event) {
       this.loading = true;
       this.message = "Næ í gögn ekki stökkva langt 😉";
 
@@ -732,16 +807,16 @@ export default {
             }
           })
         )
-        .catch(error => {
+        .catch((error) => {
           this.message = "Villa frá vefþjóni (" + error + ") 😭";
-          document.title = 'Afrekaskrá FRÍ'
+          document.title = "Afrekaskrá FRÍ";
         })
         .finally(() => {
           this.loading = false;
           document.title = this.titleText;
         });
     },
-    cut_year: function(my_data) {
+    cut_year: function (my_data) {
       //Klippa út árið úr dags. ef eitt ár er valið
       var dataLen = my_data.length;
       for (var i = 0; i < dataLen; i++) {
@@ -753,7 +828,7 @@ export default {
 
       return my_data;
     },
-    add_inndoor_sign: function(my_data) {
+    add_inndoor_sign: function (my_data) {
       var dataLen = my_data.length;
 
       for (var i = 0; i < dataLen; i++) {
@@ -764,7 +839,7 @@ export default {
 
       return my_data;
     },
-    convert_to_timeformat: function(unit, my_data) {
+    convert_to_timeformat: function (unit, my_data) {
       // Breyta tíma úr sek í mm:ss,dd eða hh:mm:ss,dd eftir því hvaða grein er valin.
       //0, # No units!
       //'metrar': 1, # Meters
@@ -818,22 +893,22 @@ export default {
 
       return my_data;
     },
-    test: function(event) {
+    test: function (event) {
       alert(event.target.id);
       console.log("Hi");
     },
     //Outdoor = 0, Indoor = 1
     //Women = 2, Men = 1 -->
-    outinsex_change: function(event, outin, gender) {
+    outinsex_change: function (event, outin, gender) {
       this.outin = outin;
       this.gender = gender;
 
       this.$router.push({
-        query: { ...this.$route.query, g: gender, i: outin }
+        query: { ...this.$route.query, g: gender, i: outin },
       });
       this.get_data(event);
     },
-    toogle_sex: function(event, gender) {
+    toogle_sex: function (event, gender) {
       this.gender = gender;
 
       this.$router.push({ query: { ...this.$route.query, g: gender } });
@@ -845,7 +920,7 @@ export default {
       this.$router.push({ query: { ...this.$route.query, i: outin } });
       this.get_data(event);
     },
-    toggle_legalresults: function(event) {
+    toggle_legalresults: function (event) {
       this.isLegalActive = !this.isLegalActive;
       if (this.isLegalActive === true) {
         this.legal = 1;
@@ -856,7 +931,7 @@ export default {
       this.$router.push({ query: { ...this.$route.query, l: this.legal } });
       this.get_data(event);
     },
-    toggle_isl: function(event, isl) {
+    toggle_isl: function (event, isl) {
       this.isISLActive = !this.isISLActive;
       if (this.isISLActive === true) {
         this.isl = 0;
@@ -867,7 +942,7 @@ export default {
       this.$router.push({ query: { ...this.$route.query, isl: this.isl } });
       this.get_data(event);
     },
-    toggle_bestbyath: function(event) {
+    toggle_bestbyath: function (event) {
       this.isBestByAthActive = !this.isBestByAthActive;
       if (this.isBestByAthActive === true) {
         this.bestbyath = 1;
@@ -878,14 +953,14 @@ export default {
       this.$router.push({ query: { ...this.$route.query, b: this.bestbyath } });
       this.get_data(event);
     },
-    year_change: function(event) {
+    year_change: function (event) {
       this.year = Number(event.target.id);
       //this.yearText = event.target.textContent
 
       this.$router.push({ query: { ...this.$route.query, y: this.year } });
       this.get_data(event);
     },
-    age_change: function(event) {
+    age_change: function (event) {
       this.ageGroup = Number(event.target.id);
 
       this.ageStart = this.ageGroups[this.ageGroup].ageStart;
@@ -894,16 +969,16 @@ export default {
       this.$router.push({ query: { ...this.$route.query, a: this.ageGroup } });
       this.get_data(event);
     },
-    event_change: function(event) {
+    event_change: function (event) {
       this.event_id = Number(event.target.id);
       this.event_type = Number(event.target.dataset.eventType);
 
       this.$router.push({
-        query: { ...this.$route.query, t: this.event_type, e: this.event_id }
+        query: { ...this.$route.query, t: this.event_type, e: this.event_id },
       });
       this.get_data(event);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -935,5 +1010,9 @@ export default {
 /* center spinner */
 .v-spinner {
   text-align: center;
+}
+
+.img-club {
+  height: 25px;
 }
 </style>
