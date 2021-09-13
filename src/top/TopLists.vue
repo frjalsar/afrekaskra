@@ -476,7 +476,7 @@ export default {
         { id: 159, type: 2, name: "Kringlukast (1,75kg) [P19]" },
         { id: 153, type: 2, name: "Kringlukast (1,5 kg) [P17]" },
         { id: 154, type: 2, name: "Kringlukast (1,0 kg) [KO, P15]" },
-        { id: 156, type: 2, name: "Kringlukast (600 g) [S15]" },
+        { id: 156, type: 2, name: "Kringlukast (600 gr) [S15]" },
         { id: 162, type: 2, name: "Kúluvarp (7,26 kg) [KA]" },
         { id: 165, type: 2, name: "Kúluvarp (6,0 kg) [P19]" },
         { id: 172, type: 2, name: "Kúluvarp (5,0 kg) [P17]" },
