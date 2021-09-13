@@ -188,6 +188,8 @@ def Get_List_of_Achievements(CompetitorCode, Event_id):
     return Achievements_list
 
 def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal, ISL, BestByAth, N=100):
+    Event_id_double_thorid_1 = [228, 232, 233] # Spjótkast 500 gr
+
     if (Event_id > 1000): # Ef Event_id ef yfir 1000 þá er þetta þrautagrein. Þurfum að meðhöndla þær sérstaklega.
         Athlon_events = {1001: 'FIMMTARÞR',  # Fimmtarþraut
                          1002: 'FIMMTUNG',   # Fimmtarþr. unglingastig
@@ -235,7 +237,11 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
         flokkur = Event_Info['AgeGroup']
         if (flokkur == '-1'):
             flokkur = ''
-        q = AthlAfrek.objects.all().filter(grein__iexact=Event_Info['THORID_2'], tákn_greinar__iexact=Event_Info['THORID_1'])
+
+        if (Event_id in Event_id_double_thorid_1):
+            q = AthlAfrek.objects.all().filter(tákn_greinar__iexact=Event_Info['THORID_1'])
+        else:
+            q = AthlAfrek.objects.all().filter(grein__iexact=Event_Info['THORID_2'], tákn_greinar__iexact=Event_Info['THORID_1'])
         #print(Event_Info)
 
     #--

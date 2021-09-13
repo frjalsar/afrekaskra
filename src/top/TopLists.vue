@@ -492,7 +492,7 @@ export default {
         { id: 226, type: 2, name: "Spjótkast (800 gr) [KA]" },
         { id: 229, type: 2, name: "Spjótkast (700 gr) [P17]" },
         { id: 227, type: 2, name: "Spjótkast (600 gr) [KO, P15]" },
-        { id: 228, type: 2, name: "Spjótkast (500 gr) [S17]" },
+        { id: 233, type: 2, name: "Spjótkast (500 gr) [S17]" },
         { id: 230, type: 2, name: "Spjótkast (400 gr) [S15]" },
       ],
       events_sprint: [
@@ -517,6 +517,7 @@ export default {
         { id: 49, type: 4, name: "400 metra gr. (91,4 cm) [KA]" },
         { id: 50, type: 4, name: "400 metra gr. (84 cm)" },
         { id: 52, type: 4, name: "400 metra gr. (76,2 cm) [KO]" },
+        { id: 99, type: 4, name: "80 metra grind (76,2 cm) [S17]" },
         { id: 83, type: 4, name: "60 metra grind (106,7cm) [KA]" },
         { id: 91, type: 4, name: "60 metra grind (99,1 cm) [P19]" },
         { id: 85, type: 4, name: "60 metra grind (91,4cm) [P17]" },
