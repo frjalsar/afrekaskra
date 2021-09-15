@@ -190,7 +190,8 @@ def Get_List_of_Achievements(CompetitorCode, Event_id):
 def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal, ISL, BestByAth, N=100):
     # Sumar greinar eru skráðar oftar ein einu sinni í Þór. Í því tilviki notum við bara ThorID 1 til að fletta þeim upp.
     Event_id_double_thorid_1 = [228, 232, 233, # Spjótkast 500 gr
-                                229, 231]
+                                229, 231, # Spjótkast 700 gr
+                                155, 156] # Kringlukast 600 gr
 
     if (Event_id > 1000): # Ef Event_id ef yfir 1000 þá er þetta þrautagrein. Þurfum að meðhöndla þær sérstaklega.
         Athlon_events = {1001: 'FIMMTARÞR',  # Fimmtarþraut
