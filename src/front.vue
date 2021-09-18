@@ -30,7 +30,7 @@
     </div>
     <!---->
     <div class="card bg-light mt-4">
-      <h4 class="card-header"><i class="fas fa-flag"></i> Íslandsmet</h4>
+      <h4 class="card-header"><i class="fas fa-flag"></i> Íslands- og aldursflokkamet</h4>
       <div class="card-body">
         <!--<p class="card-text">
           Todo: Listi yfir Íslandsmet sem voru nýlega sett?

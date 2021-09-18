@@ -8,7 +8,7 @@
       <!--<p style="text-align:center">{{message}}</p>-->
     </div>
     <div v-if="!loading">
-    <p>Eftirfarandi Íslandsmet eiga afmæli á næstunni. Smelltu <router-link :to="{name: 'IcelandicRecords'}">hér</router-link> til að sjá lista yfir öll íslandsmet.</p>
+    <p>Eftirfarandi met eiga afmæli á næstunni. Smelltu <router-link :to="{name: 'IcelandicRecords'}">hér</router-link> til að sjá lista yfir öll íslandsmet.</p>
     <table class="table table-striped table-hover table-responsive-sm table-sm">
       <!--<caption>Listi yfir afmæli Íslandsmeta</caption>-->
       <col span="1" class="wide" />
