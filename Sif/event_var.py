@@ -1014,8 +1014,8 @@ u'4x1500 metra boðhlaup':
 },
 #
 u'4x200 metra boðhlaup':
-{'UNIT': 2,
-'UNIT_SYMBOL': 's',
+{'UNIT': 3,
+'UNIT_SYMBOL': 'm:s',
 'MAX': False,
 'HAS_WIND': False,
 'NAME_SHORT': '4x200 m bh.',
@@ -1023,8 +1023,8 @@ u'4x200 metra boðhlaup':
 },
 #
 u'4x400 metra boðhlaup':
-{'UNIT': 2,
-'UNIT_SYMBOL': 's',
+{'UNIT': 3,
+'UNIT_SYMBOL': 'm:s',
 'MAX': False,
 'HAS_WIND': False,
 'NAME_SHORT': '4x400 m bh.',
@@ -1041,8 +1041,8 @@ u'4x60m boðhlaup':
 },
 #
 u'4x800 metra boðhlaup':
-{'UNIT': 2,
-'UNIT_SYMBOL': 's',
+{'UNIT': 3,
+'UNIT_SYMBOL': 'm:s',
 'MAX': False,
 'HAS_WIND': False,
 'NAME_SHORT': '4x800 m bh.',

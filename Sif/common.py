@@ -89,16 +89,16 @@ def results_to_str(in_float, Units, ElectricTiming):
 
     elif (Units == 2): # s
         if (ElectricTiming == True):
-            return '{:.2f}'.format(in_float)
+            return '{:05.2f}'.format(in_float)
         else:
-            return '{:.1f}'.format(in_float) + 'h'
+            return '{:04.1f}'.format(in_float) + 'h'
 
     elif (Units == 3): # mm:ss,dd
         ss = in_float
         mm = int(ss // 60)
         ss = ss % 60
 
-        return '{:02d}:{:.2f}'.format(mm, ss)
+        return '{:02d}:{:05.2f}'.format(mm, ss)
 
     elif (Units == 4): # hh:mm:ss,dd
         ss = in_float
@@ -107,7 +107,7 @@ def results_to_str(in_float, Units, ElectricTiming):
         mm = int(ss // 60)
         ss = ss % 60
 
-        return '{:02d}:{:02d}:{:.2f}'.format(hh, mm, ss)
+        return '{:02d}:{:02d}:{:05.2f}'.format(hh, mm, ss)
 
     elif (Units == 5): # points
         return '{:.0f}'.format(in_float)
