@@ -244,7 +244,24 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
         if (Event_id in Event_id_double_thorid_1):
             q = AthlAfrek.objects.all().filter(tákn_greinar__iexact=Event_Info['THORID_1'])
         else:
-            q = AthlAfrek.objects.all().filter(grein__iexact=Event_Info['THORID_2'], tákn_greinar__iexact=Event_Info['THORID_1'])
+            # Kúluvarp 6 kg er þrískráð sem grein
+            # THORID_2 = KÚLA   , THORID_1 = KÚLA6K
+            # THORID_2 = KÚLA6KG, THORID_1 = KÚLA6KG6K
+            # THORID_2 = KÚLA6KG, THORID_1 = KÚLA6KG5K
+            #print('KÚLUVARP 6KG er skrítin')
+            if (Event_id == 165): # Kúluvarp 6kg
+                q = AthlAfrek.objects.all().filter(Q(grein__iexact="KÚLA", tákn_greinar__iexact="KÚLA6K") |
+                                                   Q(grein__iexact="KÚLA6KG", tákn_greinar__iexact="KÚLA6KG6K") |
+                                                   Q(grein__iexact="KÚLA6KG", tákn_greinar__iexact="KÚLA6KG5K"))
+            else:
+                # Kúluvarp 5 KG er tvískráð
+                # THORID_2 = KÚLA    , THORID_1 = KÚLA5K
+                # THORID_2 = KÚLA5KG, THORID_1 = KÚLA5KG5K
+                if (Event_id == 172):
+                    q = AthlAfrek.objects.all().filter(Q(grein__iexact="KÚLA", tákn_greinar__iexact="KÚLA5K") |
+                                                       Q(grein__iexact="KÚLA5KG", tákn_greinar__iexact="KÚLA5KG5K"))
+                else:
+                    q = AthlAfrek.objects.all().filter(grein__iexact=Event_Info['THORID_2'], tákn_greinar__iexact=Event_Info['THORID_1'])
         #print(Event_Info)
 
     #--
