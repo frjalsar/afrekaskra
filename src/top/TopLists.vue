@@ -478,8 +478,8 @@ export default {
         { id: 154, type: 2, name: "Kringlukast (1,0 kg) [KO, P15]" },
         { id: 156, type: 2, name: "Kringlukast (600 gr) [S15]" },
         { id: 162, type: 2, name: "Kúluvarp (7,26 kg) [KA]" },
-        { id: 165, type: 2, name: "Kúluvarp (6,0 kg) [P19]" },
-        { id: 172, type: 2, name: "Kúluvarp (5,0 kg) [P17]" },
+        { id: 165, type: 2, name: "Kúluvarp (6,0 kg) [P19]" }, // Þessi grein er meðhöndluð sérstaklega í bakenda.
+        { id: 172, type: 2, name: "Kúluvarp (5,0 kg) [P17]" }, // Þessi grein er meðhöndluð sérstaklega í bakenda.
         { id: 168, type: 2, name: "Kúluvarp (4,0 kg) [KO, P15]" },
         { id: 167, type: 2, name: "Kúluvarp (3,0 kg) [S15]" },
         { id: 163, type: 2, name: "Kúluvarp (2,0 kg) [S13]" },
