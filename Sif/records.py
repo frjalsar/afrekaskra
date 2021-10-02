@@ -13,6 +13,7 @@ from babel.dates import format_date, format_datetime, format_time
 from Sif import common
 from Sif import events
 import datetime as dt
+from dateutil.relativedelta import *
 import pandas as pd
 from django.db import connection
 
@@ -53,25 +54,34 @@ def Get_All_Master_Records():
 def Get_Records_Birthdays():
     df = Get_All_National_Records()
 
-    month = dt.datetime.now().month
-    day = dt.datetime.now().day
-    year = dt.datetime.now().year
+    date_now = dt.datetime.now()
+    #date_now = dt.date(2021, 12, 28) # Test date for debug
 
+    month = date_now.month
+    day = date_now.day
+    year = date_now.year
+
+    future = date_now + relativedelta(months=+1) # Framtíðin er +1 mánuður
+    future_month = future.month
+    future_day = future.day
+
+    # Reiknar aldur meta
     df['Record_age'] = year - df['Year']
 
-    df.sort_values(by=['Month', 'Day'], inplace=True)
-    df_month = df.loc[df['Month'] >= month]
-    df_filter = df_month.loc[df_month['Day'] >= day]
-    result = pd.concat([df_filter, df]).reset_index()
+    # Ná öll met sem er í á milli dagsetningar í dag og framtíðar (+1 mánuður)
+    df_filter = df.loc[((df['Month'] == month) & (df['Day'] >= day)) | ((df['Month'] == future_month) & (df['Day'] < future_day))]
+    
+    # Röðum eftir dagsetningu.
+    # Athuga að röðin þarf að vera öfug fyrir mánuð í desember því annars kemur janúar á undan.
+    if (month == 12):
+        df_filter = df_filter.sort_values(by=['Month', 'Day'], ascending=[False, True]).reset_index()
+    else:
+        df_filter = df_filter.sort_values(by=['Month', 'Day'], ascending=[True, True]).reset_index()
 
+    # Búa til listann yfir met til að senda sem json
     List_of_Records = []
 
-    if (dt.date.today().month == 12) and (dt.date.today().day >= 28):
-        N = 85 # Rosalega mörg met sem eru sett 30 og 31. des
-    else:
-        N = 15 # Vanalega er 15 nóg
-
-    for index, row in result.head(n=N).iterrows():
+    for index, row in df_filter.iterrows():
         record_age = row['Record_age']
         if (record_age == 0): # Metið var sett í ár en afmælið er á næsta ári.
             record_age = 1
@@ -94,6 +104,7 @@ def Get_Records_Birthdays():
 
         # Nafnið kemur með ártalinu í lokinn. Klippum það út.
         name = row['Nafn'].rsplit(' ', 1)[0]
+
 
         List_of_Records.append({'Event': event,
                                'Results': results,
