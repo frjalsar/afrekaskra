@@ -15,6 +15,7 @@
           <th scope="col">Grein</th>
           <th scope="col">Nafn</th>
           <th scope="col">Árangur</th>
+          <th scope="col">Úti/Inni</th>
         </tr>
       </thead>
       <tbody>
@@ -33,6 +34,7 @@
             </router-link>
           </td>
           <td>{{ i.Results }} <small class="text-muted">{{i.Units_symbol }}</small></td>
+          <td>{{ inout_text(i.OutInn) }}</td>
         </tr>
       </tbody>
     </table>
@@ -47,6 +49,7 @@
           <th scope="col">Grein</th>
           <th scope="col">Nafn</th>
           <th scope="col">Árangur</th>
+          <th scope="col">Úti/Inni</th>
         </tr>
       </thead>
       <tbody>
@@ -65,6 +68,7 @@
             </router-link>
           </td>
           <td>{{ i.Results }} <small class="text-muted">{{i.Units_symbol }}</small></td>
+          <td>{{ inout_text(i.OutInn) }}</td>
         </tr>
       </tbody>
     </table>
@@ -101,6 +105,13 @@ export default {
     //
   },
   methods: {
+    inout_text: function (inout) {
+      if (inout === 0) {
+        return "Úti";
+      } else {
+        return "Inni";
+      }
+    },
     get_data: function () {
       this.message = "Næ í gögn ekki stökkva langt 😉";
 
