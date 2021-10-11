@@ -37,7 +37,7 @@ export default {
       for (var i = 0; i < dataLen; i++) {
         per = (this.event_info[i].count / total) * 100;
 
-        if (per < 1.5) {
+        if (per < 2.0) {
           other = other + per;
           other_count = other_count + this.event_info[i].count;
         } else {
