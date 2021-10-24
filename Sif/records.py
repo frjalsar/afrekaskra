@@ -153,7 +153,11 @@ def Get_Competitor_Records(CompetitorCode):
         agegroup = row['AgeGroup']
         club = row['Club']
 
-        event_info = events.Get_Event_Info_by_Name(row['EventName'])
+        try:
+            event_info = events.Get_Event_Info_by_Name(row['EventName'])
+        except:
+            continue
+
         EventShorterName = row['EventName'].replace('metra', 'm').replace('boðhlaup', 'bh.').replace('hlaup', '').replace('grind', 'gr.').replace('atrennu', 'atr.')
         event = EventShorterName
         units = event_info['UNIT']

@@ -180,7 +180,10 @@ def national_records(request):
     # Adults and 12-22 year old
     for index, row in df_records.iterrows():
         if (row['Nafn'] != None): # Aðgerðin í gagnagrunninum virðist skila út NULL á milli aldursflokka
-            Event_Info = events.Get_Event_Info_by_Name(row['HeitiGreinar'])
+            try:
+                Event_Info = events.Get_Event_Info_by_Name(row['HeitiGreinar'])
+            except:
+                print(row)
             List_of_Records.append({
                 'Event': Event_Info['NAME_SHORT'],
                 'Results': row['Arangur'],
