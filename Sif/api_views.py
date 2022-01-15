@@ -141,12 +141,17 @@ def club_logo(request, ClubName):
         with open(filename, "rb") as f:
             return HttpResponse(f.read(), content_type="image/png")
     except:
-        try: # Reyna jpg
-            filename = './images/clubs/{}.jpg'.format(ClubName_decode)
+        try: # Reyna svg
+            filename = './images/clubs/{}.svg'.format(ClubName_decode)
             with open(filename, "rb") as f:
-                return HttpResponse(f.read(), content_type="image/jpeg")
-        except: # Ekkert virkar skila þá 404
-            raise Http404()
+                return HttpResponse(f.read(), content_type="image/svg+xml")
+        except:
+            try: # Reyna jpg
+                filename = './images/clubs/{}.jpg'.format(ClubName_decode)
+                with open(filename, "rb") as f:
+                    return HttpResponse(f.read(), content_type="image/jpeg")
+            except: # Ekkert virkar skila þá 404
+                raise Http404()
 
 @cache_page(60 * 60 * 24)
 def competitor_records(request, CompetitorCode):
