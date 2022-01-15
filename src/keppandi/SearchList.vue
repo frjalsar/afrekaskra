@@ -28,7 +28,6 @@
             <tr
               v-for="athlete in athletes"
               :key="athlete.CompetitorCode"
-              @click.prevent="onClick && onClick(athlete)"
             >
               <td class="d-none d-lg-table-cell">
                 {{ athlete.CompetitorCode }}
@@ -47,7 +46,11 @@
                 {{ athlete.YOB }}
               </td>
               <td class="">
-                {{ athlete.Club }}
+                {{ athlete.Club }} <img
+                class="img-club"
+                v-bind:src="'/api/img/club/' + athlete.Club"
+                alt=""
+              />
               </td>
             </tr>
           </tbody>
@@ -144,5 +147,9 @@ export default {
 tr:hover td {
   cursor: pointer;
   background-color: #eee;
+}
+
+.img-club {
+  height: 25px;
 }
 </style>
