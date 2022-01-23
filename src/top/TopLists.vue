@@ -389,12 +389,10 @@
                     <!--<a v-bind:href="'/keppandi/' + competitor.competitor_code">{{competitor.name}}</a>-->
                   </td>
                   <td class="d-none d-sm-table-cell">{{ competitor.age }}</td>
-                  <td class="d-none d-sm-table-cell">
-                    {{ competitor.club }}
-                    <img
+                  <td class="d-none d-sm-table-cell"><img
                       class="img-club"
                       v-bind:src="'/api/img/club/' + competitor.club"
-                      alt=""
+                      v-bind:alt="competitor.club"
                     />
                   </td>
                   <td class="d-none d-xl-table-cell">
@@ -1028,5 +1026,8 @@ export default {
 
 .img-club {
   height: 25px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

@@ -44,10 +44,10 @@
           <td>{{ inout_text(i.Inout) }}</td>
           <td>{{ i.Date }}</td>
           <td>{{ i.AgeGroup }}</td>
-          <td>{{ i.Club }}  <img
+          <td><img
                 class="img-club"
                 v-bind:src="'/api/img/club/' + i.Club"
-                alt=""
+                v-bind:alt="i.Club"
               /></td>
         </tr>
       </tbody>
@@ -162,5 +162,8 @@ export default {
 
 .img-club {
   height: 25px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

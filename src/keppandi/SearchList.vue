@@ -45,11 +45,10 @@
               <td class="d-none d-md-table-cell">
                 {{ athlete.YOB }}
               </td>
-              <td class="">
-                {{ athlete.Club }} <img
+              <td class=""><img
                 class="img-club"
                 v-bind:src="'/api/img/club/' + athlete.Club"
-                alt=""
+                v-bind:alt="athlete.Club"
               />
               </td>
             </tr>
@@ -151,5 +150,8 @@ tr:hover td {
 
 .img-club {
   height: 25px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>
