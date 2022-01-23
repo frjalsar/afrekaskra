@@ -48,7 +48,8 @@
                 class="img-club"
                 v-bind:src="'/api/img/club/' + i.Club"
                 v-bind:alt="i.Club"
-              /></td>
+              />
+              </td>
         </tr>
       </tbody>
     </table>
