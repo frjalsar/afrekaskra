@@ -50,12 +50,19 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
 
     # Breytum öllum árangri yfir í rauntölur
     df['árangur_float'] = df['árangur'].map(common.results_to_float)
+    df['árangur_sort'] = df['árangur_float'].copy()
+    for index, row in df.iterrows():
+        if row['rafmagnstímataka'] == 1:
+            df.loc[index, 'árangur_sort'] = row['árangur_float']
+        else:
+            df.loc[index, 'árangur_sort'] = row['árangur_float'] + 0.24
+            #print(row)
 
     # Röðum árangri, fyrst eftir árangri og svo eftir dagsetningu ef árangrar eru jafnir.
     if (Event_Info['Minimize'] == True):
-        df.sort_values(by=['árangur_float', 'dagsetning'], ascending=[True, True], inplace=True)
+        df.sort_values(by=['árangur_sort', 'dagsetning'], ascending=[True, True], inplace=True)
     else:
-        df.sort_values(by=['árangur_float', 'dagsetning'], ascending=[False, True], inplace=True)
+        df.sort_values(by=['árangur_sort', 'dagsetning'], ascending=[False, True], inplace=True)
 
     # Athuga hvort við viljum bara besta árangur íþróttamanns. Ef svo er hendum við úr endurtekningum en höldum fyrstu línu.
     if (best_by_ath == True):
