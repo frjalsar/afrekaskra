@@ -50,6 +50,8 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
 
     # Breytum öllum árangri yfir í rauntölur
     df['árangur_float'] = df['árangur'].map(common.results_to_float)
+
+    # Bæta við error factor ef tíminn er handtími
     df['árangur_sort'] = df['árangur_float'].copy()
     for index, row in df.iterrows():
         if row['rafmagnstímataka'] == 1:
