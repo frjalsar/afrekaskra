@@ -14,7 +14,7 @@
                 v-on:change="inout_change($event)"
               />
               <label class="custom-control-label" for="InndoorRadio"
-                >Innanhús</label
+                >Innanhúss</label
               >
             </div>
             <div class="custom-control custom-radio">
@@ -28,7 +28,7 @@
                 checked
               />
               <label class="custom-control-label" for="OutdoorRadio"
-                >Utanhús</label
+                >Utanhúss</label
               >
             </div>
           </div>
@@ -334,9 +334,9 @@ export default {
     },
     inout_text_long() {
       if (this.inout === 0) {
-        return "Utanhús";
+        return "Utanhúss";
       } else {
-        return "Innanhús";
+        return "Innanhúss";
       }
     },
     agegroup() {

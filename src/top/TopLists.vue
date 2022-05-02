@@ -303,7 +303,7 @@
                       id="option1"
                       autocomplete="off"
                     />
-                    Innanhús
+                    Innanhúss
                   </label>
                   <label
                     class="btn"
@@ -319,7 +319,7 @@
                       id="option2"
                       autocomplete="off"
                     />
-                    Innan og utanhús
+                    Innan- og utanhúss
                   </label>
                   <label
                     class="btn"
@@ -335,7 +335,7 @@
                       id="option3"
                       autocomplete="off"
                     />
-                    Utanhús
+                    Utanhúss
                   </label>
                 </div>
               </div>
@@ -640,11 +640,11 @@ export default {
     },
     inoutText: function () {
       if (this.outin == 1) {
-        return "innanhús";
+        return "innanhúss";
       } else if (this.outin == 0) {
-        return "utanhús";
+        return "utanhúss";
       } else {
-        return "innan og utanhús";
+        return "innan- og utanhúss";
       }
     },
     eventText: function () {

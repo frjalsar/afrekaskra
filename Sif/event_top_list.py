@@ -21,8 +21,8 @@ age_group_ranges = [
 ]
 
 out_or_indoors_names = [
-u'Utanhús',
-u'Innanhús'
+u'Utanhúss',
+u'Innanhúss'
 ]
 
 gender_names = [
