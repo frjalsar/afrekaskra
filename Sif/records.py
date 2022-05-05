@@ -95,6 +95,8 @@ def Get_Records_Birthdays():
         agegroup = row['AldursflFRÍ']
         club = row['Félag']
 
+        if (row['HeitiGreinar'] == None): # Vantar HeitiGreinar á sum íslandsmet í töflunni. ÞARF AÐ LAGA
+            continue
         event_info = events.Get_Event_Info_by_Name(row['HeitiGreinar'])
         EventShorterName = row['HeitiGreinar'].replace('metra', 'm').replace('boðhlaup', 'bh.').replace('hlaup', '').replace('grind', 'gr.').replace('atrennu', 'atr.')
         event = EventShorterName
