@@ -534,6 +534,7 @@ export default {
       events_middle: [
         { id: 81, type: 5, name: "600 metra hlaup" },
         { id: 97, type: 5, name: "800 metra hlaup" },
+        { id: 4,  type: 5, name: "1000 metra hlaup"},
         { id: 19, type: 5, name: "1500 metra hlaup" },
         { id: 1 , type: 5, name: "1 míla"},
         { id: 30, type: 5, name: "3000 metra hlaup" },
