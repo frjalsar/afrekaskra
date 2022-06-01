@@ -116,6 +116,9 @@ def results_to_str(in_float, Units, ElectricTiming):
         return '{:.0f}'.format(in_float)
         
     else:
+        print('ERROR')
+        print(type(in_float))
+        print(in_float)
         raise ValueError
 
 def wind_to_str(in_float, inout=None, hasWind=True):

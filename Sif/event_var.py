@@ -23,6 +23,7 @@ u'60 metra grind (100.0 cm)',
 u'60 metra grind (106.7cm)',
 u'60 metra hlaup',
 u'60 yarda grindahlaup',
+u'60 stiku grindahlaup',
 u'80 metra grind (76.2 cm)',
 u'80 metra grind (84 cm)',
 u'80 metra grind (91.4 cm)',
@@ -477,6 +478,16 @@ u'60 yarda grindahlaup':
 'NAME_SHORT': '60 yarda gr.',
 'NAME_ENG': '60 yard hurdles',
 'DISTANCE': 54.864
+},
+#
+u'60 stiku grindahlaup':
+{'UNIT': 2,
+'UNIT_SYMBOL': 's',
+'MAX': False,
+'HAS_WIND': True,
+'NAME_SHORT': '60 stiku gr.',
+'NAME_ENG': '60 stiku hurdles',
+'DISTANCE': 60
 },
 #
 u'80 metra grind (76.2 cm)':
