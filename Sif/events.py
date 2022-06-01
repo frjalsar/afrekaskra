@@ -2,6 +2,7 @@ from django.http import Http404
 
 import os
 import pandas as pd
+import re
 
 from Sif import settings
 from Sif import common
@@ -97,6 +98,23 @@ def Get_Event_Info_by_ID(Event_id):
         else:
             minimize = False
 
+        distance = -1.0
+        reg = re.findall(r'(\d+) metra', df_event_list['Name_ISL'].values[Event_id])
+        if (len(reg) > 0):
+            distance = int(reg[0])
+        else:
+            reg = re.findall(r'(\d+\.\d+) km', df_event_list['Name_ISL'].values[Event_id].replace(',', '.'))
+            if (len(reg) > 0):
+                distance = (float(reg[0])*1000)
+            else:
+                if (re.search('maraþon', df_event_list['Name_ISL'].values[Event_id], re.IGNORECASE)):
+                    if (re.search('hálft', df_event_list['Name_ISL'].values[Event_id], re.IGNORECASE)):
+                        distance = 21097.5
+                    else:
+                        distance = 42195
+                else:
+                    distance = -1.0
+
         EventShorterName = df_event_list['Name_ISL'].values[Event_id].replace('metra', 'm').replace('boðhlaup', 'bh.').replace(' hlaup', ' ').replace('grind', 'gr.').replace('atrennu', 'atr.')
         Event_Info = {'THORID_1': df_event_list['THORID_1'].values[Event_id],
                       'THORID_2': df_event_list['THORID_2'].values[Event_id],
@@ -107,7 +125,8 @@ def Get_Event_Info_by_ID(Event_id):
                       'Minimize': minimize,
                       'ShortName': EventShorterName.strip(), #df_event_list['ShortName'].values[Event_id],
                       'Name_ISL': df_event_list['Name_ISL'].values[Event_id],
-                      'HasWind': df_event_list['Wind'].values[Event_id]}
+                      'HasWind': df_event_list['Wind'].values[Event_id],
+                      'Distance': -1.0}
     except:
         print(Event_id)
         raise Http404('Gat ekki fundið grein.')

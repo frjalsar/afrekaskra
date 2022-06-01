@@ -55,9 +55,9 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
     # 24/100 upp að 300 (ekki með),
     # 14/100 frá og með 300 til 800 m (ekki með)
     # 0/100 frá og með 800 m og upp
-    if (Event_Info['DISTANCE'] > 0.0 and Event_Info['DISTANCE'] < 300.0):
+    if (Event_Info['Distance'] > 0.0 and Event_Info['Distance'] < 300.0):
         hand_buffer = 0.24
-    elif (Event_Info['DISTANCE'] >= 300.0 and Event_Info['DISTANCE'] < 800.0):
+    elif (Event_Info['Distance'] >= 300.0 and Event_Info['Distance'] < 800.0):
         hand_buffer = 0.14
     else:
         hand_buffer = 0.0
@@ -249,7 +249,8 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
                       'Units_symbol': 'Stig',
                       'Minimize': False,
                       'ShortName': Athlon_events_Name[Event_id],
-                      'HasWind': 0}
+                      'HasWind': 0,
+                      'Distance': -1.0}
         q = AthlAfrek.objects.all().filter(grein__iexact=THORID_2)
         if ((Event_id == 1002) or (Event_id == 1014)):
             q = q.filter(flokkur=14)
