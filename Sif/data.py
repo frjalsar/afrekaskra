@@ -51,7 +51,17 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
     # Breytum öllum árangri yfir í rauntölur
     df['árangur_float'] = df['árangur'].map(common.results_to_float)
 
-    # Bæta við error factor ef tíminn er handtími
+    # Bæta við buffer ef tíminn er handtími
+    # 24/100 upp að 300 (ekki með),
+    # 14/100 frá og með 300 til 800 m (ekki með)
+    # 0/100 frá og með 800 m og upp
+    if (Event_Info['DISTANCE'] > 0.0 and Event_Info['DISTANCE'] < 300.0):
+        hand_buffer = 0.24
+    elif (Event_Info['DISTANCE'] >= 300.0 and Event_Info['DISTANCE'] < 800.0):
+        hand_buffer = 0.14
+    else:
+        hand_buffer = 0.0
+
     df['árangur_sort'] = df['árangur_float'].copy()
     for index, row in df.iterrows():
         if row['rafmagnstímataka'] == 1:
