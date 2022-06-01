@@ -95,25 +95,28 @@ def Get_Event_Info_by_ID(Event_id):
          #'Ungl.stig': 6 # Points junior
         if (Units in [0, 2, 3, 4]):
             minimize = True
+
+            # Þetta er líklega hlaupa grein
+            # Reynum að finna vegalengdina á henni
+            distance = -1.0
+            reg = re.findall(r'(\d+) metra', df_event_list['Name_ISL'].values[Event_id])
+            if (len(reg) > 0):
+                distance = int(reg[0])
+            else:
+                reg = re.findall(r'(\d+\.\d+) km', df_event_list['Name_ISL'].values[Event_id].replace(',', '.'))
+                if (len(reg) > 0):
+                    distance = (float(reg[0])*1000)
+                else:
+                    if (re.search('maraþon', df_event_list['Name_ISL'].values[Event_id], re.IGNORECASE)):
+                        if (re.search('hálft', df_event_list['Name_ISL'].values[Event_id], re.IGNORECASE)):
+                            distance = 21097.5
+                        else:
+                            distance = 42195
+                    else:
+                        distance = -1.0
         else:
             minimize = False
-
-        distance = -1.0
-        reg = re.findall(r'(\d+) metra', df_event_list['Name_ISL'].values[Event_id])
-        if (len(reg) > 0):
-            distance = int(reg[0])
-        else:
-            reg = re.findall(r'(\d+\.\d+) km', df_event_list['Name_ISL'].values[Event_id].replace(',', '.'))
-            if (len(reg) > 0):
-                distance = (float(reg[0])*1000)
-            else:
-                if (re.search('maraþon', df_event_list['Name_ISL'].values[Event_id], re.IGNORECASE)):
-                    if (re.search('hálft', df_event_list['Name_ISL'].values[Event_id], re.IGNORECASE)):
-                        distance = 21097.5
-                    else:
-                        distance = 42195
-                else:
-                    distance = -1.0
+            distance = -1.0 # -1 í vegalengd ef greinin er ekki hlaupa grein
 
         EventShorterName = df_event_list['Name_ISL'].values[Event_id].replace('metra', 'm').replace('boðhlaup', 'bh.').replace(' hlaup', ' ').replace('grind', 'gr.').replace('atrennu', 'atr.')
         Event_Info = {'THORID_1': df_event_list['THORID_1'].values[Event_id],
