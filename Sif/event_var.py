@@ -479,7 +479,7 @@ u'60 yarda grindahlaup':
 'NAME_ENG': '60 yard hurdles',
 'DISTANCE': 54.864
 },
-#
+# stika er gamalt orð yfir yard
 u'60 stiku grindahlaup':
 {'UNIT': 2,
 'UNIT_SYMBOL': 's',
@@ -487,7 +487,7 @@ u'60 stiku grindahlaup':
 'HAS_WIND': True,
 'NAME_SHORT': '60 stiku gr.',
 'NAME_ENG': '60 stiku hurdles',
-'DISTANCE': 60
+'DISTANCE': 54.864
 },
 #
 u'80 metra grind (76.2 cm)':
