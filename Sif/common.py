@@ -80,7 +80,7 @@ def results_to_float(in_str):
     return time_sec
 
 #Units_symbol = {1: 'm', 2: 's', 3: 'mm:ss,dd', 4: 'hh:mm:ss,dd', 5: 'stig', 6: 'stig'}
-def results_to_str(in_float, Units, ElectricTiming, hand_buffer):
+def results_to_str(in_float, Units, ElectricTiming):
     if (in_float < 0.0): # Engin árangur
         return ''
 
