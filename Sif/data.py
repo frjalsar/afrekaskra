@@ -62,13 +62,14 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
     else:
         hand_buffer = 0.0
 
+    # Búum til nýjan dálk þar sem búið er að bæta við buffer tímanum.
+    # Flokkum svo eftir þeim dálk.
     df['árangur_sort'] = df['árangur_float'].copy()
     for index, row in df.iterrows():
         if row['rafmagnstímataka'] == 1:
             df.loc[index, 'árangur_sort'] = row['árangur_float']
         else:
-            df.loc[index, 'árangur_sort'] = row['árangur_float'] + 0.24
-            #print(row)
+            df.loc[index, 'árangur_sort'] = row['árangur_float'] + hand_buffer
 
     # Röðum árangri, fyrst eftir árangri og svo eftir dagsetningu ef árangrar eru jafnir.
     if (Event_Info['Minimize'] == True):
