@@ -88,11 +88,11 @@ def Get_Event_Info_by_ID(Event_id):
         Units = df_event_list['Units'].values[Event_id]
         #0, # No units!
         #'metrar': 1, # Meters
-         #'sek.': 2, # ss,dd
-         #'mín.': 3, # mm:ss
-         #'klst.': 4, # hh:mm:ss,dd
-         #'stig': 5, # Points
-         #'Ungl.stig': 6 # Points junior
+        #'sek.': 2, # ss,dd
+        #'mín.': 3, # mm:ss
+        #'klst.': 4, # hh:mm:ss,dd
+        #'stig': 5, # Points
+        #'Ungl.stig': 6 # Points junior
         if (Units in [0, 2, 3, 4]):
             minimize = True
 
@@ -129,7 +129,7 @@ def Get_Event_Info_by_ID(Event_id):
                       'ShortName': EventShorterName.strip(), #df_event_list['ShortName'].values[Event_id],
                       'Name_ISL': df_event_list['Name_ISL'].values[Event_id],
                       'HasWind': df_event_list['Wind'].values[Event_id],
-                      'Distance': -1.0}
+                      'Distance': distance}
     except:
         print(Event_id)
         raise Http404('Gat ekki fundið grein.')
