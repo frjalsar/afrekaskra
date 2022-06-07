@@ -157,6 +157,7 @@ export default {
           this.message = "Villa frá vefþjóni (" + error + ") 😭";
           console.log("Error getting data");
           document.title = "Afrekaskrá FRÍ";
+          this.competitor_info.FirstName = "Keppandi fannst ekki eða engin afrek skráð á hann."
         })
         .finally(() => {
           this.isReady = true;

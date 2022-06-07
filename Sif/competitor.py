@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 from Sif.models import AthlCompetitors, AthlAfrek, Competitors
 from django.db.models import Q
 from django.db import connection
+from django.http import Http404
 
 # Get_Competitor_Info
 # Looks upp information about a competitor from the AthlCompetitors table.
@@ -63,6 +64,12 @@ def Get_Competitor_Achievements(CompetitorCode):
     
     # Köllum á stored procedure sem heitir CompetitorsAchievements.
     df = pd.read_sql_query("EXEC CompetitorsAchievements @CompetitorNo = {:d}, @YearFrom = 1800, @YearTo = {:d}, @OutdoorsIndoorsFilter = '%'".format(CompetitorCode, CurrentYear), connection)
+
+    # Athuga hvort það séu einhver afrek skráð
+    # ATH það kemur ekki villa á front end þegar þetta gerist, bara tóma síða.
+    if (df.empty):
+        raise Http404('Engin afrek skráð á keppanda.')
+
     # Breytum öllum árangri yfir í rauntölur
     df['Results_float'] = df['Results'].map(common.results_to_float)
 
