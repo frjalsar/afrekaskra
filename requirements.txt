@@ -23,4 +23,4 @@ sqlparse==0.4.2
 style==1.1.6
 toml==0.10.2
 uhashring==2.1
-whitenoise==6.1.0
+whitenoise==6.2.0
