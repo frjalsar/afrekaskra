@@ -3,6 +3,8 @@ Units_symbol = {1: 'm', 2: 's', 3: 'mm:ss,dd', 4: 'hh:mm:ss,dd', 5: 'stig', 6: '
 
 # stuff
 import re
+import numpy as np
+import datetime
 prog_time = re.compile('^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?(\d+\.?\d*)?$') # Notum regex
 
 #-------------------------------------------------------------------------------
@@ -132,3 +134,11 @@ def wind_to_str(in_float, inout=None, hasWind=True):
             return '{:+.1f}'.format(in_float)
         else:
             return ''
+
+#-------------------------------------------------------------------------------
+# Breytum rauntölu sem táknar sekúndur yfri í streng sem er tíminn liðinn
+# frá 1. Jan 1970.
+def float_to_datetime(in_f):
+    #date_str = datetime.datetime.fromtimestamp(in_f).strftime('%Y-%m-%d %H:%M:%S.%f')
+    date_str = datetime.datetime.utcfromtimestamp(in_f)
+    return date_str

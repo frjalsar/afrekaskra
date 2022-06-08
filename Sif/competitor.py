@@ -409,7 +409,7 @@ def filter_year_best(df_event_data, event_max, event_time_axis, event_unit):
                 #avg_str.append( '{.2f} ± {.2f}'.format(mean_f, std_f) + ' ' + event_unit )
                 #results_std.append( df_event_year['Árangur_float'].std() / np.sqrt(df_event_year['Árangur_float'].count()) ) # Standard error
             else:
-                results_avg.append( float_to_datetime(mean_f) )
+                results_avg.append( common.float_to_datetime(mean_f) )
                 results_std.append( std_f )
                 #avg_str.append( float_to_datetime(mean_f) + event_unit + ' ± {.2f} s'.format(std_f) )
                 #results_std.append( df_event_year['Árangur_float'].std() / np.sqrt(df_event_year['Árangur_float'].count()) ) # Standard error
