@@ -2,7 +2,7 @@
   "name": "sif-site",
   "version": "1.0.0",
   "engines": {
-    "npm": "8.12.1"
+    "npm": "8.13.1"
   },
   "description": "Afrekaskrá FRÍ",
   "scripts": {
