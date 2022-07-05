@@ -181,4 +181,50 @@ def Get_Competitor_Records(CompetitorCode):
 
         record_list.append(record_info)
 
+    # Ná í 30+ met
+    # Það þarf að kalla á SQL procedure fyrir hvort kyn og fyrir innan og utan hús.
+    # ToDo: Fletta upp keppanda og athuga hvort hann sé 30+ og kyn
+    df_men_in = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 1, @KarlarKonur = 1, @SelectedCompetitorCode = {:d}".format(CompetitorCode), connection)
+    df_men_out = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 0, @KarlarKonur = 1, @SelectedCompetitorCode = {:d}".format(CompetitorCode), connection)
+
+    df_women_in = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 1, @KarlarKonur = 2, @SelectedCompetitorCode = {:d}".format(CompetitorCode), connection)
+    df_women_out = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 0, @KarlarKonur = 2, @SelectedCompetitorCode = {:d}".format(CompetitorCode), connection)
+    
+    df_master = pd.concat([df_men_in, df_men_out, df_women_in, df_women_out])
+    df_master['Dags'] = pd.to_datetime(df_master['Dags'], yearfirst=True)
+
+    for index, row in df_master.iterrows():
+        inout = row['ÚtiInni']
+        wind_str = row['Vindur']
+        results_str = row['Árang']
+        results = common.results_to_float(results_str.replace(',', '.'))
+        date_str = format_date(row['Dags'].date(), "d MMM yyyy", locale='is_IS').upper()
+        if (row['HeitiGr'] == None): # Vantar HeitiGreinar á sum íslandsmet í töflunni. ÞARF AÐ LAGA
+            continue
+        event_info = events.Get_Event_Info_by_Name(row['HeitiGr'])
+        EventShorterName = row['HeitiGr'].replace('metra', 'm').replace('boðhlaup', 'bh.').replace('hlaup', '').replace('grind', 'gr.').replace('atrennu', 'atr.')
+        event = EventShorterName
+        units = event_info['UNIT']
+        units_symbol = event_info['UNIT_SYMBOL']
+        active = True
+        age = row['Aldur keppanda']
+        agegroup = row['Aldursflokkuröldunga']
+        club = row['Félag']
+
+        record_info = {'Event': event,
+                       'Club': club,
+                       'Inout': inout,
+                       'AgeGroup': agegroup,
+                       'Age': age,
+                       'isActive': active,
+                       'Date': date_str,
+                       'Results': results,
+                       'Results_str': results_str,
+                       'Wind': wind_str,
+                       'Units': units,
+                       'Units_symbol': units_symbol
+                      }
+
+        record_list.append(record_info)
+
     return record_list
