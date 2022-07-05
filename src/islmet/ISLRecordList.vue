@@ -5,134 +5,52 @@
         <div class="row">
           <div class="col-6 col-md-4">
             <div class="custom-control custom-radio">
-              <input
-                type="radio"
-                id="InndoorRadio"
-                name="InndoorOutdoorRadio"
-                class="custom-control-input"
-                value="1"
-                v-on:change="inout_change($event)"
-              />
-              <label class="custom-control-label" for="InndoorRadio"
-                >Innanhúss</label
-              >
+              <input type="radio" id="InndoorRadio" name="InndoorOutdoorRadio" class="custom-control-input" value="1" v-on:change="inout_change($event)" />
+              <label class="custom-control-label" for="InndoorRadio">Innanhúss</label>
             </div>
             <div class="custom-control custom-radio">
-              <input
-                type="radio"
-                id="OutdoorRadio"
-                name="InndoorOutdoorRadio"
-                class="custom-control-input"
-                value="0"
-                v-on:change="inout_change($event)"
-                checked
-              />
-              <label class="custom-control-label" for="OutdoorRadio"
-                >Utanhúss</label
-              >
+              <input type="radio" id="OutdoorRadio" name="InndoorOutdoorRadio" class="custom-control-input" value="0" v-on:change="inout_change($event)" checked />
+              <label class="custom-control-label" for="OutdoorRadio">Utanhúss</label>
             </div>
           </div>
           <div class="col-6 col-md-4">
             <div class="custom-control custom-radio">
-              <input
-                type="radio"
-                id="MenRadio"
-                name="MenWomenRadio"
-                class="custom-control-input"
-                value="1"
-                v-on:change="gender_change($event)"
-              />
-              <label class="custom-control-label" for="MenRadio"
-                >Karlar</label
-              >
+              <input type="radio" id="MenRadio" name="MenWomenRadio" class="custom-control-input" value="1" v-on:change="gender_change($event)" />
+              <label class="custom-control-label" for="MenRadio">Karlar</label>
             </div>
             <div class="custom-control custom-radio">
-              <input
-                type="radio"
-                id="WomenRadio"
-                name="MenWomenRadio"
-                class="custom-control-input"
-                value="2"
-                v-on:change="gender_change($event)"
-                checked
-              />
-              <label class="custom-control-label" for="WomenRadio"
-                >Konur</label
-              >
+              <input type="radio" id="WomenRadio" name="MenWomenRadio" class="custom-control-input" value="2" v-on:change="gender_change($event)" checked />
+              <label class="custom-control-label" for="WomenRadio">Konur</label>
             </div>
           </div>
           <div class="col-12 col-md-4" style="margin-top: auto;margin-bottom: auto;">
-            <div
-              class="btn-toolbar"
-              role="toolbar"
-              aria-label="Tækjastika"
-              style="text-align: center; display: block"
-            >
-              <div
-                class="btn-group mr-2"
-                role="group"
-                aria-label="Valmynd fyrir aldursflokk"
-              >
-                <button
-                  id="btnGroupDrop1"
-                  type="button"
-                  class="btn dropdown-toggle"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  v-bind:class="[agegroup_value < 8 ? 'btn-primary': 'btn-secondary']"
-                >
+            <div class="btn-toolbar" role="toolbar" aria-label="Tækjastika" style="text-align: center; display: block">
+              <div class="btn-group mr-2" role="group" aria-label="Valmynd fyrir aldursflokk">
+                <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-bind:class="[agegroup_value < 21 ? 'btn-primary' : 'btn-secondary']">
                   Aldursflokkur
                 </button>
-                <div
-                  class="dropdown-menu"
-                  aria-labelledby="btnGroupDrop1"
-                  v-on:click="agegroup_change($event)"
-                >
-                  <a class="dropdown-item" href="#" id="0" v-bind:class="{active: agegroup_value===0}">Fullorðnir</a>
-                  <a class="dropdown-item" href="#" id="1" v-bind:class="{active: agegroup_value===1}">20-22 ára</a>
-                  <a class="dropdown-item" href="#" id="2" v-bind:class="{active: agegroup_value===2}">18-19 ára</a>
-                  <a class="dropdown-item" href="#" id="3" v-bind:class="{active: agegroup_value===3}">16-17 ára</a>
-                  <a class="dropdown-item" href="#" id="4" v-bind:class="{active: agegroup_value===4}">15 ára</a>
-                  <a class="dropdown-item" href="#" id="5" v-bind:class="{active: agegroup_value===5}">14 ára</a>
-                  <a class="dropdown-item" href="#" id="6" v-bind:class="{active: agegroup_value===6}">13 ára</a>
-                  <a class="dropdown-item" href="#" id="7" v-bind:class="{active: agegroup_value===7}">12 ára</a>
-                </div>
-              </div>
-              <div
-                class="btn-group mr-2"
-                role="group"
-                aria-label="Valmynd fyrir aldursflokk"
-              >
-                <button
-                  id="btnGroupDrop2"
-                  type="button"
-                  class="btn dropdown-toggle"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  v-bind:class="[agegroup_value >= 8 ? 'btn-primary': 'btn-secondary']"
-                >
-                  Öldungaflokkar
-                </button>
-                <div
-                  class="dropdown-menu"
-                  aria-labelledby="btnGroupDrop2"
-                  v-on:click="agegroup_change($event)"
-                >
-                  <a class="dropdown-item" href="#" id="8" v-bind:class="{active: agegroup_value===8}">30-34 ára</a>
-                  <a class="dropdown-item" href="#" id="9" v-bind:class="{active: agegroup_value===9}">35-39 ára</a>
-                  <a class="dropdown-item" href="#" id="10" v-bind:class="{active: agegroup_value===10}">40-44 ára</a>
-                  <a class="dropdown-item" href="#" id="11" v-bind:class="{active: agegroup_value===11}">45-49 ára</a>
-                  <a class="dropdown-item" href="#" id="12" v-bind:class="{active: agegroup_value===12}">50-54 ára</a>
-                  <a class="dropdown-item" href="#" id="13" v-bind:class="{active: agegroup_value===13}">55-59 ára</a>
-                  <a class="dropdown-item" href="#" id="14" v-bind:class="{active: agegroup_value===14}">60-64 ára</a>
-                  <a class="dropdown-item" href="#" id="15" v-bind:class="{active: agegroup_value===15}">65-69 ára</a>
-                  <a class="dropdown-item" href="#" id="16" v-bind:class="{active: agegroup_value===16}">70-74 ára</a>
-                  <a class="dropdown-item" href="#" id="17" v-bind:class="{active: agegroup_value===17}">75-79 ára</a>
-                  <a class="dropdown-item" href="#" id="18" v-bind:class="{active: agegroup_value===18}">80-84 ára</a>
-                  <a class="dropdown-item" href="#" id="19" v-bind:class="{active: agegroup_value===19}">85-89 ára</a>
-                  <a class="dropdown-item" href="#" id="20" v-bind:class="{active: agegroup_value===20}">90-94 ára</a>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" v-on:click="agegroup_change($event)">
+                  <a class="dropdown-item" href="#" id="0" v-bind:class="{ active: agegroup_value === 0 }">Fullorðnir</a>
+                  <a class="dropdown-item" href="#" id="1" v-bind:class="{ active: agegroup_value === 1 }">20-22 ára</a>
+                  <a class="dropdown-item" href="#" id="2" v-bind:class="{ active: agegroup_value === 2 }">18-19 ára</a>
+                  <a class="dropdown-item" href="#" id="3" v-bind:class="{ active: agegroup_value === 3 }">16-17 ára</a>
+                  <a class="dropdown-item" href="#" id="4" v-bind:class="{ active: agegroup_value === 4 }">15 ára</a>
+                  <a class="dropdown-item" href="#" id="5" v-bind:class="{ active: agegroup_value === 5 }">14 ára</a>
+                  <a class="dropdown-item" href="#" id="6" v-bind:class="{ active: agegroup_value === 6 }">13 ára</a>
+                  <a class="dropdown-item" href="#" id="7" v-bind:class="{ active: agegroup_value === 7 }">12 ára</a>
+                  <a class="dropdown-item" href="#" id="8" v-bind:class="{ active: agegroup_value === 8 }">30-34 ára</a>
+                  <a class="dropdown-item" href="#" id="9" v-bind:class="{ active: agegroup_value === 9 }">35-39 ára</a>
+                  <a class="dropdown-item" href="#" id="10" v-bind:class="{ active: agegroup_value === 10 }">40-44 ára</a>
+                  <a class="dropdown-item" href="#" id="11" v-bind:class="{ active: agegroup_value === 11 }">45-49 ára</a>
+                  <a class="dropdown-item" href="#" id="12" v-bind:class="{ active: agegroup_value === 12 }">50-54 ára</a>
+                  <a class="dropdown-item" href="#" id="13" v-bind:class="{ active: agegroup_value === 13 }">55-59 ára</a>
+                  <a class="dropdown-item" href="#" id="14" v-bind:class="{ active: agegroup_value === 14 }">60-64 ára</a>
+                  <a class="dropdown-item" href="#" id="15" v-bind:class="{ active: agegroup_value === 15 }">65-69 ára</a>
+                  <a class="dropdown-item" href="#" id="16" v-bind:class="{ active: agegroup_value === 16 }">70-74 ára</a>
+                  <a class="dropdown-item" href="#" id="17" v-bind:class="{ active: agegroup_value === 17 }">75-79 ára</a>
+                  <a class="dropdown-item" href="#" id="18" v-bind:class="{ active: agegroup_value === 18 }">80-84 ára</a>
+                  <a class="dropdown-item" href="#" id="19" v-bind:class="{ active: agegroup_value === 19 }">85-89 ára</a>
+                  <a class="dropdown-item" href="#" id="20" v-bind:class="{ active: agegroup_value === 20 }">90-94 ára</a>
                 </div>
               </div>
             </div>
@@ -142,19 +60,13 @@
       <div class="card-body">
         <div v-if="loading">
           <hr />
-          <pulse-loader
-            :loading="loading"
-            :color="color"
-            :size="size"
-          ></pulse-loader>
+          <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
           <p style="text-align: center">{{ message }}</p>
         </div>
         <br />
         <div v-if="!loading">
           <h2 v-html="header_text"></h2>
-          <table
-            class="table table-striped table-hover table-responsive-sm table-sm"
-          >
+          <table class="table table-striped table-hover table-responsive-sm table-sm">
             <!--<caption>Listi yfir íslandsmeta</caption>-->
             <col span="1" class="wide" />
             <thead>
@@ -170,18 +82,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr
-                v-for="(i, index) in record_data"
-                v-if="i.AgeGroup == agegroup && i.InOut == inout"
-              >
+              <tr v-for="(i, index) in record_data" v-if="i.AgeGroup == agegroup && i.InOut == inout">
                 <th scope="row">{{ i.Event }}</th>
                 <td>
-                  <router-link
-                    :to="{
-                      name: 'CompetitorProfile',
-                      params: { competitorID: i.CompetitorID },
-                    }"
-                  >
+                  <router-link :to="{
+                    name: 'CompetitorProfile',
+                    params: { competitorID: i.CompetitorID },
+                  }">
                     <a>{{ i.Name }}</a>
                   </router-link>
                 </td>
@@ -193,11 +100,7 @@
                 <!--<td class="d-none d-xl-table-cell">{{ inout_text(i.InOut) }}</td>-->
                 <td class="d-none d-md-table-cell">{{ i.Date }}</td>
                 <!--<td>{{ i.AgeGroup }}</td>-->
-                <td class="d-none d-xl-table-cell">{{ i.Club }}&nbsp;&nbsp;<img
-                class="img-club"
-                v-bind:src="'/api/img/club/' + i.Club"
-                alt=""
-              /></td>
+                <td class="d-none d-xl-table-cell">{{ i.Club }}&nbsp;&nbsp;<img class="img-club" v-bind:src="'/api/img/club/' + i.Club" alt="" /></td>
               </tr>
             </tbody>
           </table>
@@ -255,74 +158,35 @@ export default {
         ["ST12", "<i class='fas fa-female'></i> Stúlkur 12 ára"],
       ],
       master_mengroups: [
-        ["KA030-34", "Öldungar - <i class='fas fa-male'></i> Karlar 30-34 ára"],
-        ["KA035-39", "Öldungar - <i class='fas fa-male'></i> Karlar 35-39 ára"],
-        ["KA040-44", "Öldungar - <i class='fas fa-male'></i> Karlar 40-44 ára"],
-        ["KA045-49", "Öldungar - <i class='fas fa-male'></i> Karlar 45-49 ára"],
-        ["KA050-54", "Öldungar - <i class='fas fa-male'></i> Karlar 50-54 ára"],
-        ["KA055-59", "Öldungar - <i class='fas fa-male'></i> Karlar 55-59 ára"],
-        ["KA060-64", "Öldungar - <i class='fas fa-male'></i> Karlar 60-64 ára"],
-        ["KA065-69", "Öldungar - <i class='fas fa-male'></i> Karlar 65-69 ára"],
-        ["KA070-74", "Öldungar - <i class='fas fa-male'></i> Karlar 70-74 ára"],
-        ["KA075-79", "Öldungar - <i class='fas fa-male'></i> Karlar 75-79 ára"],
-        ["KA080-84", "Öldungar - <i class='fas fa-male'></i> Karlar 80-84 ára"],
-        ["KA085-89", "Öldungar - <i class='fas fa-male'></i> Karlar 85-89 ára"],
-        ["KA090-94", "Öldungar - <i class='fas fa-male'></i> Karlar 90-94 ára"],
+        ["KA030-34", "<i class='fas fa-male'></i> Karlar 30-34 ára"],
+        ["KA035-39", "<i class='fas fa-male'></i> Karlar 35-39 ára"],
+        ["KA040-44", "<i class='fas fa-male'></i> Karlar 40-44 ára"],
+        ["KA045-49", "<i class='fas fa-male'></i> Karlar 45-49 ára"],
+        ["KA050-54", "<i class='fas fa-male'></i> Karlar 50-54 ára"],
+        ["KA055-59", "<i class='fas fa-male'></i> Karlar 55-59 ára"],
+        ["KA060-64", "<i class='fas fa-male'></i> Karlar 60-64 ára"],
+        ["KA065-69", "<i class='fas fa-male'></i> Karlar 65-69 ára"],
+        ["KA070-74", "<i class='fas fa-male'></i> Karlar 70-74 ára"],
+        ["KA075-79", "<i class='fas fa-male'></i> Karlar 75-79 ára"],
+        ["KA080-84", "<i class='fas fa-male'></i> Karlar 80-84 ára"],
+        ["KA085-89", "<i class='fas fa-male'></i> Karlar 85-89 ára"],
+        ["KA090-94", "<i class='fas fa-male'></i> Karlar 90-94 ára"],
       ],
       master_womengroups: [
-        [
-          "KO030-34",
-          "Öldungar - <i class='fas fa-female'></i> Konur 30-34 ára",
-        ],
-        [
-          "KO035-39",
-          "Öldungar - <i class='fas fa-female'></i> Konur 35-39 ára",
-        ],
-        [
-          "KO040-44",
-          "Öldungar - <i class='fas fa-female'></i> Konur 40-44 ára",
-        ],
-        [
-          "KO045-49",
-          "Öldungar - <i class='fas fa-female'></i> Konur 45-49 ára",
-        ],
-        [
-          "KO050-54",
-          "Öldungar - <i class='fas fa-female'></i> Konur 50-54 ára",
-        ],
-        [
-          "KO055-59",
-          "Öldungar - <i class='fas fa-female'></i> Konur 55-59 ára",
-        ],
-        [
-          "KO060-64",
-          "Öldungar - <i class='fas fa-female'></i> Konur 60-64 ára",
-        ],
-        [
-          "KO065-69",
-          "Öldungar - <i class='fas fa-female'></i> Konur 65-69 ára",
-        ],
-        [
-          "KO070-74",
-          "Öldungar - <i class='fas fa-female'></i> Konur 70-74 ára",
-        ],
-        [
-          "KO075-79",
-          "Öldungar - <i class='fas fa-female'></i> Konur 75-79 ára",
-        ],
-        [
-          "KO080-84",
-          "Öldungar - <i class='fas fa-female'></i> Konur 80-84 ára",
-        ],
-        [
-          "KO085-89",
-          "Öldungar - <i class='fas fa-female'></i> Konur 85-89 ára",
-        ],
-        [
-          "KO090-94",
-          "Öldungar - <i class='fas fa-female'></i> Konur 90-94 ára",
-        ],
-      ],
+        ["KO030-34", "<i class='fas fa-female'></i> Konur 30-34 ára"],
+        ["KO035-39", "<i class='fas fa-female'></i> Konur 35-39 ára"],
+        ["KO040-44", "<i class='fas fa-female'></i> Konur 40-44 ára"],
+        ["KO045-49", "<i class='fas fa-female'></i> Konur 45-49 ára"],
+        ["KO050-54", "<i class='fas fa-female'></i> Konur 50-54 ára"],
+        ["KO055-59", "<i class='fas fa-female'></i> Konur 55-59 ára"],
+        ["KO060-64", "<i class='fas fa-female'></i> Konur 60-64 ára"],
+        ["KO065-69", "<i class='fas fa-female'></i> Konur 65-69 ára"],
+        ["KO070-74", "<i class='fas fa-female'></i> Konur 70-74 ára"],
+        ["KO075-79", "<i class='fas fa-female'></i> Konur 75-79 ára"],
+        ["KO080-84", "<i class='fas fa-female'></i> Konur 80-84 ára"],
+        ["KO085-89", "<i class='fas fa-female'></i> Konur 85-89 ára"],
+        ["KO090-94", "<i class='fas fa-female'></i> Konur 90-94 ára"],
+      ]
     };
   },
   created() {
@@ -419,7 +283,7 @@ export default {
       // If we switch groups make sure to show or hide the loading screen if we don't have the data.
       if (this.agegroup_value < this.men_agegroups.length) {
         this.loading = this.loading_all
-      } 
+      }
       if (this.agegroup_value >= this.men_agegroups.length) {
         this.loading = this.loading_master
       }
@@ -480,10 +344,12 @@ export default {
 .table {
   margin-bottom: 0;
 }
+
 .td {
   text-align: center;
   vertical-align: middle;
 }
+
 .display-4 {
   margin-top: 1rem;
 }
