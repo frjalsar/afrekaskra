@@ -104,11 +104,13 @@ DATABASES = {
         'ENGINE': 'mssql',
         'NAME': 'Athletics',
         'HOST': '82.221.94.225',
+        'PORT': 1433,
         'USER': os.environ['SIF_DB_USER'],
         'PASSWORD': os.environ['SIF_DB_PASSWORD'],
         'OPTIONS': {
             #'driver': '/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.7.so.2.1',
-            'driver': os.path.join(BASE_DIR, 'drv/msodbcsql17/lib64/libmsodbcsql-17.10.so.1.1'), # The driver is in the GIT repository
+            #'driver': os.path.join(BASE_DIR, 'drv/msodbcsql17/lib64/libmsodbcsql-17.10.so.1.1'), # The driver is in the GIT repository
+            'driver': os.path.join(BASE_DIR, '.apt/usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so'), # The driver is in the GIT repository
             'host_is_server': True,
         },
     },

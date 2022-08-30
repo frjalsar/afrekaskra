@@ -2,7 +2,7 @@
 
 ## How-to:
 0. Install Python 3.10 or higher.
-1. sudo apt install libpq-dev unixodbc-dev libsqliteodbc python3-dev npm git build-essentials
+1. sudo apt install libpq-dev unixodbc-dev libsqliteodbc tdsodbc python3-dev npm git build-essentials 
 2. git clone
 3. npm install
 4. npm run build
