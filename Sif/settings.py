@@ -110,7 +110,7 @@ DATABASES = {
         'OPTIONS': {
             #'driver': '/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.7.so.2.1',
             #'driver': os.path.join(BASE_DIR, 'drv/msodbcsql17/lib64/libmsodbcsql-17.10.so.1.1'), # The driver is in the GIT repository
-            'driver': os.path.join(BASE_DIR, 'drv/odbc/libtdsodbc.so'), # The driver is in the GIT repository
+            'driver': os.path.join(BASE_DIR, '.apt/usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so'), # The driver is in the GIT repository
             'host_is_server': True,
         },
     },
