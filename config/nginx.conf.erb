@@ -43,9 +43,10 @@ http {
 		  return 301 https://$host$request_uri;
 		}
 
+		error_page 404 =200 /index.html;
+
 		# Redirect old website
 		location /Afr/ {
-			error_page 404 =200 /index.html;
 			rewrite (\d+) /keppandi/$1 break;
 		}
 
