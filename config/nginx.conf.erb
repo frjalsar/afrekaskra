@@ -79,7 +79,12 @@ http {
 			proxy_redirect off;
 			proxy_pass http://app_server;
 		}
-		
+
+		# Redirect old website
+		location /Afr/keppendur/
+          { 
+            rewrite /Afr/keppendur/kep$1.htm ^keppandi/([0-9]+)/?$ break; 
+          }
 	}
 	
 	# Redirect other domains to sif.fri.is
