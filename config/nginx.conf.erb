@@ -43,6 +43,9 @@ http {
 		  return 301 https://$host$request_uri;
 		}
 
+		# Redirect old website
+		rewrite ^/Afr/keppendur/kep(.*).htm?$ /keppandi/$1 break;
+
 		location /sitemap.xml {
 			alias /app/templates/sitemap.xml;
 		}
@@ -78,11 +81,6 @@ http {
 			proxy_set_header Host $http_host;
 			proxy_redirect off;
 			proxy_pass http://app_server;
-		}
-
-		# Redirect old website
-		location /Afr/ {
-			rewrite ^/Afr/keppendur/kep(.*).htm?$ /keppandi/$1 break;
 		}
 	}
 	
