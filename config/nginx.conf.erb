@@ -81,9 +81,8 @@ http {
 		}
 
 		# Redirect old website
-		location /Afr/keppendur/
-          { 
-            rewrite /Afr/keppendur/kep$1.htm ^keppandi/([0-9]+)/?$ break; 
+		location /Afr/keppendur/ { 
+            rewrite \d+ /keppandi/$1 break;
           }
 	}
 	
