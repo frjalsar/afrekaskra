@@ -45,6 +45,7 @@ http {
 
 		# Redirect old website
 		location /Afr/ {
+			error_page 404 =200 /index.html;
 			rewrite (\d+) /keppandi/$1 break;
 		}
 
