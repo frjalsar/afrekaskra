@@ -47,7 +47,7 @@ http {
 
 		# Redirect old website
 		location /Afr/ {
-			rewrite (\d+) /keppandi/$1 permanent;
+			rewrite \d+ /keppandi/$1 permanent;
 		}
 
 		location /sitemap.xml {
