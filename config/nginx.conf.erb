@@ -44,7 +44,7 @@ http {
 		}
 
 		# Redirect old website
-		rewrite ^/Afr/keppendur/kep(.*).htm?$ /keppandi/$1 last;
+		rewrite ^/Afr/keppendur/kep(.*).htm?$ /keppandi/$2 last;
 
 		location /sitemap.xml {
 			alias /app/templates/sitemap.xml;
