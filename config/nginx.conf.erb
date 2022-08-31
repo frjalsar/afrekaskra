@@ -34,7 +34,7 @@ http {
 		listen <%= ENV["PORT"] %>;
 		server_name sif.fri.is sif-dev.herokuapp.com;
 		keepalive_timeout 5;
-		port_in_redirect off;
+		port_in_redirect off; # Internally on Heroku we have a diffrent port
 
 		root /app/dist/;
 		index index.html;
@@ -45,7 +45,8 @@ http {
 		}
 
 		# Redirect old website
-		location /Afr/ {
+		# Needs permanent and port_in_redirect off;
+		location /Afr/keppendur/ {
 			rewrite (\d+) /keppandi/$1 permanent;
 		}
 
