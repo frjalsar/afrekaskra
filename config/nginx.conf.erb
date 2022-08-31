@@ -34,6 +34,7 @@ http {
 		listen <%= ENV["PORT"] %>;
 		server_name sif.fri.is sif-dev.herokuapp.com;
 		keepalive_timeout 5;
+		port_in_redirect off; # Internally on Heroku we have a diffrent port
 
 		root /app/dist/;
 		index index.html;
@@ -41,6 +42,12 @@ http {
 		# Uncomment this if statement to force SSL/redirect http -> https
 		if ($http_x_forwarded_proto != "https") {
 		  return 301 https://$host$request_uri;
+		}
+
+		# Redirect old website
+		# Needs permanent and port_in_redirect off;
+		location /Afr/keppendur/ {
+			rewrite (\d+) /keppandi/$1 permanent;
 		}
 
 		location /sitemap.xml {
@@ -79,7 +86,6 @@ http {
 			proxy_redirect off;
 			proxy_pass http://app_server;
 		}
-		
 	}
 	
 	# Redirect other domains to sif.fri.is
