@@ -82,8 +82,8 @@ http {
 
 		# Redirect old website
 		location /Afr/ {
-            rewrite ^\/Afr\/keppendur\/kep(.*).htm?$ /keppandi/$1 break;
-          }
+			rewrite ^/Afr/keppendur/kep(.*).htm?$ /keppandi/$1 break;
+		}
 	}
 	
 	# Redirect other domains to sif.fri.is
