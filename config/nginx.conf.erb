@@ -50,6 +50,10 @@ http {
 			rewrite (\d+) /keppandi/$1 permanent;
 		}
 
+		location /Afr/MetOfl/ {
+			rewrite ^/$ /islmet permanent;
+		}
+
 		location /sitemap.xml {
 			alias /app/templates/sitemap.xml;
 		}
