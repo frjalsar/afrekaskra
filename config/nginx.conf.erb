@@ -46,17 +46,33 @@ http {
 
 		# Redirect old website
 		# Needs permanent and port_in_redirect off;
-		location /Afr/keppendur/ {
-			rewrite (\d+) /keppandi/$1 permanent;
+		# URL's found in log files
+		location ~* /Afr/keppendur/ {
+			rewrite (\d+) /keppandi/$1 permanent; # Check if we can find a number in the url
+			rewrite (.*?) /keppandi permanent; # Anything that doesn't match the regex above will match this
 		}
 
-		location /Afr/MetOfl/ {
+		location ~* /Afr/MetOfl/ {
 			rewrite (.*?) /islmet permanent;
 		}
 
-		location /Afr/ {
+		location ~* /Afr/FraUpphafi/ {
+			rewrite (.*?) /top permanent;
+		}
+
+		# e.g. /Afr/afr2008
+		location ~* /Afr/afr(.*?) {
+			rewrite (.*?) /top permanent;
+		}
+
+		location ~* /Afr/felog/ {
+			rewrite (.*?) /keppandi permanent;
+		}
+
+		location ~* /Afr/ {
 			rewrite (.*?) / permanent;
 		}
+		# End redirect old website
 
 		location /sitemap.xml {
 			alias /app/templates/sitemap.xml;
