@@ -59,7 +59,8 @@ http {
 			rewrite (.*?) /top permanent;
 		}
 
-		location ^/Afr/afr(\d+).*$ {
+		# e.g. /Afr/afr2008
+		location ~* /Afr/afr(.*?) {
 			rewrite (.*?) /top permanent;
 		}
 
