@@ -48,8 +48,8 @@ http {
 		# Needs permanent and port_in_redirect off;
 		# URL's found in log files
 		location ~* /Afr/keppendur/ {
-			rewrite (\d+) /keppandi/$1 permanent;
-			rewrite (.*?) /keppandi permanent;
+			rewrite (\d+) /keppandi/$1 permanent; # Check if we can find a number in the url
+			rewrite (.*?) /keppandi permanent; # Anything that doesn't match the regex above will match this
 		}
 
 		location ~* /Afr/MetOfl/ {
