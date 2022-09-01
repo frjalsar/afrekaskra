@@ -51,7 +51,11 @@ http {
 		}
 
 		location /Afr/MetOfl/ {
-			rewrite ^/$ /islmet permanent;
+			rewrite (.*?) /islmet permanent;
+		}
+
+		location /Arf/ {
+			rewrite (.*?) / permanent;
 		}
 
 		location /sitemap.xml {
