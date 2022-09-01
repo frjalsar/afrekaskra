@@ -49,7 +49,7 @@ http {
 		# URL's found in log files
 		location ~* /Afr/keppendur/ {
 			rewrite (\d+) /keppandi/$1 permanent;
-			rewrite (.*?) /keppandi
+			rewrite (.*?) /keppandi permanent;
 		}
 
 		location ~* /Afr/MetOfl/ {
