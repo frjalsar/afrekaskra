@@ -135,6 +135,21 @@ def wind_to_str(in_float, inout=None, hasWind=True):
         else:
             return ''
 
+#------------------------------------------------------------------------------
+# IAAF reglur fyrir handtíma
+# Bæta við buffer ef tíminn er handtími
+# 24/100 upp að 300 (ekki með),
+# 14/100 frá og með 300 til 800 m (ekki með)
+# 0/100 frá og með 800 m og upp
+def Get_Hand_buffer(distance):
+    if (distance > 0.0 and distance < 300.0):
+        hand_buffer = 0.24
+    elif (distance >= 300.0 and distance < 800.0):
+        hand_buffer = 0.14
+    else:
+        hand_buffer = 0.0
+    return hand_buffer
+
 #-------------------------------------------------------------------------------
 # Breytum rauntölu sem táknar sekúndur yfri í streng sem er tíminn liðinn
 # frá 1. Jan 1970.

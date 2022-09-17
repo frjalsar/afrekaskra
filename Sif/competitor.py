@@ -103,7 +103,7 @@ def Get_Competitor_Events_Info(df):
         # Úti árangur með löglegum vindi
         mask = np.logical_and(df_event['WindReading'] <= 2.0, df_event['OutdoorsOrIndoors'] == 'Úti')
         #mask = np.logical_and(mask, df_event['vantar_vind'] == 0)
-        df_event_nowind_out = df_event.loc[mask]
+        df_event_nowind_out = df_event.loc[mask].copy()
 
         df_event_out = df_event.loc[df_event['OutdoorsOrIndoors'] == 'Úti'] # Úti árangur + vind árangur
         df_event_in = df_event.loc[df_event['OutdoorsOrIndoors'] == 'Inni'] # Inni árangur
@@ -119,35 +119,73 @@ def Get_Competitor_Events_Info(df):
         pb_in = ''
         pb_in_date = datetime(1970, 1, 1)
 
+        # Bæta við buffer ef tíminn er handtími
+        hand_buffer = common.Get_Hand_buffer(event_info['DISTANCE'])
+
+        # Búum til nýjan dálk þar sem búið er að bæta við buffer tímanum.
+        # Flokkum svo eftir þeim dálk.
+        df_event_out['Results_sort'] = df_event_out['Results_float'].copy()
+        for index, row in df_event_out.iterrows():
+            if row['Rafmagnstímataka'] == 1:
+                df_event_out.loc[index, 'Results_sort'] = row['Results_float']
+            else:
+                df_event_out.loc[index, 'Results_sort'] = row['Results_float'] + hand_buffer
+
+        df_event_nowind_out['Results_sort'] = df_event_nowind_out['Results_float'].copy()
+        for index, row in df_event_nowind_out.iterrows():
+            if row['Rafmagnstímataka'] == 1:
+                df_event_nowind_out.loc[index, 'Results_sort'] = row['Results_float']
+            else:
+                df_event_nowind_out.loc[index, 'Results_sort'] = row['Results_float'] + hand_buffer
+
+        df_event_in['Results_sort'] = df_event_in['Results_float'].copy()
+        for index, row in df_event_in.iterrows():
+            if row['Rafmagnstímataka'] == 1:
+                df_event_in.loc[index, 'Results_sort'] = row['Results_float']
+            else:
+                df_event_in.loc[index, 'Results_sort'] = row['Results_float'] + hand_buffer
+
         #try:
             # Finnum PB inni ef það er til
         if (df_event_in.empty == False):
             if (event_info['MAX'] == True):
-                idx = df_event_in['Results_float'].idxmax()
+                idx = df_event_in['Results_sort'].idxmax()
             else:
-                idx = df_event_in['Results_float'].idxmin()
+                idx = df_event_in['Results_sort'].idxmin()
 
-            pb_in = common.results_to_str(df_event_in['Results_float'][idx], event_info['UNIT'], True)
+            if (df_event_in['Rafmagnstímataka'][idx] == 1):
+                ElecTime = True
+            else:
+                ElecTime = False
+            pb_in = common.results_to_str(df_event_in['Results_float'][idx], event_info['UNIT'], ElecTime)
             pb_in_date = df_event_in['AchievementDate'][idx]
 
         # Finnum PB úti með löglegum árangri ef það er til
         if (df_event_nowind_out.empty == False):
             if (event_info['MAX'] == True):
-                idx = df_event_nowind_out['Results_float'].idxmax()
+                idx = df_event_nowind_out['Results_sort'].idxmax()
             else:
-                idx = df_event_nowind_out['Results_float'].idxmin()
+                idx = df_event_nowind_out['Results_sort'].idxmin()
 
-            pb_out = common.results_to_str(df_event_nowind_out['Results_float'][idx], event_info['UNIT'], True)
+            if (df_event_nowind_out['Rafmagnstímataka'][idx] == 1):
+                ElecTime = True
+            else:
+                ElecTime = False
+            pb_out = common.results_to_str(df_event_nowind_out['Results_float'][idx], event_info['UNIT'], ElecTime)
             pb_out_date = df_event_nowind_out['AchievementDate'][idx]
 
         # Ef ekki þá athugum við ólöglegan árangur
         elif (df_event_out.empty == False):
             if (event_info['MAX'] == True):
-                idx = df_event_out['Results_float'].idxmax()
+                idx = df_event_out['Results_sort'].idxmax()
             else:
-                idx = df_event_out['Results_float'].idxmin()
+                idx = df_event_out['Results_sort'].idxmin()
 
-            pb_out = common.results_to_str(df_event_out['Results_float'][idx], event_info['UNIT'], True) + ' ({:+.1f}'.format(df_event_out['WindReading'][idx]) + ' m/s)'
+            if (df_event_out['Rafmagnstímataka'][idx] == 1):
+                ElecTime = True
+            else:
+                ElecTime = False
+            pb_out = common.results_to_str(df_event_out['Results_float'][idx], event_info['UNIT'], ElecTime) + ' ({:+.1f}'.format(df_event_out['WindReading'][idx]) + ' m/s)'
             pb_out_date = df_event_out['AchievementDate'][idx]
         #except:
             # Ef eitthvað klikkar þá sleppum við þessari grein
@@ -362,17 +400,7 @@ def Get_Competitor_Event(CompetitorCode, EventID):
         else:
             ElecTime = False
             result_str = common.results_to_str(row.Results_float, event_info['UNIT'], ElecTime)
-            # Bæta við buffer ef tíminn er handtími
-            # 24/100 upp að 300 (ekki með),
-            # 14/100 frá og með 300 til 800 m (ekki með)
-            # 0/100 frá og með 800 m og upp
-            if (event_info['DISTANCE'] > 0.0 and event_info['DISTANCE'] < 300.0):
-                hand_buffer = 0.24
-            elif (event_info['DISTANCE'] >= 300.0 and event_info['DISTANCE'] < 800.0):
-                hand_buffer = 0.14
-            else:
-                hand_buffer = 0.0
-            result_float = row.Results_float + hand_buffer
+            result_float = row.Results_float + common.Get_Hand_buffer(event_info['DISTANCE'])
 
         if (row['OutdoorsOrIndoors'] == 'Úti'):
             OutorInn = 0

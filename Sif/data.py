@@ -52,15 +52,7 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
     df['árangur_float'] = df['árangur'].map(common.results_to_float)
 
     # Bæta við buffer ef tíminn er handtími
-    # 24/100 upp að 300 (ekki með),
-    # 14/100 frá og með 300 til 800 m (ekki með)
-    # 0/100 frá og með 800 m og upp
-    if (Event_Info['Distance'] > 0.0 and Event_Info['Distance'] < 300.0):
-        hand_buffer = 0.24
-    elif (Event_Info['Distance'] >= 300.0 and Event_Info['Distance'] < 800.0):
-        hand_buffer = 0.14
-    else:
-        hand_buffer = 0.0
+    hand_buffer = common.Get_Hand_buffer(Event_Info['Distance'])
 
     # Búum til nýjan dálk þar sem búið er að bæta við buffer tímanum.
     # Flokkum svo eftir þeim dálk.
