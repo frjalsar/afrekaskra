@@ -2,7 +2,7 @@ asgiref==3.5.2
 autopep8==1.7.0
 Babel==2.10.3
 dj-database-url==1.0.0
-Django==4.0.6
+Django==4.0.7
 django-bmemcached==0.3.0
 django-heroku==0.3.1
 greenlet==1.1.3
