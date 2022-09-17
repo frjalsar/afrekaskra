@@ -1,11 +1,12 @@
 USE [Athletics]
 GO
-/****** Object:  StoredProcedure [dbo].[CompetitorsAchievements]    Script Date: 5/5/2021 6:26:04 PM ******/
+/****** Object:  StoredProcedure [dbo].[CompetitorsAchievementsSif]    Script Date: 9/17/2022 1:37:29 PM ******/
+/****** Breytt útgáfa af CompetitorsAchievements ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[CompetitorsAchievements]
+ALTER PROCEDURE [dbo].[CompetitorsAchievementsSif]
   @CompetitorNo nvarchar(20),
   @YearFrom int,
   @YearTo int,
@@ -36,6 +37,7 @@ BEGIN
 	CompetitionCode nvarchar(20),
 	Placing nvarchar(10),
 	Remarks nvarchar(200),
+	Rafmagnstímataka int,
 	EventSortOrder decimal(38,20),
 	AchievementSortOrder decimal(30,20),
 	Series nvarchar(150),
@@ -44,11 +46,11 @@ BEGIN
 
 INSERT INTO @AchieveMents (EventName, OutdoorsOrIndoors, Results,
   AchievementDate, Venue, Club, Age, WindReading, CompetitionName, CompetitionCode, Placing, Remarks, 
-  EventSortOrder, AchievementSortOrder, Series, RequiresWindMeter, WindReadingText)
+  Rafmagnstímataka, EventSortOrder, AchievementSortOrder, Series, RequiresWindMeter, WindReadingText)
   SELECT (SELECT TOP 1 Heiti FROM  Athl$Events WHERE Grein = Afr.Grein 
     AND Kyn = Afr.Kyn AND Flokkur = Afr.Flokkur AND Úti_Inni = Afr.Úti_Inni) as HeitiGr, 
 	CASE WHEN Úti_Inni = 0 THEN 'Úti' ELSE 'Inni' END, Árangur + ' ' + Athugasemd, Dagsetning, Staður, 
-	Félag, [Aldur keppanda], Vindur, [Heiti Móts], [Mót], [Röð], [Athugasemd],
+	Félag, [Aldur keppanda], Vindur, [Heiti Móts], [Mót], [Röð], [Athugasemd], Rafmagnstímataka, 
 	(SELECT [Röð í afrekaskrá] FROM Athl$Events WHERE Grein = Afr.Grein 
     AND Kyn = Afr.Kyn AND Flokkur = Afr.Flokkur AND Úti_Inni = Afr.Úti_Inni) as EventSortOrd,
 	Raðsvæði, Sería,

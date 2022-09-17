@@ -63,7 +63,7 @@ def Get_Competitor_Achievements(CompetitorCode):
     CurrentYear = datetime.now().year
     
     # Köllum á stored procedure sem heitir CompetitorsAchievements.
-    df = pd.read_sql_query("EXEC CompetitorsAchievements @CompetitorNo = {:d}, @YearFrom = 1800, @YearTo = {:d}, @OutdoorsIndoorsFilter = '%'".format(CompetitorCode, CurrentYear), connection)
+    df = pd.read_sql_query("EXEC CompetitorsAchievementsSif @CompetitorNo = {:d}, @YearFrom = 1800, @YearTo = {:d}, @OutdoorsIndoorsFilter = '%'".format(CompetitorCode, CurrentYear), connection)
 
     # Athuga hvort það séu einhver afrek skráð
     # ATH það kemur ekki villa á front end þegar þetta gerist, bara tóma síða.
@@ -355,10 +355,24 @@ def Get_Competitor_Event(CompetitorCode, EventID):
         #if (row.rafmagnstímataka == 0 and event_info['MAX'] == False):
         #    result_str = '{:.1f}'.format(row.árangur_float)
         #else:
-        if (event_info['UNIT'] == 5):
-            result_str = '{:.0f}'.format(row['Results_float'])
+        if (row.Rafmagnstímataka == 1):
+            ElecTime = True
+            result_str = common.results_to_str(row.Results_float, event_info['UNIT'], ElecTime)
+            result_float = row.Results_float
         else:
-            result_str = '{:.2f}'.format(row['Results_float'])
+            ElecTime = False
+            result_str = common.results_to_str(row.Results_float, event_info['UNIT'], ElecTime)
+            # Bæta við buffer ef tíminn er handtími
+            # 24/100 upp að 300 (ekki með),
+            # 14/100 frá og með 300 til 800 m (ekki með)
+            # 0/100 frá og með 800 m og upp
+            if (event_info['DISTANCE'] > 0.0 and event_info['DISTANCE'] < 300.0):
+                hand_buffer = 0.24
+            elif (event_info['DISTANCE'] >= 300.0 and event_info['DISTANCE'] < 800.0):
+                hand_buffer = 0.14
+            else:
+                hand_buffer = 0.0
+            result_float = row.Results_float + hand_buffer
 
         if (row['OutdoorsOrIndoors'] == 'Úti'):
             OutorInn = 0
@@ -366,13 +380,14 @@ def Get_Competitor_Event(CompetitorCode, EventID):
             OutorInn = 1        
 
         event_data.append({'Results': result_str,
+                           'Results_float': result_float,
                            'Wind': wind_str,
                            'Club': row['Club'],
                            'OutIn': OutorInn,
                            'competition_name': row['CompetitionName'],
                            'competition_id': row['CompetitionCode'],
                            'Age': row['Age'],
-                           'Date': row['AchievementDate'] #format_date(row['dagsetning'], "d MMM yyyy",locale='is_IS').upper(),
+                           'Date': row['AchievementDate'], #format_date(row['dagsetning'], "d MMM yyyy",locale='is_IS').upper(),
                            #'ElectricTiming': row['rafmagnstímataka'],
                            #'MissingWind': row['vantar_vind']
                            })

@@ -381,13 +381,13 @@ export default {
 
         if (this.event_info["UNIT"] == 3) {
           my_data[i]["Results_text"] =
-            moment.unix(my_data[i]["Results"]).format("mm:ss,SS") + strPost;
+            moment.unix(my_data[i]["Results_float"]).format("mm:ss,SS") + strPost;
           //my_data[i]["Results"] = my_data[i]["Results"] * 10000; // Convert to ms for highcharts
         } else if (this.event_info["UNIT"] == 4) {
           my_data[i]["Results_text"] =
-            moment.unix(my_data[i]["Results"]).format("hh:mm:ss,SS") + strPost;
+            moment.unix(my_data[i]["Results_float"]).format("hh:mm:ss,SS") + strPost;
         } else {
-          my_data[i]["Results_text"] = my_data[i]["Results"] + strPost;
+          my_data[i]["Results_text"] = my_data[i]["Results_float"] + strPost;
         }
       }
 
@@ -407,7 +407,7 @@ export default {
       for (var i = 0; i < dataLen; i++) {
         data_points.push({
           x: moment(this.event_data[i]["Date"]).valueOf(),
-          y: Number(this.event_data[i]["Results"]) * factor, //Tryggja að þetta sé tala, annars fer Highcharts í fýlu.
+          y: Number(this.event_data[i]["Results_float"]) * factor, //Tryggja að þetta sé tala, annars fer Highcharts í fýlu.
         });
       }
 

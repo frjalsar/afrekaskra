@@ -5,7 +5,7 @@
       <col span="1" class="wide" />
       <thead>
         <tr>
-          <th scope="col" @click="sort('Results')">
+          <th scope="col" @click="sort('Results_float')">
             <i class="fas fa-sort"></i>
             &nbsp;Árangur <small class="text-muted">{{event_info.UNIT_SYMBOL}}</small>
           </th>
@@ -68,7 +68,7 @@ export default {
         if (this.currentSortDir === "desc") modifier = -1;
 
         if (
-          this.currentSort == "Results" ||
+          this.currentSort == "Results_float" ||
           this.currentSort == "Wind" ||
           this.currentSort == "Age"
         ) {

@@ -16,18 +16,39 @@ df_event_list = pd.read_pickle(EVENT_LIST_FILENAME)
 #def Get_Event_Info_by_ID():
 #    return None
 
+def Find_Distance(event_name_isl_str):
+    distance = -1.0
+    reg = re.findall(r'(\d+) metra', event_name_isl_str)
+    if (len(reg) > 0):
+        distance = int(reg[0])
+    else:
+        reg = re.findall(r'(\d+\.\d+) km', event_name_isl_str.replace(',', '.'))
+        if (len(reg) > 0):
+            distance = (float(reg[0])*1000)
+        else:
+            if (re.search('maraþon', event_name_isl_str, re.IGNORECASE)):
+                if (re.search('hálft', event_name_isl_str, re.IGNORECASE)):
+                    distance = 21097.5
+                else:
+                    distance = 42195
+            else:
+                distance = -1.0
+    return distance
+
 def Get_Event_Info_by_Name(EventName):
     NameofEvent = EventName.replace(',', '.').replace('(f)', '(flögutímar)')
     try:
         event_info = event_dict[NameofEvent]
         event_info['NAME_THOR'] = NameofEvent
         event_info['EVENT_ID'] = event_list.index(NameofEvent)
+        event_info['DISTANCE'] = Find_Distance(NameofEvent)
     except:
         print('VILLA: Fann ekki grein {}'.format(NameofEvent))
         print(NameofEvent)
         event_info = event_dict['Óþekkt grein']
         event_info['NAME_SHORT'] = NameofEvent
         event_info['EVENT_ID'] = 1
+        event_info['DISTANCE'] = -1
     
     return event_info
 
@@ -98,22 +119,8 @@ def Get_Event_Info_by_ID(Event_id):
 
             # Þetta er líklega hlaupa grein
             # Reynum að finna vegalengdina á henni
-            distance = -1.0
-            reg = re.findall(r'(\d+) metra', df_event_list['Name_ISL'].values[Event_id])
-            if (len(reg) > 0):
-                distance = int(reg[0])
-            else:
-                reg = re.findall(r'(\d+\.\d+) km', df_event_list['Name_ISL'].values[Event_id].replace(',', '.'))
-                if (len(reg) > 0):
-                    distance = (float(reg[0])*1000)
-                else:
-                    if (re.search('maraþon', df_event_list['Name_ISL'].values[Event_id], re.IGNORECASE)):
-                        if (re.search('hálft', df_event_list['Name_ISL'].values[Event_id], re.IGNORECASE)):
-                            distance = 21097.5
-                        else:
-                            distance = 42195
-                    else:
-                        distance = -1.0
+            distance = Find_Distance(df_event_list['Name_ISL'].values[Event_id])
+            
         else:
             minimize = False
             distance = -1.0 # -1 í vegalengd ef greinin er ekki hlaupa grein
