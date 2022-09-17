@@ -387,7 +387,7 @@ export default {
           my_data[i]["Results_text"] =
             moment.unix(my_data[i]["Results_float"]).format("hh:mm:ss,SS") + strPost;
         } else {
-          my_data[i]["Results_text"] = my_data[i]["Results_float"] + strPost;
+          my_data[i]["Results_text"] = my_data[i]["Results"] + strPost;
         }
       }
 
