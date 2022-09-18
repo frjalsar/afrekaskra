@@ -85,21 +85,8 @@ WSGI_APPLICATION = 'Sif.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# Database settings for the MS-SQL server. We use the django-mssql-backend package for this.
+# Database settings for the MS-SQL server. We use the django-mssql package for this.
 DATABASES = {
-    #'default': {
-    #    'ENGINE': 'sql_server.pyodbc',
-    #    'NAME': 'Athletics',
-    #    'HOST': '82.221.94.225',
-    #    'USER': os.environ['SIF_DB_USER'],
-    #    'PASSWORD': os.environ['SIF_DB_PASSWORD'],
-
-    #    'OPTIONS': {
-    #        #'driver': '/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.7.so.2.1',
-    #        'driver': os.path.join(BASE_DIR, 'drv/msodbcsql17/lib64/libmsodbcsql-17.8.so.1.1'), # The driver is in the GIT repository
-    #        'host_is_server': True,
-    #    },
-    #},
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'Athletics',
@@ -108,9 +95,7 @@ DATABASES = {
         'USER': os.environ['SIF_DB_USER'],
         'PASSWORD': os.environ['SIF_DB_PASSWORD'],
         'OPTIONS': {
-            #'driver': '/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.7.so.2.1',
-            #'driver': os.path.join(BASE_DIR, 'drv/msodbcsql17/lib64/libmsodbcsql-17.10.so.1.1'), # The driver is in the GIT repository
-            'driver': os.path.join(BASE_DIR, '.apt/usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so'), # The driver is in the GIT repository
+            'driver': os.path.join(BASE_DIR, '.apt/usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so'), # The driver is installed on Heroku using the Aptfile into this path.
             'host_is_server': True,
         },
     },
@@ -158,7 +143,7 @@ LOGGING = {
             'class': 'logging.NullHandler',
         },
         'console': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
         }
@@ -166,12 +151,12 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['console'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': True,
         },
         'django.request': {
             'handlers': ['console'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': False,
         },
     }
