@@ -25,12 +25,12 @@
           v-bind:src="'/api/img/action/' + competitorID"
         />
         <div class="topleft">
-          <h2 style="font-size: 3.5vw">
+          <h2 style="font-size: 3.0vw">
             <b
               >{{ competitor_info.FirstName }} {{ competitor_info.LastName }}</b
             >
           </h2>
-          <h5 style="font-size: 2.5vw">
+          <h5 style="font-size: 2.25vw">
             {{ competitor_info.Club }} -
             <i
               class="fas"

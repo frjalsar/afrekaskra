@@ -358,9 +358,7 @@
                 <tr>
                   <th class="d-none d-sm-table-cell" scope="col">#</th>
                   <th scope="col">Árangur</th>
-                  <th v-bind:class="{ 'd-none': !hasWind }" scope="col">
-                    Vindur
-                  </th>
+                  <th v-bind:class="{ 'd-none': !hasWind }" scope="col">Vindur</th>
                   <th scope="col">Nafn</th>
                   <th class="d-none d-sm-table-cell" scope="col">Aldur</th>
                   <th class="d-none d-sm-table-cell" scope="col">Félag</th>
