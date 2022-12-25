@@ -105,7 +105,7 @@ def results_to_str(in_float, Units, ElectricTiming):
         else:
             return '{:02d}:{:04.1f}'.format(mm, ss) + 'h'
 
-    elif (Units == 4): # hh:mm:ss,dd
+    elif (Units == 4): # hh:mm:ss
         ss = in_float
         hh = int(ss // (60*60))
         ss = ss % (60*60)
@@ -113,7 +113,7 @@ def results_to_str(in_float, Units, ElectricTiming):
         ss = ss % 60
 
         # Greinar í þessum flokki virðast ekki vera með rétta merkt hvort um rafmagns- eða handtímatöku var að ræða
-        return '{:02d}:{:02d}:{:05.2f}'.format(hh, mm, ss)
+        return '{:02d}:{:02d}:{:02.0f}'.format(hh, mm, ss)
         #if (ElectricTiming == True):
         #    return '{:02d}:{:02d}:{:05.2f}'.format(hh, mm, ss)
         #else:
