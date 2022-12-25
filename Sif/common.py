@@ -101,7 +101,7 @@ def results_to_str(in_float, Units, ElectricTiming, distance):
         ss = ss % 60
 
         # Greinar í þessum flokki virðast ekki vera með rétta merkt hvort um rafmagns- eða handtímatöku var að ræða
-        if (distance >= 800):
+        if (distance >= 1550):
             return '{:02d}:{:05.2f}'.format(mm, ss)
         else:
             if (ElectricTiming == True):
