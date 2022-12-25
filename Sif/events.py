@@ -22,17 +22,30 @@ def Find_Distance(event_name_isl_str):
     if (len(reg) > 0):
         distance = int(reg[0])
     else:
-        reg = re.findall(r'(\d+\.\d+) km', event_name_isl_str.replace(',', '.'))
+        reg = re.findall(r'(\d+)m', event_name_isl_str)
         if (len(reg) > 0):
-            distance = (float(reg[0])*1000)
+            distance = int(reg[0])
         else:
-            if (re.search('maraþon', event_name_isl_str, re.IGNORECASE)):
-                if (re.search('hálft', event_name_isl_str, re.IGNORECASE)):
-                    distance = 21097.5
-                else:
-                    distance = 42195
+            reg = re.findall(r'(\d+) km', event_name_isl_str.replace(',', '.'))
+            if (len(reg) > 0):
+                distance = (float(reg[0])*1000)
             else:
-                distance = -1.0
+                if (re.search('maraþon', event_name_isl_str, re.IGNORECASE)):
+                    if (re.search('hálft', event_name_isl_str, re.IGNORECASE)):
+                        distance = 21097.5
+                    else:
+                        distance = 42195
+                else:
+                    if (re.search(r'míla', event_name_isl_str, re.IGNORECASE)):
+                        distance = 1.60934
+                    else:
+                        if (re.search(r'mílur', event_name_isl_str, re.IGNORECASE)): # Meira ein míla
+                            distance = 2*1.60934
+                        else:
+                            print('Fann ekki fjarlægð')
+                            print(event_name_isl_str)
+                            print('')
+                            distance = -1.0
     return distance
 
 def Get_Event_Info_by_Name(EventName):

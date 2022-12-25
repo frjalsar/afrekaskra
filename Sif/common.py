@@ -82,7 +82,7 @@ def results_to_float(in_str):
     return time_sec
 
 #Units_symbol = {1: 'm', 2: 's', 3: 'mm:ss,dd', 4: 'hh:mm:ss,dd', 5: 'stig', 6: 'stig'}
-def results_to_str(in_float, Units, ElectricTiming):
+def results_to_str(in_float, Units, ElectricTiming, distance):
     if (in_float < 0.0): # Engin árangur
         return ''
 
@@ -100,10 +100,14 @@ def results_to_str(in_float, Units, ElectricTiming):
         mm = int(ss // 60)
         ss = ss % 60
 
-        if (ElectricTiming == True):
+        # Greinar í þessum flokki virðast ekki vera með rétta merkt hvort um rafmagns- eða handtímatöku var að ræða
+        if (distance >= 800):
             return '{:02d}:{:05.2f}'.format(mm, ss)
         else:
-            return '{:02d}:{:04.1f}'.format(mm, ss) + 'h'
+            if (ElectricTiming == True):
+                return '{:02d}:{:05.2f}'.format(mm, ss)
+            else:
+                return '{:02d}:{:04.1f}'.format(mm, ss) + 'h'
 
     elif (Units == 4): # hh:mm:ss
         ss = in_float
