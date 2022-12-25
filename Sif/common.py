@@ -112,10 +112,12 @@ def results_to_str(in_float, Units, ElectricTiming):
         mm = int(ss // 60)
         ss = ss % 60
 
-        if (ElectricTiming == True):
-            return '{:02d}:{:02d}:{:05.2f}'.format(hh, mm, ss)
-        else:
-            return '{:02d}:{:02d}:{:04.1f}'.format(hh, mm, ss) + 'h'
+        # Greinar í þessum flokki virðast ekki vera með rétta merkt hvort um rafmagns- eða handtímatöku var að ræða
+        return '{:02d}:{:02d}:{:05.2f}'.format(hh, mm, ss)
+        #if (ElectricTiming == True):
+        #    return '{:02d}:{:02d}:{:05.2f}'.format(hh, mm, ss)
+        #else:
+        #    return '{:02d}:{:02d}:{:04.1f}'.format(hh, mm, ss) + 'h'
 
     elif (Units == 5): # points
         return '{:.0f}'.format(in_float)
