@@ -42,9 +42,9 @@ def Find_Distance(event_name_isl_str):
                         if (re.search(r'mílur', event_name_isl_str, re.IGNORECASE)): # Meira ein míla
                             distance = 2*1.60934
                         else:
-                            print('Fann ekki fjarlægð')
-                            print(event_name_isl_str)
-                            print('')
+                            #print('Fann ekki fjarlægð')
+                            #print(event_name_isl_str)
+                            #print('')
                             distance = -1.0
     return distance
 
