@@ -379,16 +379,19 @@ export default {
           strPost = "";
         }
 
-        if (this.event_info["UNIT"] == 3) {
-          my_data[i]["Results_text"] =
-            moment.unix(my_data[i]["Results_float"]).format("mm:ss,SS") + strPost;
-          //my_data[i]["Results"] = my_data[i]["Results"] * 10000; // Convert to ms for highcharts
-        } else if (this.event_info["UNIT"] == 4) {
-          my_data[i]["Results_text"] =
-            moment.unix(my_data[i]["Results_float"]).format("hh:mm:ss,SS") + strPost;
-        } else {
-          my_data[i]["Results_text"] = my_data[i]["Results"] + strPost;
-        }
+        my_data[i]["Results_text"] = my_data[i]["Results"] + strPost;
+
+
+        //if (this.event_info["UNIT"] == 3) {
+        //  my_data[i]["Results_text"] =
+        //    moment.unix(my_data[i]["Results_float"]).format("mm:ss,SS") + strPost;
+        //  //my_data[i]["Results"] = my_data[i]["Results"] * 10000; // Convert to ms for highcharts
+        //} else if (this.event_info["UNIT"] == 4) {
+        //  my_data[i]["Results_text"] =
+        //    moment.unix(my_data[i]["Results_float"]).format("hh:mm:ss,SS") + strPost;
+        //} else {
+        //  my_data[i]["Results_text"] = my_data[i]["Results"] + strPost;
+        //}
       }
 
       return my_data;
