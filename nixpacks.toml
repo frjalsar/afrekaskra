@@ -1,1 +1,1 @@
-providers = ["...", "Python", "Staticfile"]
+providers = ["...", "python", "staticfile"]
