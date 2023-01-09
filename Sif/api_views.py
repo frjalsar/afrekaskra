@@ -100,7 +100,7 @@ def Get_Top_100(request, Event_id, IndoorOutDoor, Gender, Year, AgeStart, AgeEnd
     Top_list, Event_Info = data.Top_100_List(Event_id=Event_id, Year=Year, IndoorOutDoor=IndoorOutDoor, Gender=Gender, AgeStart=AgeStart, AgeEnd=AgeEnd, Legal=Legal, ISL=ISL, BestByAth=BestByAth)
     return JsonResponse({'TopList': Top_list, 'EventInfo': Event_Info}, safe=False)
 
-@cache_page(60 * 60 * 0)
+@cache_page(60 * 60 * 12)
 def Get_Top_List(request):
     Top_list_Women, Top_list_Men = data.Top_List()
     return JsonResponse({'Women': Top_list_Women, 'Men': Top_list_Men}, safe=False)
