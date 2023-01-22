@@ -2,6 +2,7 @@ providers = ["...", "python"]
 
 [phases.setup]
 nixPkgs = ['...', 'nginx']
+aptPkgs = ['...', 'tdsodbc']
 
 [phases.build]
 cmd = ['npm run build', 'pip install -r requirements.txt', 'cp config/nginx.conf /etc/nginx/']
