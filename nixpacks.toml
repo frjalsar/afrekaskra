@@ -1,7 +1,7 @@
 providers = ["...", "python"]
 
 [phases.setup]
-aptPkgs = ['...', 'tdsodbc']
+aptPkgs = ['...', 'tdsodbc', 'unixodbc-dev']
 nixPkgs = ['...', 'nginx']
 
 [phases.build]
