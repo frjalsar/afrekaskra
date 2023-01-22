@@ -7,4 +7,4 @@ nixPkgs = ['...', 'nginx']
 cmd = ['npm run build', 'pip install -r requirements.txt', 'cp config/nginx.conf.erb /etc/nginx/']
 
 [start]
-cmd = '/bin/nginx gunicorn -c /app/config/gunicorn.conf.py Sif.wsgi'
+cmd = 'nginx gunicorn -c /app/config/gunicorn.conf.py Sif.wsgi'
