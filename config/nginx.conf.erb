@@ -32,7 +32,7 @@ http {
 
 	server {
 		listen <%= ENV["PORT"] %>;
-		server_name sif.fri.is sif-dev.herokuapp.com;
+		server_name sif.fri.is sif-dev.herokuapp.com momentous-stem-production.up.railway.app;
 		keepalive_timeout 5;
 		port_in_redirect off; # Internally on Heroku we have a diffrent port
 
@@ -115,7 +115,7 @@ http {
 	# Redirect other domains to sif.fri.is
 	server {
 		listen <%= ENV["PORT"] %>;
-		server_name afrek.fri.is afrekaskra.fri.is fri-afrekaskra.herokuapp.com;
+		server_name afrek.fri.is afrekaskra.fri.is fri-afrekaskra.herokuapp.com momentous-stem-production.up.railway.app;
 
 		return 301 $scheme://sif.fri.is$request_uri;
 	}
