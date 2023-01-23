@@ -8,4 +8,4 @@ nixPkgs = ['...', 'nginx']
 cmd = ['npm run build', 'pip install -r requirements.txt', 'cp config/nginx.conf /etc/nginx/']
 
 [start]
-cmd = '(echo "Stuff"); (find / -name "libodbc.so.2"); (echo "Setting LD_LIBRARY_PATH"); (export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu/"); (echo $LD_LIBRARY_PATH); (echo "Starting gunicorn"); (gunicorn -c /app/config/gunicorn.conf.py Sif.wsgi &); (sleep 2); (echo "Starting nginx"); nginx -c /app/config/nginx.conf'
+cmd = '(echo "Stuff"); (find / -name "libodbc.so.2"); (echo "Setting LD_LIBRARY_PATH"); (export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu/"); (echo $LD_LIBRARY_PATH); (echo "Starting gunicorn"); (export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu/" && gunicorn -c /app/config/gunicorn.conf.py Sif.wsgi &); (sleep 2); (echo "Starting nginx"); nginx -c /app/config/nginx.conf'
