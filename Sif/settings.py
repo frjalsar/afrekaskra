@@ -95,7 +95,7 @@ DATABASES = {
         'USER': os.environ['SIF_DB_USER'],
         'PASSWORD': os.environ['SIF_DB_PASSWORD'],
         'OPTIONS': {
-            'driver': 'FreeTDS' ,#os.path.join(BASE_DIR, '.apt/usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so'), # The driver is installed on Heroku using the Aptfile into this path.
+            'driver': '/usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so', # The driver is installed on Heroku using the Aptfile into this path.
             'host_is_server': True,
         },
     },
