@@ -2,10 +2,10 @@ providers = ["...", "python"]
 
 [phases.setup]
 aptPkgs = ['...', 'tdsodbc', 'unixodbc-dev', 'libodbc1', 'unixodbc-common']
-nixPkgs = ['...', 'nginx', 'unixODBC']
+nixPkgs = ['...', 'nginx', 'unixODBC', 'unixODBCDrivers.mysql', 'unixODBCDrivers.msodbcsql17']
 
 [phases.build]
 cmd = ['npm run build', 'pip install -r requirements.txt', 'cp config/nginx.conf /etc/nginx/']
 
 [start]
-cmd = '(echo "Stuff"); (find . -name "libodbc.so.2"); (echo "more stuff"); (ls -R); (echo "Starting gunicorn"); (gunicorn -c /app/config/gunicorn.conf.py Sif.wsgi &); (sleep 2); (echo "Starting nginx"); nginx -c /app/config/nginx.conf'
+cmd = '(echo "Stuff"); (find / -name "libodbc.so.2"); (echo "Starting gunicorn"); (gunicorn -c /app/config/gunicorn.conf.py Sif.wsgi &); (sleep 2); (echo "Starting nginx"); nginx -c /app/config/nginx.conf'
