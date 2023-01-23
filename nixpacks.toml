@@ -2,7 +2,7 @@ providers = ["...", "python"]
 
 [phases.setup]
 aptPkgs = ['...', 'tdsodbc', 'unixodbc-dev', 'libodbc1', 'unixodbc-common']
-nixPkgs = ['...', 'nginx', 'unixODBC', 'unixODBCDrivers.mysql']
+nixPkgs = ['...', 'nginx', 'unixODBCDrivers.mysql']
 
 [phases.build]
 cmd = ['npm run build', 'pip install -r requirements.txt', 'cp config/nginx.conf /etc/nginx/']
