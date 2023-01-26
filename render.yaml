@@ -1,0 +1,15 @@
+services:
+  - name: Sif-npm
+    type: web
+    env: node
+
+  - type: web
+    name: Sif-Django
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn mysite.wsgi:application"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
