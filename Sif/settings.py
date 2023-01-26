@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import django_heroku
+#import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -34,7 +34,7 @@ else:
 
 #APPEND_SLASH = False
 
-ALLOWED_HOSTS = [] # The django_heroku package takes care of this.
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -95,7 +95,7 @@ DATABASES = {
         'USER': os.environ['SIF_DB_USER'],
         'PASSWORD': os.environ['SIF_DB_PASSWORD'],
         'OPTIONS': {
-            'driver': os.path.join(BASE_DIR, '.apt/usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so'), # The driver is installed on Heroku using the Aptfile into this path.
+            'driver': '/usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so', # The driver is installed on Heroku using the Aptfile into this path.
             'host_is_server': True,
         },
     },
@@ -212,7 +212,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-#STATIC_URL = '/staticfiles/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
@@ -221,4 +221,4 @@ STATICFILES_DIRS = (
 #STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Activate Django-Heroku. We have our own database settings and we set the private key ourselves.
-django_heroku.settings(locals(), databases=False, secret_key=False, logging=False)
+#django_heroku.settings(locals(), databases=False, secret_key=False, logging=False)
