@@ -218,7 +218,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Activate Django-Heroku. We have our own database settings and we set the private key ourselves.
 #django_heroku.settings(locals(), databases=False, secret_key=False, logging=False)
