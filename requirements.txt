@@ -2,13 +2,13 @@ asgiref==3.6.0
 autopep8==2.0.1
 Babel==2.11.0
 dj-database-url==1.2.0
-Django==4.1.5
+Django==4.1.7
 django-bmemcached==0.3.0
 django-heroku==0.3.1
-greenlet==2.0.1
+greenlet==2.0.2
 gunicorn==20.1.0
 mssql-django==1.2
-numpy==1.24.1
+numpy==1.24.2
 pandas==1.5.3
 Pillow==9.4.0
 psycopg2==2.9.5

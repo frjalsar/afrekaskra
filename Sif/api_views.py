@@ -163,17 +163,17 @@ def record_birthdays(request):
     Records = records.Get_Records_Birthdays()
     return JsonResponse(Records, safe=False)
 
-@cache_page(60 * 60 * 12)
+@cache_page(60 * 60 * 0)
 def national_records_all(request):
     df = records.Get_All_National_Records()
     return df
 
-@cache_page(60 * 60 * 24 * 7)
+@cache_page(60 * 60 * 0)
 def national_records_masters(request):
     df = records.Get_All_Master_Records()
     return df
 
-@cache_page(60 * 60 * 12)
+@cache_page(60 * 60 * 0)
 def national_records(request):
     #df_records = national_records_all(request)
     df_records = records.Get_All_National_Records()
@@ -206,7 +206,7 @@ def national_records(request):
 
     return JsonResponse(List_of_Records, safe=False)
 
-@cache_page(60 * 60 * 24)
+@cache_page(60 * 60 * 0)
 def national_records_masters(request):
     #df_records = national_records_all(request)
     #df_records = records.Get_All_National_Records()

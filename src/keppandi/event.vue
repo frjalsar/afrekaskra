@@ -136,7 +136,7 @@
                 Ef mældur er vindur í greininni er hægt að
                 velja að taka líka með ólöglegan árangur með því að smella á
                 "Allir árangrar" undir grafinu. Á símum er best að skoða grafið
-                í lóðréttum ham.&nbsp;&nbsp;<i
+                í láréttum ham.&nbsp;&nbsp;<i
                   class="fas fa-mobile-alt fa-rotate-270"
                 ></i>
               </p>
@@ -156,7 +156,7 @@
             >
               <p>
                 Grafið sýnir alla árangra í greininni í tímaröð. Á símum er
-                best að skoða grafið í lóðréttum ham.&nbsp;&nbsp;<i
+                best að skoða grafið í láréttum ham.&nbsp;&nbsp;<i
                   class="fas fa-mobile-alt fa-rotate-270"
                 ></i>
               </p>
@@ -177,7 +177,7 @@
             >
               <p>
                 Grafið sýnir bætingar á löglegum árangri í greininni. Á símum er
-                best að skoða grafið í lóðréttum ham.&nbsp;&nbsp;<i
+                best að skoða grafið í láréttum ham.&nbsp;&nbsp;<i
                   class="fas fa-mobile-alt fa-rotate-270"
                 ></i>
               </p>
