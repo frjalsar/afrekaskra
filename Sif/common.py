@@ -130,7 +130,11 @@ def results_to_str(in_float, Units, ElectricTiming, distance):
         return '{:.0f}'.format(in_float)
         
     else:
-        raise ValueError
+        print('Error')
+        print(in_float)
+        print(Units)
+        return '{:.2f}'.format(in_float)
+        #raise ValueError
 
 def wind_to_str(in_float, inout=None, hasWind=True):
     if (inout == 1):
