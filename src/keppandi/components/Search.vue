@@ -104,7 +104,7 @@ export default {
       if (this.searchQ.length >= 3) {
         this.search();
       }
-    }, 2500),
+    }, 2250),
     //     searchInput: function(e) {
     //       this.searchQ = e.target && e.target.value
     //   // Only search on 3
