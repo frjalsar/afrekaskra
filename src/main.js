@@ -36,7 +36,8 @@ Vue.mixin({
 })
 
 Vue.use(VueGtag, {
-  config: { id: "G-ZHPYDECZRM" }
+  //config: { id: "G-ZHPYDECZRM" }
+  config: {id: "G-YPHLKPVRX2"}
 }, router);
 
 new Vue({
