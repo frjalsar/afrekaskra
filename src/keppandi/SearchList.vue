@@ -114,6 +114,12 @@ export default {
     onClick(item) {
       this.$router.push("/keppandi/" + item.CompetitorCode);
     },
+    created() {
+      var parameters = this.$route.query;
+      if ("CompetitorCode" in parameters) {
+        this.$router.push("/keppandi/" + this.$route.query.y);
+      }
+    },
     search() {
       var url = this.global_API_URL + "/api/competitor";
       this.busy = true;
