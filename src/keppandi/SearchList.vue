@@ -83,6 +83,12 @@ export default {
       return this.$route.query;
     },
   },
+  created() {
+    var parameters = this.$route.query;
+    if ("CompetitorCode" in parameters) {
+      this.$router.push("/keppandi/" + this.$route.query.CompetitorCode);
+    }
+  },
   mounted() {
     var url = this.global_API_URL + "/api/clubs";
     this.search();
@@ -113,12 +119,6 @@ export default {
     },
     onClick(item) {
       this.$router.push("/keppandi/" + item.CompetitorCode);
-    },
-    created() {
-      var parameters = this.$route.query;
-      if ("CompetitorCode" in parameters) {
-        this.$router.push("/keppandi/" + this.$route.query.CompetitorCode);
-      }
     },
     search() {
       var url = this.global_API_URL + "/api/competitor";
