@@ -117,7 +117,7 @@ export default {
     created() {
       var parameters = this.$route.query;
       if ("CompetitorCode" in parameters) {
-        this.$router.push("/keppandi/" + this.$route.query.y);
+        this.$router.push("/keppandi/" + this.$route.query.CompetitorCode);
       }
     },
     search() {
