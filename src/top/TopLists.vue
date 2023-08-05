@@ -283,6 +283,8 @@
             </div>
           </div>
         </div>
+        From: <input type="date" id="fromDate" name="fromDate" placeholder="dd-mm-yyyy" value="2018-07-22" min="2018-01-01" max="2018-12-31">
+        To: <input type="date" id="toDate" name="toDate" placeholder="dd-mm-yyyy" value="2018-07-22" min="2018-01-01" max="2018-12-31">
         <!-- Outdoor = 0, Indoor = 1 -->
         <div class="row">
           <div class="col">
