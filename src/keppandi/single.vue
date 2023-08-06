@@ -25,12 +25,12 @@
           v-bind:src="'/api/img/action/' + competitorID"
         />
         <div class="topleft">
-          <h2 style="font-size: 3.0vw">
-            <b
-              >{{ competitor_info.FirstName }} {{ competitor_info.LastName }}</b
+          <h2 style="font-family: 'Beausite Classic Semibold', Sans-serif; font-size: 3.0vw">
+            <span style="font-feature-settings: 'ss05' on, 'ss12' on;"
+              >{{ competitor_info.FirstName }} {{ competitor_info.LastName }}</span
             >
           </h2>
-          <h5 style="font-size: 2.25vw">
+          <h5 style="font-family: 'Beausite Classic Regular', Sans-serif; font-size: 2.25vw;">
             {{ competitor_info.Club }} -
             <i
               class="fas"
