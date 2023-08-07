@@ -32,7 +32,7 @@ def Get_Competitor_Info(CompetitorCode):
                            'LastName': q.nafn.split(' ', 1)[-1],
                            'YOB': q.fæðingarár,
                            'Club': q.félag,
-                           'Sex': q.kyn
+                           'Sex': q.kyn # 1 = Men, 2 = Women
                            }
     except AthlCompetitors.DoesNotExist:
         raise Http404('Gat ekki fundið keppanda.')

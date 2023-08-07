@@ -12,6 +12,7 @@ from Sif import settings
 from babel.dates import format_date, format_datetime, format_time
 from Sif import common
 from Sif import events
+from Sif import competitor
 import datetime as dt
 from dateutil.relativedelta import *
 import pandas as pd
@@ -133,6 +134,8 @@ def Get_Records_Birthdays():
 def Get_Competitor_Records(CompetitorCode):
     #q = AthlMetaskrFr.objects.all().filter(methafi__iexact=CompetitorCode).order_by('aldursflokkur_frí', 'dagsetning_mets')
 
+    Competitor_info = competitor.Get_Competitor_Info(CompetitorCode)
+
     now = dt.datetime.now()
     df = pd.read_sql_query("EXEC CompetitorsRecords @CompetitorNo = '{:d}', @YearFrom = 1800, @YearTo = {:d}, @OutdoorsIndoorsFilter = '%'".format(CompetitorCode, now.year), connection)
     df['AchievementDate'] = pd.to_datetime(df['AchievementDate'], yearfirst=True)
@@ -181,50 +184,50 @@ def Get_Competitor_Records(CompetitorCode):
 
         record_list.append(record_info)
 
-    # Ná í 30+ met
-    # Það þarf að kalla á SQL procedure fyrir hvort kyn og fyrir innan og utan hús.
-    # ToDo: Fletta upp keppanda og athuga hvort hann sé 30+ og kyn
-    df_men_in = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 1, @KarlarKonur = 1, @SelectedCompetitorCode = {:d}".format(CompetitorCode), connection)
-    df_men_out = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 0, @KarlarKonur = 1, @SelectedCompetitorCode = {:d}".format(CompetitorCode), connection)
+        
+    # Athuga hvort keppandi sé 30+ og hvort það þurfi að sækja 30+ met
+    if (dt.datetime.now().year - Competitor_info['YOB']  >= 30):
+        # Ná í 30+ met
+        # Það þarf að kalla á SQL procedure fyrir kyn og fyrir innan og utan hús.
+        # ToDo: Fletta upp keppanda og athuga hvort hann sé 30+ og kyn
+        df_master_in = pd.read_sql_query("EXEC OldungametKeppanda @CompetitorCode = {:d}, @OutdoorsIndoors = 1, @Gendr = {:d}".format(CompetitorCode, Competitor_info['Sex']), connection)
+        df_master_out = pd.read_sql_query("EXEC OldungametKeppanda @CompetitorCode = {:d}, @OutdoorsIndoors = 0, @Gendr = {:d}".format(CompetitorCode, Competitor_info['Sex']), connection)
+        
+        df_master = pd.concat([df_master_in, df_master_out])
+        df_master['Dags'] = pd.to_datetime(df_master['Dags'], yearfirst=True)
 
-    df_women_in = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 1, @KarlarKonur = 2, @SelectedCompetitorCode = {:d}".format(CompetitorCode), connection)
-    df_women_out = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 0, @KarlarKonur = 2, @SelectedCompetitorCode = {:d}".format(CompetitorCode), connection)
-    
-    df_master = pd.concat([df_men_in, df_men_out, df_women_in, df_women_out])
-    df_master['Dags'] = pd.to_datetime(df_master['Dags'], yearfirst=True)
+        for index, row in df_master.iterrows():
+            inout = row['ÚtiInni']
+            wind_str = row['Vindur']
+            results_str = row['Árang']
+            results = common.results_to_float(results_str.replace(',', '.'))
+            date_str = format_date(row['Dags'].date(), "d MMM yyyy", locale='is_IS').upper()
+            if (row['HeitiGr'] == None): # Vantar HeitiGreinar á sum íslandsmet í töflunni. ÞARF AÐ LAGA
+                continue
+            event_info = events.Get_Event_Info_by_Name(row['HeitiGr'])
+            EventShorterName = row['HeitiGr'].replace('metra', 'm').replace('boðhlaup', 'bh.').replace('hlaup', '').replace('grind', 'gr.').replace('atrennu', 'atr.')
+            event = EventShorterName
+            units = event_info['UNIT']
+            units_symbol = event_info['UNIT_SYMBOL']
+            active = True
+            age = row['Aldur keppanda']
+            agegroup = row['Aldursflokkuröldunga']
+            club = row['Félag']
 
-    for index, row in df_master.iterrows():
-        inout = row['ÚtiInni']
-        wind_str = row['Vindur']
-        results_str = row['Árang']
-        results = common.results_to_float(results_str.replace(',', '.'))
-        date_str = format_date(row['Dags'].date(), "d MMM yyyy", locale='is_IS').upper()
-        if (row['HeitiGr'] == None): # Vantar HeitiGreinar á sum íslandsmet í töflunni. ÞARF AÐ LAGA
-            continue
-        event_info = events.Get_Event_Info_by_Name(row['HeitiGr'])
-        EventShorterName = row['HeitiGr'].replace('metra', 'm').replace('boðhlaup', 'bh.').replace('hlaup', '').replace('grind', 'gr.').replace('atrennu', 'atr.')
-        event = EventShorterName
-        units = event_info['UNIT']
-        units_symbol = event_info['UNIT_SYMBOL']
-        active = True
-        age = row['Aldur keppanda']
-        agegroup = row['Aldursflokkuröldunga']
-        club = row['Félag']
+            record_info = {'Event': event,
+                        'Club': club,
+                        'Inout': inout,
+                        'AgeGroup': agegroup,
+                        'Age': age,
+                        'isActive': active,
+                        'Date': date_str,
+                        'Results': results,
+                        'Results_str': results_str,
+                        'Wind': wind_str,
+                        'Units': units,
+                        'Units_symbol': units_symbol
+                        }
 
-        record_info = {'Event': event,
-                       'Club': club,
-                       'Inout': inout,
-                       'AgeGroup': agegroup,
-                       'Age': age,
-                       'isActive': active,
-                       'Date': date_str,
-                       'Results': results,
-                       'Results_str': results_str,
-                       'Wind': wind_str,
-                       'Units': units,
-                       'Units_symbol': units_symbol
-                      }
-
-        record_list.append(record_info)
+            record_list.append(record_info)
 
     return record_list
