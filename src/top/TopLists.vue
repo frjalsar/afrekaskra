@@ -167,12 +167,14 @@
                     v-on:click="toogle_sex($event, 2)"
                     class="dropdown-item"
                     id="1"
+                    v-bind:class="{ active: gender === 2 }"
                     >Konur</a
                   >
                   <a
                     v-on:click="toogle_sex($event, 1)"
                     class="dropdown-item"
                     id="2"
+                    v-bind:class="{ active: gender === 1 }"
                     >Karlar</a
                   >
                 </div>
