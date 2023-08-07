@@ -445,7 +445,7 @@ export default {
       isLegalActive: true,
       isISLActive: true,
 
-      event_id: 179, // Event_id
+      event_id: 143, // Event_id
       event_type: 1, //Jumps = 1, Throws = 2, Sprint = 3, Hurdles = 4, Middle = 5, Long = 6, -athlon = 7
       outin: 2, // Outdoor = 0, Indoor = 1
       gender: 2, // Women = 2, Men = 1
