@@ -96,8 +96,8 @@ def competitor_achievements(request, CompetitorCode, Event_id):
     return JsonResponse(Achievements_list, safe=False)
 
 @cache_page(60 * 60 * 0)
-def Get_Top_100(request, Event_id, IndoorOutDoor, Gender, Year, AgeStart, AgeEnd, Legal, ISL, BestByAth):
-    Top_list, Event_Info = data.Top_100_List(Event_id=Event_id, Year=Year, IndoorOutDoor=IndoorOutDoor, Gender=Gender, AgeStart=AgeStart, AgeEnd=AgeEnd, Legal=Legal, ISL=ISL, BestByAth=BestByAth)
+def Get_Top_100(request, Event_id, IndoorOutDoor, Gender, fromDate, toDate, AgeStart, AgeEnd, Legal, ISL, BestByAth):
+    Top_list, Event_Info = data.Top_100_List(Event_id=Event_id, fromDate=fromDate, toDate=toDate, IndoorOutDoor=IndoorOutDoor, Gender=Gender, AgeStart=AgeStart, AgeEnd=AgeEnd, Legal=Legal, ISL=ISL, BestByAth=BestByAth)
     return JsonResponse({'TopList': Top_list, 'EventInfo': Event_Info}, safe=False)
 
 @cache_page(60 * 60 * 12)

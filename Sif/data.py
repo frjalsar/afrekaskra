@@ -199,7 +199,7 @@ def Get_List_of_Achievements(CompetitorCode, Event_id):
 
     return Achievements_list
 
-def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal, ISL, BestByAth, N=100):
+def Top_100_List(Event_id, fromDate, toDate, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal, ISL, BestByAth, N=100):
     # Sumar greinar eru skráðar oftar ein einu sinni í Þór. Í því tilviki notum við bara ThorID 1 til að fletta þeim upp.
     Event_id_double_thorid_1 = [228, 232, 233, # Spjótkast 500 gr
                                 229, 231, # Spjótkast 700 gr
@@ -317,9 +317,11 @@ def Top_100_List(Event_id, Year, IndoorOutDoor, Gender, AgeStart, AgeEnd, Legal,
         q = q.filter(úti_inni=IndoorOutDoor)
 
     # Ef við viljum fá öll gögn þá er Year = 0
-    if (Year > 0):
-        q = q.filter(dagsetning__gte=datetime.datetime(Year, 1, 1, tzinfo=pytz.UTC),
-                     dagsetning__lte=datetime.datetime(Year, 12, 31, tzinfo=pytz.UTC))
+    #if (Year > 0):
+    #    q = q.filter(dagsetning__gte=datetime.datetime(Year, 1, 1, tzinfo=pytz.UTC),
+    #                 dagsetning__lte=datetime.datetime(Year, 12, 31, tzinfo=pytz.UTC))
+    q = q.filter(dagsetning__gte=datetime.datetime.strptime(fromDate, '%Y-%m-%d'),
+                 dagsetning__lte=datetime.datetime.strptime(toDate, '%Y-%m-%d'))
 
     # Öll þjóðerni eða ekki. ISL = 0 þýðir bara íslendingar.
     if (ISL == 0):
@@ -361,12 +363,15 @@ def Top_List():
                     1011, 1021 # Þraut
                     ]
 
+    # Get current year and set fromDate and toDate to cover whole year
     current_year = datetime.datetime.now().year
+    fromDate = datetime.datetime(current_year, 1, 1).strftime('%Y-%m-%d')
+    toDate = datetime.datetime(current_year, 12, 31).strftime('%Y-%m-%d')
     #current_year = 2020
 
     # -- Women
     for event_id, event_t in zip(Women_Events, Event_Type):
-        Top_W, Event_info_W = Top_100_List(event_id, current_year, 2, 2, 0, 99, True, 0, True, 1)
+        Top_W, Event_info_W = Top_100_List(event_id, fromDate, toDate, 2, 2, 0, 99, True, 0, True, 1)
 
         try:
             # if (Top_W[0]['electronic_timing'] == 1):
@@ -389,7 +394,7 @@ def Top_List():
 
     # -- Men
     for event_id, event_t in zip(Men_Events, Event_Type):
-        Top_M, Event_info_M = Top_100_List(event_id, current_year, 2, 1, 0, 99, True, 0, True, 1)
+        Top_M, Event_info_M = Top_100_List(event_id, fromDate, toDate, 2, 1, 0, 99, True, 0, True, 1)
 
         try:
             # if (Top_M[0]['electronic_timing'] == 1):

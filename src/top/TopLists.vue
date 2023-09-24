@@ -180,7 +180,8 @@
                 </div>
               </li>
               <!---->
-              <li class="nav-item dropdown">
+              <!--
+                <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"
                   data-toggle="dropdown"
@@ -209,6 +210,7 @@
                   >
                 </div>
               </li>
+              -->
               <!---->
               <li class="nav-item dropdown">
                 <a
@@ -344,6 +346,38 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col">
+            <div class="row justify-content-center">
+              <div class="col-md-4 col-sm-12 mb-3 text-center">
+                    Dags. frá: <input
+                    type="date"
+                    id="from-datetime"
+                    name="from-datetime"
+                    v-bind:value="fromDate"
+                    v-on:focusout="setFromDate($event)"
+                    min="1900-01-01"
+                    v-bind:max="toMaxDate"
+                  />
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="row justify-content-center">
+              <div class="col-md-4 col-sm-12 mb-3 text-center">
+                    Dags. til: <input
+                    type="date"
+                    id="to-datetime"
+                    name="to-datetime"
+                    v-bind:value="toDate"
+                    v-on:focusout="setToDate($event)"
+                    min="1900-01-01"
+                    v-bind:max="toMaxDate"
+                  />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="card-body">
@@ -452,6 +486,9 @@ export default {
       outin: 2, // Outdoor = 0, Indoor = 1
       gender: 2, // Women = 2, Men = 1
       year: new Date().getFullYear(), // Year
+      fromDate: "2023-01-01",
+      toDate: "2023-12-31",
+      toMaxDate: "2023-12-31",
       year_list: [],
       ageGroup: 0,
       ageStart: 0, // Start age
@@ -623,12 +660,18 @@ export default {
     ageText: function () {
       return this.ageGroups[this.ageGroup].name;
     },
-    yearText: function () {
-      if (this.year === 0) {
-        return "Öll ár";
-      } else {
-        return this.year.toString();
-      }
+    //yearText: function () {
+    //  if (this.year === 0) {
+    //    return "Öll ár";
+    //  } else {
+    //    return this.year.toString();
+    //  }
+    //},
+    fromText: function () {
+      return this.fromDate;
+    },
+    toText: function () {
+      return this.toDate;
     },
     sexText: function () {
       if (this.gender === 1) {
@@ -680,7 +723,7 @@ export default {
         this.sexText +
         " " +
         this.inoutText;
-      " í " + this.ageText + " fyrir " + this.yearText;
+      " í " + this.ageText;
 
       return my_str;
     },
@@ -698,16 +741,27 @@ export default {
     },
   },
   created() {
-    var year_start = 1909;
-    var year_end = this.year;
-    this.year_list = [];
-    while (year_end + 1 > year_start) {
-      this.year_list.push(year_end--);
-    }
+    //var year_start = 1909;
+    //var year_end = this.year;
+    //this.year_list = [];
+
+    this.fromDate = this.year + "-01-01";
+    this.toDate = this.year + "-12-31";
+    this.toMaxDate = this.year + "-12-31";
+    
+    //while (year_end + 1 > year_start) {
+    //  this.year_list.push(year_end--);
+    //}
 
     var parameters = this.$route.query;
-    if ("y" in parameters) {
-      this.year = Number(this.$route.query.y);
+    //if ("y" in parameters) {
+    //  this.year = Number(this.$route.query.y);
+    //}
+    if ("f" in parameters) {
+      this.fromDate = this.$route.query.f;
+    }
+    if ("t" in parameters) {
+      this.toDate = this.$route.query.t;
     }
     if ("a" in parameters) {
       this.ageGroup = Number(this.$route.query.a);
@@ -772,7 +826,9 @@ export default {
         "/" +
         this.gender +
         "/" +
-        this.year +
+        this.fromDate +
+        "/" +
+        this.toDate +
         "/" +
         this.ageStart +
         "/" +
@@ -784,6 +840,7 @@ export default {
         "/" +
         this.bestbyath +
         "/";
+
       axios
         .all([axios.get(url)])
         .then(
@@ -802,13 +859,21 @@ export default {
                 this.inoutText +
                 " í " +
                 this.ageText +
-                " fyrir " +
-                this.yearText +
+                " frá " +
+                this.fromText +
+                " til " +
+                this.toText +
                 " 😟";
             } else {
               this.message = "";
-              if (this.year !== 0) {
-                this.data = this.cut_year(this.data);
+              //if (this.year !== 0) {
+              //  this.data = this.cut_year(this.data);
+              //}
+              // Check if fromDate and toDate have the same year
+              var split_from = this.fromDate.split("-");
+              var split_to = this.toDate.split("-");
+              if (split_from[0] === split_to[0]) {
+                this.data = this.cut_year(this.data); // Cut year from date
               }
               this.data = this.convert_to_timeformat(
                 this.event["Units"],
@@ -910,6 +975,20 @@ export default {
       alert(event.target.id);
       console.log("Hi");
     },
+    setFromDate: function (event) {
+      this.fromDate = event.target.value;
+      this.$router.push({
+        query: { ...this.$route.query, f: this.fromDate, t: this.toDate },
+      });
+      this.get_data(event);
+    },
+    setToDate: function (event) {
+      this.toDate = event.target.value;
+      this.$router.push({
+        query: { ...this.$route.query, f: this.fromDate, t: this.toDate },
+      });
+      this.get_data(event);
+    },
     //Outdoor = 0, Indoor = 1
     //Women = 2, Men = 1 -->
     outinsex_change: function (event, outin, gender) {
@@ -966,13 +1045,13 @@ export default {
       this.$router.push({ query: { ...this.$route.query, b: this.bestbyath } });
       this.get_data(event);
     },
-    year_change: function (event) {
-      this.year = Number(event.target.id);
-      //this.yearText = event.target.textContent
+    //year_change: function (event) {
+    //  this.year = Number(event.target.id);
+    //  //this.yearText = event.target.textContent
 
-      this.$router.push({ query: { ...this.$route.query, y: this.year } });
-      this.get_data(event);
-    },
+    //  this.$router.push({ query: { ...this.$route.query, y: this.year } });
+    //  this.get_data(event);
+    //},
     age_change: function (event) {
       this.ageGroup = Number(event.target.id);
 
