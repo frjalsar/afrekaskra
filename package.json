@@ -37,7 +37,8 @@
     "vue-hot-reload-api": "^2.3.4",
     "vue-meta": "^2.4.0",
     "vue-router": "^3.6.5",
-    "vue-spinner": "^1.0.4"
+    "vue-spinner": "^1.0.4",
+    "vue2-datepicker": "^3.11.1"
   },
   "devDependencies": {
     "@vue/component-compiler-utils": "^3.3.0",

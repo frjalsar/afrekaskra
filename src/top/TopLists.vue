@@ -350,30 +350,30 @@
           <div class="col">
             <div class="row justify-content-center">
               <div class="col-md-4 col-sm-12 mb-3 text-center">
-                    Dags. frá: <input
-                    type="date"
-                    id="from-datetime"
-                    name="from-datetime"
-                    v-bind:value="fromDate"
-                    v-on:focusout="setFromDate($event)"
-                    min="1900-01-01"
-                    v-bind:max="toMaxDate"
-                  />
+                    Dags. frá: 
+                    <date-picker
+                    v-model="fromDate"
+                    valueType="format"
+                    @change="setFromDate"
+                    :editable="false"
+                    :clearable="false"
+                    :shortcuts="shortcutsFromDate"
+                    ></date-picker>
               </div>
             </div>
           </div>
           <div class="col">
             <div class="row justify-content-center">
               <div class="col-md-4 col-sm-12 mb-3 text-center">
-                    Dags. til: <input
-                    type="date"
-                    id="to-datetime"
-                    name="to-datetime"
-                    v-bind:value="toDate"
-                    v-on:focusout="setToDate($event)"
-                    min="1900-01-01"
-                    v-bind:max="toMaxDate"
-                  />
+                    Dags. til: 
+                    <date-picker
+                    v-model="toDate"
+                    valueType="format"
+                    @change="setToDate"
+                    :editable="false"
+                    :clearable="false"
+                    :shortcuts="shortcutsToDate"
+                    ></date-picker>
               </div>
             </div>
           </div>
@@ -459,11 +459,14 @@
 <script>
 import axios from "axios";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
 
 export default {
   name: "TopLists",
   components: {
     PulseLoader,
+    DatePicker,
   },
   data() {
     return {
@@ -496,6 +499,51 @@ export default {
       legal: 1, // Only legal = 1, all = 0
       isl: 0, // Icelandic = 0, Everybody = 1
       bestbyath: 1,
+
+      shortcutsFromDate: [
+        {
+          text: 'Ársbyrjun',
+          onClick() {
+            // Get Jan 1st of current year
+            const date = new Date();
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
+        {
+          text: 'Frá upphafi',
+          onClick() {
+            // Set date to 1900-01-01
+            const date = new Date();
+            date.setFullYear(1900);
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
+      ],
+
+      shortcutsToDate: [
+        {
+          text: 'Í dag',
+          onClick() {
+            const date = new Date();
+            // return a Date
+            return date;
+          },
+        },
+/*         {
+          text: 'Yesterday',
+          onClick() {
+            const date = new Date();
+            date.setTime(date.getTime() - 3600 * 1000 * 24);
+            return date;
+          },
+        }, */
+      ],
 
       events_jump: [
         { id: 143, type: 1, name: "Hástökk" },
@@ -975,19 +1023,19 @@ export default {
       alert(event.target.id);
       console.log("Hi");
     },
-    setFromDate: function (event) {
-      this.fromDate = event.target.value;
+    setFromDate: function (value, type) {
+      this.fromDate = value;
       this.$router.push({
         query: { ...this.$route.query, f: this.fromDate, t: this.toDate },
       });
-      this.get_data(event);
+      this.get_data(null);
     },
-    setToDate: function (event) {
-      this.toDate = event.target.value;
+    setToDate: function (value, type) {
+      this.toDate = value;
       this.$router.push({
         query: { ...this.$route.query, f: this.fromDate, t: this.toDate },
       });
-      this.get_data(event);
+      this.get_data(null);
     },
     //Outdoor = 0, Indoor = 1
     //Women = 2, Men = 1 -->
