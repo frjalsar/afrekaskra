@@ -349,7 +349,7 @@
         <div class="row">
           <div class="col">
             <div class="row justify-content-center">
-              <div class="col-md-4 col-sm-12 mb-3 text-center">
+              <div class="col-md-auto col-sm-12 mb-3 text-center">
                     Dags. frá: 
                     <date-picker
                     v-model="fromDate"
@@ -364,7 +364,7 @@
           </div>
           <div class="col">
             <div class="row justify-content-center">
-              <div class="col-md-4 col-sm-12 mb-3 text-center">
+              <div class="col-md-auto col-sm-12 mb-3 text-center">
                     Dags. til: 
                     <date-picker
                     v-model="toDate"
