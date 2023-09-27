@@ -179,6 +179,40 @@
                   >
                 </div>
               </li>
+              <!-- Dropdown for indoor, outdoor or both select-->
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  data-toggle="dropdown"
+                  role="button"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  >{{ inoutText }}</a
+                >
+                <div class="dropdown-menu" id="outinDropdown">
+                  <a
+                    v-on:click="toogle_innout($event, 1)"
+                    class="dropdown-item"
+                    id="1"
+                    v-bind:class="{ active: outin === 1 }"
+                    >Innanhúss</a
+                  >
+                  <a
+                    v-on:click="toogle_innout($event, 2)"
+                    class="dropdown-item"
+                    id="2"
+                    v-bind:class="{ active: outin === 2 }"
+                    >Innan- og utanhúss</a
+                  >
+                  <a
+                    v-on:click="toogle_innout($event, 0)"
+                    class="dropdown-item"
+                    id="0"
+                    v-bind:class="{ active: outin === 0 }"
+                    >Utanhúss</a
+                  >
+                </div>
+              </li>
               <!---->
               <!--
                 <li class="nav-item dropdown">
@@ -288,7 +322,7 @@
           </div>
         </div>
         <!-- Outdoor = 0, Indoor = 1 -->
-        <div class="row">
+        <!-- <div class="row">
           <div class="col">
             <div class="row justify-content-center">
               <div class="col-md-4 col-sm-12 mb-3 text-center">
@@ -345,7 +379,8 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>-->
+        <!-- Datepickers -->
         <div class="row">
           <div class="col">
             <div class="row justify-content-center">
