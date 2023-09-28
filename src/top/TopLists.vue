@@ -975,11 +975,11 @@ export default {
     },
     inoutText: function () {
       if (this.outin == 1) {
-        return "innanhúss";
+        return "Innanhúss";
       } else if (this.outin == 0) {
-        return "utanhúss";
+        return "Utanhúss";
       } else {
-        return "innan- og utanhúss";
+        return "Innan- og utanhúss";
       }
     },
     eventText: function () {
