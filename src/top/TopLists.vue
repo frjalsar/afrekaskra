@@ -638,6 +638,30 @@ export default {
             return date;
           },
         },
+        {
+          text: (new Date().getFullYear() - 7).toString(),
+          onClick() {
+            // From date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 7);
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 8).toString(),
+          onClick() {
+            // From date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 8);
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
       ],
 
       shortcutsToDate: [
@@ -727,6 +751,30 @@ export default {
             // To date
             const date = new Date();
             date.setFullYear(date.getFullYear() - 6);
+            date.setMonth(11);
+            date.setDate(31);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 7).toString(),
+          onClick() {
+            // To date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 7);
+            date.setMonth(11);
+            date.setDate(31);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 8).toString(),
+          onClick() {
+            // To date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 8);
             date.setMonth(11);
             date.setDate(31);
 
