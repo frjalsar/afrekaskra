@@ -395,6 +395,7 @@
                     :editable="false"
                     :clearable="false"
                     :shortcuts="shortcutsFromDate"
+                    :disabled-date="disabledBefore1900AndAfterThisYear"
                     >
                    <!--<template v-slot:header="{ emit }">
           <button class="mx-btn mx-btn-text" @click="emit(new Date())">{{ yearMinusOne }}</button>
@@ -415,6 +416,7 @@
                     :editable="false"
                     :clearable="false"
                     :shortcuts="shortcutsToDate"
+                    :disabled-date="disabledBefore1900AndAfterThisYear"
                     ></date-picker>
               </div>
             </div>
@@ -1101,6 +1103,30 @@ export default {
   },
   methods: {
     get_data: function (event) {
+      // Check if fromDate is before toDate and set message if so
+      var split_from = this.fromDate.split("-");
+      var split_to = this.toDate.split("-");
+      if (split_from[0] > split_to[0]) {
+        this.message =
+          "Frá-dagsetning getur ekki verið á eftir til-dagsetningu 😟";
+          this.data = [];
+        return;
+      } else if (split_from[0] === split_to[0]) {
+        if (split_from[1] > split_to[1]) {
+          this.message =
+            "Frá-dagsetning getur ekki verið á eftir til-dagsetningu 😟";
+            this.data = [];
+          return;
+        } else if (split_from[1] === split_to[1]) {
+          if (split_from[2] > split_to[2]) {
+            this.message =
+              "Frá-dagsetning getur ekki verið á eftir til-dagsetningu 😟";
+              this.data = [];
+            return;
+          }
+        }
+      }
+
       this.loading = true;
       this.message = "Næ í gögn ekki stökkva langt 😉";
 
@@ -1277,6 +1303,11 @@ export default {
         query: { ...this.$route.query, f: this.fromDate, t: this.toDate },
       });
       this.get_data(null);
+    },
+    disabledBefore1900AndAfterThisYear: function (date) {
+      const year = date.getFullYear();
+      const thisYear = new Date().getFullYear();
+      return year < 1900 || year > thisYear;
     },
     //Outdoor = 0, Indoor = 1
     //Women = 2, Men = 1 -->
