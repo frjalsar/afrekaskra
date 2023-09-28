@@ -385,15 +385,21 @@
           <div class="col">
             <div class="row justify-content-center">
               <div class="col-md-auto col-sm-12 mb-3 text-center">
+                <!--:shortcuts="shortcutsFromDate"-->
                     Dags. frá: 
                     <date-picker
                     v-model="fromDate"
+                    v-bind:value="fromDate"
                     valueType="format"
                     @change="setFromDate"
                     :editable="false"
                     :clearable="false"
                     :shortcuts="shortcutsFromDate"
-                    ></date-picker>
+                    >
+                   <!--<template v-slot:header="{ emit }">
+          <button class="mx-btn mx-btn-text" @click="emit(new Date())">{{ yearMinusOne }}</button>
+        </template>-->
+                  </date-picker>
               </div>
             </div>
           </div>
@@ -403,6 +409,7 @@
                     Dags. til: 
                     <date-picker
                     v-model="toDate"
+                    v-bind:value="toDate"
                     valueType="format"
                     @change="setToDate"
                     :editable="false"
@@ -460,7 +467,7 @@
                   <td class="d-none d-sm-table-cell">{{ competitor.age }}</td>
                   <td class="d-none d-sm-table-cell"><img
                       class="img-club"
-                      v-bind:src="'/api/img/club/' + competitor.club"
+                      v-bind:src="'/api/img/club/' + competitor.club.split('-')[0].split('/')[0]"
                       v-bind:alt="competitor.club"
                     />
                   </td>
@@ -537,6 +544,18 @@ export default {
 
       shortcutsFromDate: [
         {
+          text: 'Frá upphafi',
+          onClick() {
+            // Set date to 1900-01-01
+            const date = new Date();
+            date.setFullYear(1900);
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
+        {
           text: 'Ársbyrjun',
           onClick() {
             // Get Jan 1st of current year
@@ -547,12 +566,72 @@ export default {
             return date;
           },
         },
-        {
-          text: 'Frá upphafi',
+          {
+          text: (new Date().getFullYear() - 1).toString(),
           onClick() {
-            // Set date to 1900-01-01
+            // From date
             const date = new Date();
-            date.setFullYear(1900);
+            date.setFullYear(date.getFullYear() - 1);
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 2).toString(),
+          onClick() {
+            // From date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 2);
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 3).toString(),
+          onClick() {
+            // From date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 3);
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 4).toString(),
+          onClick() {
+            // From date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 4);
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 5).toString(),
+          onClick() {
+            // From date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 5);
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 6).toString(),
+          onClick() {
+            // From date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 6);
             date.setMonth(0);
             date.setDate(1);
 
@@ -570,14 +649,90 @@ export default {
             return date;
           },
         },
-/*         {
-          text: 'Yesterday',
+        {
+          text: "Árslok",
           onClick() {
+            // To date
             const date = new Date();
-            date.setTime(date.getTime() - 3600 * 1000 * 24);
+            date.setFullYear(date.getFullYear() - 0);
+            date.setMonth(11);
+            date.setDate(31);
+
             return date;
           },
-        }, */
+        },
+        {
+          text: (new Date().getFullYear() - 1).toString(),
+          onClick() {
+            // To date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 1);
+            date.setMonth(11);
+            date.setDate(31);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 2).toString(),
+          onClick() {
+            // To date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 2);
+            date.setMonth(11);
+            date.setDate(31);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 3).toString(),
+          onClick() {
+            // To date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 3);
+            date.setMonth(11);
+            date.setDate(31);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 4).toString(),
+          onClick() {
+            // To date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 4);
+            date.setMonth(11);
+            date.setDate(31);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 5).toString(),
+          onClick() {
+            // To date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 5);
+            date.setMonth(11);
+            date.setDate(31);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 6).toString(),
+          onClick() {
+            // To date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 6);
+            date.setMonth(11);
+            date.setDate(31);
+
+            return date;
+          },
+        },
       ],
 
       events_jump: [
@@ -739,6 +894,9 @@ export default {
     testPar: function () {
       //return 'Hello'
       return this.$route.params.test;
+    },
+    yearMinusOne: function () {
+      return (this.year - 1).toString();
     },
     ageText: function () {
       return this.ageGroups[this.ageGroup].name;
