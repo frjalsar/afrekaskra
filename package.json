@@ -25,7 +25,7 @@
   "homepage": "https://github.com/frjalsar/afrekaskra#readme",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.2",
-    "axios": "^1.5.0",
+    "axios": "^1.5.1",
     "axis": "^1.0.0",
     "highcharts": "^11.1.0",
     "highcharts-vue": "^1.4.3",
@@ -37,7 +37,8 @@
     "vue-hot-reload-api": "^2.3.4",
     "vue-meta": "^2.4.0",
     "vue-router": "^3.6.5",
-    "vue-spinner": "^1.0.4"
+    "vue-spinner": "^1.0.4",
+    "vue2-datepicker": "^3.11.1"
   },
   "devDependencies": {
     "@vue/component-compiler-utils": "^3.3.0",

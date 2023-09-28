@@ -179,8 +179,43 @@
                   >
                 </div>
               </li>
-              <!---->
+              <!-- Dropdown for indoor, outdoor or both select-->
               <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  data-toggle="dropdown"
+                  role="button"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  >{{ inoutText }}</a
+                >
+                <div class="dropdown-menu" id="outinDropdown">
+                  <a
+                    v-on:click="toogle_innout($event, 1)"
+                    class="dropdown-item"
+                    id="1"
+                    v-bind:class="{ active: outin === 1 }"
+                    >Innanhúss</a
+                  >
+                  <a
+                    v-on:click="toogle_innout($event, 2)"
+                    class="dropdown-item"
+                    id="2"
+                    v-bind:class="{ active: outin === 2 }"
+                    >Innan- og utanhúss</a
+                  >
+                  <a
+                    v-on:click="toogle_innout($event, 0)"
+                    class="dropdown-item"
+                    id="0"
+                    v-bind:class="{ active: outin === 0 }"
+                    >Utanhúss</a
+                  >
+                </div>
+              </li>
+              <!---->
+              <!--
+                <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"
                   data-toggle="dropdown"
@@ -209,6 +244,7 @@
                   >
                 </div>
               </li>
+              -->
               <!---->
               <li class="nav-item dropdown">
                 <a
@@ -286,7 +322,7 @@
           </div>
         </div>
         <!-- Outdoor = 0, Indoor = 1 -->
-        <div class="row">
+        <!-- <div class="row">
           <div class="col">
             <div class="row justify-content-center">
               <div class="col-md-4 col-sm-12 mb-3 text-center">
@@ -343,6 +379,48 @@
               </div>
             </div>
           </div>
+        </div>-->
+        <!-- Datepickers -->
+        <div class="row">
+          <div class="col">
+            <div class="row justify-content-center">
+              <div class="col-md-auto col-sm-12 mb-3 text-center">
+                <!--:shortcuts="shortcutsFromDate"-->
+                    Dags. frá: 
+                    <date-picker
+                    v-model="fromDate"
+                    v-bind:value="fromDate"
+                    valueType="format"
+                    @change="setFromDate"
+                    :editable="false"
+                    :clearable="false"
+                    :shortcuts="shortcutsFromDate"
+                    :disabled-date="disabledBefore1900AndAfterThisYear"
+                    >
+                   <!--<template v-slot:header="{ emit }">
+          <button class="mx-btn mx-btn-text" @click="emit(new Date())">{{ yearMinusOne }}</button>
+        </template>-->
+                  </date-picker>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="row justify-content-center">
+              <div class="col-md-auto col-sm-12 mb-3 text-center">
+                    Dags. til: 
+                    <date-picker
+                    v-model="toDate"
+                    v-bind:value="toDate"
+                    valueType="format"
+                    @change="setToDate"
+                    :editable="false"
+                    :clearable="false"
+                    :shortcuts="shortcutsToDate"
+                    :disabled-date="disabledBefore1900AndAfterThisYear"
+                    ></date-picker>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -391,7 +469,7 @@
                   <td class="d-none d-sm-table-cell">{{ competitor.age }}</td>
                   <td class="d-none d-sm-table-cell"><img
                       class="img-club"
-                      v-bind:src="'/api/img/club/' + competitor.club"
+                      v-bind:src="'/api/img/club/' + competitor.club.split('-')[0].split('/')[0]"
                       v-bind:alt="competitor.club"
                     />
                   </td>
@@ -425,11 +503,14 @@
 <script>
 import axios from "axios";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
 
 export default {
   name: "TopLists",
   components: {
     PulseLoader,
+    DatePicker,
   },
   data() {
     return {
@@ -452,6 +533,9 @@ export default {
       outin: 2, // Outdoor = 0, Indoor = 1
       gender: 2, // Women = 2, Men = 1
       year: new Date().getFullYear(), // Year
+      fromDate: "2023-01-01",
+      toDate: "2023-12-31",
+      toMaxDate: "2023-12-31",
       year_list: [],
       ageGroup: 0,
       ageStart: 0, // Start age
@@ -459,6 +543,247 @@ export default {
       legal: 1, // Only legal = 1, all = 0
       isl: 0, // Icelandic = 0, Everybody = 1
       bestbyath: 1,
+
+      shortcutsFromDate: [
+        {
+          text: 'Frá upphafi',
+          onClick() {
+            // Set date to 1900-01-01
+            const date = new Date();
+            date.setFullYear(1900);
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
+        {
+          text: 'Ársbyrjun',
+          onClick() {
+            // Get Jan 1st of current year
+            const date = new Date();
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
+          {
+          text: (new Date().getFullYear() - 1).toString(),
+          onClick() {
+            // From date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 1);
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 2).toString(),
+          onClick() {
+            // From date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 2);
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 3).toString(),
+          onClick() {
+            // From date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 3);
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 4).toString(),
+          onClick() {
+            // From date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 4);
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 5).toString(),
+          onClick() {
+            // From date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 5);
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 6).toString(),
+          onClick() {
+            // From date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 6);
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 7).toString(),
+          onClick() {
+            // From date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 7);
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 8).toString(),
+          onClick() {
+            // From date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 8);
+            date.setMonth(0);
+            date.setDate(1);
+
+            return date;
+          },
+        },
+      ],
+
+      shortcutsToDate: [
+        {
+          text: 'Í dag',
+          onClick() {
+            const date = new Date();
+            // return a Date
+            return date;
+          },
+        },
+        {
+          text: "Árslok",
+          onClick() {
+            // To date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 0);
+            date.setMonth(11);
+            date.setDate(31);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 1).toString(),
+          onClick() {
+            // To date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 1);
+            date.setMonth(11);
+            date.setDate(31);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 2).toString(),
+          onClick() {
+            // To date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 2);
+            date.setMonth(11);
+            date.setDate(31);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 3).toString(),
+          onClick() {
+            // To date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 3);
+            date.setMonth(11);
+            date.setDate(31);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 4).toString(),
+          onClick() {
+            // To date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 4);
+            date.setMonth(11);
+            date.setDate(31);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 5).toString(),
+          onClick() {
+            // To date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 5);
+            date.setMonth(11);
+            date.setDate(31);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 6).toString(),
+          onClick() {
+            // To date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 6);
+            date.setMonth(11);
+            date.setDate(31);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 7).toString(),
+          onClick() {
+            // To date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 7);
+            date.setMonth(11);
+            date.setDate(31);
+
+            return date;
+          },
+        },
+        {
+          text: (new Date().getFullYear() - 8).toString(),
+          onClick() {
+            // To date
+            const date = new Date();
+            date.setFullYear(date.getFullYear() - 8);
+            date.setMonth(11);
+            date.setDate(31);
+
+            return date;
+          },
+        },
+      ],
 
       events_jump: [
         { id: 143, type: 1, name: "Hástökk" },
@@ -620,15 +945,24 @@ export default {
       //return 'Hello'
       return this.$route.params.test;
     },
+    yearMinusOne: function () {
+      return (this.year - 1).toString();
+    },
     ageText: function () {
       return this.ageGroups[this.ageGroup].name;
     },
-    yearText: function () {
-      if (this.year === 0) {
-        return "Öll ár";
-      } else {
-        return this.year.toString();
-      }
+    //yearText: function () {
+    //  if (this.year === 0) {
+    //    return "Öll ár";
+    //  } else {
+    //    return this.year.toString();
+    //  }
+    //},
+    fromText: function () {
+      return this.fromDate;
+    },
+    toText: function () {
+      return this.toDate;
     },
     sexText: function () {
       if (this.gender === 1) {
@@ -641,11 +975,11 @@ export default {
     },
     inoutText: function () {
       if (this.outin == 1) {
-        return "innanhúss";
+        return "Innanhúss";
       } else if (this.outin == 0) {
-        return "utanhúss";
+        return "Utanhúss";
       } else {
-        return "innan- og utanhúss";
+        return "Innan- og utanhúss";
       }
     },
     eventText: function () {
@@ -680,7 +1014,7 @@ export default {
         this.sexText +
         " " +
         this.inoutText;
-      " í " + this.ageText + " fyrir " + this.yearText;
+      " í " + this.ageText;
 
       return my_str;
     },
@@ -698,16 +1032,27 @@ export default {
     },
   },
   created() {
-    var year_start = 1909;
-    var year_end = this.year;
-    this.year_list = [];
-    while (year_end + 1 > year_start) {
-      this.year_list.push(year_end--);
-    }
+    //var year_start = 1909;
+    //var year_end = this.year;
+    //this.year_list = [];
+
+    this.fromDate = this.year + "-01-01";
+    this.toDate = this.year + "-12-31";
+    this.toMaxDate = this.year + "-12-31";
+    
+    //while (year_end + 1 > year_start) {
+    //  this.year_list.push(year_end--);
+    //}
 
     var parameters = this.$route.query;
-    if ("y" in parameters) {
-      this.year = Number(this.$route.query.y);
+    //if ("y" in parameters) {
+    //  this.year = Number(this.$route.query.y);
+    //}
+    if ("f" in parameters) {
+      this.fromDate = this.$route.query.f;
+    }
+    if ("t" in parameters) {
+      this.toDate = this.$route.query.t;
     }
     if ("a" in parameters) {
       this.ageGroup = Number(this.$route.query.a);
@@ -758,6 +1103,30 @@ export default {
   },
   methods: {
     get_data: function (event) {
+      // Check if fromDate is before toDate and set message if so
+      var split_from = this.fromDate.split("-");
+      var split_to = this.toDate.split("-");
+      if (split_from[0] > split_to[0]) {
+        this.message =
+          "Frá-dagsetning getur ekki verið á eftir til-dagsetningu 😟";
+          this.data = [];
+        return;
+      } else if (split_from[0] === split_to[0]) {
+        if (split_from[1] > split_to[1]) {
+          this.message =
+            "Frá-dagsetning getur ekki verið á eftir til-dagsetningu 😟";
+            this.data = [];
+          return;
+        } else if (split_from[1] === split_to[1]) {
+          if (split_from[2] > split_to[2]) {
+            this.message =
+              "Frá-dagsetning getur ekki verið á eftir til-dagsetningu 😟";
+              this.data = [];
+            return;
+          }
+        }
+      }
+
       this.loading = true;
       this.message = "Næ í gögn ekki stökkva langt 😉";
 
@@ -772,7 +1141,9 @@ export default {
         "/" +
         this.gender +
         "/" +
-        this.year +
+        this.fromDate +
+        "/" +
+        this.toDate +
         "/" +
         this.ageStart +
         "/" +
@@ -784,6 +1155,7 @@ export default {
         "/" +
         this.bestbyath +
         "/";
+
       axios
         .all([axios.get(url)])
         .then(
@@ -802,13 +1174,21 @@ export default {
                 this.inoutText +
                 " í " +
                 this.ageText +
-                " fyrir " +
-                this.yearText +
+                " frá " +
+                this.fromText +
+                " til " +
+                this.toText +
                 " 😟";
             } else {
               this.message = "";
-              if (this.year !== 0) {
-                this.data = this.cut_year(this.data);
+              //if (this.year !== 0) {
+              //  this.data = this.cut_year(this.data);
+              //}
+              // Check if fromDate and toDate have the same year
+              var split_from = this.fromDate.split("-");
+              var split_to = this.toDate.split("-");
+              if (split_from[0] === split_to[0]) {
+                this.data = this.cut_year(this.data); // Cut year from date
               }
               this.data = this.convert_to_timeformat(
                 this.event["Units"],
@@ -910,6 +1290,25 @@ export default {
       alert(event.target.id);
       console.log("Hi");
     },
+    setFromDate: function (value, type) {
+      this.fromDate = value;
+      this.$router.push({
+        query: { ...this.$route.query, f: this.fromDate, t: this.toDate },
+      });
+      this.get_data(null);
+    },
+    setToDate: function (value, type) {
+      this.toDate = value;
+      this.$router.push({
+        query: { ...this.$route.query, f: this.fromDate, t: this.toDate },
+      });
+      this.get_data(null);
+    },
+    disabledBefore1900AndAfterThisYear: function (date) {
+      const year = date.getFullYear();
+      const thisYear = new Date().getFullYear();
+      return year < 1900 || year > thisYear;
+    },
     //Outdoor = 0, Indoor = 1
     //Women = 2, Men = 1 -->
     outinsex_change: function (event, outin, gender) {
@@ -966,13 +1365,13 @@ export default {
       this.$router.push({ query: { ...this.$route.query, b: this.bestbyath } });
       this.get_data(event);
     },
-    year_change: function (event) {
-      this.year = Number(event.target.id);
-      //this.yearText = event.target.textContent
+    //year_change: function (event) {
+    //  this.year = Number(event.target.id);
+    //  //this.yearText = event.target.textContent
 
-      this.$router.push({ query: { ...this.$route.query, y: this.year } });
-      this.get_data(event);
-    },
+    //  this.$router.push({ query: { ...this.$route.query, y: this.year } });
+    //  this.get_data(event);
+    //},
     age_change: function (event) {
       this.ageGroup = Number(event.target.id);
 
