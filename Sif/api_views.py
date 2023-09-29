@@ -14,6 +14,10 @@ from Sif import records
 from Sif import competitor
 from Sif import events
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 # Other
 import os
 import urllib
@@ -135,23 +139,23 @@ def competitor_img_action(request, CompetitorCode):
     raise Http404() # Ættum ekki að koma hingað
 
 def club_logo(request, ClubName):
-    print('CLUB: Getting club logo for {}'.format(ClubName))
+    logger.info('CLUB: Getting club logo for {}'.format(ClubName))
     ClubName_decode = urllib.parse.unquote(ClubName).lower()
-    print('CLUB: Getting club logo for {}'.format(ClubName_decode))
+    logger.info('CLUB: decode name {}'.format(ClubName))
     try: # Reyna png
-        print('CLUB: Trying png')
+        logger.info('CLUB: Trying png')
         filename = './images/clubs/{}.png'.format(ClubName_decode)
         with open(filename, "rb") as f:
             return HttpResponse(f.read(), content_type="image/png")
     except:
         try: # Reyna svg
-            print('CLUB: Trying svg')
+            logger.info('CLUB: Trying svg')
             filename = './images/clubs/{}.svg'.format(ClubName_decode)
             with open(filename, "rb") as f:
                 return HttpResponse(f.read(), content_type="image/svg+xml")
         except:
             try: # Reyna jpg
-                print('CLUB: Trying jpg')
+                logger.info('CLUB: Trying jpg')
                 filename = './images/clubs/{}.jpg'.format(ClubName_decode)
                 with open(filename, "rb") as f:
                     return HttpResponse(f.read(), content_type="image/jpeg")
