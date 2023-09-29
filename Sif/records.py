@@ -189,19 +189,11 @@ def Get_Competitor_Records(CompetitorCode):
     if (dt.datetime.now().year - Competitor_info['YOB']  >= 30):
         # Ná í 30+ met
         # Það þarf að kalla á SQL procedure fyrir kyn og fyrir innan og utan hús.
-        # ToDo: Fletta upp keppanda og athuga hvort hann sé 30+ og kyn
         df_master_in = pd.read_sql_query("EXEC OldungametKeppanda @CompetitorCode = {:d}, @OutdoorsIndoors = 1, @Gendr = {:d}".format(CompetitorCode, Competitor_info['Sex']), connection)
         df_master_out = pd.read_sql_query("EXEC OldungametKeppanda @CompetitorCode = {:d}, @OutdoorsIndoors = 0, @Gendr = {:d}".format(CompetitorCode, Competitor_info['Sex']), connection)
 
         df_master = pd.concat([df_master_in, df_master_out])
         df_master['Dags'] = pd.to_datetime(df_master['Dags'], yearfirst=True)
-
-        #with connection.cursor() as cursor:
-        #    cursor.callproc('OldungametKeppanda', [CompetitorCode, 1, Competitor_info['Sex']])
-        #    cursor.callproc('OldungametKeppanda', [CompetitorCode, 0, Competitor_info['Sex']])
-        #    df_master = pd.DataFrame(cursor.fetchall())
-        #    df_master.columns = cursor.keys()
-        # AttributeError: 'pyodbc.Cursor' object has no attribute 'callproc'
 
         for index, row in df_master.iterrows():
             inout = row['ÚtiInni']
