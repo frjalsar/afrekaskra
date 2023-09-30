@@ -476,23 +476,22 @@ def Get_Competitor_List(s, club, startsWith, yob):
     #df = pd.DataFrame.from_records(names_q.values_list('keppandanúmer', 'nafn', 'fæðingarár', 'félag', 'dagsetning'),
     #                                          columns=['keppandanúmer', 'nafn', 'fæðingarár', 'félag', 'dagsetning'])
 
+    # Raða eftir dagsetningu
     df['dagsetning'] = pd.to_datetime(df['dagsetning'], dayfirst=True)
     df.sort_values(by=['dagsetning'], ascending=[False], inplace=True)
 
     #df.drop_duplicates(subset=['keppandanúmer'], keep='first', inplace=True, ignore_index=True)
 
     # Hendum út öllu nema í top 25 matches
-    df = df.iloc[0:25]
+    df = df.iloc[:25]
 
-    for index, row in df.iterrows():
-        Competitor_Info = {'CompetitorCode': row.keppandanúmer,
-                           'Name': row.nafn,
-                           'FirstName': row.nafn.split(' ')[0],
-                           'LastName': row.nafn.split(' ')[-1],
-                           'YOB': row.fæðingarár,
-                           'Club': row.félag
-                           }
-        results.append(Competitor_Info)
+    results = [{'CompetitorCode': row.keppandanúmer,
+                'Name': row.nafn,
+                'FirstName': row.nafn.split(' ')[0],
+                'LastName': row.nafn.split(' ')[-1],
+                'YOB': row.fæðingarár,
+                'Club': row.félag
+               } for index, row in df.iterrows()]
 
     return results
 
@@ -500,18 +499,17 @@ def Get_Competitor_Event_Data_All(CompetitorCode, Event_id):
     EventInfo = events.Get_Event_Info_by_ID(Event_id)
     df = competitor.Get_Competitor_Event_DataFrame(CompetitorCode, Event_id, EventInfo)
 
-    EventData = []
-    for index, row in df.iterrows():
-        EventData.append({'strResults': row['árangur_str'],
-                          'floatResults': row['árangur_float'],
-                          'strWind': row['vindur_str'],
-                          'Club': row['félag'],
-                          'OutIn': row['úti_inni'],
-                          'CompetitionName': row['heiti_móts'],
-                          'CompetitionID': row['mót'],
-                          'Age': row['aldur_keppanda'],
-                          'Date': row['dagsetning'],
-                          'ElectricTiming': row['rafmagnstímataka'],
-                          'MissingWind': row['vantar_vind']
-                         })
+    EventData = [{'strResults': row['árangur_str'],
+                'floatResults': row['árangur_float'],
+                'strWind': row['vindur_str'],
+                'Club': row['félag'],
+                'OutIn': row['úti_inni'],
+                'CompetitionName': row['heiti_móts'],
+                'CompetitionID': row['mót'],
+                'Age': row['aldur_keppanda'],
+                'Date': row['dagsetning'],
+                'ElectricTiming': row['rafmagnstímataka'],
+                'MissingWind': row['vantar_vind']
+                } for _, row in df.iterrows()]
+
     return EventData
