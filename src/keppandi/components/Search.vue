@@ -80,7 +80,7 @@ export default {
     var parameters = this.$route.query;
     if ("search" in parameters) {
       this.searchQ = this.$route.query.search;
-      if (this.searchQ.length >= 3) {
+      if (this.searchQ.length >= 2) {
         this.search()
       }
     }

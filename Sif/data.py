@@ -112,7 +112,37 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
                             }
         Achievements_list.append(Achievement_info)
 
-    #print(df.head(n=10))
+    """def format_date_str(date):
+        return date.strftime("%d %b %Y").upper()
+
+    def format_result_str(row):
+        if (row.rafmagnstímataka == 1):
+            ElecTime = True
+        else:
+            ElecTime = False
+        return common.results_to_str(row.árangur_float, Event_Info['Units'], ElecTime, Event_Info['Distance'])
+
+    df['date_str'] = df['dagsetning'].apply(format_date_str)
+    df['wind_str'] = df['vindur'].apply(lambda x: '{:+.1f}'.format(x))
+    df['result_str'] = df.apply(format_result_str, axis=1)
+
+    Achievements_list = df[['nafn', 'result_str', 'wind_str', 'félag', 'aldur_keppanda',
+                            'heiti_móts', 'mót', 'úti_inni', 'date_str', 'keppandanúmer',
+                            'rafmagnstímataka']].to_dict('records')
+    # Change column names
+    for item in Achievements_list:
+        item['name'] = item.pop('nafn')
+        item['results'] = item.pop('result_str')
+        item['wind'] = item.pop('wind_str')
+        item['club'] = item.pop('félag')
+        item['age'] = item.pop('aldur_keppanda')
+        item['competition_name'] = item.pop('heiti_móts')
+        item['competition_id'] = item.pop('mót')
+        item['outdoor_indoor'] = item.pop('úti_inni')
+        item['date'] = item.pop('date_str')
+        item['competitor_code'] = item.pop('keppandanúmer')
+        item['electronic_timing'] = item.pop('rafmagnstímataka')"""
+
     return Achievements_list
 
 def Convert_Achievements_to_List(q, minimize_results, best_by_ath, units):
