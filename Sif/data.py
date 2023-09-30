@@ -51,7 +51,7 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
     # Breytum öllum árangri yfir í rauntölur
     df['árangur_float'] = df['árangur'].map(common.results_to_float)
 
-    # Bæta við buffer ef tíminn er handtími
+    """# Bæta við buffer ef tíminn er handtími
     hand_buffer = common.Get_Hand_buffer(Event_Info['Distance'])
 
     # Búum til nýjan dálk þar sem búið er að bæta við buffer tímanum.
@@ -61,7 +61,15 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
         if row['rafmagnstímataka'] == 1:
             df.loc[index, 'árangur_sort'] = row['árangur_float']
         else:
-            df.loc[index, 'árangur_sort'] = row['árangur_float'] + hand_buffer
+            df.loc[index, 'árangur_sort'] = row['árangur_float'] + hand_buffer"""
+
+    # Bæta við buffer ef tíminn er handtími
+    hand_buffer = common.Get_Hand_buffer(Event_Info['Distance'])
+
+    # Búum til nýjan dálk þar sem búið er að bæta við buffer tímanum.
+    # Flokkum svo eftir þeim dálk.
+    df['árangur_sort'] = df['árangur_float'].copy()
+    df.loc[df['rafmagnstímataka'] != 1, 'árangur_sort'] += hand_buffer
 
     # Röðum árangri, fyrst eftir árangri og svo eftir dagsetningu ef árangrar eru jafnir.
     if (Event_Info['Minimize'] == True):

@@ -305,17 +305,13 @@ def Get_Competitor_Events_Info(df):
 def Get_Competitor_Event_DataFrame(CompetitorCode, Event_id, EventInfo):
 
     # Náum í gögn úr Þór
-    q = AthlAfrek.objects.all().filter(keppandanúmer__iexact=CompetitorCode, tákn_greinar__iexact=EventInfo['THORID_1']).order_by('dagsetning')
-
-    # Búum til Pandas dataframe
-    df = pd.DataFrame.from_records(q.values_list('árangur', 'vindur', 'félag',
+    q = AthlAfrek.objects.filter(keppandanúmer__iexact=CompetitorCode, tákn_greinar__iexact=EventInfo['THORID_1']).order_by('dagsetning').values('árangur', 'vindur', 'félag',
                                                  'aldur_keppanda', 'heiti_móts', 'mót',
                                                  'dagsetning', 'rafmagnstímataka', 'úti_inni',
-                                                 'grein', 'tákn_greinar', 'vantar_vind'),
-                                                 columns=['árangur', 'vindur', 'félag',
-                                                          'aldur_keppanda', 'heiti_móts', 'mót',
-                                                          'dagsetning', 'rafmagnstímataka', 'úti_inni',
-                                                          'grein', 'tákn_greinar', 'vantar_vind'])
+                                                 'grein', 'tákn_greinar', 'vantar_vind')
+
+    # Búum til Pandas dataframe
+    df = pd.DataFrame.from_records(q)
 
     #df['dagsetning'] = pd.to_datetime(df['dagsetning'], dayfirst=True)
 
@@ -324,17 +320,17 @@ def Get_Competitor_Event_DataFrame(CompetitorCode, Event_id, EventInfo):
     df['árangur_str'] = ''
     df['vindur_str'] = ''
 
-    for index, row in df.iterrows():
+    def process_row(row):
         # Breytum öllum árangri yfir í rauntölur
         results_float = common.results_to_float(row['árangur'])
-        df.iloc[index, df.columns.get_loc('árangur_float')] = results_float
+        df.at[row.name, 'árangur_float'] = results_float
 
         # Breytum vind yfir í string með + eða -
         if (row['vantar_vind'] == True):
             wind_str = 'N/A'
         else:
             wind_str = common.wind_to_str(row['vindur'])
-        df.iloc[index, df.columns.get_loc('vindur_str')] = wind_str
+        df.at[row.name, 'vindur_str'] = wind_str
 
         # Breytum árangri yfir í string
         if (row['rafmagnstímataka'] == 0 and EventInfo['Minimize'] == True):
@@ -345,7 +341,9 @@ def Get_Competitor_Event_DataFrame(CompetitorCode, Event_id, EventInfo):
             else:
                 result_str = '{:.2f}'.format(results_float)
 
-        df.iloc[index, df.columns.get_loc('árangur_str')]
+        df.at[row.name, 'árangur_str'] = result_str
+
+    df.apply(process_row, axis=1)
 
     #print(df['árangur_float'])
     return df
@@ -386,39 +384,19 @@ def Get_Competitor_Event(CompetitorCode, EventID):
                          'Tooltip': pb_tooltip
                         }
 
-    event_data = []
-    for index, row in df_event.iterrows():
-        wind_str = '{:+.1f}'.format(row['WindReading'])
+    # Make a new coulumn that is true if the the row Rafmagnstímataka is equal to 1 (True)
+    df_event['Rafmagnstímataka_bool'] = df_event['Rafmagnstímataka'] == 1
 
-        #if (row.rafmagnstímataka == 0 and event_info['MAX'] == False):
-        #    result_str = '{:.1f}'.format(row.árangur_float)
-        #else:
-        if (row.Rafmagnstímataka == 1):
-            ElecTime = True
-            result_str = common.results_to_str(row.Results_float, event_info['UNIT'], ElecTime, event_info['DISTANCE'])
-            result_float = row.Results_float
-        else:
-            ElecTime = False
-            result_str = common.results_to_str(row.Results_float, event_info['UNIT'], ElecTime, event_info['DISTANCE'])
-            result_float = row.Results_float + common.Get_Hand_buffer(event_info['DISTANCE'])
-
-        if (row['OutdoorsOrIndoors'] == 'Úti'):
-            OutorInn = 0
-        else:
-            OutorInn = 1        
-
-        event_data.append({'Results': result_str,
-                           'Results_float': result_float,
-                           'Wind': wind_str,
-                           'Club': row['Club'],
-                           'OutIn': OutorInn,
-                           'competition_name': row['CompetitionName'],
-                           'competition_id': row['CompetitionCode'],
-                           'Age': row['Age'],
-                           'Date': row['AchievementDate'], #format_date(row['dagsetning'], "d MMM yyyy",locale='is_IS').upper(),
-                           #'ElectricTiming': row['rafmagnstímataka'],
-                           #'MissingWind': row['vantar_vind']
-                           })
+    event_data = [{'Results': common.results_to_str(row['Results_float'], event_info['UNIT'], row['Rafmagnstímataka_bool'], event_info['DISTANCE']),
+                   'Results_float': row['Results_float'] + common.Get_Hand_buffer(event_info['DISTANCE']) if not row['Rafmagnstímataka_bool'] else row['Results_float'],
+                   'Wind': '{:+.1f}'.format(row['WindReading']),
+                   'Club': row['Club'],
+                   'OutIn': 0 if row['OutdoorsOrIndoors'] == 'Úti' else 1,
+                   'competition_name': row['CompetitionName'],
+                   'competition_id': row['CompetitionCode'],
+                   'Age': row['Age'],
+                   'Date': row['AchievementDate'],
+                   } for _, row in df_event.iterrows()]
 
     return event_info, event_data, event_min_max_all, event_min_max_legal, event_progression
 
