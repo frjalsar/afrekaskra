@@ -4,7 +4,7 @@
       :value="searchQ"
       type="text"
       class="form-control text-center"
-      placeholder="Sláðu inn nafn"
+      placeholder="Sláðu inn nafn, félag eða fæðingarár"
       @input="searchInput"
       ref="athleteSearch"
     />
@@ -101,7 +101,7 @@ export default {
       }
 
       //Only search on 3
-      if (this.searchQ.length >= 3) {
+      if (this.searchQ.length >= 2) {
         this.search();
       }
     }, 2250),
