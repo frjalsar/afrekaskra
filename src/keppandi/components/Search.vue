@@ -21,7 +21,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-if="loading">
+            <tr v-if="showMessage">
               <td colspan="3" align="center">
                 <div v_if="loading">
                 <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
@@ -68,6 +68,7 @@ export default {
       margin: "2px",
       radius: "100%",
       loading: false,
+      showMessage: false,
       showSearchQ: false,
 
       athletes: [],
@@ -117,6 +118,8 @@ export default {
       var url = this.global_API_URL + "/api/competitor";
 
       this.loading = true;
+      this.message = "Leita að keppanda...";
+      this.showMessage = true;
       this.showSearchQ = true;
       this.athletes = [];
 
@@ -129,18 +132,24 @@ export default {
         cancelToken: this.cancelSource.token,
         params: {search: this.searchQ}})
         .then(response => {
-          //console.log("RESPONSE");
-          //console.log(response);
+
           this.athletes = response["data"];
           this.cancelSource = null;
           this.loading = false;
-          //console.log(this.$refs)
-          //this.$refs.athleteSearch.scrollIntoView();
+          this.showMessage = false;
+
+          if (this.athletes.length == 0)
+          {
+            this.message = "Enginn keppandi fannst";
+            this.showMessage = true;
+          }
         })
         .catch(error => {
           //console.log("ERROR");
           //console.log(error);
           this.message = "Villa frá vefþjóni (" + error + ") 😭";
+          this.showMessage = true;
+          this.athletes = [];
         })
         .finally(() => {
           //console.log("FINALLY");
