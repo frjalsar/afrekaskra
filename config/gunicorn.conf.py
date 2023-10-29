@@ -66,9 +66,10 @@ backlog = 2048
 #       A positive integer. Generally set in the 1-5 seconds range.
 #
 
-workers = 4 # KT
+workers = 3 # KT
 worker_class = 'sync'
 worker_connections = 1000
+max_requests = 100 # KT
 timeout = 30
 keepalive = 2
 preload_app = True # KT
