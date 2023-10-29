@@ -520,7 +520,7 @@ def Get_Competitor_List(s, club, startsWith, yob):
 
     #df.drop_duplicates(subset=['keppandanúmer'], keep='first', inplace=True, ignore_index=True)
 
-    # Hendum út öllu nema í top 25 matches
+    # Hendum út öllu nema top 25 matches
     df = df.iloc[:25]
 
     results = [{'CompetitorCode': row.keppandanúmer,
