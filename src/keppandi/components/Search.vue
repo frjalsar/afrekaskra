@@ -25,8 +25,8 @@
               <td colspan="3" align="center">
                 <div v_if="loading">
                 <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
-                <p>{{message}}<p>
-                <div>
+                <p>{{message}}</p>
+                </div>
               </td>
             </tr>
             <tr
