@@ -1047,10 +1047,10 @@ export default {
     //if ("y" in parameters) {
     //  this.year = Number(this.$route.query.y);
     //}
-    if ("f" in parameters) {
+    if ("fd" in parameters) {
       this.fromDate = this.$route.query.f;
     }
-    if ("t" in parameters) {
+    if ("td" in parameters) {
       this.toDate = this.$route.query.t;
     }
     if ("a" in parameters) {
@@ -1292,14 +1292,14 @@ export default {
     setFromDate: function (value, type) {
       this.fromDate = value;
       this.$router.push({
-        query: { ...this.$route.query, f: this.fromDate, t: this.toDate },
+        query: { ...this.$route.query, fd: this.fromDate, td: this.toDate },
       });
       this.get_data(null);
     },
     setToDate: function (value, type) {
       this.toDate = value;
       this.$router.push({
-        query: { ...this.$route.query, f: this.fromDate, t: this.toDate },
+        query: { ...this.$route.query, fd: this.fromDate, td: this.toDate },
       });
       this.get_data(null);
     },
