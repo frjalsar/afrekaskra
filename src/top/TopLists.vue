@@ -1048,10 +1048,10 @@ export default {
     //  this.year = Number(this.$route.query.y);
     //}
     if ("fd" in parameters) {
-      this.fromDate = this.$route.query.f;
+      this.fromDate = this.$route.query.fd;
     }
     if ("td" in parameters) {
-      this.toDate = this.$route.query.t;
+      this.toDate = this.$route.query.td;
     }
     if ("a" in parameters) {
       this.ageGroup = Number(this.$route.query.a);
