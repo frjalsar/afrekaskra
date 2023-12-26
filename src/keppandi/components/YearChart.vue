@@ -29,7 +29,7 @@ export default {
     this.handleResize();
     this.addAllData();
   },
-  destroyed() {
+  unmounted() {
     window.removeEventListener("resize", this.handleResize);
   },
   // mounted() {

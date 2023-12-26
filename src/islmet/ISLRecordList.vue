@@ -82,25 +82,25 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(i, index) in record_data" v-if="i.AgeGroup == agegroup && i.InOut == inout">
-                <th scope="row">{{ i.Event }}</th>
+              <tr v-for="item in record_data">
+                <th scope="row">{{ item.Event }}</th>
                 <td>
                   <router-link :to="{
                     name: 'CompetitorProfile',
-                    params: { competitorID: i.CompetitorID },
+                    params: { competitorID: item.CompetitorID },
                   }">
-                    <a>{{ i.Name }}</a>
+                    <a>{{ item.Name }}</a>
                   </router-link>
                 </td>
                 <td>
-                  {{ i.Results }}
-                  <small class="text-muted">{{ i.Units_symbol }}</small>
+                  {{ item.Results }}
+                  <small class="text-muted">{{ item.Units_symbol }}</small>
                 </td>
-                <td v-show="inout === 0">{{ i.Wind }}</td>
+                <td v-show="inout === 0">{{ item.Wind }}</td>
                 <!--<td class="d-none d-xl-table-cell">{{ inout_text(i.InOut) }}</td>-->
-                <td class="d-none d-md-table-cell">{{ i.Date }}</td>
+                <td class="d-none d-md-table-cell">{{ item.Date }}</td>
                 <!--<td>{{ i.AgeGroup }}</td>-->
-                <td class="d-none d-xl-table-cell">{{ i.Club }}&nbsp;&nbsp;<img class="img-club" v-bind:src="'/api/img/club/' + i.Club" alt="" /></td>
+                <td class="d-none d-xl-table-cell">{{ item.Club }}&nbsp;&nbsp;<img class="img-club" v-bind:src="'/api/img/club/' + item.Club" alt="" /></td>
               </tr>
             </tbody>
           </table>
@@ -111,6 +111,7 @@
 </template>
 
 <script>
+import { inject } from 'vue';
 import axios from "axios";
 import moment from "moment";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
@@ -133,9 +134,11 @@ export default {
       agegroup_value: 0,
       inout: 0,
       org_record_data: [],
+      all_record_data: [],
       masters_record_data: [],
       gender: 2,
       message: "Næ í gögn ekki stökkva langt 😉",
+      api_url_prefix: this.global_api_url_prefix,
 
       men_agegroups: [
         ["KA", "<i class='fas fa-male'></i> Karlar"],
@@ -248,18 +251,33 @@ export default {
     record_data() {
       let record_list = [];
       //v-if="i.AgeGroup == agegroup && i.InOut == inout"
-      /*         for (var i = 0; i < this.org_record_data.length; i++)
+      if (this.agegroup_value < this.men_agegroups.length) // Check if the age group is a masters age group or not.
         {
-            if ((this.org_record_data[i].AgeGroup === this.agegroup) && (this.org_record_data[i].InOut === this.inout))
+          // Find the records for the age group and inout.
+          for (var i = 0; i < this.all_record_data.length; i++)
             {
-                record_list.push(this.org_record_data[i])
+                if ((this.all_record_data[i].AgeGroup === this.agegroup) && (this.all_record_data[i].InOut === this.inout))
+                {
+                    record_list.push(this.all_record_data[i])
+                }
             }
-        } */
+        } else {
+          // Find the records for the age group and inout.
+          for (var i = 0; i < this.masters_record_data.length; i++)
+            {
+              if ((this.masters_record_data[i].AgeGroup === this.agegroup) && (this.masters_record_data[i].InOut === this.inout))
+              {
+                  record_list.push(this.masters_record_data[i])
+              }
+            }
+        }
+      return record_list;
+      /*console.log("Getting record data");
       if (this.agegroup_value < this.men_agegroups.length) {
         return this.all_record_data;
       } else {
         return this.masters_record_data;
-      }
+      }*/
     },
   },
   methods: {
@@ -295,13 +313,14 @@ export default {
       this.masters_record_data = [];
       //console.log('Getting data')
 
-      var url = "/api/records/";
+      var url = this.api_url_prefix + "/api/records/";
       axios
         .all([axios.get(url)])
         .then(
           axios.spread((...response) => {
             this.all_record_data = response[0]["data"];
-            //console.log("Got data");
+            console.log("Got data");
+            //console.log(this.all_record_data);
           })
         )
         .catch((error) => {
@@ -314,13 +333,13 @@ export default {
         });
 
       //console.log('Getting masters data')
-      var url = "/api/records/masters";
+      var url = this.api_url_prefix + "/api/records/masters";
       axios
         .all([axios.get(url)])
         .then(
           axios.spread((...response) => {
             this.masters_record_data = response[0]["data"];
-            //console.log("Got masters data");
+            console.log("Got masters data");
           })
         )
         .catch((error) => {

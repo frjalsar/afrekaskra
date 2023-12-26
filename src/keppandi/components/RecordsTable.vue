@@ -167,6 +167,7 @@ export default {
       showActiveRecordsTable: false,
       showunActiveRecordsTable: false,
       loading: true,
+      api_url_prefix: this.global_api_url_prefix,
 
       nrRecords: 0,
       nrActiveRecords: 0,
@@ -348,7 +349,7 @@ export default {
     Get_Records_Data: function () {
       this.record_data = [];
 
-      var url = "/api/records/" + this.competitorID + "/";
+      var url = this.api_url_prefix + "/api/records/" + this.competitorID + "/";
       axios
         .all([axios.get(url)])
         .then(

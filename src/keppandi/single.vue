@@ -22,7 +22,7 @@
       <div class="action-div">
         <img
           class="img-fluid img-action"
-          v-bind:src="'/api/img/action/' + competitorID"
+          v-bind:src="api_url_prefix + '/api/img/action/' + competitorID"
         />
         <div class="topleft">
           <h2 style="font-family: 'Beausite Classic Semibold', Sans-serif; font-size: 3.0vw">
@@ -45,7 +45,7 @@
         <div class="bottomleft">
           <img
             class="rounded-circle img-thumbnail img-profile"
-            v-bind:src="'/api/img/profile/' + competitorID"
+            v-bind:src="api_url_prefix + '/api/img/profile/' + competitorID"
           />
         </div>
         <div class="bottomright">
@@ -105,6 +105,7 @@ export default {
       isReady: false,
       competitorID: null,
       message: "",
+      api_url_prefix: this.global_api_url_prefix,
       showClubLogo: true,
     };
   },
@@ -115,7 +116,7 @@ export default {
   computed: {
     ClubNameUrl: function () {
       if (this.isReady === true) {
-        return "/api/img/club/" + this.competitor_info.Club;
+        return this.api_url_prefix + "/api/img/club/" + this.competitor_info.Club;
       } else {
         return "";
       }
@@ -133,7 +134,7 @@ export default {
       this.data = [];
       //console.log('Getting data')
 
-      var url = "/api/competitor/" + this.competitorID + "/";
+      var url = this.api_url_prefix + "/api/competitor/" + this.competitorID + "/";
       axios
         .all([axios.get(url)])
         .then(

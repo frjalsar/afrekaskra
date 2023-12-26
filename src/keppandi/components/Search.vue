@@ -74,6 +74,7 @@ export default {
       athletes: [],
       searchQ: "",
       message: "",
+      api_url_prefix: this.global_api_url_prefix,
       cancelSource: null
     };
   },
@@ -115,7 +116,7 @@ export default {
     // },
     search() {
       //var url = this.global_API_URL + "/api/competitor?search=";
-      var url = this.global_API_URL + "/api/competitor";
+      var url = this.api_url_prefix + "/api/competitor";
 
       this.loading = true;
       this.message = "Leita að keppanda...";

@@ -93,6 +93,7 @@ export default {
 
       loading: true,
       message: "",
+      api_url_prefix: this.global_api_url_prefix,
 
       women_data: [],
       men_data: [],
@@ -118,7 +119,7 @@ export default {
       this.data = [];
       //console.log('Getting data')
 
-      var url = "/api/top_front/";
+      var url = this.api_url_prefix + "/api/top_front/";
       axios
         .all([axios.get(url)])
         .then(

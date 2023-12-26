@@ -47,7 +47,7 @@
               </td>
               <td class=""><img
                 class="img-club"
-                v-bind:src="'/api/img/club/' + athlete.Club"
+                v-bind:src="api_url_prefix + '/api/img/club/' + athlete.Club"
                 v-bind:alt="athlete.Club"
               />
               </td>
@@ -76,6 +76,7 @@ export default {
       athletes: [],
       clubs: [],
       message: "",
+      api_url_prefix: this.global_api_url_prefix,
     };
   },
   computed: {
@@ -90,7 +91,7 @@ export default {
     }
   },
   mounted() {
-    var url = this.global_API_URL + "/api/clubs";
+    var url = this.api_url_prefix + "/api/clubs";
     this.search();
 
     // agent
@@ -121,7 +122,7 @@ export default {
       this.$router.push("/keppandi/" + item.CompetitorCode);
     },
     search() {
-      var url = this.global_API_URL + "/api/competitor";
+      var url = this.api_url_prefix + "/api/competitor";
       this.busy = true;
       this.athletes = [];
       return axios

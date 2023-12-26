@@ -1,7 +1,8 @@
 {
-    "include": [
-      "./src/**/*"
-    ],
-    "target": 2.7,
-    "extensions": [".vue"]
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
 }

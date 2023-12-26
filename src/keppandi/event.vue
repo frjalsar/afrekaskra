@@ -23,7 +23,7 @@
           >
             <img
               class="rounded-circle img-thumbnail img-profile"
-              v-bind:src="'/api/img/profile/' + competitorID"
+              v-bind:src="api_url_prefix + '/api/img/profile/' + competitorID"
             />
           </router-link>
         </div>
@@ -255,6 +255,7 @@ export default {
       isReady: false,
       showAllEvents: true,
       message: "",
+      api_url_prefix: this.global_api_url_prefix,
 
       showTimeChart: false,
       showYearChart: true,
@@ -311,7 +312,7 @@ export default {
       this.$parent.loading = true;
       this.message = "Næ í gögn ekki stökkva langt 😉";
 
-      var url =
+      var url = this.api_url_prefix +
         "/api/competitor/" + this.competitorID + "/" + this.eventID + "/";
       axios
         .all([axios.get(url)])

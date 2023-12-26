@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import { inject } from 'vue';
 import axios from "axios";
 import moment from "moment";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
@@ -76,6 +77,7 @@ export default {
       raw_record_data: [],
       loading: true,
       message: "",
+      api_url_prefix: this.global_api_url_prefix,
     };
   },
   created() {
@@ -135,7 +137,8 @@ export default {
       this.raw_record_data = [];
       //console.log('Getting data')
 
-      var url = "/api/records/birthdays/";
+      var url = this.api_url_prefix + "/api/records/birthdays/";
+      //console.log(url);
       axios
         .all([axios.get(url)])
         .then(

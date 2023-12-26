@@ -11,18 +11,18 @@ import axios from "axios";
 
 export default {
   props: ["data", "event_info", "competitorID", "eventID"],
-  //   data() {
-  //     return {
-  //       isVisible: true,
-  //     };
-  //   },
+     data() {
+       return {
+        api_url_prefix: this.global_api_url_prefix,
+       };
+     },
   created() {
     this.GetData();
   },
   methods: {
     GetData: function () {
       //console.log("Getting all competitor event data");
-      var url =
+      var url = this.api_url_prefix +
         "/api/competitor/" + this.competitorID + "/" + this.eventID + "/all/";
       axios
         .all([axios.get(url)])

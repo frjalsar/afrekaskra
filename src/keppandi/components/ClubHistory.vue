@@ -39,12 +39,12 @@
               &nbsp;&nbsp;
               <img
                 class="img-club"
-                v-bind:src="'/api/img/club/' + i.club"
+                v-bind:src="api_url_prefix + '/api/img/club/' + i.club"
                 alt=""
               />
             </th>
-            <td>{{ i.from | formatDate }}</td>
-            <td>{{ i.to | formatDate }}</td>
+            <td>{{ formatDate(i.from) }}</td>
+            <td>{{ formatDate(i.to) }}</td>
           </tr>
         </tbody>
       </table>
@@ -53,7 +53,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import moment from "moment";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
@@ -70,9 +69,19 @@ export default {
       margin: "2px",
       radius: "100%",
       loading: false,
+      api_url_prefix: this.global_api_url_prefix,
 
       history: [],
     };
+  },
+  methods: {
+    formatDate: function(date) {
+      if (date === null) {
+        return "";
+      } else {
+        return moment(String(date)).format('ll');
+      }
+    },
   },
 };
 </script>

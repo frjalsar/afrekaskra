@@ -388,7 +388,7 @@
                 <!--:shortcuts="shortcutsFromDate"-->
                     Dags. frá: 
                     <date-picker
-                    v-model="fromDate"
+                    v-model:value="fromDate"
                     v-bind:value="fromDate"
                     valueType="format"
                     @change="setFromDate"
@@ -397,9 +397,6 @@
                     :shortcuts="shortcutsFromDate"
                     :disabled-date="disabledBefore1900AndAfterThisYear"
                     >
-                   <!--<template v-slot:header="{ emit }">
-          <button class="mx-btn mx-btn-text" @click="emit(new Date())">{{ yearMinusOne }}</button>
-        </template>-->
                   </date-picker>
               </div>
             </div>
@@ -409,7 +406,7 @@
               <div class="col-md-auto col-sm-12 mb-3 text-center">
                     Dags. til: 
                     <date-picker
-                    v-model="toDate"
+                    v-model:value="toDate"
                     v-bind:value="toDate"
                     valueType="format"
                     @change="setToDate"
@@ -503,8 +500,8 @@
 <script>
 import axios from "axios";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
-import DatePicker from 'vue2-datepicker';
-import 'vue2-datepicker/index.css';
+import DatePicker from 'vue-datepicker-next';
+import 'vue-datepicker-next/index.css';
 
 export default {
   name: "TopLists",
@@ -519,10 +516,12 @@ export default {
       margin: "2px",
       radius: "100%",
       loading: false,
+      time0: null,
 
       data: [],
       event: [],
       message: "",
+      api_url_prefix: this.global_api_url_prefix,
 
       isBestByAthActive: true,
       isLegalActive: true,
@@ -1133,7 +1132,7 @@ export default {
       this.data = [];
 
       let url =
-        this.global_API_URL +
+        this.api_url_prefix +
         "/api/top_list/" +
         this.event_id +
         "/" +

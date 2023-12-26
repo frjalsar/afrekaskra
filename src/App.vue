@@ -35,7 +35,7 @@
           :to="{name: 'CompetitorList'}"
           class="p-2 text-dark"
         >Iðkandi</router-link>
-      </nav>
+     </nav>
     </div>
     <div class="container">
       <div class="my-5 p-3 bg-white rounded shadow">

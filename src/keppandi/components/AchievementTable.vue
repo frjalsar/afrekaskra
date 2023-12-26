@@ -31,7 +31,7 @@
           <!-- v-bind:style="{display: 'none'}" -->
           <th scope="row">{{i.Results_text}}</th>
           <td v-bind:class="{'d-none': !hasWind}">{{i.Wind}}</td>
-          <td>{{i.Date | formatDate}}</td>
+          <td>{{formatDate(i.Date)}}</td>
           <td>{{i.Age}}</td>
           <td>{{i.Club}}</td>
           <td>
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
   props: ["event_info", "showAllEvents", "event_data"],
   data() {
@@ -93,6 +94,13 @@ export default {
     },
   },
   methods: {
+    formatDate: function(date) {
+      if (date === null) {
+        return "";
+      } else {
+        return moment(String(date)).format('ll');
+      }
+    },
     sort: function (s) {
       //if s == current sort, reverse
       if (s === this.currentSort) {
