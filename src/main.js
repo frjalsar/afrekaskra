@@ -36,5 +36,6 @@ const app = createApp(App)
 //                      RENDER_FUNCTION: false // Remove some warnings
 //                    }) 
 //app.config.globalProperties.global_api_url_prefix = 'https://sif.fri.is' // For production
-app.config.globalProperties.global_api_url_prefix = 'http://127.0.0.1:8000' // For development
+//app.config.globalProperties.global_api_url_prefix = 'http://127.0.0.1:8000' // For development
+app.config.globalProperties.global_api_url_prefix = '' // For production
 app.use(HighchartsVue).use(router).mount('#app')

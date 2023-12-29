@@ -19,12 +19,12 @@ python-binary-memcached==0.31.2
 python-dateutil==2.8.2
 pytz==2023.3.post1
 six==1.16.0
-SQLAlchemy==2.0.23
+SQLAlchemy==2.0.24
 sqlparse==0.4.4
 style==1.1.6
 toml==0.10.2
 tomli==2.0.1
 typing_extensions==4.9.0
-tzdata==2023.3
+tzdata==2023.4
 uhashring==2.3
 whitenoise==6.6.0
