@@ -110,6 +110,7 @@ export default {
       default: () => {},
     },
   },
+  emits: ['change'],
   data() {
     return {
       startsWith: this.settings.startsWith,

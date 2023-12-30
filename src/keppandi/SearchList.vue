@@ -63,6 +63,7 @@
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import SearchPanel from "./components/SearchPanel.vue";
 import axios from "axios";
+import debounce from "lodash.debounce";
 
 export default {
   name: "AthletesList",
@@ -89,6 +90,12 @@ export default {
     if ("CompetitorCode" in parameters) {
       this.$router.push("/keppandi/" + this.$route.query.CompetitorCode);
     }
+    // Set watch on query parameters
+    this.$watch(
+      "$route.query",
+        this.search,
+      { deep: true }
+    );
   },
   mounted() {
     var url = this.api_url_prefix + "/api/clubs";
@@ -115,8 +122,11 @@ export default {
   },
   methods: {
     setQueryParams(query) {
-      this.$router.replace({ query });
-      this.search();
+      // Set query parameters
+      //this.$router.push({ query: query });
+      this.$router.replace({ query: query });
+      // Search
+      //this.search();
     },
     onClick(item) {
       this.$router.push("/keppandi/" + item.CompetitorCode);
