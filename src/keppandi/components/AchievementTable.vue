@@ -7,9 +7,9 @@
         <tr>
           <th scope="col" @click="sort('Results_float')">
             <i class="fas fa-sort"></i>
-            &nbsp;Árangur <small class="text-muted">{{event_info.UNIT_SYMBOL}}</small>
+            &nbsp;Árangur <small class="text-muted">{{ event_info.UNIT_SYMBOL }}</small>
           </th>
-          <th scope="col" @click="sort('Wind')" v-bind:class="{'d-none': !hasWind}">
+          <th scope="col" @click="sort('Wind')" v-bind:class="{ 'd-none': !hasWind }">
             <i class="fas fa-sort"></i>&nbsp;Vindur <small class="text-muted">m/s</small>
           </th>
           <th scope="col" @click="sort('Date')">
@@ -29,15 +29,13 @@
       <tbody>
         <tr v-for="(i, index) in sortedData" v-show="(index < 5) || showAllEvents" :key="i.Event">
           <!-- v-bind:style="{display: 'none'}" -->
-          <th scope="row">{{i.Results_text}}</th>
-          <td v-bind:class="{'d-none': !hasWind}">{{i.Wind}}</td>
-          <td>{{formatDate(i.Date)}}</td>
-          <td>{{i.Age}}</td>
-          <td>{{i.Club}}</td>
+          <th scope="row">{{ i.Results_text }}</th>
+          <td v-bind:class="{ 'd-none': !hasWind }">{{ i.Wind }}</td>
+          <td>{{ formatDate(i.Date) }}</td>
+          <td>{{ i.Age }}</td>
+          <td>{{ i.Club }}</td>
           <td>
-            <a
-              v-bind:href="'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' + i.competition_id"
-            >{{i.competition_name}}</a>
+            <a v-bind:href="'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' + i.competition_id">{{ i.competition_name }}</a>
           </td>
         </tr>
       </tbody>
@@ -94,7 +92,7 @@ export default {
     },
   },
   methods: {
-    formatDate: function(date) {
+    formatDate: function (date) {
       if (date === null) {
         return "";
       } else {

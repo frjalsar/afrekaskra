@@ -54,11 +54,11 @@ export default {
     chartOptions() {
       var ctx = this;
       return {
-                chart: {
-        //  plotBackgroundImage: require('../../bg-1.png'),
-            scrollablePlotArea: {
+        chart: {
+          //  plotBackgroundImage: require('../../bg-1.png'),
+          scrollablePlotArea: {
             minWidth: 550
-        }
+          }
         },
         credits: {
           enabled: false,
@@ -75,11 +75,11 @@ export default {
         yAxis: {
           visible: this.isyvisible,
           title: {
-           //text: "Árangur",
-           text: null,
+            //text: "Árangur",
+            text: null,
           },
           labels: {
-                        align: 'left',
+            align: 'left',
             x: 3,
             y: 16,
             format: this.strFormat,

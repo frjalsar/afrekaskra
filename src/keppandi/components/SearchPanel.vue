@@ -2,26 +2,14 @@
   <div>
     <div class="row mb-4">
       <div class="col-md-12 text-center">
-        <a
-          v-for="letter in alphabet"
-          :key="letter"
-          class="btn btn-sm"
-          :class="{ 'btn-outline-secondary': startsWith === letter }"
-          @click="toggleLetter(letter)"
-        >
+        <a v-for="letter in alphabet" :key="letter" class="btn btn-sm" :class="{ 'btn-outline-secondary': startsWith === letter }" @click="toggleLetter(letter)">
           {{ letter }}
         </a>
       </div>
     </div>
     <div class="form-row mb-4" align="center">
       <div class="col-md-6 col-lg-4 mb-4">
-        <input
-          :value="search"
-          type="text"
-          class="form-control text-center"
-          placeholder="Sláðu inn nafn"
-          @input="searchInput"
-        />
+        <input :value="search" type="text" class="form-control text-center" placeholder="Sláðu inn nafn" @input="searchInput" />
       </div>
       <!-- <div class="col-md-6 col-lg-3 mb-3">
         <select
@@ -45,13 +33,7 @@
         </select>
       </div> -->
       <div class="col-md-4 col-lg-2 mb-3">
-        <input
-          :value="yob"
-          type="text"
-          class="form-control text-center"
-          placeholder="Fæðingarár"
-          @input="yobInput"
-        />
+        <input :value="yob" type="text" class="form-control text-center" placeholder="Fæðingarár" @input="yobInput" />
       </div>
       <div class="col-md-4 col-lg-4 mb-3">
         <select :value="clubId" class="form-control" @change="changeClub">
@@ -83,11 +65,7 @@
         </select>
       </div> -->
       <div class="col-md-4 col-lg-2 mb-4">
-        <button
-          type="button"
-          class="btn btn-secondary btn-block"
-          @click.prevent="clear"
-        >
+        <button type="button" class="btn btn-secondary btn-block" @click.prevent="clear">
           Hreinsa
         </button>
       </div>
@@ -107,7 +85,7 @@ export default {
     },
     settings: {
       type: Object,
-      default: () => {},
+      default: () => { },
     },
   },
   emits: ['change'],
@@ -225,6 +203,7 @@ export default {
 a.btn {
   cursor: pointer;
 }
+
 a.btn:hover {
   border-color: #6c757d;
 }

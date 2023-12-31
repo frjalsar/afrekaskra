@@ -2,11 +2,7 @@
   <div>
     <div>
       <h1 class="text-center mb-4">Iðkendur</h1>
-      <SearchPanel
-        :clubs="clubs"
-        :settings="settings"
-        @change="setQueryParams"
-      />
+      <SearchPanel :clubs="clubs" :settings="settings" @change="setQueryParams" />
     </div>
     <div class="row">
       <div class="col-md-12">
@@ -25,31 +21,22 @@
                 <PulseLoader :loading="busy" color="#007bff" />
               </td>
             </tr>
-            <tr
-              v-for="athlete in athletes"
-              :key="athlete.CompetitorCode"
-            >
+            <tr v-for="athlete in athletes" :key="athlete.CompetitorCode">
               <td class="d-none d-lg-table-cell">
                 {{ athlete.CompetitorCode }}
               </td>
               <td>
-                <router-link
-                  :to="{
-                    name: 'CompetitorProfile',
-                    params: { competitorID: athlete.CompetitorCode },
-                  }"
-                >
+                <router-link :to="{
+                  name: 'CompetitorProfile',
+                  params: { competitorID: athlete.CompetitorCode },
+                }">
                   {{ athlete.Name }}
                 </router-link>
               </td>
               <td class="d-none d-md-table-cell">
                 {{ athlete.YOB }}
               </td>
-              <td class=""><img
-                class="img-club"
-                v-bind:src="api_url_prefix + '/api/img/club/' + athlete.Club"
-                v-bind:alt="athlete.Club"
-              />
+              <td class=""><img class="img-club" v-bind:src="api_url_prefix + '/api/img/club/' + athlete.Club" v-bind:alt="athlete.Club" />
               </td>
             </tr>
           </tbody>
@@ -93,7 +80,7 @@ export default {
     // Set watch on query parameters
     this.$watch(
       "$route.query",
-        this.search,
+      this.search,
       { deep: true }
     );
   },

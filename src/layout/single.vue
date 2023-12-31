@@ -2,39 +2,26 @@
   <div style="margin-top: 0px;">
     <div v-if="!isReady">
       <pulse-loader :loading="!isReady" :color="color" :size="size"></pulse-loader>
-      <p style="text-align:center">{{message}}</p>
+      <p style="text-align:center">{{ message }}</p>
     </div>
     <div id="competitor-view" v-if="isReady">
       <!-- HEADER -->
       <img class="card-img-top img-fluid" v-bind:src="'/api/img/action/' + competitorID" />
       <div class="d-flex flex-column bd-highlight mb-3">
         <div class="p-2 bd-highlight profile-div">
-          <img
-            class="rounded-circle border img-thumbnail img-fluid"
-            v-bind:src="'/api/img/profile/' + competitorID"
-            width="125px"
-          />
+          <img class="rounded-circle border img-thumbnail img-fluid" v-bind:src="'/api/img/profile/' + competitorID" width="125px" />
         </div>
         <div class="p-2 bd-highlight profile-text profile-text-name h2">
-          <b>{{competitor_info.FirstName}} {{competitor_info.LastName}}</b>
+          <b>{{ competitor_info.FirstName }} {{ competitor_info.LastName }}</b>
         </div>
         <div class="p-2 bd-highlight profile-text profile-text-other h5">
-          <i
-            class="fas"
-            v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"
-          ></i>
-          {{competitor_info.YOB}}
+          <i class="fas" v-bind:class="{ 'fa-male': competitor_info.Sex == 1, 'fa-female': competitor_info.Sex == 2 }"></i>
+          {{ competitor_info.YOB }}
         </div>
         <div class="p-2 bd-highlight club-info">
-          <img
-            class="rounded border img-thumbnail img-fluid img-club"
-            v-bind:src="ClubNameUrl"
-            width="75px"
-            @error="ClubLogoError"
-            v-show="showClubLogo"
-          />
+          <img class="rounded border img-thumbnail img-fluid img-club" v-bind:src="ClubNameUrl" width="75px" @error="ClubLogoError" v-show="showClubLogo" />
           <div v-show="!showClubLogo">
-            <h2 class="club-text">{{competitor_info.Club}}</h2>
+            <h2 class="club-text">{{ competitor_info.Club }}</h2>
           </div>
         </div>
       </div>

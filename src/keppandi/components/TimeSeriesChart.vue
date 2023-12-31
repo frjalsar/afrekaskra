@@ -11,11 +11,11 @@ import axios from "axios";
 
 export default {
   props: ["data", "event_info", "competitorID", "eventID"],
-     data() {
-       return {
-        api_url_prefix: this.global_api_url_prefix,
-       };
-     },
+  data() {
+    return {
+      api_url_prefix: this.global_api_url_prefix,
+    };
+  },
   created() {
     this.GetData();
   },

@@ -2,11 +2,7 @@
   <div>
     <div v-if="loading">
       <hr />
-      <pulse-loader
-        :loading="loading"
-        :color="color"
-        :size="size"
-      ></pulse-loader>
+      <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
     </div>
     <div v-if="showRecordsTable">
       <hr />
@@ -20,10 +16,8 @@
       <!-- VIRK MET -->
       <div v-show="showActiveRecordsTable">
         <h5>Virk met</h5>
-        <table
-          class="table table-striped table-hover table-responsive-sm table-sm"
-        >
-        <!--<caption>Listi yfir virk Íslandsmet</caption>-->
+        <table class="table table-striped table-hover table-responsive-sm table-sm">
+          <!--<caption>Listi yfir virk Íslandsmet</caption>-->
           <col span="1" class="wide" />
           <thead>
             <tr>
@@ -51,10 +45,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="(i, index) in sortedDataActive"
-              v-show="index < 5 || showAllActiveRecords"
-            >
+            <tr v-for="(i, index) in sortedDataActive" v-show="index < 5 || showAllActiveRecords">
               <th scope="row">{{ i.Event }} <small class="text-muted">{{ i.Units_symbol }}</small></th>
               <td>{{ i.Results_text }}</td>
               <td>{{ i.Wind }}</td>
@@ -65,13 +56,7 @@
             </tr>
           </tbody>
         </table>
-        <a
-          href="#"
-          v-on:click.prevent="toggle_ActiveRecords($event)"
-          v-if="showMoreLessButtonActive"
-          class="text-success"
-          ><b><span v-html="textMoreLessActive"></span></b></a
-        >
+        <a href="#" v-on:click.prevent="toggle_ActiveRecords($event)" v-if="showMoreLessButtonActive" class="text-success"><b><span v-html="textMoreLessActive"></span></b></a>
         <p>
           <br />
         </p>
@@ -79,10 +64,8 @@
       <!-- ÓVIRK MET -->
       <div v-show="showunActiveRecordsTable">
         <h5>Óvirk met</h5>
-        <table
-          class="table table-striped table-hover table-responsive-sm table-sm"
-        >
-        <!--<caption>Listi yfir óvirk Íslandsmet</caption>-->
+        <table class="table table-striped table-hover table-responsive-sm table-sm">
+          <!--<caption>Listi yfir óvirk Íslandsmet</caption>-->
           <col span="1" class="wide" />
           <thead>
             <tr>
@@ -110,10 +93,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="(i, index) in sortedDataunActive"
-              v-show="index < 5 || showAllunActiveRecords"
-            >
+            <tr v-for="(i, index) in sortedDataunActive" v-show="index < 5 || showAllunActiveRecords">
               <th scope="row">{{ i.Event }} <small class="text-muted">{{ i.Units_symbol }}</small></th>
               <td>{{ i.Results_text }}</td>
               <td>{{ i.Wind }}</td>
@@ -124,13 +104,7 @@
             </tr>
           </tbody>
         </table>
-        <a
-          href="#"
-          v-on:click.prevent="toggle_unActiveRecords($event)"
-          v-if="showMoreLessButtonunActive"
-          class="text-success"
-          ><b><span v-html="textMoreLessunActive"></span></b></a
-        >
+        <a href="#" v-on:click.prevent="toggle_unActiveRecords($event)" v-if="showMoreLessButtonunActive" class="text-success"><b><span v-html="textMoreLessunActive"></span></b></a>
       </div>
     </div>
   </div>
@@ -382,10 +356,12 @@ export default {
 .table {
   margin-bottom: 0;
 }
+
 .td {
   text-align: center;
   vertical-align: middle;
 }
+
 .display-4 {
   margin-top: 1rem;
 }

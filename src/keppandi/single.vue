@@ -6,11 +6,7 @@
     </div> -->
     <!-- LOADING -->
     <div v-if="!isReady">
-      <pulse-loader
-        :loading="!isReady"
-        :color="color"
-        :size="size"
-      ></pulse-loader>
+      <pulse-loader :loading="!isReady" :color="color" :size="size"></pulse-loader>
       <p style="text-align: center">{{ message }}</p>
       <!--<img src="../assets/fri-loading-1.gif" alt="Hleð síðu" width=100%>-->
       <video autoplay loop muted playsinline width="100%">
@@ -20,51 +16,31 @@
     <!-- PROFILE -->
     <div id="competitor-view" v-if="isReady">
       <div class="action-div">
-        <img
-          class="img-fluid img-action"
-          v-bind:src="api_url_prefix + '/api/img/action/' + competitorID"
-        />
+        <img class="img-fluid img-action" v-bind:src="api_url_prefix + '/api/img/action/' + competitorID" />
         <div class="topleft">
           <h2 style="font-family: 'Beausite Classic Semibold', Sans-serif; font-size: 3.0vw">
-            <span style="font-feature-settings: 'ss05' on, 'ss12' on;"
-              >{{ competitor_info.FirstName }} {{ competitor_info.LastName }}</span
-            >
+            <span style="font-feature-settings: 'ss05' on, 'ss12' on;">{{ competitor_info.FirstName }} {{ competitor_info.LastName }}</span>
           </h2>
           <h5 style="font-family: 'Beausite Classic Regular', Sans-serif; font-size: 2.25vw;">
             {{ competitor_info.Club }} -
-            <i
-              class="fas"
-              v-bind:class="{
-                'fa-male': competitor_info.Sex == 1,
-                'fa-female': competitor_info.Sex == 2,
-              }"
-            ></i>
+            <i class="fas" v-bind:class="{
+              'fa-male': competitor_info.Sex == 1,
+              'fa-female': competitor_info.Sex == 2,
+            }"></i>
             {{ competitor_info.YOB }}
           </h5>
         </div>
         <div class="bottomleft">
-          <img
-            class="rounded-circle img-thumbnail img-profile"
-            v-bind:src="api_url_prefix + '/api/img/profile/' + competitorID"
-          />
+          <img class="rounded-circle img-thumbnail img-profile" v-bind:src="api_url_prefix + '/api/img/profile/' + competitorID" />
         </div>
         <div class="bottomright">
-          <img
-            class="img-club"
-            v-bind:src="ClubNameUrl"
-            @error="ClubLogoError"
-            v-if="showClubLogo"
-          />
+          <img class="img-club" v-bind:src="ClubNameUrl" @error="ClubLogoError" v-if="showClubLogo" />
         </div>
       </div>
       <!-- INFO -->
       <div>
         <recordstable :competitorID="competitorID"></recordstable>
-        <pbtable
-          :event_info="event_info"
-          :competitorID="competitorID"
-          ref="pbtable"
-        ></pbtable>
+        <pbtable :event_info="event_info" :competitorID="competitorID" ref="pbtable"></pbtable>
         <piechart :event_info="event_info" ref="pieChart"></piechart>
         <clubhistory :club_history="club_history"></clubhistory>
       </div>
@@ -213,18 +189,21 @@ export default {
   width: 50px;
   height: auto;
 }
+
 /* sm */
 @media (min-width: 768px) {
   .img-club {
     width: 75px;
   }
 }
+
 /* md */
 @media (min-width: 992px) {
   .img-club {
     width: 100px;
   }
 }
+
 /* lg */
 @media (min-width: 1200px) {
   .img-club {
@@ -237,18 +216,21 @@ export default {
   width: 50px;
   height: auto;
 }
+
 /* sm */
 @media (min-width: 768px) {
   .img-profile {
     width: 75px;
   }
 }
+
 /* md */
 @media (min-width: 992px) {
   .img-profile {
     width: 100px;
   }
 }
+
 /* lg */
 @media (min-width: 1200px) {
   .img-profile {

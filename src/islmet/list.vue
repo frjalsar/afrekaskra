@@ -1,7 +1,6 @@
 <template>
   <div>
-    <a href="http://mot.fri.is/MotFRI/Islandsmet.aspx"
-      >Íslands- og aldursflokkamet</a>
+    <a href="http://mot.fri.is/MotFRI/Islandsmet.aspx">Íslands- og aldursflokkamet</a>
     <br />
     <br />
     <a href="http://mot.fri.is/MotFRI/Oldungamet.aspx">Öldungamet</a>
@@ -28,10 +27,12 @@ body {
   width: 100%;
   margin: 0;
 }
+
 .h_iframe iframe {
   width: 100%;
   height: 100%;
 }
+
 .h_iframe {
   height: auto;
   width: 100%;

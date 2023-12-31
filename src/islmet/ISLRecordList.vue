@@ -252,25 +252,21 @@ export default {
       let record_list = [];
       //v-if="i.AgeGroup == agegroup && i.InOut == inout"
       if (this.agegroup_value < this.men_agegroups.length) // Check if the age group is a masters age group or not.
-        {
-          // Find the records for the age group and inout.
-          for (var i = 0; i < this.all_record_data.length; i++)
-            {
-                if ((this.all_record_data[i].AgeGroup === this.agegroup) && (this.all_record_data[i].InOut === this.inout))
-                {
-                    record_list.push(this.all_record_data[i])
-                }
-            }
-        } else {
-          // Find the records for the age group and inout.
-          for (var i = 0; i < this.masters_record_data.length; i++)
-            {
-              if ((this.masters_record_data[i].AgeGroup === this.agegroup) && (this.masters_record_data[i].InOut === this.inout))
-              {
-                  record_list.push(this.masters_record_data[i])
-              }
-            }
+      {
+        // Find the records for the age group and inout.
+        for (var i = 0; i < this.all_record_data.length; i++) {
+          if ((this.all_record_data[i].AgeGroup === this.agegroup) && (this.all_record_data[i].InOut === this.inout)) {
+            record_list.push(this.all_record_data[i])
+          }
         }
+      } else {
+        // Find the records for the age group and inout.
+        for (var i = 0; i < this.masters_record_data.length; i++) {
+          if ((this.masters_record_data[i].AgeGroup === this.agegroup) && (this.masters_record_data[i].InOut === this.inout)) {
+            record_list.push(this.masters_record_data[i])
+          }
+        }
+      }
       return record_list;
       /*console.log("Getting record data");
       if (this.agegroup_value < this.men_agegroups.length) {

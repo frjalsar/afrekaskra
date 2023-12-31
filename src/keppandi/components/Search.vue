@@ -1,13 +1,6 @@
 <template>
   <div>
-    <input
-      :value="searchQ"
-      type="text"
-      class="form-control text-center"
-      placeholder="Sláðu inn nafn, félag eða fæðingarár"
-      @input="searchInput"
-      ref="athleteSearch"
-    />
+    <input :value="searchQ" type="text" class="form-control text-center" placeholder="Sláðu inn nafn, félag eða fæðingarár" @input="searchInput" ref="athleteSearch" />
     <!-- -->
     <div class="row" v-show="showSearchQ">
       <div class="col-md-12">
@@ -24,24 +17,20 @@
             <tr v-if="showMessage">
               <td colspan="3" align="center">
                 <div v_if="loading">
-                <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
-                <p>{{message}}</p>
+                  <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
+                  <p>{{ message }}</p>
                 </div>
               </td>
             </tr>
-            <tr
-              v-for="athlete in athletes"
-              :key="athlete.CompetitorCode"
-              @click.prevent="onClick && onClick(athlete)"
-            >
+            <tr v-for="athlete in athletes" :key="athlete.CompetitorCode" @click.prevent="onClick && onClick(athlete)">
               <!--<td class="d-none d-lg-table-cell">{{ athlete.CompetitorCode }}</td>-->
               <td>
                 <!--<a v-bind:href="'/keppandi/' + athlete.CompetitorCode">{{athlete.Name}}</a>-->
-                <router-link :to="{ name: 'CompetitorProfile', params: { competitorID: athlete.CompetitorCode }}">
-                {{ athlete.Name }}
+                <router-link :to="{ name: 'CompetitorProfile', params: { competitorID: athlete.CompetitorCode } }">
+                  {{ athlete.Name }}
                 </router-link>
-                </td>
-                <td>{{ athlete.Club }}</td>
+              </td>
+              <td>{{ athlete.Club }}</td>
               <td>{{ athlete.YOB }}</td>
             </tr>
           </tbody>
@@ -90,9 +79,9 @@ export default {
   methods: {
     onClick(item) {
       //this.$router.push("/keppandi/" + item.CompetitorCode);
-      this.$router.push({name: 'CompetitorProfile', params: {competitorID: item.CompetitorCode}})
+      this.$router.push({ name: 'CompetitorProfile', params: { competitorID: item.CompetitorCode } })
     },
-    searchInput: debounce(function(e) {
+    searchInput: debounce(function (e) {
       this.searchQ = e.target && e.target.value;
       this.$router.replace({ query: { search: this.searchQ } });
 
@@ -130,8 +119,9 @@ export default {
       //console.log("Searching for " + this.searchQ);
       axios
         .get(url, {
-        cancelToken: this.cancelSource.token,
-        params: {search: this.searchQ}})
+          cancelToken: this.cancelSource.token,
+          params: { search: this.searchQ }
+        })
         .then(response => {
 
           this.athletes = response["data"];
@@ -139,8 +129,7 @@ export default {
           this.loading = false;
           this.showMessage = false;
 
-          if (this.athletes.length == 0)
-          {
+          if (this.athletes.length == 0) {
             this.message = "Enginn keppandi fannst";
             this.showMessage = true;
           }
@@ -157,7 +146,7 @@ export default {
           //this.loading = false;
         });
     },
-    cancelSearch () {
+    cancelSearch() {
       if (this.cancelSource) {
         this.cancelSource.cancel('Start new search, stop active search');
         //console.log('cancel request done');

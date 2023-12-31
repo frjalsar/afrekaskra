@@ -1,11 +1,7 @@
 <template>
   <div>
     <div v-if="!isReady">
-      <pulse-loader
-        :loading="!isReady"
-        :color="color"
-        :size="size"
-      ></pulse-loader>
+      <pulse-loader :loading="!isReady" :color="color" :size="size"></pulse-loader>
       <p style="text-align: center">{{ message }}</p>
       <!--<img src="../assets/fri-loading-2.gif" alt="Hleð síðu" width="100%" />-->
       <video autoplay loop muted playsinline width="100%">
@@ -15,95 +11,50 @@
     <div v-if="isReady">
       <div class="d-flex flex-row">
         <div class="p-2">
-          <router-link
-            :to="{
-              name: 'CompetitorProfile',
-              params: { competitorID: competitorID },
-            }"
-          >
-            <img
-              class="rounded-circle img-thumbnail img-profile"
-              v-bind:src="api_url_prefix + '/api/img/profile/' + competitorID"
-            />
+          <router-link :to="{
+            name: 'CompetitorProfile',
+            params: { competitorID: competitorID },
+          }">
+            <img class="rounded-circle img-thumbnail img-profile" v-bind:src="api_url_prefix + '/api/img/profile/' + competitorID" />
           </router-link>
         </div>
         <div class="p-2 align-self-center">
           <h3 style="font-size: 2.5vw">
-            <i
-              class="fas"
-              v-bind:class="{
-                'fa-male': competitor_info.Sex == 1,
-                'fa-female': competitor_info.Sex == 2,
-              }"
-            ></i>
-            <b
-              >{{ competitor_info.FirstName }} {{ competitor_info.LastName }}</b
-            >
-            <font style="font-size: 1.75vw" class="text-muted"
-              >- {{ competitor_info.Club }} ({{ competitor_info.YOB }})</font
-            >
+            <i class="fas" v-bind:class="{
+              'fa-male': competitor_info.Sex == 1,
+              'fa-female': competitor_info.Sex == 2,
+            }"></i>
+            <b>{{ competitor_info.FirstName }} {{ competitor_info.LastName }}</b>
+            <font style="font-size: 1.75vw" class="text-muted">- {{ competitor_info.Club }} ({{ competitor_info.YOB }})</font>
           </h3>
           <h4 style="font-size: 1.75vw">{{ event_info.NAME_SHORT }}</h4>
         </div>
       </div>
       <div class="d-flex flex-row">
         <h5>
-          <router-link
-            :to="{
-              name: 'CompetitorProfile',
-              params: { competitorID: competitorID },
-            }"
-          >
+          <router-link :to="{
+            name: 'CompetitorProfile',
+            params: { competitorID: competitorID },
+          }">
             <i class="fas fa-user-circle"></i> Fara á prófíl síðu iðkanda
           </router-link>
         </h5>
       </div>
       <div class="card">
         <div class="card-header">
-          <ul
-            class="nav nav-tabs card-header-tabs pull-right"
-            id="myTab"
-            role="tablist"
-          >
+          <ul class="nav nav-tabs card-header-tabs pull-right" id="myTab" role="tablist">
             <li class="nav-item">
-              <a
-                class="nav-link active"
-                id="bestbyyear-tab"
-                data-toggle="tab"
-                href="#bestbyyear"
-                role="tab"
-                aria-controls="bestbyyear"
-                aria-selected="true"
-                v-on:click="onTabClick"
-              >
+              <a class="nav-link active" id="bestbyyear-tab" data-toggle="tab" href="#bestbyyear" role="tab" aria-controls="bestbyyear" aria-selected="true" v-on:click="onTabClick">
                 Ársbest
               </a>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link"
-                id="timeseries-tab"
-                data-toggle="tab"
-                href="#timeseries"
-                role="tab"
-                aria-controls="timeseries"
-                aria-selected="false"
-                v-on:click="onTabClick"
-              >
+              <a class="nav-link" id="timeseries-tab" data-toggle="tab" href="#timeseries" role="tab" aria-controls="timeseries" aria-selected="false" v-on:click="onTabClick">
                 Tímaröð
               </a>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link"
-                id="progression-tab"
-                data-toggle="tab"
-                href="#progression"
-                role="tab"
-                aria-controls="progression"
-                aria-selected="false"
-                v-on:click="onTabClick"
-              >
+              <a class="nav-link" id="progression-tab" data-toggle="tab" href="#progression" role="tab" aria-controls="progression" aria-selected="false" v-on:click="onTabClick">
                 Bætingar
               </a>
             </li>
@@ -125,68 +76,29 @@
         </div>
         <div class="card-body">
           <div class="tab-content" id="myTabContent">
-            <div
-              class="tab-pane fade show active"
-              id="bestbyyear"
-              role="tabpanel"
-              aria-labelledby="bestbyyear-tab"
-            >
+            <div class="tab-pane fade show active" id="bestbyyear" role="tabpanel" aria-labelledby="bestbyyear-tab">
               <p>
                 Grafið sýnir besta árangur í greininni á hverju ári.
                 Ef mældur er vindur í greininni er hægt að
                 velja að taka líka með ólöglegan árangur með því að smella á
                 "Allir árangrar" undir grafinu. Á símum er best að skoða grafið
-                í láréttum ham.&nbsp;&nbsp;<i
-                  class="fas fa-mobile-alt fa-rotate-270"
-                ></i>
+                í láréttum ham.&nbsp;&nbsp;<i class="fas fa-mobile-alt fa-rotate-270"></i>
               </p>
-              <yearchart
-                :alldata="yearAllData"
-                :legaldata="yearLegalData"
-                :event_info="event_info"
-                ref="yearChart"
-                v-if="showYearChart"
-              ></yearchart>
+              <yearchart :alldata="yearAllData" :legaldata="yearLegalData" :event_info="event_info" ref="yearChart" v-if="showYearChart"></yearchart>
             </div>
-            <div
-              class="tab-pane fade"
-              id="timeseries"
-              role="tabpanel"
-              aria-labelledby="timeseries-tab"
-            >
+            <div class="tab-pane fade" id="timeseries" role="tabpanel" aria-labelledby="timeseries-tab">
               <p>
                 Grafið sýnir alla árangra í greininni í tímaröð. Á símum er
-                best að skoða grafið í láréttum ham.&nbsp;&nbsp;<i
-                  class="fas fa-mobile-alt fa-rotate-270"
-                ></i>
+                best að skoða grafið í láréttum ham.&nbsp;&nbsp;<i class="fas fa-mobile-alt fa-rotate-270"></i>
               </p>
-              <timeserieschart
-                :data="timeData"
-                :event_info="event_info"
-                :competitorID="competitorID"
-                :eventID="eventID"
-                ref="timeChart"
-                v-if="showTimeChart"
-              ></timeserieschart>
+              <timeserieschart :data="timeData" :event_info="event_info" :competitorID="competitorID" :eventID="eventID" ref="timeChart" v-if="showTimeChart"></timeserieschart>
             </div>
-            <div
-              class="tab-pane fade"
-              id="progression"
-              role="tabpanel"
-              aria-labelledby="progression-tab"
-            >
+            <div class="tab-pane fade" id="progression" role="tabpanel" aria-labelledby="progression-tab">
               <p>
                 Grafið sýnir bætingar á löglegum árangri í greininni. Á símum er
-                best að skoða grafið í láréttum ham.&nbsp;&nbsp;<i
-                  class="fas fa-mobile-alt fa-rotate-270"
-                ></i>
+                best að skoða grafið í láréttum ham.&nbsp;&nbsp;<i class="fas fa-mobile-alt fa-rotate-270"></i>
               </p>
-              <progressionchart
-                :data="progressionData"
-                :event_info="event_info"
-                ref="progressionChart"
-                v-if="showProgressionChart"
-              ></progressionchart>
+              <progressionchart :data="progressionData" :event_info="event_info" ref="progressionChart" v-if="showProgressionChart"></progressionchart>
             </div>
           </div>
         </div>
@@ -195,11 +107,7 @@
       <p>
         Taflan hér að neðan sýnir alla árangra íþróttamannsins í greininni.
       </p>
-      <achievementtable
-        :event_info="event_info"
-        :showAllEvents="showAllEvents"
-        :event_data="event_data"
-      ></achievementtable>
+      <achievementtable :event_info="event_info" :showAllEvents="showAllEvents" :event_data="event_data"></achievementtable>
     </div>
   </div>
 </template>
@@ -533,18 +441,23 @@ export default {
   width: 50px;
   height: auto;
 }
+
 /* sm */
 @media (min-width: 768px) {
   .img-profile {
     width: 75px;
-  };
+  }
+
+  ;
 }
+
 /* md */
 @media (min-width: 992px) {
   .img-profile {
     width: 100px;
   }
 }
+
 /* lg */
 @media (min-width: 1200px) {
   .img-profile {

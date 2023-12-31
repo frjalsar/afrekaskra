@@ -8,9 +8,7 @@
       þeim tilvikum þegar enginn löglegur árangur er til.
       <br />
       <i class="far fa-hand-pointer"></i>
-      <small
-        >Veldu grein í töflunni til að sjá meiri upplýsingar um hana.</small
-      >
+      <small>Veldu grein í töflunni til að sjá meiri upplýsingar um hana.</small>
     </p>
     <table class="table table-striped table-hover table-responsive-sm table-sm">
       <!--<caption>Listi yfir árangur</caption>-->
@@ -26,35 +24,24 @@
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="(i, index) in event_info"
-          v-show="index < 5 || showAllEvents"
-          :key="i.Event"
-          @click.prevent="onClick && onClick(i)"
-        >
+        <tr v-for="(i, index) in event_info" v-show="index < 5 || showAllEvents" :key="i.Event" @click.prevent="onClick && onClick(i)">
           <!-- v-bind:style="{display: 'none'}" -->
           <th scope="row">
-            <router-link
-              :to="{
-                name: 'CompetitorEvent',
-                params: { competitorID: competitorID, eventID: i.EventID },
-              }"
-            >
+            <router-link :to="{
+              name: 'CompetitorEvent',
+              params: { competitorID: competitorID, eventID: i.EventID },
+            }">
               {{ i.EventShortName }}
               <small class="text-muted">{{ i.EventUnit }}</small>
             </router-link>
           </th>
           <td>
             {{ i.PB_out }}
-            <small class="text-muted" v-if="i.PB_out !== ''"
-              >({{ i.PB_out_date }})</small
-            >
+            <small class="text-muted" v-if="i.PB_out !== ''">({{ i.PB_out_date }})</small>
           </td>
           <td>
             {{ i.PB_in }}
-            <small class="text-muted" v-if="i.PB_in !== ''"
-              >({{ i.PB_in_date }})</small
-            >
+            <small class="text-muted" v-if="i.PB_in !== ''">({{ i.PB_in_date }})</small>
           </td>
           <td>{{ i.SB_cur }}</td>
           <td>{{ i.SB_last }}</td>
@@ -62,13 +49,7 @@
         </tr>
       </tbody>
     </table>
-    <a
-      href="#"
-      v-on:click.prevent="toggle_showEvents($event)"
-      v-if="showMoreLessButton"
-      class="text-success"
-      ><b><span v-html="textMoreLess"></span></b
-    ></a>
+    <a href="#" v-on:click.prevent="toggle_showEvents($event)" v-if="showMoreLessButton" class="text-success"><b><span v-html="textMoreLess"></span></b></a>
   </div>
 </template>
 
@@ -117,10 +98,12 @@ export default {
   margin-bottom: 0;
   width: 100%;
 }
+
 .td {
   text-align: center;
   vertical-align: middle;
 }
+
 .display-4 {
   margin-top: 1rem;
 }

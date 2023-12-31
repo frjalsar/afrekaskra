@@ -4,149 +4,64 @@
       <div class="card-header">
         <div class="row mb-4">
           <div class="col">
-            <ul
-              class="nav nav-pills nav-fill card-header-tabs pull-right"
-              id="myTab"
-              role="tablist"
-            >
+            <ul class="nav nav-pills nav-fill card-header-tabs pull-right" id="myTab" role="tablist">
               <!-- https://codepen.io/surjithctly/pen/PJqKzQ -->
               <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  id="navbarDropdownMenuLink"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  >{{ eventText }}</a
-                >
-                <ul
-                  v-on:click="event_change($event)"
-                  class="dropdown-menu"
-                  aria-labelledby="navbarDropdownMenuLink"
-                >
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ eventText }}</a>
+                <ul v-on:click="event_change($event)" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                   <li class="dropdown-submenu">
-                    <a
-                      v-bind:class="{ active: event_type === 1 }"
-                      class="dropdown-item dropdown-toggle"
-                      >Stökkgreinar</a
-                    >
+                    <a v-bind:class="{ active: event_type === 1 }" class="dropdown-item dropdown-toggle">Stökkgreinar</a>
                     <ul class="dropdown-menu">
                       <li v-for="i in events_jump">
-                        <a
-                          v-bind:class="{ active: event_id === i.id }"
-                          :id="i.id"
-                          :data-event-type="i.type"
-                          class="dropdown-item"
-                          >{{ i.name }}</a
-                        >
+                        <a v-bind:class="{ active: event_id === i.id }" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{ i.name }}</a>
                       </li>
                     </ul>
                   </li>
                   <li class="dropdown-submenu">
-                    <a
-                      v-bind:class="{ active: event_type === 2 }"
-                      class="dropdown-item dropdown-toggle"
-                      >Kastgreinar</a
-                    >
+                    <a v-bind:class="{ active: event_type === 2 }" class="dropdown-item dropdown-toggle">Kastgreinar</a>
                     <ul class="dropdown-menu">
                       <li v-for="i in events_throw">
-                        <a
-                          v-bind:class="{ active: event_id === i.id }"
-                          :id="i.id"
-                          :data-event-type="i.type"
-                          class="dropdown-item"
-                          >{{ i.name }}</a
-                        >
+                        <a v-bind:class="{ active: event_id === i.id }" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{ i.name }}</a>
                       </li>
                     </ul>
                   </li>
                   <li class="dropdown-submenu">
-                    <a
-                      v-bind:class="{ active: event_type === 3 }"
-                      class="dropdown-item dropdown-toggle"
-                      >Spretthlaup</a
-                    >
+                    <a v-bind:class="{ active: event_type === 3 }" class="dropdown-item dropdown-toggle">Spretthlaup</a>
                     <ul class="dropdown-menu">
                       <li v-for="i in events_sprint">
-                        <a
-                          v-bind:class="{ active: event_id === i.id }"
-                          :id="i.id"
-                          :data-event-type="i.type"
-                          class="dropdown-item"
-                          >{{ i.name }}</a
-                        >
+                        <a v-bind:class="{ active: event_id === i.id }" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{ i.name }}</a>
                       </li>
                     </ul>
                   </li>
                   <li class="dropdown-submenu">
-                    <a
-                      v-bind:class="{ active: event_type === 4 }"
-                      class="dropdown-item dropdown-toggle"
-                      >Grindarhlaup</a
-                    >
+                    <a v-bind:class="{ active: event_type === 4 }" class="dropdown-item dropdown-toggle">Grindarhlaup</a>
                     <ul class="dropdown-menu">
                       <li v-for="i in events_hurdle">
-                        <a
-                          v-bind:class="{ active: event_id === i.id }"
-                          :id="i.id"
-                          :data-event-type="i.type"
-                          class="dropdown-item"
-                          >{{ i.name }}</a
-                        >
+                        <a v-bind:class="{ active: event_id === i.id }" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{ i.name }}</a>
                       </li>
                     </ul>
                   </li>
                   <li class="dropdown-submenu">
-                    <a
-                      v-bind:class="{ active: event_type === 5 }"
-                      class="dropdown-item dropdown-toggle"
-                      >Millivegalengdir</a
-                    >
+                    <a v-bind:class="{ active: event_type === 5 }" class="dropdown-item dropdown-toggle">Millivegalengdir</a>
                     <ul class="dropdown-menu">
                       <li v-for="i in events_middle">
-                        <a
-                          v-bind:class="{ active: event_id === i.id }"
-                          :id="i.id"
-                          :data-event-type="i.type"
-                          class="dropdown-item"
-                          >{{ i.name }}</a
-                        >
+                        <a v-bind:class="{ active: event_id === i.id }" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{ i.name }}</a>
                       </li>
                     </ul>
                   </li>
                   <li class="dropdown-submenu">
-                    <a
-                      v-bind:class="{ active: event_type === 6 }"
-                      class="dropdown-item dropdown-toggle"
-                      >Langhlaup</a
-                    >
+                    <a v-bind:class="{ active: event_type === 6 }" class="dropdown-item dropdown-toggle">Langhlaup</a>
                     <ul class="dropdown-menu">
                       <li v-for="i in events_long">
-                        <a
-                          v-bind:class="{ active: event_id === i.id }"
-                          :id="i.id"
-                          :data-event-type="i.type"
-                          class="dropdown-item"
-                          >{{ i.name }}</a
-                        >
+                        <a v-bind:class="{ active: event_id === i.id }" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{ i.name }}</a>
                       </li>
                     </ul>
                   </li>
                   <li class="dropdown-submenu">
-                    <a
-                      v-bind:class="{ active: event_type === 7 }"
-                      class="dropdown-item dropdown-toggle"
-                      >Þrautagreinar</a
-                    >
+                    <a v-bind:class="{ active: event_type === 7 }" class="dropdown-item dropdown-toggle">Þrautagreinar</a>
                     <ul class="dropdown-menu">
                       <li v-for="i in events_athlon">
-                        <a
-                          v-bind:class="{ active: event_id === i.id }"
-                          :id="i.id"
-                          :data-event-type="i.type"
-                          class="dropdown-item"
-                          >{{ i.name }}</a
-                        >
+                        <a v-bind:class="{ active: event_id === i.id }" :id="i.id" :data-event-type="i.type" class="dropdown-item">{{ i.name }}</a>
                       </li>
                     </ul>
                   </li>
@@ -154,63 +69,19 @@
               </li>
               <!-- Women = 2, Men = 1-->
               <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  data-toggle="dropdown"
-                  role="button"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  >{{ sexText }}</a
-                >
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ sexText }}</a>
                 <div class="dropdown-menu" id="sexDropdown">
-                  <a
-                    v-on:click="toogle_sex($event, 2)"
-                    class="dropdown-item"
-                    id="1"
-                    v-bind:class="{ active: gender === 2 }"
-                    >Konur</a
-                  >
-                  <a
-                    v-on:click="toogle_sex($event, 1)"
-                    class="dropdown-item"
-                    id="2"
-                    v-bind:class="{ active: gender === 1 }"
-                    >Karlar</a
-                  >
+                  <a v-on:click="toogle_sex($event, 2)" class="dropdown-item" id="1" v-bind:class="{ active: gender === 2 }">Konur</a>
+                  <a v-on:click="toogle_sex($event, 1)" class="dropdown-item" id="2" v-bind:class="{ active: gender === 1 }">Karlar</a>
                 </div>
               </li>
               <!-- Dropdown for indoor, outdoor or both select-->
               <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  data-toggle="dropdown"
-                  role="button"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  >{{ inoutText }}</a
-                >
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ inoutText }}</a>
                 <div class="dropdown-menu" id="outinDropdown">
-                  <a
-                    v-on:click="toogle_innout($event, 1)"
-                    class="dropdown-item"
-                    id="1"
-                    v-bind:class="{ active: outin === 1 }"
-                    >Innanhúss</a
-                  >
-                  <a
-                    v-on:click="toogle_innout($event, 2)"
-                    class="dropdown-item"
-                    id="2"
-                    v-bind:class="{ active: outin === 2 }"
-                    >Innan- og utanhúss</a
-                  >
-                  <a
-                    v-on:click="toogle_innout($event, 0)"
-                    class="dropdown-item"
-                    id="0"
-                    v-bind:class="{ active: outin === 0 }"
-                    >Utanhúss</a
-                  >
+                  <a v-on:click="toogle_innout($event, 1)" class="dropdown-item" id="1" v-bind:class="{ active: outin === 1 }">Innanhúss</a>
+                  <a v-on:click="toogle_innout($event, 2)" class="dropdown-item" id="2" v-bind:class="{ active: outin === 2 }">Innan- og utanhúss</a>
+                  <a v-on:click="toogle_innout($event, 0)" class="dropdown-item" id="0" v-bind:class="{ active: outin === 0 }">Utanhúss</a>
                 </div>
               </li>
               <!---->
@@ -247,26 +118,9 @@
               -->
               <!---->
               <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  data-toggle="dropdown"
-                  role="button"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  >{{ ageText }}</a
-                >
-                <div
-                  v-on:click="age_change($event)"
-                  class="dropdown-menu"
-                  id="ageDropdown"
-                >
-                  <a
-                    v-for="i in ageGroups"
-                    v-bind:class="{ active: ageGroup === i.id }"
-                    class="dropdown-item"
-                    :id="i.id"
-                    >{{ i.name }}</a
-                  >
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ ageText }}</a>
+                <div v-on:click="age_change($event)" class="dropdown-menu" id="ageDropdown">
+                  <a v-for="i in ageGroups" v-bind:class="{ active: ageGroup === i.id }" class="dropdown-item" :id="i.id">{{ i.name }}</a>
                 </div>
               </li>
               <!---->
@@ -278,44 +132,20 @@
             <div class="row justify-content-center">
               <div class="col-md-4 col-sm-12 mb-3 text-center">
                 <div class="custom-control custom-switch">
-                  <input
-                    v-on:click="toggle_bestbyath($event)"
-                    type="checkbox"
-                    class="custom-control-input"
-                    id="customSwitch2"
-                    :checked="isBestByAthActive"
-                  />
-                  <label class="custom-control-label" for="customSwitch2"
-                    >Birta bara besta afrek íþróttamanns</label
-                  >
+                  <input v-on:click="toggle_bestbyath($event)" type="checkbox" class="custom-control-input" id="customSwitch2" :checked="isBestByAthActive" />
+                  <label class="custom-control-label" for="customSwitch2">Birta bara besta afrek íþróttamanns</label>
                 </div>
               </div>
               <div class="col-md-4 col-sm-12 mb-3 text-center">
                 <div class="custom-control custom-switch">
-                  <input
-                    v-on:click="toggle_legalresults($event)"
-                    type="checkbox"
-                    class="custom-control-input"
-                    id="customSwitch1"
-                    :checked="!isLegalActive"
-                  />
-                  <label class="custom-control-label" for="customSwitch1"
-                    >Birta ólöglegan árangur</label
-                  >
+                  <input v-on:click="toggle_legalresults($event)" type="checkbox" class="custom-control-input" id="customSwitch1" :checked="!isLegalActive" />
+                  <label class="custom-control-label" for="customSwitch1">Birta ólöglegan árangur</label>
                 </div>
               </div>
               <div class="col-md-4 col-sm-12 mb-3 text-center">
                 <div class="custom-control custom-switch">
-                  <input
-                    v-on:click="toggle_isl($event)"
-                    type="checkbox"
-                    class="custom-control-input"
-                    id="customSwitch3"
-                    :checked="!isISLActive"
-                  />
-                  <label class="custom-control-label" for="customSwitch3"
-                    >Birta öll þjóðerni</label
-                  >
+                  <input v-on:click="toggle_isl($event)" type="checkbox" class="custom-control-input" id="customSwitch3" :checked="!isISLActive" />
+                  <label class="custom-control-label" for="customSwitch3">Birta öll þjóðerni</label>
                 </div>
               </div>
             </div>
@@ -386,35 +216,18 @@
             <div class="row justify-content-center">
               <div class="col-md-auto col-sm-12 mb-3 text-center">
                 <!--:shortcuts="shortcutsFromDate"-->
-                    Dags. frá: 
-                    <date-picker
-                    v-model:value="fromDate"
-                    v-bind:value="fromDate"
-                    valueType="format"
-                    @change="setFromDate"
-                    :editable="false"
-                    :clearable="false"
-                    :shortcuts="shortcutsFromDate"
-                    :disabled-date="disabledBefore1900AndAfterThisYear"
-                    >
-                  </date-picker>
+                Dags. frá:
+                <date-picker v-model:value="fromDate" v-bind:value="fromDate" valueType="format" @change="setFromDate" :editable="false" :clearable="false" :shortcuts="shortcutsFromDate" :disabled-date="disabledBefore1900AndAfterThisYear">
+                </date-picker>
               </div>
             </div>
           </div>
           <div class="col">
             <div class="row justify-content-center">
               <div class="col-md-auto col-sm-12 mb-3 text-center">
-                    Dags. til: 
-                    <date-picker
-                    v-model:value="toDate"
-                    v-bind:value="toDate"
-                    valueType="format"
-                    @change="setToDate"
-                    :editable="false"
-                    :clearable="false"
-                    :shortcuts="shortcutsToDate"
-                    :disabled-date="disabledBefore1900AndAfterThisYear"
-                    ></date-picker>
+                Dags. til:
+                <date-picker v-model:value="toDate" v-bind:value="toDate" valueType="format" @change="setToDate" :editable="false" :clearable="false" :shortcuts="shortcutsToDate"
+                  :disabled-date="disabledBefore1900AndAfterThisYear"></date-picker>
               </div>
             </div>
           </div>
@@ -423,12 +236,7 @@
 
       <div class="card-body">
         <div class="tab-content" id="myTabContent">
-          <div
-            class="tab-pane fade show active"
-            id="datatab"
-            role="tabpanel"
-            aria-labelledby="data-tab"
-          >
+          <div class="tab-pane fade show active" id="datatab" role="tabpanel" aria-labelledby="data-tab">
             <!-- ------------------------------------------------------------------------------------------------------------------------------------------------- -->
             <table class="table table-striped table-responsive-sm">
               <thead>
@@ -453,41 +261,27 @@
                     {{ competitor.wind }}
                   </td>
                   <td>
-                    <router-link
-                      :to="{
-                        name: 'CompetitorProfile',
-                        params: { competitorID: competitor.competitor_code },
-                      }"
-                    >
+                    <router-link :to="{
+                      name: 'CompetitorProfile',
+                      params: { competitorID: competitor.competitor_code },
+                    }">
                       <a>{{ competitor.name }}</a>
                     </router-link>
                     <!--<a v-bind:href="'/keppandi/' + competitor.competitor_code">{{competitor.name}}</a>-->
                   </td>
                   <td class="d-none d-sm-table-cell">{{ competitor.age }}</td>
-                  <td class="d-none d-sm-table-cell"><img
-                      class="img-club"
-                      v-bind:src="'/api/img/club/' + competitor.club.split('-')[0].split('/')[0]"
-                      v-bind:alt="competitor.club"
-                    />
+                  <td class="d-none d-sm-table-cell"><img class="img-club" v-bind:src="'/api/img/club/' + competitor.club.split('-')[0].split('/')[0]" v-bind:alt="competitor.club" />
                   </td>
                   <td class="d-none d-xl-table-cell">
-                    <a
-                      v-bind:href="
-                        'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' +
-                        competitor.competition_id
-                      "
-                      >{{ competitor.competition_name }}</a
-                    >
+                    <a v-bind:href="'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' +
+                      competitor.competition_id
+                      ">{{ competitor.competition_name }}</a>
                   </td>
                   <td class="d-none d-md-table-cell">{{ competitor.date }}</td>
                 </tr>
               </tbody>
             </table>
-            <pulse-loader
-              :loading="loading"
-              :color="color"
-              :size="size"
-            ></pulse-loader>
+            <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
             <p align="center">{{ message }}</p>
             <!-- ------------------------------------------------------------------------------------------------------------------------------------------------- -->
           </div>
@@ -567,7 +361,7 @@ export default {
             return date;
           },
         },
-          {
+        {
           text: (new Date().getFullYear() - 1).toString(),
           onClick() {
             // From date
@@ -816,15 +610,15 @@ export default {
         { id: 227, type: 2, name: "Spjótkast (600 gr) [KO, P15]" },
         { id: 233, type: 2, name: "Spjótkast (500 gr) [S17]" },
         { id: 230, type: 2, name: "Spjótkast (400 gr) [S15]" },
-        { id: 188, type: 2, name: "Lóðkast (15,88 kg)"},
-        { id: 181, type: 2, name: "Lóðkast (15,0 kg)"},
-        { id: 183, type: 2, name: "Lóðkast (11,34 kg)"},
-        { id: 186, type: 2, name: "Lóðkast (10,0 kg)"},
-        { id: 182, type: 2, name: "Lóðkast (9,08 kg)"},
+        { id: 188, type: 2, name: "Lóðkast (15,88 kg)" },
+        { id: 181, type: 2, name: "Lóðkast (15,0 kg)" },
+        { id: 183, type: 2, name: "Lóðkast (11,34 kg)" },
+        { id: 186, type: 2, name: "Lóðkast (10,0 kg)" },
+        { id: 182, type: 2, name: "Lóðkast (9,08 kg)" },
         //{ id: 193, type: 2, name: "Lóðkast (9,0 kg)"},
-        { id: 191, type: 2, name: "Lóðkast (8,0 kg)"},
-        { id: 184, type: 2, name: "Lóðkast (7,26 kg)"},
-        { id: 185, type: 2, name: "Lóðkast (5,45 kg)"},
+        { id: 191, type: 2, name: "Lóðkast (8,0 kg)" },
+        { id: 184, type: 2, name: "Lóðkast (7,26 kg)" },
+        { id: 185, type: 2, name: "Lóðkast (5,45 kg)" },
       ],
       events_sprint: [
         { id: 82, type: 3, name: "60 metra hlaup" },
@@ -858,9 +652,9 @@ export default {
       events_middle: [
         { id: 81, type: 5, name: "600 metra hlaup" },
         { id: 97, type: 5, name: "800 metra hlaup" },
-        { id: 4,  type: 5, name: "1000 metra hlaup"},
+        { id: 4, type: 5, name: "1000 metra hlaup" },
         { id: 19, type: 5, name: "1500 metra hlaup" },
-        { id: 1 , type: 5, name: "1 míla"},
+        { id: 1, type: 5, name: "1 míla" },
         { id: 30, type: 5, name: "3000 metra hlaup" },
         { id: 32, type: 5, name: "3000 metra hindrun" },
       ],
@@ -1038,7 +832,7 @@ export default {
     this.fromDate = this.year + "-01-01";
     this.toDate = this.year + "-12-31";
     this.toMaxDate = this.year + "-12-31";
-    
+
     //while (year_end + 1 > year_start) {
     //  this.year_list.push(year_end--);
     //}
@@ -1108,19 +902,19 @@ export default {
       if (split_from[0] > split_to[0]) {
         this.message =
           "Frá-dagsetning getur ekki verið á eftir til-dagsetningu 😟";
-          this.data = [];
+        this.data = [];
         return;
       } else if (split_from[0] === split_to[0]) {
         if (split_from[1] > split_to[1]) {
           this.message =
             "Frá-dagsetning getur ekki verið á eftir til-dagsetningu 😟";
-            this.data = [];
+          this.data = [];
           return;
         } else if (split_from[1] === split_to[1]) {
           if (split_from[2] > split_to[2]) {
             this.message =
               "Frá-dagsetning getur ekki verið á eftir til-dagsetningu 😟";
-              this.data = [];
+            this.data = [];
             return;
           }
         }

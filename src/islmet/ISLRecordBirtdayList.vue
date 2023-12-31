@@ -8,52 +8,46 @@
       <!--<p style="text-align:center">{{message}}</p>-->
     </div>
     <div v-if="!loading">
-    <p>Eftirfarandi <router-link :to="{name: 'IcelandicRecords'}">met</router-link> eiga afmæli á næstunni.</p>
-    <table class="table table-striped table-hover table-responsive-sm table-sm">
-      <!--<caption>Listi yfir afmæli Íslandsmeta</caption>-->
-      <col span="1" class="wide" />
-      <thead>
-        <tr>
-          <th scope="col">Grein</th>
-          <th scope="col">Methafi</th>
-          <th scope="col">Árangur</th>
-          <th scope="col">Aldur mets</th>
-          <th scope="col">Vindur</th>
-          <th scope="col">Úti/Inni</th>
-          <th scope="col">Dags.</th>
-          <th scope="col">Aldursfl.</th>
-          <th scope="col">Félag</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(i, index) in RecordData">
-          <th scope="row">{{ i.Event }}</th>
-          <td>
-            <router-link
-              :to="{
+      <p>Eftirfarandi <router-link :to="{ name: 'IcelandicRecords' }">met</router-link> eiga afmæli á næstunni.</p>
+      <table class="table table-striped table-hover table-responsive-sm table-sm">
+        <!--<caption>Listi yfir afmæli Íslandsmeta</caption>-->
+        <col span="1" class="wide" />
+        <thead>
+          <tr>
+            <th scope="col">Grein</th>
+            <th scope="col">Methafi</th>
+            <th scope="col">Árangur</th>
+            <th scope="col">Aldur mets</th>
+            <th scope="col">Vindur</th>
+            <th scope="col">Úti/Inni</th>
+            <th scope="col">Dags.</th>
+            <th scope="col">Aldursfl.</th>
+            <th scope="col">Félag</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(i, index) in RecordData">
+            <th scope="row">{{ i.Event }}</th>
+            <td>
+              <router-link :to="{
                 name: 'CompetitorProfile',
                 params: { competitorID: i.CompetitorID },
-              }"
-            >
-              <a>{{ i.Name }}</a>
-            </router-link>
-          </td>
-          <td>{{ i.Results_text }} <small class="text-muted">{{ i.Units_symbol }}</small></td>
-          <td>{{ i.Age_record }}</td>
-          <td>{{ i.Wind }}</td>
-          <td>{{ inout_text(i.Inout) }}</td>
-          <td>{{ i.Date }}</td>
-          <td>{{ i.AgeGroup }}</td>
-          <td><img
-                class="img-club"
-                v-bind:src="'/api/img/club/' + i.Club"
-                v-bind:alt="i.Club"
-              />
-              </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+              }">
+                <a>{{ i.Name }}</a>
+              </router-link>
+            </td>
+            <td>{{ i.Results_text }} <small class="text-muted">{{ i.Units_symbol }}</small></td>
+            <td>{{ i.Age_record }}</td>
+            <td>{{ i.Wind }}</td>
+            <td>{{ inout_text(i.Inout) }}</td>
+            <td>{{ i.Date }}</td>
+            <td>{{ i.AgeGroup }}</td>
+            <td><img class="img-club" v-bind:src="'/api/img/club/' + i.Club" v-bind:alt="i.Club" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 

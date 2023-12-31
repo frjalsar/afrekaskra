@@ -112,10 +112,10 @@ export default {
           },
         },
         chart: {
-        //  plotBackgroundImage: require('../../bg-1.png'),
-            scrollablePlotArea: {
+          //  plotBackgroundImage: require('../../bg-1.png'),
+          scrollablePlotArea: {
             minWidth: 550
-        }
+          }
         },
         title: {
           text: "",
