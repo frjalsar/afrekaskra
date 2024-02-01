@@ -84,8 +84,8 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
     # Hendum út öllu sem er ekki í top 100
     df = df.iloc[0:100]
 
-    # Skipta út NaN fyrir 0.0 í vind (Innanhúss árangur og árangur þar sem ekki er mældur vindur)
-    df['vindur'].fillna(0.0, inplace=True)
+    # Skiptum út NaN fyrir 0.0 í vind (Innanhúss árangur og árangur þar sem ekki er mældur vindur)
+    df.fillna({'vindur': 0.0}, inplace=True)
 
     Achievements_list = []
     for index, row in df.iterrows():
