@@ -77,7 +77,7 @@ def Convert_Achievements_to_List_PD(q, best_by_ath, Event_Info):
     else:
         df.sort_values(by=['árangur_sort', 'dagsetning'], ascending=[False, True], inplace=True)
 
-    # Athuga hvort við viljum bara besta árangur íþróttamanns. Ef svo er hendum við úr endurtekningum en höldum fyrstu línu.
+    # Athuga hvort við viljum bara besta árangur íþróttamanns. Ef svo er hendum við út endurtekningum en höldum fyrstu línu.
     if (best_by_ath == True):
         df.drop_duplicates(subset=['keppandanúmer'], keep='first', inplace=True, ignore_index=True)
 
