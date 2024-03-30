@@ -56,7 +56,7 @@ def Get_Event_Info_by_Name(EventName):
         event_info['EVENT_ID'] = event_list.index(NameofEvent)
         event_info['DISTANCE'] = Find_Distance(NameofEvent)
     except:
-        print('VILLA: Fann ekki grein {}'.format(NameofEvent))
+        print('VILLA: Fann ekki grein "{}"'.format(NameofEvent))
         print(NameofEvent)
         event_info = event_dict['Óþekkt grein']
         event_info['NAME_SHORT'] = NameofEvent

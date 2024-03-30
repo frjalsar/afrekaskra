@@ -2,7 +2,12 @@ from Sif import common
 from Sif import events
 import numpy as np
 import pandas as pd
+#pd.options.mode.copy_on_write = True
+pd.options.mode.chained_assignment = None  # default='warn'
 from datetime import datetime, timedelta
+
+import warnings
+warnings.filterwarnings('ignore')
 
 # Database
 # We only use AthlCompetitors for information about competitors
@@ -60,6 +65,7 @@ def Get_Competitor_Info(CompetitorCode):
 	# WindReadingText nvarchar(20));
 def Get_Competitor_Achievements(CompetitorCode):
     # Núverandi ár. Þarf til að kalla á stored procedure
+    warnings.filterwarnings('ignore')
     CurrentYear = datetime.now().year
     
     # Köllum á stored procedure sem heitir CompetitorsAchievements.
@@ -78,7 +84,7 @@ def Get_Competitor_Achievements(CompetitorCode):
     return df
 
 #def Get_Competitor_Events_Info(CompetitorCode):
-def Get_Competitor_Events_Info(df):
+def Get_Competitor_Events_Info(df, CompetitorCode=None):
     #df = Get_Competitor_Achievements(CompetitorCode)
 
     # Búa til lista yfir greinar
@@ -93,7 +99,11 @@ def Get_Competitor_Events_Info(df):
         try:
             event_info = events.Get_Event_Info_by_Name(row['EventName'])
         except:
-            print('Hello error')
+            print('Error: Get_Event_Info_by_Name')
+            #print(row['EventName'])
+            print('index = {}'.format(index))
+            print('competitor = {}'.format(CompetitorCode))
+            print(row)
             continue
 
         # Flokka út Grein
@@ -139,6 +149,7 @@ def Get_Competitor_Events_Info(df):
                 df_event_nowind_out.loc[index, 'Results_sort'] = row['Results_float'] + hand_buffer
 
         df_event_in['Results_sort'] = df_event_in['Results_float'].copy()
+        #df_event_in['Results_sort'] = df_event_in.loc[:, 'Results_float']
         for index, row in df_event_in.iterrows():
             if row['Rafmagnstímataka'] == 1:
                 df_event_in.loc[index, 'Results_sort'] = row['Results_float']

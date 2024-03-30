@@ -34,7 +34,7 @@ def Print_list_vertically(my_list):
 def get_competitor(request, CompetitorCode=None):
     df = competitor.Get_Competitor_Achievements(CompetitorCode)
     Competitor_info = competitor.Get_Competitor_Info(CompetitorCode)
-    Event_info = competitor.Get_Competitor_Events_Info(df)
+    Event_info = competitor.Get_Competitor_Events_Info(df, CompetitorCode)
     club_list, club_history = competitor.Get_Club_By_Year(df)
     return JsonResponse({'Competitor': Competitor_info, 'Events': Event_info, 'Clubs': club_history}, safe=False)
 

@@ -18,6 +18,9 @@ from dateutil.relativedelta import *
 import pandas as pd
 from django.db import connection
 
+import warnings
+warnings.filterwarnings('ignore')
+
 # Return all Icelandic records in all agegroups.
 #['KA', 'PI22', 'PI19', 'PI17', 'PI15', 'PI14', 'PI13', 'PI12']
 #['KO', 'ST22', 'ST19', 'ST17', 'ST15', 'ST14', 'ST13', 'ST12']

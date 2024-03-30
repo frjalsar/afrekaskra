@@ -118,6 +118,7 @@ u'Fimmtarþraut (telpnaáhöld)',
 u'Fimmtarþraut pilta 15 ára',
 u'Fimmtarþraut stúlkna 15 ára',
 u'Fimmtarþraut (50m hlaup)',
+u'Fimmtarþraut (200m)',
 u'Fimmtarþraut öldunga 45',
 u'Fimmtarþraut öldunga 50',
 u'Fimmtarþraut öldunga 60',
@@ -160,9 +161,12 @@ u'Kúluvarp (3 kg)',
 u'Kúluvarp (4.0 kg)',
 u'Kúluvarp (4 kg)',
 u'Kúluvarp (5.0 kg)',
+u'Kúluvarp (5 kg)',
+u'Kúluvarp (5  kg)',
 u'Kúluvarp (5.5 kg)',
 u'Kúluvarp (6.0 kg)',
 u'Kúluvarp (6.00 kg)',
+u'Kúluvarp (6 kg)',
 u'Kúluvarp (6.25kg)',
 u'Kúluvarp (7.26 kg)',
 u'Kúluvarp 3kg beggja handa',
@@ -173,6 +177,7 @@ u'Kúluvarp beggja handa',
 u'Kúluvarp 7.26kg beggja handa',
 u'Kúluvarp 7.26kg  beggja handa',
 u'Laugavegurinn',
+u'Lóðkast (4.0 kg)',
 u'Lóðkast (5.45 kg)',
 u'Lóðkast (7.26 kg)',
 u'Lóðkast (15.0 kg)',
@@ -180,6 +185,7 @@ u'Lóðkast (15.88 kg)',
 u'Lóðkast (8.0 kg)',
 u'Lóðkast (9.0 kg)',
 u'Lóðkast (9.08 kg)',
+u'Lóðkast (9.08kg)',
 u'Lóðkast (10.0 kg)',
 u'Lóðkast (11.34 kg)',
 u'Maraþon',
@@ -1432,6 +1438,15 @@ u'Fimmtarþraut (50m hlaup)':
 'NAME_ENG': 'Fimmtarþraut (50m hlaup)',
 'DISTANCE': -1
 },
+u'Fimmtarþraut (200m)':
+{'UNIT': 5,
+'UNIT_SYMBOL': 'stig',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Fimmtarþraut (200m)',
+'NAME_ENG': 'Fimmtarþraut (200m)',
+'DISTANCE': -1
+},
 #
 u'Fimmtarþraut öldunga 45':
 {'UNIT': 5,
@@ -1851,6 +1866,26 @@ u'Kúluvarp (5.0 kg)':
 'DISTANCE': -1
 },
 #
+u'Kúluvarp (5 kg)':
+{'UNIT': 1,
+'UNIT_SYMBOL': 'm',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Kúluvarp (5 kg)',
+'NAME_ENG': 'Shot put (5 kg)',
+'DISTANCE': -1
+},
+#
+u'Kúluvarp (5  kg)':
+{'UNIT': 1,
+'UNIT_SYMBOL': 'm',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Kúluvarp (5  kg)',
+'NAME_ENG': 'Shot put (5  kg)',
+'DISTANCE': -1
+},
+#
 u'Kúluvarp (5.5 kg)':
 {'UNIT': 1,
 'UNIT_SYMBOL': 'm',
@@ -1868,6 +1903,16 @@ u'Kúluvarp (6.0 kg)':
 'HAS_WIND': False,
 'NAME_SHORT': 'Kúluvarp (6.0 kg)',
 'NAME_ENG': 'Shot put (6.0 kg)',
+'DISTANCE': -1
+},
+#
+u'Kúluvarp (6 kg)':
+{'UNIT': 1,
+'UNIT_SYMBOL': 'm',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Kúluvarp (6 kg)',
+'NAME_ENG': 'Shot put (6 kg)',
 'DISTANCE': -1
 },
 #
@@ -1981,6 +2026,16 @@ u'Laugavegurinn':
 'DISTANCE': 55000
 },
 #
+u'Lóðkast (4.0 kg)':
+{'UNIT': 1,
+'UNIT_SYMBOL': 'm',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Lóðkast (4.0 kg)',
+'NAME_ENG': 'Weight throw (4.0 kg)',
+'DISTANCE': -1
+},
+#
 u'Lóðkast (5.45 kg)':
 {'UNIT': 1,
 'UNIT_SYMBOL': 'm',
@@ -2048,6 +2103,16 @@ u'Lóðkast (9.08 kg)':
 'HAS_WIND': False,
 'NAME_SHORT': 'Lóðkast (9.08 kg)',
 'NAME_ENG': 'Weight throw (9.08 kg)',
+'DISTANCE': -1
+},
+#
+u'Lóðkast (9.08kg)':
+{'UNIT': 1,
+'UNIT_SYMBOL': 'm',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Lóðkast (9.08kg)',
+'NAME_ENG': 'Weight throw (9.08kg)',
 'DISTANCE': -1
 },
 #
