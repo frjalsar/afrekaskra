@@ -1,0 +1,42 @@
+services:
+# A Python FastAPI service for the backend
+  - type: web
+    name: django-backend
+    runtime: python
+    plan: free
+    rootDir: backend
+    autoDeploy: true
+    region: frankfurt
+    repo: https://github.com/frjalsar/afrekaskra
+    branch: render
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -c config/gunicorn.conf.py Sif.wsgi
+
+# A static Vue site for the frontend
+  - type: web
+    name: vue-frontend
+    runtime: static
+    rootDir: frontend
+    autoDeploy: true
+    repo: https://github.com/frjalsar/afrekaskra
+    branch: render
+    #plan: starter
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+#    headers:
+#      - path: /*
+#        name: X-Frame-Options
+#        value: sameorigin
+    routes:
+# Rewrite /api/* to the backend service
+      - type: rewrite
+        source: /api/*
+        destination: https://fastapi-backend-716h.onrender.com/*
+# Note: /api/* does not match /api
+      - type: rewrite
+        source: /api
+        destination: https://fastapi-backend-716h.onrender.com/
+# Rewrite all other paths to index.html for Vue Router
+      - type: rewrite
+        source: /*
+        destination: /index.html
