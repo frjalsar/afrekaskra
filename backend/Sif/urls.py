@@ -31,10 +31,10 @@ urlpatterns = [
     # Views
     #path('admin/', admin.site.urls),
     #path(r'', views.front_page, name='front_page'),
-    path(r'', TemplateView.as_view(template_name='index.html')),
-    path(r'google04bf0be63aa8d2e2.html', TemplateView.as_view(template_name='google04bf0be63aa8d2e2.html')),
-    path(r'robots.txt', TemplateView.as_view(template_name='robots.txt')),
-    path(r'sitemap.xml', TemplateView.as_view(template_name='sitemap.xml')),
+    #path(r'', TemplateView.as_view(template_name='index.html')),
+    #path(r'google04bf0be63aa8d2e2.html', TemplateView.as_view(template_name='google04bf0be63aa8d2e2.html')),
+    #path(r'robots.txt', TemplateView.as_view(template_name='robots.txt')),
+    #path(r'sitemap.xml', TemplateView.as_view(template_name='sitemap.xml')),
     #re_path(r'^keppandi/*', views.competitor, name='competitor'),
     #re_path(r'^top/*', views.top_lists, name="top_lists"),
 
