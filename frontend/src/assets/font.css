@@ -1,0 +1,26 @@
+@font-face {
+	font-family: 'Beausite Classic Semibold';
+	font-style: normal;
+	font-weight: normal;
+	font-display: auto;
+	src: url('./BeausiteClassicWeb-Semibold.woff2') format('woff2'),
+	 	 url('./BeausiteClassicWeb-Semibold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Beausite Classic Regular';
+    font-style: normal;
+    font-weight: normal;
+    font-display: auto;
+    src: url('./BeausiteClassicWeb-Regular.woff2') format('woff2'),
+         url('./BeausiteClassicWeb-Regular.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'ABCDiatypeMono-Regular';
+	font-style: normal;
+	font-weight: normal;
+	font-display: auto;
+	src: url('./ABCDiatypeMono-Regular.woff2') format('woff2'),
+		 url('./ABCDiatypeMono-Regular.woff') format('woff');
+}

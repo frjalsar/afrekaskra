@@ -1,0 +1,122 @@
+daemon off;
+# Heroku dynos have at least 4 cores.
+worker_processes <%= ENV['NGINX_WORKERS'] || 3 %>;
+
+events {
+	use epoll;
+	accept_mutex on;
+	worker_connections <%= ENV['NGINX_WORKER_CONNECTIONS'] || 1024 %>;
+}
+
+http {
+	gzip on;
+	gzip_comp_level 2;
+	gzip_min_length 512;
+
+	server_tokens off;
+
+	log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id';
+	access_log <%= ENV['NGINX_ACCESS_LOG_PATH'] || 'logs/nginx/access.log' %> l2met;
+	error_log <%= ENV['NGINX_ERROR_LOG_PATH'] || 'logs/nginx/error.log' %>;
+
+	include mime.types;
+	default_type application/octet-stream;
+	sendfile on;
+
+	# Must read the body in 5 seconds.
+	client_body_timeout 5;
+
+	upstream app_server {
+		server unix:/tmp/nginx.socket fail_timeout=0;
+	}
+
+	server {
+		listen <%= ENV["PORT"] %>;
+		server_name sif.fri.is sif-dev.herokuapp.com;
+		keepalive_timeout 5;
+		port_in_redirect off; # Internally on Heroku we have a diffrent port
+
+		root /app/dist/;
+		index index.html;
+
+		# Uncomment this if statement to force SSL/redirect http -> https
+		if ($http_x_forwarded_proto != "https") {
+		  return 301 https://$host$request_uri;
+		}
+
+		# Redirect old website
+		# Needs permanent and port_in_redirect off;
+		# URL's found in log files
+		location ~* /Afr/keppendur/ {
+			rewrite (\d+) /keppandi/$1 permanent; # Check if we can find a number in the url
+			rewrite (.*?) /keppandi permanent; # Anything that doesn't match the regex above will match this
+		}
+
+		location ~* /Afr/MetOfl/ {
+			rewrite (.*?) /islmet permanent;
+		}
+
+		location ~* /Afr/FraUpphafi/ {
+			rewrite (.*?) /top permanent;
+		}
+
+		# e.g. /Afr/afr2008
+		location ~* /Afr/afr(.*?) {
+			rewrite (.*?) /top permanent;
+		}
+
+		location ~* /Afr/felog/ {
+			rewrite (.*?) /keppandi permanent;
+		}
+
+		location ~* /Afr/ {
+			rewrite (.*?) / permanent;
+		}
+		# End redirect old website
+
+		location /sitemap.xml {
+			alias /app/templates/sitemap.xml;
+		}
+
+		location /robots.txt {
+			alias /app/templates/robots.txt;
+		}
+
+		location /google04bf0be63aa8d2e2.html
+		{
+			alias /app/templates/google04bf0be63aa8d2e2.html;
+		}
+
+		location /static/ {
+			root /app/;
+			index index.html;
+		}
+
+		location /islmet {
+    		try_files $uri $uri/ /index.html;
+		}
+
+		location /keppandi {
+			try_files $uri $uri/ /index.html;
+		}
+
+		location /top {
+    		try_files $uri $uri/ /index.html;
+		}
+
+		location /api/ {
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+			proxy_set_header Host $http_host;
+			proxy_redirect off;
+			proxy_pass http://app_server;
+		}
+	}
+	
+	# Redirect other domains to sif.fri.is
+	server {
+		listen <%= ENV["PORT"] %>;
+		server_name afrek.fri.is afrekaskra.fri.is fri-afrekaskra.herokuapp.com;
+
+		return 301 $scheme://sif.fri.is$request_uri;
+	}
+}
