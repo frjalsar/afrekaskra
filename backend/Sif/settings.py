@@ -122,44 +122,69 @@ DATABASES = {
 #         }
 #     }
 
-# Logging
+# # Logging
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'verbose': {
+#             'format': ('%(asctime)s [%(process)d] [%(levelname)s] '
+#                        'pathname=%(pathname)s lineno=%(lineno)s '
+#                        'funcname=%(funcName)s %(message)s'),
+#             'datefmt': '%Y-%m-%d %H:%M:%S'
+#         },
+#         'simple': {
+#             'format': '%(levelname)s %(message)s'
+#         }
+#     },
+#     'handlers': {
+#         'null': {
+#             'level': 'DEBUG',
+#             'class': 'logging.NullHandler',
+#         },
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'verbose'
+#         }
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console'],
+#             'level': 'INFO',
+#             'propagate': True,
+#         },
+#         'django.request': {
+#             'handlers': ['console'],
+#             'level': 'INFO',
+#             'propagate': False,
+#         },
+#     }
+# }
+
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': ('%(asctime)s [%(process)d] [%(levelname)s] '
-                       'pathname=%(pathname)s lineno=%(lineno)s '
-                       'funcname=%(funcName)s %(message)s'),
-            'datefmt': '%Y-%m-%d %H:%M:%S'
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        }
-    },
-    'handlers': {
-        'null': {
-            'level': 'DEBUG',
-            'class': 'logging.NullHandler',
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        }
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-        'django.request': {
-            'handlers': ['console'],
-            'level': 'INFO',
-            'propagate': False,
-        },
-    }
+   'version': 1,
+   'disable_existing_loggers': False,
+   'formatters': {
+       'verbose': {
+           'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+       },
+   },
+   'handlers': {
+       'console': {
+           'level': 'INFO',
+           'class': 'logging.StreamHandler',
+           'stream': sys.stdout,
+           'formatter': 'verbose'
+       },
+   },
+   'loggers': {
+       '': {
+           'handlers': ['console'],
+           'level': 'INFO',
+           'propagate': True,
+       },
+   },
 }
 
 #MIGRATION_MODULES = {
