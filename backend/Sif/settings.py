@@ -34,7 +34,7 @@ else:
 
 #APPEND_SLASH = False
 
-ALLOWED_HOSTS = [] # The django_heroku package takes care of this.
+ALLOWED_HOSTS = ['sif-django-backend.onrender.com'] # Render hosts
 
 
 # Application definition
