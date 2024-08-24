@@ -19,9 +19,9 @@ import re
  # Senda allt sem fer ekki á API á index.html
 def view_404(request, exception=None):
     if (re.match('^/api/*', request.path) is None):
-        return render(request, 'index.html')
+        raise Http404('Error')
     else:
-        return render(request, '404.html', status=404)
+        raise Http404('API error')
 
 # def Print_list_vertically(my_list):
 #     for i in my_list:
