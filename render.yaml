@@ -31,11 +31,11 @@ services:
 # Rewrite /api/* to the backend service
       - type: rewrite
         source: /api/*
-        destination: https://fastapi-backend-716h.onrender.com/*
+        destination: https://sif-django-backend.onrender.com/*
 # Note: /api/* does not match /api
       - type: rewrite
         source: /api
-        destination: https://fastapi-backend-716h.onrender.com/
+        destination: https://sif-django-backend.onrender.com/
 # Rewrite all other paths to index.html for Vue Router
       - type: rewrite
         source: /*

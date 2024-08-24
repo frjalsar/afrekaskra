@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import django_heroku
+#import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SIF_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if 'SIF_ON_HEROKU' in os.environ:
+if 'SIF_ON_RENDER' in os.environ:
     DEBUG = False
 else:
     DEBUG = True
