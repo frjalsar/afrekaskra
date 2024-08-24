@@ -30,6 +30,9 @@ def Print_list_vertically(my_list):
         print(i)
     return None
 
+def test(request):
+    return JsonResponse({'test': 'test'}, safe=False)
+
 @cache_page(60 * 60 * 0)
 def get_competitor(request, CompetitorCode=None):
     df = competitor.Get_Competitor_Achievements(CompetitorCode)

@@ -39,6 +39,7 @@ urlpatterns = [
     #re_path(r'^top/*', views.top_lists, name="top_lists"),
 
     # API
+    path(r'api/test/', api_views.test, name='api_test'),
     path(r'api/competitor/<int:CompetitorCode>/', api_views.get_competitor, name ='api_competitor'),
     path(r'api/competitor/<int:CompetitorCode>/<int:Event_id>/', api_views.competitor_event, name ='api_competitor_event'),
     path(r'api/competitor/<int:CompetitorCode>/<int:Event_id>/all/', api_views.competitor_event_all, name = 'api_competitor_all'),
