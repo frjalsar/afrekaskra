@@ -18,8 +18,8 @@
 #       range.
 #
 
-#bind = '127.0.0.1:8000'
-bind = 'unix:///tmp/nginx.socket' # KT
+bind = '0.0.0.0:80'
+#bind = 'unix:///tmp/nginx.socket' # KT
 backlog = 2048
 
 #
