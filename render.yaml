@@ -1,7 +1,7 @@
 services:
 # A Python FastAPI service for the backend
   - type: web
-    name: django-backend
+    name: Sif-Django-Backend
     runtime: python
     plan: free
     rootDir: backend
@@ -14,7 +14,7 @@ services:
 
 # A static Vue site for the frontend
   - type: web
-    name: vue-frontend
+    name: Sif-Vue-Frontend
     runtime: static
     rootDir: frontend
     autoDeploy: true
