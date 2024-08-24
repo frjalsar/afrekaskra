@@ -105,22 +105,22 @@ DATABASES = {
     #}
 }
 
-if 'SIF_ON_HEROKU' in os.environ:
-    CACHES = {'default': {
-        'BACKEND': 'django_bmemcached.memcached.BMemcached',
-        'LOCATION': os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','),
-        'OPTIONS': {
-                    'username': os.environ.get('MEMCACHEDCLOUD_USERNAME'),
-                    'password': os.environ.get('MEMCACHEDCLOUD_PASSWORD'),
-            }
-        }
-    }
-else:
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-        }
-    }
+# if 'SIF_ON_HEROKU' in os.environ:
+#     CACHES = {'default': {
+#         'BACKEND': 'django_bmemcached.memcached.BMemcached',
+#         'LOCATION': os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','),
+#         'OPTIONS': {
+#                     'username': os.environ.get('MEMCACHEDCLOUD_USERNAME'),
+#                     'password': os.environ.get('MEMCACHEDCLOUD_PASSWORD'),
+#             }
+#         }
+#     }
+# else:
+#     CACHES = {
+#         'default': {
+#             'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+#         }
+#     }
 
 # Logging
 LOGGING = {
@@ -187,7 +187,7 @@ LOGGING = {
 # ]
 
 # Force HTTPS if on Heroku
-if 'SIF_ON_HEROKU' in os.environ:
+if 'SIF_ON_RENDER' in os.environ:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_SSL_REDIRECT = True
 
@@ -225,4 +225,4 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Activate Django-Heroku. We have our own database settings and we set the private key ourselves.
-django_heroku.settings(locals(), databases=False, secret_key=False, logging=False, staticfiles=False)
+#django_heroku.settings(locals(), databases=False, secret_key=False, logging=False, staticfiles=False)
