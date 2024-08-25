@@ -101,9 +101,9 @@ WSGI_APPLICATION = 'Sif.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': 'Athletics',
-        'HOST': '82.221.94.225',
-        'PORT': 1433,
+        'NAME': os.environ['SIF_DB_NAME'],
+        'HOST': os.environ['SIF_DB_HOST'],
+        'PORT': os.environ['SIF_DB_PORT'],
         'USER': os.environ['SIF_DB_USER'],
         'PASSWORD': os.environ['SIF_DB_PASSWORD'],
         'OPTIONS': {
@@ -121,7 +121,7 @@ if 'SIF_ON_RENDER' in os.environ:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
-            "LOCATION": "redis://red-cr5m6a3tq21c73b56hm0:6379",
+            "LOCATION": os.environ['SIF_REDIS_URL'],
         }
     }
 else:
