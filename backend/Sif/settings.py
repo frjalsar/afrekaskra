@@ -27,7 +27,7 @@ SECRET_KEY = os.environ['SIF_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if 'SIF_ON_RENDER' in os.environ:
-    DEBUG = True
+    DEBUG = False
 else:
     DEBUG = True
     print('DEBUG IS ON')
