@@ -3,7 +3,7 @@ services:
   - type: web
     name: Sif-Django-Backend
     runtime: docker
-    dockerfile: ./Dockerfile
+    dockerfilePath: ./Dockerfile
     plan: free
     rootDir: backend
     autoDeploy: true
