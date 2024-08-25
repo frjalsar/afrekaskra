@@ -12,6 +12,8 @@ services:
     branch: render
     numInstances: 1
     envVars:
+      - key: PORT
+        value: 8000
       - key: SIF_ON_RENDER
         value: 1
       - key: SIF_DB_PASSWORD
