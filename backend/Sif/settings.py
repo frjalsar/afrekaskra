@@ -36,7 +36,15 @@ else:
 
 #APPEND_SLASH = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'sif-django-backend.onrender.com'] # Render hosts
+ALLOWED_HOSTS = ['127.0.0.1', 'sif-django-backend.onrender.com', 'sif-vue-frontend.onrender.com'] # Render hosts
+
+CORS_ALLOWED_ORIGINS = [
+    "https://sif-django-backend.onrender.com",
+    "https://sif-vue-frontend.onrender.com",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "https://sif.fri.is"
+]
 
 
 # Application definition
@@ -47,11 +55,13 @@ INSTALLED_APPS = [
     #'django.contrib.contenttypes',
     #'django.contrib.sessions',
     #'django.contrib.messages',
+    'corsheaders',
     'django.contrib.staticfiles',
     'Sif',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     #'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
