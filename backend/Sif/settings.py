@@ -120,8 +120,8 @@ DATABASES = {
 if 'SIF_ON_RENDER' in os.environ:
     CACHES = {
         "default": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "LOCATION": "unique-snowflake",
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": "redis://red-cr5jkotumphs73e54dag:6379",
         }
     }
 else:
