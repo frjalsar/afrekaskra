@@ -19,8 +19,7 @@
 #
 
 bind = '0.0.0.0:8000'
-#bind = 'unix:///tmp/nginx.socket' # KT
-backlog = 2048
+backlog = 2048 # Default: 2048
 
 #
 # Worker processes
@@ -66,11 +65,11 @@ backlog = 2048
 #       A positive integer. Generally set in the 1-5 seconds range.
 #
 
-workers = 3 # KT
-worker_class = 'sync'
-worker_connections = 1000
-max_requests = 1000 # KT
-timeout = 30
+workers = 2 # KT
+worker_class = 'sync' # Default: sync
+worker_connections = 1000 # Default: 1000
+max_requests = 1000 # KT (The maximum number of requests a worker will process before restarting.)
+timeout = 60
 keepalive = 2
 preload_app = True # KT
 
@@ -193,7 +192,7 @@ def pre_exec(server):
 
 def when_ready(server):
     server.log.info("Server is ready. Spawning workers")
-    open('/tmp/app-initialized', 'w').close() # KT
+    #open('/tmp/app-initialized', 'w').close() # KT
 
 def worker_int(worker):
     worker.log.info("worker received INT or QUIT signal")
