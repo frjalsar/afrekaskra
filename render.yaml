@@ -51,3 +51,11 @@ services:
       - type: rewrite
         source: /*
         destination: /index.html
+
+# A Redis cache for the site
+  - type: redis
+    name: Sif-Redis-Cache
+    plan: free
+    region: frankfurt
+    maxmemoryPolicy: allkeys-lru
+    ipAllowList: []
