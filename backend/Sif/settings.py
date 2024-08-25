@@ -117,6 +117,20 @@ DATABASES = {
     #}
 }
 
+if 'SIF_ON_RENDER' in os.environ:
+    CACHES = {
+        "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "unique-snowflake",
+        }
+    }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        }
+    }
+
 # if 'SIF_ON_HEROKU' in os.environ:
 #     CACHES = {'default': {
 #         'BACKEND': 'django_bmemcached.memcached.BMemcached',
@@ -223,10 +237,10 @@ LOGGING = {
 #     },
 # ]
 
-# Force HTTPS if on Heroku
-#if 'SIF_ON_RENDER' in os.environ:
-    #SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = False
+# Force HTTPS if on Render
+if 'SIF_ON_RENDER' in os.environ:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
 
 # Disable admin panel
 ADMIN_ENABLED = False
