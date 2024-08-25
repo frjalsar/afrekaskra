@@ -17,11 +17,11 @@ import re
 #EVENT_LIST_FILENAME = os.path.join(settings.BASE_DIR, 'Sif/event_list.pickle')
 
  # Senda allt sem fer ekki á API á index.html
-def view_404(request, exception=None):
-    if (re.match('^/api/*', request.path) is None):
-        raise Http404('Error')
-    else:
-        raise Http404('API error')
+# def view_404(request, exception=None):
+#     if (re.match('^/api/*', request.path) is None):
+#         raise Http404('Error')
+#     else:
+#         raise Http404('API error')
 
 # def Print_list_vertically(my_list):
 #     for i in my_list:
