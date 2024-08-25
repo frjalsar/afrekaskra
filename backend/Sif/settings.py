@@ -27,7 +27,7 @@ SECRET_KEY = os.environ['SIF_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if 'SIF_ON_RENDER' in os.environ:
-    DEBUG = False
+    DEBUG = True
 else:
     DEBUG = True
     print('DEBUG IS ON')
@@ -36,7 +36,7 @@ else:
 
 #APPEND_SLASH = False
 
-ALLOWED_HOSTS = ['sif-django-backend.onrender.com'] # Render hosts
+ALLOWED_HOSTS = ['127.0.0.1', 'sif-django-backend.onrender.com'] # Render hosts
 
 
 # Application definition
@@ -97,7 +97,7 @@ DATABASES = {
         'USER': os.environ['SIF_DB_USER'],
         'PASSWORD': os.environ['SIF_DB_PASSWORD'],
         'OPTIONS': {
-            'driver': os.path.join(BASE_DIR, '.apt/usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so'), # The driver is installed on Heroku using the Aptfile into this path.
+            'driver': os.path.join(BASE_DIR, '/usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so'), # The driver is installed on Heroku using the Aptfile into this path.
             'host_is_server': True,
         },
     },
@@ -214,9 +214,9 @@ LOGGING = {
 # ]
 
 # Force HTTPS if on Heroku
-if 'SIF_ON_RENDER' in os.environ:
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    SECURE_SSL_REDIRECT = True
+#if 'SIF_ON_RENDER' in os.environ:
+    #SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = False
 
 # Disable admin panel
 ADMIN_ENABLED = False

@@ -2,15 +2,24 @@ services:
 # A Python FastAPI service for the backend
   - type: web
     name: Sif-Django-Backend
-    runtime: python
+    runtime: docker
+    dockerfile: ./Dockerfile
     plan: free
     rootDir: backend
     autoDeploy: true
     region: frankfurt
     repo: https://github.com/frjalsar/afrekaskra
     branch: render
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn -c config/gunicorn.conf.py Sif.wsgi
+    numInstances: 1
+    envVars:
+      - key: SIF_ON_RENDER
+        value: 1
+      - key: SIF_DB_PASSWORD
+        sync: false
+      - key: SIF_DB_USER
+        sync: false
+      - key: SIF_SECRET_KEY
+        generateValue: true
 
 # A static Vue site for the frontend
   - type: web

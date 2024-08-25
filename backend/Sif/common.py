@@ -5,7 +5,7 @@ Units_symbol = {1: 'm', 2: 's', 3: 'mm:ss,dd', 4: 'hh:mm:ss,dd', 5: 'stig', 6: '
 import re
 import numpy as np
 import datetime
-prog_time = re.compile('^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?(\d+\.?\d*)?$') # Notum regex
+prog_time = re.compile(r'^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?(\d+\.?\d*)?$') # Notum regex
 
 #-------------------------------------------------------------------------------
 # Fall sem breytir streng með árangri yfir í rauntölu

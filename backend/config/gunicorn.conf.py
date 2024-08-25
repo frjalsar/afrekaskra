@@ -18,7 +18,7 @@
 #       range.
 #
 
-bind = '0.0.0.0:80'
+bind = '0.0.0.0:8000'
 #bind = 'unix:///tmp/nginx.socket' # KT
 backlog = 2048
 
