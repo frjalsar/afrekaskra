@@ -121,7 +121,7 @@ if 'SIF_ON_RENDER' in os.environ:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
-            "LOCATION": "redis://red-cr5jkotumphs73e54dag:6379",
+            "LOCATION": "redis://red-cr5m6a3tq21c73b56hm0:6379",
         }
     }
 else:

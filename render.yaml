@@ -42,11 +42,11 @@ services:
 # Rewrite /api/* to the backend service
       - type: rewrite
         source: /api/*
-        destination: https://sif-django-backend.onrender.com/api/*
+        destination: https://sif-django-backend-fhh0.onrender.com/api/*
 # Note: /api/* does not match /api
       - type: rewrite
         source: /api
-        destination: https://sif-django-backend.onrender.com/api/
+        destination: https://sif-django-backend-fhh0.onrender.com/api/
 # Rewrite all other paths to index.html for Vue Router
       - type: rewrite
         source: /*
