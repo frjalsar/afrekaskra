@@ -12,7 +12,7 @@ services:
     region: frankfurt
     preDeployCommand: python manage.py clearcache # Clear old cache before deploying
     repo: https://github.com/frjalsar/afrekaskra
-    branch: render
+    branch: main
     numInstances: 1
     envVars:
       - key: PORT # The port that gunicorn listens on (See config/gunicorn.conf.py)
@@ -44,7 +44,7 @@ services:
     rootDir: frontend
     autoDeploy: true
     repo: https://github.com/frjalsar/afrekaskra
-    branch: render
+    branch: main
     #plan: starter
     buildCommand: npm run build
     staticPublishPath: ./dist
