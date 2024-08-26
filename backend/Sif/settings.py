@@ -37,11 +37,13 @@ else:
 
 #APPEND_SLASH = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'sif-django-backend-fhh0.onrender.com', 'sif-vue-frontend-6xh9.onrender.com', 'sif.fri.is', 'fri.is'] # Render hosts
+ALLOWED_HOSTS = ['127.0.0.1', 'sif-django-backend-fhh0.onrender.com', 'sif-vue-frontend-6xh9.onrender.com', 'sif-dev-frontend.onrender.com', 'sif-dev-backend.onrender.com', 'sif.fri.is', 'fri.is'] # Render hosts
 
 CORS_ALLOWED_ORIGINS = [
     "https://sif-django-backend-fhh0.onrender.com",
     "https://sif-vue-frontend-6xh9.onrender.com",
+    "https://sif-dev-frontend.onrender.com",
+    "https://sif-dev-backend.onrender.com",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
     "https://sif.fri.is"
