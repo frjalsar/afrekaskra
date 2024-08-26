@@ -111,7 +111,7 @@ services:
       - key: REDIS_URL # Redis URL for caching (See redis cache service)
         fromService:
           type: redis
-          name: Sif-Dev-Redis
+          name: Sif-Redis-Cache
           property: connectionString
       - key: SIF_SECRET_KEY # Not used?
         generateValue: true
@@ -144,11 +144,3 @@ services:
       - type: rewrite
         source: /*
         destination: /index.html
-
-# A Redis cache for the site
-  - type: redis
-    name: Sif-Dev-Redis
-    plan: free # Free plan is 25 MB / 50 connections
-    region: frankfurt
-    maxmemoryPolicy: allkeys-lru
-    ipAllowList: []

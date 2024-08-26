@@ -121,13 +121,16 @@ if 'SIF_ON_RENDER' in os.environ:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "KEY_PREFIX:": "prod", # Prefix for the keys in the cache to separate production and development
             "LOCATION": os.environ['SIF_REDIS_URL'],
         }
     }
 else:
     CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "KEY_PREFIX:": "dev", # Prefix for the keys in the cache to separate production and development
+            "LOCATION": os.environ['SIF_REDIS_URL'],
         }
     }
 
