@@ -1,4 +1,6 @@
 services:
+# ------------------------------------------------------------
+# Production environment
 # A Python Django service for the backend
   - type: web
     name: Sif-Django-Backend
@@ -30,6 +32,7 @@ services:
       - key: REDIS_URL # Redis URL for caching (See redis cache service)
         fromService:
           type: redis
+          name: Sif-Redis-Cache
           property: connectionString
       - key: SIF_SECRET_KEY # Not used?
         generateValue: true
@@ -70,6 +73,81 @@ services:
 # A Redis cache for the site
   - type: redis
     name: Sif-Redis-Cache
+    plan: free # Free plan is 25 MB / 50 connections
+    region: frankfurt
+    maxmemoryPolicy: allkeys-lru
+    ipAllowList: []
+
+# ------------------------------------------------------------
+# Development environment
+# A Python Django service for the backend
+  - type: web
+    name: Sif-Dev-Backend
+    runtime: docker # In a Docker container because of MS-SQL driver (See apt commands in Dockerfile)
+    dockerfilePath: ./Dockerfile
+    plan: free # Starter plan 0.5 CPU / 512 MB RAM
+    rootDir: backend
+    autoDeploy: true
+    region: frankfurt
+    preDeployCommand: python manage.py clearcache # Clear old cache before deploying
+    repo: https://github.com/frjalsar/afrekaskra
+    branch: dev
+    numInstances: 1
+    envVars:
+      - key: PORT # The port that gunicorn listens on (See config/gunicorn.conf.py)
+        value: 8000 # This is the internal port, not the external port which is 80
+      - key: SIF_ON_RENDER # Tell Django it's running on Render
+        value: 1
+      - key: SIF_DB_PASSWORD
+        sync: false
+      - key: SIF_DB_USER
+        sync: false
+      - key: SIF_DB_HOST
+        sync: false
+      - key: SIF_DB_PORT
+        sync: false
+      - key: SIF_DB_NAME
+        sync: false
+      - key: REDIS_URL # Redis URL for caching (See redis cache service)
+        fromService:
+          type: redis
+          name: Sif-Dev-Redis
+          property: connectionString
+      - key: SIF_SECRET_KEY # Not used?
+        generateValue: true
+
+# A static Vue site for the frontend
+  - type: web
+    name: Sif-Dev-Frontend
+    runtime: static
+    rootDir: frontend
+    autoDeploy: true
+    repo: https://github.com/frjalsar/afrekaskra
+    branch: dev
+    #plan: starter
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+#    headers:
+#      - path: /*
+#        name: X-Frame-Options
+#        value: sameorigin
+    routes:
+# Rewrite /api/* to the backend service
+      - type: rewrite
+        source: /api/*
+        destination: https://sif-django-backend-fhh0.onrender.com/api/*
+# Note: /api/* does not match /api
+      - type: rewrite
+        source: /api
+        destination: https://sif-django-backend-fhh0.onrender.com/api/
+# Rewrite all other paths to index.html for Vue Router
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+# A Redis cache for the site
+  - type: redis
+    name: Sif-Dev-Redis
     plan: free # Free plan is 25 MB / 50 connections
     region: frankfurt
     maxmemoryPolicy: allkeys-lru
