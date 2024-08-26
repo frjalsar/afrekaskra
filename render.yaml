@@ -2,20 +2,20 @@ services:
 # A Python Django service for the backend
   - type: web
     name: Sif-Django-Backend
-    runtime: docker
+    runtime: docker # In a Docker container because of MS-SQL driver (See apt commands in Dockerfile)
     dockerfilePath: ./Dockerfile
-    plan: starter
+    plan: starter # Starter plan 0.5 CPU / 512 MB RAM
     rootDir: backend
     autoDeploy: true
     region: frankfurt
-    preDeployCommand: python manage.py clearcache
+    preDeployCommand: python manage.py clearcache # Clear old cache before deploying
     repo: https://github.com/frjalsar/afrekaskra
     branch: render
     numInstances: 1
     envVars:
-      - key: PORT
-        value: 8000
-      - key: SIF_ON_RENDER
+      - key: PORT # The port that gunicorn listens on (See config/gunicorn.conf.py)
+        value: 8000 # This is the internal port, not the external port which is 80
+      - key: SIF_ON_RENDER # Tell Django it's running on Render
         value: 1
       - key: SIF_DB_PASSWORD
         sync: false
@@ -27,11 +27,11 @@ services:
         sync: false
       - key: SIF_DB_NAME
         sync: false
-      - key: REDIS_URL
+      - key: REDIS_URL # Redis URL for caching (See redis cache service)
         fromService:
           type: redis
           property: connectionString
-      - key: SIF_SECRET_KEY
+      - key: SIF_SECRET_KEY # Not used?
         generateValue: true
 
 # A static Vue site for the frontend
@@ -70,7 +70,7 @@ services:
 # A Redis cache for the site
   - type: redis
     name: Sif-Redis-Cache
-    plan: free
+    plan: free # Free plan is 25 MB / 50 connections
     region: frankfurt
     maxmemoryPolicy: allkeys-lru
     ipAllowList: []
