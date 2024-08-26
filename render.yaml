@@ -108,7 +108,7 @@ services:
         sync: false
       - key: SIF_DB_NAME
         sync: false
-      - key: REDIS_URL # Redis URL for caching (See redis cache service)
+      - key: SIF_REDIS_URL # Redis URL for caching (See redis cache service)
         fromService:
           type: redis
           name: Sif-Redis-Cache
