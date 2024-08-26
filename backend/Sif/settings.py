@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 import logging
 import sys
+import random
 #import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -122,6 +123,7 @@ if 'SIF_ON_RENDER' in os.environ:
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
             "KEY_PREFIX:": "prod", # Prefix for the keys in the cache to separate production and development
+            "VERSION": 1,
             "LOCATION": os.environ['SIF_REDIS_URL'],
         }
     }
@@ -130,6 +132,7 @@ else:
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
             "KEY_PREFIX:": "dev", # Prefix for the keys in the cache to separate production and development
+            "VERSION": random.randint(1, 1000), # Random version to avoid cache collisions, we don't flush the cache on every deploy for development
             "LOCATION": os.environ['SIF_REDIS_URL'],
         }
     }
