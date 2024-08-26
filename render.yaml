@@ -1,10 +1,10 @@
 services:
-# A Python FastAPI service for the backend
+# A Python Django service for the backend
   - type: web
     name: Sif-Django-Backend
     runtime: docker
     dockerfilePath: ./Dockerfile
-    plan: free
+    plan: starter
     rootDir: backend
     autoDeploy: true
     region: frankfurt
@@ -42,6 +42,10 @@ services:
     #plan: starter
     buildCommand: npm run build
     staticPublishPath: ./dist
+    domains:
+      - afrek.fri.is
+      - afrekaskra.fri.is
+      - sif.fri.is
 #    headers:
 #      - path: /*
 #        name: X-Frame-Options
