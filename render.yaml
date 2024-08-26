@@ -96,8 +96,8 @@ services:
     envVars:
       - key: PORT # The port that gunicorn listens on (See config/gunicorn.conf.py)
         value: 8000 # This is the internal port, not the external port which is 80
-      - key: SIF_ON_RENDER # Tell Django it's running on Render
-        value: 1
+      - key: SIF_ON_RENDER 
+        value: 0 # Debug mode on and prefix cache keys with "dev"
       - key: SIF_DB_PASSWORD
         sync: false
       - key: SIF_DB_USER
@@ -135,11 +135,11 @@ services:
 # Rewrite /api/* to the backend service
       - type: rewrite
         source: /api/*
-        destination: https://sif-django-backend-fhh0.onrender.com/api/*
+        destination: https://sif-dev-backend.onrender.com/api/*
 # Note: /api/* does not match /api
       - type: rewrite
         source: /api
-        destination: https://sif-django-backend-fhh0.onrender.com/api/
+        destination: https://sif-dev-backend.onrender.com/api/
 # Rewrite all other paths to index.html for Vue Router
       - type: rewrite
         source: /*
