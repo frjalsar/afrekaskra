@@ -8,6 +8,7 @@ services:
     rootDir: backend
     autoDeploy: true
     region: frankfurt
+    preDeployCommand: python manage.py clearcache
     repo: https://github.com/frjalsar/afrekaskra
     branch: render
     numInstances: 1
@@ -26,8 +27,10 @@ services:
         sync: false
       - key: SIF_DB_NAME
         sync: false
-      - key: SIF_REDIS_URL
-        sync: false
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          property: connectionString
       - key: SIF_SECRET_KEY
         generateValue: true
 
