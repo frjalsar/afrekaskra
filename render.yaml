@@ -89,7 +89,7 @@ services:
     rootDir: backend
     autoDeploy: true
     region: frankfurt
-    preDeployCommand: python manage.py clearcache # Clear old cache before deploying
+    #preDeployCommand: python manage.py clearcache # Clear old cache before deploying
     repo: https://github.com/frjalsar/afrekaskra
     branch: dev
     numInstances: 1
