@@ -3,7 +3,7 @@ services:
 # Production environment
 # A Python Django service for the backend
   - type: web
-    name: Sif-Django-Backend
+    name: Sif-Prod-Backend
     runtime: docker # In a Docker container because of MS-SQL driver (See apt commands in Dockerfile)
     dockerfilePath: ./Dockerfile
     plan: starter # Starter plan 0.5 CPU / 512 MB RAM
@@ -39,7 +39,7 @@ services:
 
 # A static Vue site for the frontend
   - type: web
-    name: Sif-Vue-Frontend
+    name: Sif-Prod-Frontend
     runtime: static
     rootDir: frontend
     autoDeploy: true
