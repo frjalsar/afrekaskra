@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SIF_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if 'SIF_ON_RENDER' in os.environ:
+if os.environ['SIF_IN_PROD'] == 1:
     DEBUG = False
 else:
     DEBUG = True
@@ -52,6 +52,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://sif-dev-backend.onrender.com",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
     "https://sif.fri.is"
 ]
 
@@ -126,7 +128,7 @@ DATABASES = {
     #}
 }
 
-if 'SIF_ON_RENDER' in os.environ:
+if os.environ['SIF_IN_PROD'] == 1:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
@@ -136,14 +138,21 @@ if 'SIF_ON_RENDER' in os.environ:
         }
     }
 else:
-    CACHES = {
-        "default": {
-            "BACKEND": "django.core.cache.backends.redis.RedisCache",
-            "KEY_PREFIX:": "dev", # Prefix for the keys in the cache to separate production and development
-            "VERSION": random.randint(1, 1000), # Random version to avoid cache collisions, we don't flush the cache on every deploy for development
-            "LOCATION": os.environ['SIF_REDIS_URL'],
+    if 'SIF_ON_RENDER' in os.environ:
+        CACHES = {
+            "default": {
+                "BACKEND": "django.core.cache.backends.redis.RedisCache",
+                "KEY_PREFIX:": "dev", # Prefix for the keys in the cache to separate production and development
+                "VERSION": random.randint(1, 1000), # Random version to avoid cache collisions, we don't flush the cache on every deploy for development
+                "LOCATION": os.environ['SIF_REDIS_URL'],
+            }
         }
-    }
+    else:
+        CACHES = {
+            "default": {
+                "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+            }
+        }
 
 # if 'SIF_ON_HEROKU' in os.environ:
 #     CACHES = {'default': {
@@ -292,6 +301,11 @@ if not DEBUG:    # Tell Django to copy static assets into a path called `staticf
     # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
     # and renames the files with unique names for each version to support long-term caching
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+else:
+    STATIC_URL = '/staticfiles/'
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'staticfiles'),
+    )
 
 # Activate Django-Heroku. We have our own database settings and we set the private key ourselves.
 #django_heroku.settings(locals(), databases=False, secret_key=False, logging=False, staticfiles=False)

@@ -19,6 +19,8 @@ services:
         value: 8000 # This is the internal port, not the external port which is 80
       - key: SIF_ON_RENDER # Tell Django it's running on Render
         value: 1
+      - key: SIF_IN_PROD # Tell Django it's running in production
+        value: 1
       - key: SIF_DB_PASSWORD
         sync: false
       - key: SIF_DB_USER
@@ -96,8 +98,10 @@ services:
     envVars:
       - key: PORT # The port that gunicorn listens on (See config/gunicorn.conf.py)
         value: 8000 # This is the internal port, not the external port which is 80
-      - key: SIF_ON_RENDER 
-        value: 0 # Debug mode on and prefix cache keys with "dev"
+      - key: SIF_ON_RENDER # Tell Django it's running on Render
+        value: 1
+      - key: SIF_IN_PROD # Tell Django it's running in production
+        value: 0 # Debug mode on
       - key: SIF_DB_PASSWORD
         sync: false
       - key: SIF_DB_USER
