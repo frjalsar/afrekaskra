@@ -3,4 +3,4 @@
     {
         Response.Redirect("https://sif.fri.is/");
     }
-  </script>
+</script>
