@@ -1,0 +1,3 @@
+User-Agent: *
+Allow: /
+Sitemap: http://sif.fri.is/sitemap.xml
