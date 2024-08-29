@@ -162,7 +162,7 @@ def competitor_records(request, CompetitorCode):
     Records = records.Get_Competitor_Records(CompetitorCode)
     return JsonResponse(Records, safe=False)
 
-@cache_page(60 * 60 * 12)
+@cache_page(60 * 60 * 6)
 def record_birthdays(request):
     Records = records.Get_Records_Birthdays()
     return JsonResponse(Records, safe=False)
@@ -210,7 +210,7 @@ def national_records(request):
 
     return JsonResponse(List_of_Records, safe=False)
 
-@cache_page(60 * 60 * 0)
+@cache_page(60 * 60 * 6)
 def national_records_masters(request):
     #df_records = national_records_all(request)
     #df_records = records.Get_All_National_Records()
