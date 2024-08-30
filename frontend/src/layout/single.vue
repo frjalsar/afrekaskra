@@ -6,10 +6,10 @@
     </div>
     <div id="competitor-view" v-if="isReady">
       <!-- HEADER -->
-      <img class="card-img-top img-fluid" v-bind:src="'/api/img/action/' + competitorID" />
+      <img class="card-img-top img-fluid" v-bind:src="api_url_prefix + '/api/img/action/' + competitorID + '/'" />
       <div class="d-flex flex-column bd-highlight mb-3">
         <div class="p-2 bd-highlight profile-div">
-          <img class="rounded-circle border img-thumbnail img-fluid" v-bind:src="'/api/img/profile/' + competitorID" width="125px" />
+          <img class="rounded-circle border img-thumbnail img-fluid" v-bind:src="api_url_prefix + '/api/img/profile/' + competitorID + '/'" width="125px" />
         </div>
         <div class="p-2 bd-highlight profile-text profile-text-name h2">
           <b>{{ competitor_info.FirstName }} {{ competitor_info.LastName }}</b>
@@ -78,7 +78,7 @@ export default {
   computed: {
     ClubNameUrl: function () {
       if (this.isReady === true) {
-        return "/api/img/club/" + this.competitor_info.Club;
+        return "/api/img/club/" + this.competitor_info.Club + "/";
       } else {
         return "";
       }

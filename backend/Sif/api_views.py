@@ -1,9 +1,9 @@
 from threading import Event
 from django.http import HttpResponse, HttpResponseServerError, Http404, JsonResponse
-from django.shortcuts import render, redirect
-from django.urls import reverse
+#from django.shortcuts import render
+#from django.urls import reverse
 from django.views.decorators.cache import never_cache
-from django.views.generic.base import RedirectView
+#from django.views.generic.base import RedirectView
 from django.core import serializers
 #from django.db.models import Q
 from django.views.decorators.cache import cache_page
@@ -18,7 +18,7 @@ from Sif import events
 import os
 import urllib
 from PIL import Image
-from babel.dates import format_date, format_datetime, format_time
+from babel.dates import format_date #, format_datetime, format_time
 
 # Database
 # We only use AthlCompetitors for information about competitors
@@ -122,6 +122,7 @@ def competitor_img_profile(request, CompetitorCode):
     raise Http404() # Ættum ekki að koma hingað
 
 def competitor_img_action(request, CompetitorCode):
+    print('competitor_img_action')
     filename_action = './images/action_{:d}.jpg'.format(CompetitorCode)
     try:
         with open(filename_action, "rb") as f:

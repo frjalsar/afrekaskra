@@ -15,7 +15,7 @@
             name: 'CompetitorProfile',
             params: { competitorID: competitorID },
           }">
-            <img class="rounded-circle img-thumbnail img-profile" v-bind:src="api_url_prefix + '/api/img/profile/' + competitorID" />
+            <img class="rounded-circle img-thumbnail img-profile" v-bind:src="api_url_prefix + '/api/img/profile/' + competitorID + '/'" />
           </router-link>
         </div>
         <div class="p-2 align-self-center">

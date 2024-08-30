@@ -16,7 +16,7 @@
     <!-- PROFILE -->
     <div id="competitor-view" v-if="isReady">
       <div class="action-div">
-        <img class="img-fluid img-action" v-bind:src="api_url_prefix + '/api/img/action/' + competitorID" />
+        <img class="img-fluid img-action" v-bind:src="api_url_prefix + '/api/img/action/' + competitorID + '/'" />
         <div class="topleft">
           <h2 style="font-family: 'Beausite Classic Semibold', Sans-serif; font-size: 3.0vw">
             <span style="font-feature-settings: 'ss05' on, 'ss12' on;">{{ competitor_info.FirstName }} {{ competitor_info.LastName }}</span>
@@ -31,7 +31,7 @@
           </h5>
         </div>
         <div class="bottomleft">
-          <img class="rounded-circle img-thumbnail img-profile" v-bind:src="api_url_prefix + '/api/img/profile/' + competitorID" />
+          <img class="rounded-circle img-thumbnail img-profile" v-bind:src="api_url_prefix + '/api/img/profile/' + competitorID + '/'" />
         </div>
         <div class="bottomright">
           <img class="img-club" v-bind:src="ClubNameUrl" @error="ClubLogoError" v-if="showClubLogo" />
@@ -92,7 +92,7 @@ export default {
   computed: {
     ClubNameUrl: function () {
       if (this.isReady === true) {
-        return this.api_url_prefix + "/api/img/club/" + this.competitor_info.Club;
+        return this.api_url_prefix + "/api/img/club/" + this.competitor_info.Club + "/";
       } else {
         return "";
       }

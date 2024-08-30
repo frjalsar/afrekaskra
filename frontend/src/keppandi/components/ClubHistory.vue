@@ -30,7 +30,7 @@
             <th scope="row">
               {{ i.club }}
               &nbsp;&nbsp;
-              <img class="img-club" v-bind:src="api_url_prefix + '/api/img/club/' + i.club" alt="" />
+              <img class="img-club" v-bind:src="api_url_prefix + '/api/img/club/' + i.club + '/'" alt="" />
             </th>
             <td>{{ formatDate(i.from) }}</td>
             <td>{{ formatDate(i.to) }}</td>

@@ -42,7 +42,7 @@
             <td>{{ inout_text(i.Inout) }}</td>
             <td>{{ i.Date }}</td>
             <td>{{ i.AgeGroup }}</td>
-            <td><img class="img-club" v-bind:src="'/api/img/club/' + i.Club" v-bind:alt="i.Club" />
+            <td><img class="img-club" v-bind:src="api_url_prefix + '/api/img/club/' + i.Club + '/'" v-bind:alt="i.Club" />
             </td>
           </tr>
         </tbody>

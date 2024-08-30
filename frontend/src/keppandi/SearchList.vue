@@ -36,7 +36,7 @@
               <td class="d-none d-md-table-cell">
                 {{ athlete.YOB }}
               </td>
-              <td class=""><img class="img-club" v-bind:src="api_url_prefix + '/api/img/club/' + athlete.Club" v-bind:alt="athlete.Club" />
+              <td class=""><img class="img-club" v-bind:src="api_url_prefix + '/api/img/club/' + athlete.Club + '/'" v-bind:alt="athlete.Club" />
               </td>
             </tr>
           </tbody>

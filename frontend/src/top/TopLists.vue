@@ -270,7 +270,7 @@
                     <!--<a v-bind:href="'/keppandi/' + competitor.competitor_code">{{competitor.name}}</a>-->
                   </td>
                   <td class="d-none d-sm-table-cell">{{ competitor.age }}</td>
-                  <td class="d-none d-sm-table-cell"><img class="img-club" v-bind:src="'/api/img/club/' + competitor.club.split('-')[0].split('/')[0]" v-bind:alt="competitor.club" />
+                  <td class="d-none d-sm-table-cell"><img class="img-club" v-bind:src="api_url_prefix + '/api/img/club/' + competitor.club.split('-')[0].split('/')[0] + '/'" v-bind:alt="competitor.club" />
                   </td>
                   <td class="d-none d-xl-table-cell">
                     <a v-bind:href="'http://mot.fri.is/MotFRI/SelectedCompetitionResults.aspx?Code=' +
