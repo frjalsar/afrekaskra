@@ -35,7 +35,7 @@ else:
 
 #DEBUG = False
 
-#APPEND_SLASH = False
+APPEND_SLASH = False # Don't append slashes to URLs, this gives 301 redirects in logs
 
 ALLOWED_HOSTS = ['127.0.0.1',
                  'sif-django-backend-fhh0.onrender.com',
