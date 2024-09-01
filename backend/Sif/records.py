@@ -3,13 +3,13 @@ from django.http import Http404
 # Database
 # We only use AthlCompetitors for information about competitors
 # and AthlAfrek for the achievements.
-from Sif.models import AthlCompetitors, AthlAfrek, Competitors, AthlMetaskrFr
-from django.db.models import Q
+#from Sif.models import AthlCompetitors, AthlAfrek, Competitors, AthlMetaskrFr
+#from django.db.models import Q
 
 # Settings
-from Sif import settings
+#from Sif import settings
 
-from babel.dates import format_date, format_datetime, format_time
+from babel.dates import format_date #, format_datetime, format_time
 from Sif import common
 from Sif import events
 from Sif import competitor

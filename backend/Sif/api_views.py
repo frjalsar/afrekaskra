@@ -4,11 +4,11 @@ from django.http import HttpResponse, HttpResponseServerError, Http404, JsonResp
 #from django.urls import reverse
 from django.views.decorators.cache import never_cache
 #from django.views.generic.base import RedirectView
-from django.core import serializers
+#from django.core import serializers
 #from django.db.models import Q
 from django.views.decorators.cache import cache_page
 
-from Sif import settings
+#from Sif import settings
 from Sif import data
 from Sif import records
 from Sif import competitor

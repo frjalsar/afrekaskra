@@ -11,10 +11,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import logging
+#import logging
 import sys
 import random
-#import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -35,7 +34,7 @@ else:
 
 #DEBUG = False
 
-APPEND_SLASH = False # Don't append slashes to URLs, this gives 301 redirects in logs
+APPEND_SLASH = True # Add a slash to the end of URLs if it's missing to avoid 404 errors
 
 ALLOWED_HOSTS = ['127.0.0.1',
                  'sif-django-backend-fhh0.onrender.com',
