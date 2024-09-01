@@ -34,7 +34,7 @@ else:
 
 #DEBUG = False
 
-APPEND_SLASH = True # Add a slash to the end of URLs if it's missing to avoid 404 errors
+APPEND_SLASH = True # Add a slash to the end of URLs if it's missing to avoid 404 errors, give a 301 redirect instead.
 
 ALLOWED_HOSTS = ['127.0.0.1',
                  'sif-django-backend-fhh0.onrender.com',
