@@ -120,12 +120,14 @@ DATABASES = {
             'driver': os.path.join(BASE_DIR, '/usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so'), # The driver is installed on Heroku using the Aptfile into this path.
             'host_is_server': True,
         },
+        'CON_MAX_AGE': 570, # Maximum age of a connection before it's closed, in seconds. Default on MS-SQL server is 600 seconds.
     },
     #'competitor_list': {
     #    'ENGINE': 'django.db.backends.sqlite3',
     #    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     #}
 }
+DATABASE_CONNECTION_POOLING = False
 
 if os.environ['SIF_IN_PROD'] == 1:
     CACHES = {
