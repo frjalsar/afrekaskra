@@ -9,7 +9,6 @@
       <h3><i class="fas fa-female"></i> Konur</h3>
       <table class="table table-striped table-hover table-responsive-sm table-sm">
         <!--<caption>Listi yfir afmæli Íslandsmeta</caption>-->
-        <col span="1" class="wide" />
         <thead>
           <tr>
             <th scope="col">Grein</th>
@@ -41,7 +40,6 @@
       <h3><i class="fas fa-male"></i> Karlar</h3>
       <table class="table table-striped table-hover table-responsive-sm table-sm">
         <!--<caption>Listi yfir afmæli Íslandsmeta</caption>-->
-        <col span="1" class="wide" />
         <thead>
           <tr>
             <th scope="col">Grein</th>

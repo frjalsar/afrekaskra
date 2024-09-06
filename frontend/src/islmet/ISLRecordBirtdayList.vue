@@ -11,7 +11,6 @@
       <p>Eftirfarandi <router-link :to="{ name: 'IcelandicRecords' }">met</router-link> eiga afmæli á næstunni.</p>
       <table class="table table-striped table-hover table-responsive-sm table-sm">
         <!--<caption>Listi yfir afmæli Íslandsmeta</caption>-->
-        <col span="1" class="wide" />
         <thead>
           <tr>
             <th scope="col">Grein</th>
