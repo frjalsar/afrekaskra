@@ -17,6 +17,7 @@ import datetime as dt
 from dateutil.relativedelta import *
 import pandas as pd
 from django.db import connection
+import threading
 
 import warnings
 warnings.filterwarnings('ignore')
@@ -39,13 +40,41 @@ def Get_All_National_Records():
     return df
 
 def Get_All_Master_Records():
-    df_men_in = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 1, @KarlarKonur = 1, @SelectedCompetitorCode = NULL", connection)
-    df_men_out = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 0, @KarlarKonur = 1, @SelectedCompetitorCode = NULL", connection)
+    def fetch_data(query, connection, result_list, index):
+        result_list[index] = pd.read_sql_query(query, connection)
 
-    df_women_in = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 1, @KarlarKonur = 2, @SelectedCompetitorCode = NULL", connection)
-    df_women_out = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 0, @KarlarKonur = 2, @SelectedCompetitorCode = NULL", connection)
+    # Queries
+    queries = [
+        "EXEC Oldungamet2 @OutdoorsIndoors = 1, @KarlarKonur = 1, @SelectedCompetitorCode = NULL",
+        "EXEC Oldungamet2 @OutdoorsIndoors = 0, @KarlarKonur = 1, @SelectedCompetitorCode = NULL",
+        "EXEC Oldungamet2 @OutdoorsIndoors = 1, @KarlarKonur = 2, @SelectedCompetitorCode = NULL",
+        "EXEC Oldungamet2 @OutdoorsIndoors = 0, @KarlarKonur = 2, @SelectedCompetitorCode = NULL"
+    ]
+
+    # List to store results
+    results = [None] * len(queries)
+
+    # Create and start threads
+    threads = []
+    for i, query in enumerate(queries):
+        thread = threading.Thread(target=fetch_data, args=(query, connection, results, i))
+        threads.append(thread)
+        thread.start()
+
+    # Join threads
+    for thread in threads:
+        thread.join()
+
+    # Concatenate results
+    df = pd.concat(results)
+
+    # df_men_in = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 1, @KarlarKonur = 1, @SelectedCompetitorCode = NULL", connection)
+    # df_men_out = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 0, @KarlarKonur = 1, @SelectedCompetitorCode = NULL", connection)
+
+    # df_women_in = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 1, @KarlarKonur = 2, @SelectedCompetitorCode = NULL", connection)
+    # df_women_out = pd.read_sql_query("EXEC Oldungamet2 @OutdoorsIndoors = 0, @KarlarKonur = 2, @SelectedCompetitorCode = NULL", connection)
     
-    df = pd.concat([df_men_in, df_men_out, df_women_in, df_women_out])
+    # df = pd.concat([df_men_in, df_men_out, df_women_in, df_women_out])
     
     df = df.astype({"ÚtiInni": int})
     df['Dags'] = pd.to_datetime(df['Dags'], yearfirst=True)
@@ -53,6 +82,7 @@ def Get_All_Master_Records():
     df['Day'] = df['Dags'].dt.day
     df['Month'] = df['Dags'].dt.month
     df['Year'] = df['Dags'].dt.year
+    print('Master records fetched')
     return df
 
 def Get_Records_Birthdays():
