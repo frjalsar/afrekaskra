@@ -117,7 +117,7 @@ DATABASES = {
         'USER': os.environ['SIF_DB_USER'],
         'PASSWORD': os.environ['SIF_DB_PASSWORD'],
         'OPTIONS': {
-            'driver': os.path.join(BASE_DIR, '/usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so'), # The driver is installed on Heroku using the Aptfile into this path.
+            'driver': os.path.join(BASE_DIR, '/usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so'), # The driver is installed into this path.
             'host_is_server': True,
         },
         'CON_MAX_AGE': 570, # Maximum age of a connection before it's closed, in seconds. Default on MS-SQL server is 600 seconds.
@@ -154,23 +154,6 @@ else:
                 "BACKEND": "django.core.cache.backends.dummy.DummyCache",
             }
         }
-
-# if 'SIF_ON_HEROKU' in os.environ:
-#     CACHES = {'default': {
-#         'BACKEND': 'django_bmemcached.memcached.BMemcached',
-#         'LOCATION': os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','),
-#         'OPTIONS': {
-#                     'username': os.environ.get('MEMCACHEDCLOUD_USERNAME'),
-#                     'password': os.environ.get('MEMCACHEDCLOUD_PASSWORD'),
-#             }
-#         }
-#     }
-# else:
-#     CACHES = {
-#         'default': {
-#             'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-#         }
-#     }
 
 # # Logging
 # LOGGING = {
@@ -307,6 +290,3 @@ else:
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, 'staticfiles'),
     )
-
-# Activate Django-Heroku. We have our own database settings and we set the private key ourselves.
-#django_heroku.settings(locals(), databases=False, secret_key=False, logging=False, staticfiles=False)
