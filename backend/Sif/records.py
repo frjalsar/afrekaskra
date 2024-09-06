@@ -82,7 +82,7 @@ def Get_All_Master_Records():
     df['Day'] = df['Dags'].dt.day
     df['Month'] = df['Dags'].dt.month
     df['Year'] = df['Dags'].dt.year
-    print('Master records fetched')
+    #print('Master records fetched')
     return df
 
 def Get_Records_Birthdays():
