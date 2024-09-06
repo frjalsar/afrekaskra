@@ -114,7 +114,7 @@ def Get_Top_List(request):
     Top_list_Women, Top_list_Men = data.Top_List()
     return JsonResponse({'Women': Top_list_Women, 'Men': Top_list_Men}, safe=False)
 
-@cache_page(60 * 60 * 24 * 7)
+@cache_page(60 * 60 * 24 * 0)
 def competitor_img_profile(request, CompetitorCode):
     filename_profile = './images/profile_{:d}.jpg'.format(CompetitorCode)
     try:
@@ -127,7 +127,7 @@ def competitor_img_profile(request, CompetitorCode):
 
     raise Http404() # Ættum ekki að koma hingað
 
-@cache_page(60 * 60 * 24 * 7)
+@cache_page(60 * 60 * 24 * 0)
 def competitor_img_action(request, CompetitorCode):
     #print('competitor_img_action')
     filename_action = './images/action_{:d}.jpg'.format(CompetitorCode)
@@ -146,7 +146,7 @@ def competitor_img_action(request, CompetitorCode):
 
     raise Http404() # Ættum ekki að koma hingað
 
-@cache_page(60 * 60 * 24 * 7)
+@cache_page(60 * 60 * 24 * 0)
 def club_logo(request, ClubName):
     ClubName_decode = urllib.parse.unquote(ClubName).lower()
     try: # Reyna png
