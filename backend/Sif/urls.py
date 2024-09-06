@@ -57,6 +57,7 @@ urlpatterns = [
     path(r'api/records/birthdays/', api_views.record_birthdays),
     path(r'api/records/', api_views.national_records),
     path(r'api/records/masters', api_views.national_records_masters)
+    path(r'api/health/', api_views.health_check),
 
     #re_path('[^api/*]', TemplateView.as_view(template_name='index.html')) # Senda allt sem fer ekki á API á index.html
 ]

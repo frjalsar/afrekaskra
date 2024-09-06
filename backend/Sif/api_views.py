@@ -25,6 +25,10 @@ from babel.dates import format_date #, format_datetime, format_time
 # and AthlAfrek for the achievements.
 from Sif.models import AthlCompetitors, AthlAfrek
 
+# Health check
+def health_check(request):
+    return JsonResponse({'health': 'ok'}, safe=False)
+
 def Print_list_vertically(my_list):
     for i in my_list:
         print(i)

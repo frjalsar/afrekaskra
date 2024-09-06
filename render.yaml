@@ -14,6 +14,7 @@ services:
     repo: https://github.com/frjalsar/afrekaskra
     branch: main
     numInstances: 1
+    healthCheckPath: /api/health/
     envVars:
       - key: PORT # The port that gunicorn listens on (See config/gunicorn.conf.py)
         value: 8000 # This is the internal port, not the external port which is 80
@@ -95,6 +96,7 @@ services:
     repo: https://github.com/frjalsar/afrekaskra
     branch: dev
     numInstances: 1
+    healthCheckPath: /api/health/
     envVars:
       - key: PORT # The port that gunicorn listens on (See config/gunicorn.conf.py)
         value: 8000 # This is the internal port, not the external port which is 80
