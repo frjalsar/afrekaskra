@@ -33,7 +33,7 @@ def Print_list_vertically(my_list):
 def test(request):
     return JsonResponse({'test': 'test'}, safe=False)
 
-@cache_page(60 * 60 * 0)
+@cache_page(60 * 5)
 def get_competitor(request, CompetitorCode=None):
     df = competitor.Get_Competitor_Achievements(CompetitorCode)
     Competitor_info = competitor.Get_Competitor_Info(CompetitorCode)
@@ -42,11 +42,12 @@ def get_competitor(request, CompetitorCode=None):
     return JsonResponse({'Competitor': Competitor_info, 'Events': Event_info, 'Clubs': club_history}, safe=False)
 
 # Skilar öllum gögnum fyrir tiltekna grein.
+@cache_page(60 * 5)
 def competitor_event_all(request, CompetitorCode, Event_id):
     EventData_all = data.Get_Competitor_Event_Data_All(CompetitorCode, Event_id)
     return JsonResponse(EventData_all, safe=False)
 
-@cache_page(60 * 60 * 0)
+@cache_page(60 * 60 * 1)
 def competitor_event(request, CompetitorCode=None, Event_id=None):
     Competitor_info = competitor.Get_Competitor_Info(CompetitorCode)
     Event_info, Event_data, Event_min_max_all, Event_min_max_legal, Event_progession  = competitor.Get_Competitor_Event(CompetitorCode, Event_id)
@@ -109,6 +110,7 @@ def Get_Top_List(request):
     Top_list_Women, Top_list_Men = data.Top_List()
     return JsonResponse({'Women': Top_list_Women, 'Men': Top_list_Men}, safe=False)
 
+@cache_page(60 * 60 * 24 * 7)
 def competitor_img_profile(request, CompetitorCode):
     filename_profile = './images/profile_{:d}.jpg'.format(CompetitorCode)
     try:
@@ -121,6 +123,7 @@ def competitor_img_profile(request, CompetitorCode):
 
     raise Http404() # Ættum ekki að koma hingað
 
+@cache_page(60 * 60 * 24 * 7)
 def competitor_img_action(request, CompetitorCode):
     print('competitor_img_action')
     filename_action = './images/action_{:d}.jpg'.format(CompetitorCode)
@@ -139,6 +142,7 @@ def competitor_img_action(request, CompetitorCode):
 
     raise Http404() # Ættum ekki að koma hingað
 
+@cache_page(60 * 60 * 24 * 7)
 def club_logo(request, ClubName):
     ClubName_decode = urllib.parse.unquote(ClubName).lower()
     try: # Reyna png
@@ -173,10 +177,10 @@ def national_records_all(request):
     df = records.Get_All_National_Records()
     return df
 
-@cache_page(60 * 60 * 0)
-def national_records_masters(request):
-    df = records.Get_All_Master_Records()
-    return df
+#@cache_page(60 * 60 * 24)
+#def national_records_masters(request):
+#    df = records.Get_All_Master_Records()
+#    return df
 
 @cache_page(60 * 60 * 0)
 def national_records(request):
@@ -211,7 +215,7 @@ def national_records(request):
 
     return JsonResponse(List_of_Records, safe=False)
 
-@cache_page(60 * 60 * 6)
+@cache_page(60 * 60 * 24)
 def national_records_masters(request):
     #df_records = national_records_all(request)
     #df_records = records.Get_All_National_Records()
