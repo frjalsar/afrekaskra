@@ -99,7 +99,7 @@
                 <!--<td class="d-none d-xl-table-cell">{{ inout_text(i.InOut) }}</td>-->
                 <td class="d-none d-md-table-cell">{{ item.Date }}</td>
                 <!--<td>{{ i.AgeGroup }}</td>-->
-                <td class="d-none d-xl-table-cell">{{ item.Club }}&nbsp;&nbsp;<img class="img-club" v-bind:src="api_url_prefix + '/api/img/club/' + item.Club + '/'" alt="" /></td>
+                <td class="d-none d-xl-table-cell"><img class="img-club" v-bind:src="api_url_prefix + '/api/img/club/' + item.Club + '/'" alt="" />&nbsp;&nbsp;{{ item.Club }}</td>
               </tr>
             </tbody>
           </table>
