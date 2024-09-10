@@ -201,6 +201,7 @@ def national_records(request):
             try:
                 Event_Info = events.Get_Event_Info_by_Name(row['HeitiGreinar'])
             except:
+                print('[national_records] Event not found:', row['HeitiGreinar'])
                 print(row)
             List_of_Records.append({
                 'Event': Event_Info['NAME_SHORT'],
