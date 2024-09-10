@@ -32,6 +32,10 @@ import re
 # def front_page(requests):
 #     return render(requests, 'front_page.html')
 
+# Redirect all 404 to sif.fri.is
+def view_404(request, exception=None):
+    return redirect('https://sif.fri.is')
+
 
 # def competitor(request, CompetitorCode=None, Event=None):
 #     #print(Get_List_of_Events_for_Competitor(CompetitorCode))
