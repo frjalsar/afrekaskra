@@ -26,8 +26,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SIF_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if os.environ['SIF_IN_PROD'] == 1:
+if os.environ['SIF_IN_PROD'] == '1':
     DEBUG = False
+    print('DEBUG IS OFF')
 else:
     DEBUG = True
     print('DEBUG IS ON')
@@ -129,7 +130,7 @@ DATABASES = {
 }
 DATABASE_CONNECTION_POOLING = False
 
-if os.environ['SIF_IN_PROD'] == 1:
+if os.environ['SIF_IN_PROD'] == '1':
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
