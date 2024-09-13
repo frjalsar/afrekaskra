@@ -42,7 +42,8 @@ const router = createRouter({
     {
       path: '/keppandi/:competitorID',
       name: 'CompetitorProfile',
-      component: () => import('./keppandi/single.vue')
+      component: () => import('./keppandi/single.vue'),
+      props: true 
     },
     {
       path: '/layout/:competitorID',
