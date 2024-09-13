@@ -25,7 +25,10 @@
             <tr v-for="athlete in athletes" :key="athlete.CompetitorCode" @click.prevent="onClick && onClick(athlete)">
               <!--<td class="d-none d-lg-table-cell">{{ athlete.CompetitorCode }}</td>-->
               <td>
-                <a v-bind:href="'/keppandi/' + athlete.CompetitorCode">{{athlete.Name}}</a>
+                <!--<a v-bind:href="'/keppandi/' + athlete.CompetitorCode">{{athlete.Name}}</a>-->
+                <router-link :to="{ name: 'CompetitorProfile', params: { competitorID: athlete.CompetitorCode } }">
+                  {{ athlete.Name }}
+                </router-link>
               </td>
               <td>{{ athlete.Club }}</td>
               <td>{{ athlete.YOB }}</td>
@@ -113,7 +116,7 @@ export default {
       //this.cancelSearch();
       this.cancelSource = axios.CancelToken.source();
 
-      console.log("Searching for " + this.searchQ);
+      //console.log("Searching for " + this.searchQ);
       axios
         .get(url, {
           cancelToken: this.cancelSource.token,
@@ -126,21 +129,20 @@ export default {
           this.loading = false;
           this.showMessage = false;
 
-          console.log(this.athletes);
-
           if (this.athletes.length == 0) {
             this.message = "Enginn keppandi fannst";
             this.showMessage = true;
           }
         })
         .catch(error => {
-          console.log("ERROR");
+          //console.log("ERROR");
+          //console.log(error);
           this.message = "Villa frá vefþjóni (" + error + ") 😭";
           this.showMessage = true;
           this.athletes = [];
         })
         .finally(() => {
-          console.log("FINALLY");
+          //console.log("FINALLY");
           //this.loading = false;
         });
     },
