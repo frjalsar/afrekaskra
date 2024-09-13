@@ -25,10 +25,7 @@
             <tr v-for="athlete in athletes" :key="athlete.CompetitorCode" @click.prevent="onClick && onClick(athlete)">
               <!--<td class="d-none d-lg-table-cell">{{ athlete.CompetitorCode }}</td>-->
               <td>
-                <!--<a v-bind:href="'/keppandi/' + athlete.CompetitorCode">{{athlete.Name}}</a>-->
-                <router-link :to="{ name: 'CompetitorProfile', params: { competitorID: athlete.CompetitorCode } }">
-                  {{ athlete.Name }}
-                </router-link>
+                <a v-bind:href="'/keppandi/' + athlete.CompetitorCode">{{athlete.Name}}</a>
               </td>
               <td>{{ athlete.Club }}</td>
               <td>{{ athlete.YOB }}</td>
