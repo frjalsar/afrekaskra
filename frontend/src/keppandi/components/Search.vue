@@ -113,7 +113,7 @@ export default {
       //this.cancelSearch();
       this.cancelSource = axios.CancelToken.source();
 
-      //console.log("Searching for " + this.searchQ);
+      console.log("Searching for " + this.searchQ);
       axios
         .get(url, {
           cancelToken: this.cancelSource.token,
@@ -126,20 +126,21 @@ export default {
           this.loading = false;
           this.showMessage = false;
 
+          console.log(this.athletes);
+
           if (this.athletes.length == 0) {
             this.message = "Enginn keppandi fannst";
             this.showMessage = true;
           }
         })
         .catch(error => {
-          //console.log("ERROR");
-          //console.log(error);
+          console.log("ERROR");
           this.message = "Villa frá vefþjóni (" + error + ") 😭";
           this.showMessage = true;
           this.athletes = [];
         })
         .finally(() => {
-          //console.log("FINALLY");
+          console.log("FINALLY");
           //this.loading = false;
         });
     },
