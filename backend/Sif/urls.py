@@ -25,7 +25,7 @@ import os
 from Sif import views
 from Sif import api_views
 
-handler404 = 'Sif.views.view_404'
+#handler404 = 'Sif.views.view_404'
 
 urlpatterns = [
     # Views
