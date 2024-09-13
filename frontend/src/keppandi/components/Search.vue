@@ -16,7 +16,7 @@
           <tbody>
             <tr v-if="showMessage">
               <td colspan="3" align="center">
-                <div v_if="loading">
+                <div v-if="loading">
                   <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
                   <p>{{ message }}</p>
                 </div>
