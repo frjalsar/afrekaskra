@@ -43,6 +43,4 @@ if (process.env.NODE_ENV === "development") {
   });
 }
 
-app.config.devtools = true;
-
 app.use(HighchartsVue).use(router).mount("#app");
