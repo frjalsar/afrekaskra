@@ -66,10 +66,10 @@ backlog = 2048 # Default: 2048
 #
 
 workers = 3 # KT
-threads = 2 # KT
+threads = 3 # KT
 worker_class = 'sync' # Default: sync
 worker_connections = 1000 # Default: 1000
-max_requests = 1000 # KT (The maximum number of requests a worker will process before restarting.)
+max_requests = 500 # KT (The maximum number of requests a worker will process before restarting.)
 timeout = 60
 keepalive = 2
 preload_app = True # KT
