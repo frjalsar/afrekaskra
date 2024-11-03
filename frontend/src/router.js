@@ -61,6 +61,11 @@ const router = createRouter({
       component: () => import('./islmet/ISLRecordList.vue')
     },
     {
+      path: '/samanburdur',
+      name: 'Comparison',
+      component: () => import('./samanburður/comparison.vue')
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
       component: () => import('./404.vue')
