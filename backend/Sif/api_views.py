@@ -163,13 +163,8 @@ def club_logo(request, ClubName):
                 filename = './images/clubs/{}.jpg'.format(ClubName_decode)
                 with open(filename, "rb") as f:
                     return HttpResponse(f.read(), content_type="image/jpeg")
-            except:
-                try: # Reyna default sem FRÍ logo
-                    filename = './images/clubs/fri.jpg'
-                    with open(filename, "rb") as f:
-                        return HttpResponse(f.read(), content_type="image/jpeg")
-                except: # Ekkert virkar skila þá 404
-                    raise Http404()
+            except: # Ekkert virkar skila þá 404
+                raise Http404()
 
 @cache_page(60 * 60 * 24)
 def competitor_records(request, CompetitorCode):
