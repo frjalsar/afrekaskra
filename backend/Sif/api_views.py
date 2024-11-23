@@ -148,7 +148,12 @@ def competitor_img_action(request, CompetitorCode):
 
 @cache_page(60 * 60 * 24 * 0)
 def club_logo(request, ClubName):
+    # Decode the club name
     ClubName_decode = urllib.parse.unquote(ClubName).lower()
+    # Split the string at - and take the first part
+    # This is for cases where the club name is for example "FH-A", "ÍR-B" etc.
+    ClubName_decode = ClubName_decode.split('-')[0]
+
     try: # Reyna png
         filename = './images/clubs/{}.png'.format(ClubName_decode)
         with open(filename, "rb") as f:
