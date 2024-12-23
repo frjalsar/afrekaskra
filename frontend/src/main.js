@@ -8,13 +8,14 @@ import HighchartsVue from "highcharts-vue";
 import StockModule from "highcharts/modules/stock";
 import Exporting from "highcharts/modules/exporting";
 import OfflineExporting from "highcharts/modules/offline-exporting";
+import Accessibility from "highcharts/modules/accessibility";
 import VueGtag from "vue-gtag";
 
 //Vue.config.productionTip = true
 
-StockModule(Highcharts);
-Exporting(Highcharts);
-OfflineExporting(Highcharts);
+//StockModule(Highcharts);
+//Exporting(Highcharts);
+//OfflineExporting(Highcharts);
 //Vue.use(HighchartsVue);
 
 //Vue.use(VueMeta)
