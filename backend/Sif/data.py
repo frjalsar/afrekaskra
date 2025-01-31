@@ -301,7 +301,7 @@ def Top_100_List(Event_id, fromDate, toDate, IndoorOutDoor, Gender, AgeStart, Ag
                 case 165:# Kúluvarp 6kg
                     # Kúluvarp 6 kg er þrískráð sem grein
                     # THORID_2 = KÚLA   , THORID_1 = KÚLA6K
-                   # THORID_2 = KÚLA6KG, THORID_1 = KÚLA6KG6K
+                    # THORID_2 = KÚLA6KG, THORID_1 = KÚLA6KG6K
                     # THORID_2 = KÚLA6KG, THORID_1 = KÚLA6KG5K
                     q = AthlAfrek.objects.all().filter(Q(grein__iexact="KÚLA", tákn_greinar__iexact="KÚLA6K") |
                                                    Q(grein__iexact="KÚLA6KG", tákn_greinar__iexact="KÚLA6KG6K") |
