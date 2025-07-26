@@ -255,7 +255,15 @@ export default {
         // Find the records for the age group and inout.
         for (var i = 0; i < this.all_record_data.length; i++) {
           if ((this.all_record_data[i].AgeGroup === this.agegroup || this.all_record_data[i].AgeGroup === 'BL') && (this.all_record_data[i].InOut === this.inout)) {
-            record_list.push(this.all_record_data[i])
+            if (this.all_record_data[i].AgeGroup === 'BL'){
+              // Only add is the age group selected is adults
+              if (this.agegroup === 'KA' || this.agegroup === 'KO') {
+                record_list.push(this.all_record_data[i])
+              }
+            }
+            else {
+              record_list.push(this.all_record_data[i])
+            }
           }
         }
       } else {
