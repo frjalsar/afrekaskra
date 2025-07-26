@@ -205,9 +205,9 @@ def national_records(request):
         if (row['Nafn'] != None): # Aðgerðin í gagnagrunninum virðist skila út NULL á milli aldursflokka
             try:
                 Event_Info = events.Get_Event_Info_by_Name(row['HeitiGreinar'])
-                if row['Ky'] == 3: # Blandað
-                    Event_Info['NAME_SHORT'] = Event_Info['NAME_SHORT'] + ' (BL)'
-                    print(Event_Info['NAME_SHORT'])
+                #if row['Ky'] == 3: # Blandað
+                #    Event_Info['NAME_SHORT'] = Event_Info['NAME_SHORT'] + ' (BL)'
+                #    print(Event_Info['NAME_SHORT'])
                 #if Event_Info['NAME_SHORT'] == '4x400 m bh.':
                 #    print('4x400 m bh', row['HeitiGreinar'])
                 #    print(row['Ky'])
