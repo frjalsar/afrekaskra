@@ -4,7 +4,7 @@ services:
 # A Python Django service for the backend
   - type: web
     name: Sif-Prod-Backend
-    runtime: docker # In a Docker container because of MS-SQL driver (See apt commands in Dockerfile)
+    runtime: docker # In a Docker container because of the MS-SQL driver (See apt commands in Dockerfile)
     dockerfilePath: ./Dockerfile
     plan: starter # Starter plan 0.5 CPU / 512 MB RAM
     rootDir: backend
@@ -23,7 +23,7 @@ services:
       - key: SIF_IN_PROD # Tell Django it's running in production
         value: 1
       - key: SIF_DB_PASSWORD
-        sync: false
+        sync: false # Syncing these values is not secure, they should be set manually in the Render dashboard
       - key: SIF_DB_USER
         sync: false
       - key: SIF_DB_HOST
