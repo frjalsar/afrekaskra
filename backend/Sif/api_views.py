@@ -240,9 +240,13 @@ def national_records_masters(request):
     df_masters = records.Get_All_Master_Records()
 
     List_of_Records = []
-    
+    #print('Getting all master records')
+
     # Masters records
     for index, row in df_masters.iterrows():
+        ## Debug print if HeitiGr contains "maraþon"
+        #if "maraþon" in row['HeitiGr'].lower() and row['Aldursflokkuröldunga'] == 'KO040-44':
+        #    print("Found master record:", row)
         if (row['Nafn'] != None):
             Event_Info = events.Get_Event_Info_by_Name(row['HeitiGr'])
             List_of_Records.append({

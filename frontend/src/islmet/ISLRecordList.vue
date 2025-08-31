@@ -254,7 +254,7 @@ export default {
       {
         // Find the records for the age group and inout.
         for (var i = 0; i < this.all_record_data.length; i++) {
-          if ((this.all_record_data[i].AgeGroup === this.agegroup || this.all_record_data[i].AgeGroup === 'BL') && (this.all_record_data[i].InOut === this.inout)) {
+          if ((this.all_record_data[i].AgeGroup === this.agegroup || this.all_record_data[i].AgeGroup === 'BL') && (this.all_record_data[i].InOut === this.inout) && (this.all_record_data[i].Sex === this.gender)) {
             if (this.all_record_data[i].AgeGroup === 'BL'){
               // Only add is the age group selected is adults
               if (this.agegroup === 'KA' || this.agegroup === 'KO') {
@@ -269,7 +269,7 @@ export default {
       } else {
         // Find the records for the age group and inout.
         for (var i = 0; i < this.masters_record_data.length; i++) {
-          if ((this.masters_record_data[i].AgeGroup === this.agegroup) && (this.masters_record_data[i].InOut === this.inout)) {
+          if ((this.masters_record_data[i].AgeGroup === this.agegroup) && (this.masters_record_data[i].InOut === this.inout) && (this.masters_record_data[i].Sex === this.gender)) {
             record_list.push(this.masters_record_data[i])
           }
         }
@@ -316,9 +316,9 @@ export default {
       this.masters_record_data = [];
       //console.log('Getting data')
 
-      var url = this.api_url_prefix + "/api/records/";
+      var url1 = this.api_url_prefix + "/api/records/";
       axios
-        .all([axios.get(url)])
+        .all([axios.get(url1)])
         .then(
           axios.spread((...response) => {
             this.all_record_data = response[0]["data"];
@@ -335,14 +335,15 @@ export default {
           this.loading = false;
         });
 
-      //console.log('Getting masters data')
-      var url = this.api_url_prefix + "/api/records/masters";
+      console.log('Getting masters data')
+      var url2 = this.api_url_prefix + "/api/records/masters";
       axios
-        .all([axios.get(url)])
+        .all([axios.get(url2)])
         .then(
           axios.spread((...response) => {
             this.masters_record_data = response[0]["data"];
             console.log("Got masters data");
+            //console.log(url2)
           })
         )
         .catch((error) => {

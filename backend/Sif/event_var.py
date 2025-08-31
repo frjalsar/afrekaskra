@@ -156,6 +156,7 @@ u'Kringlukast 1.5kg beggja handa',
 u'Kringlukast 2kg  beggja handa',
 u'Kúluvarp (2.0 kg)',
 u'Kúluvarp (2 kg)',
+u'Kúluvarp 2kg'
 u'Kúluvarp (3.0 kg)',
 u'Kúluvarp (3 kg)',
 u'Kúluvarp (4.0 kg)',
@@ -1808,6 +1809,15 @@ u'Kúluvarp (2.0 kg)':
 'DISTANCE': -1
 },
 u'Kúluvarp (2 kg)':
+{'UNIT': 1,
+'UNIT_SYMBOL': 'm',
+'MAX': True,
+'HAS_WIND': False,
+'NAME_SHORT': 'Kúluvarp (2.0 kg)',
+'NAME_ENG': 'Shot put (2.0 kg)',
+'DISTANCE': -1
+},
+u'Kúluvarp 2kg':
 {'UNIT': 1,
 'UNIT_SYMBOL': 'm',
 'MAX': True,

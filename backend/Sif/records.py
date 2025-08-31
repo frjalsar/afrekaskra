@@ -161,7 +161,7 @@ def Get_Records_Birthdays():
                                'Units_symbol': units_symbol,
                                'CompetitorID': competitorid
                                })
-
+        
     return List_of_Records
 
 def Get_Competitor_Records(CompetitorCode):
