@@ -10,5 +10,4 @@
 6. source env/bin/activate
 7. pip install -r requirements.txt
 8. Set the env vars 'SIF_SECRET_KEY', 'SIF_DB_USER' and 'SIF_DB_PASSWORD'
-9. Create a symlink for .apt/usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so to /usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so
-10. python manage.py runserver
+9. python manage.py runserver
