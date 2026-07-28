@@ -26,7 +26,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SIF_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if os.environ['SIF_IN_PROD'] == '1':
+# Sjálfgefið er þróunarumhverfi. Render setur SIF_IN_PROD=1 (sjá render.yaml).
+IN_PROD = os.environ.get('SIF_IN_PROD', '0') == '1'
+
+if IN_PROD:
     DEBUG = False
     print('DEBUG IS OFF')
 else:
@@ -38,11 +41,14 @@ else:
 APPEND_SLASH = True # Add a slash to the end of URLs if it's missing to avoid 404 errors, give a 301 redirect instead.
 
 ALLOWED_HOSTS = ['127.0.0.1',
+                 'localhost',
                  'sif-django-backend-fhh0.onrender.com',
                  'sif-vue-frontend-6xh9.onrender.com',
                  'sif-dev-frontend.onrender.com',
                  'sif-dev-backend.onrender.com',
                  'sif.fri.is',
+                 'afrek.fri.is',
+                 'afrekaskra.fri.is',
                  'fri.is']
 
 CORS_ALLOWED_ORIGINS = [
@@ -54,7 +60,9 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "https://sif.fri.is"
+    "https://sif.fri.is",
+    "https://afrek.fri.is",     # Lén framendans, sjá render.yaml
+    "https://afrekaskra.fri.is" # Lén framendans, sjá render.yaml
 ]
 
 
@@ -130,13 +138,17 @@ DATABASES = {
 }
 DATABASE_CONNECTION_POOLING = False
 
-if os.environ['SIF_IN_PROD'] == '1':
+# Render setur breytuna REDIS_URL (sjá render.yaml). Eldri uppsetningar notuðu
+# SIF_REDIS_URL og því lesum við báðar.
+REDIS_URL = os.environ.get('REDIS_URL', os.environ.get('SIF_REDIS_URL'))
+
+if IN_PROD:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
-            "KEY_PREFIX:": "prod", # Prefix for the keys in the cache to separate production and development
+            "KEY_PREFIX": "prod", # Prefix for the keys in the cache to separate production and development
             "VERSION": 1,
-            "LOCATION": os.environ['SIF_REDIS_URL'],
+            "LOCATION": REDIS_URL,
         }
     }
 else:
@@ -144,9 +156,9 @@ else:
         CACHES = {
             "default": {
                 "BACKEND": "django.core.cache.backends.redis.RedisCache",
-                "KEY_PREFIX:": "dev", # Prefix for the keys in the cache to separate production and development
+                "KEY_PREFIX": "dev", # Prefix for the keys in the cache to separate production and development
                 "VERSION": random.randint(1, 1000), # Random version to avoid cache collisions, we don't flush the cache on every deploy for development
-                "LOCATION": os.environ['SIF_REDIS_URL'],
+                "LOCATION": REDIS_URL,
             }
         }
     else:
@@ -263,7 +275,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True
+# USE_L10N var fjarlægt í Django 5.0 og hefur engin áhrif lengur.
 
 USE_TZ = False
 
@@ -285,7 +297,15 @@ if not DEBUG:    # Tell Django to copy static assets into a path called `staticf
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
     # and renames the files with unique names for each version to support long-term caching
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    # ATH: STATICFILES_STORAGE er úrelt frá Django 4.2, notum STORAGES í staðinn.
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
 else:
     STATIC_URL = '/staticfiles/'
     STATICFILES_DIRS = (

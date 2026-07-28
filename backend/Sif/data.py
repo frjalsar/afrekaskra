@@ -1,4 +1,5 @@
 from django.http import Http404
+from django.core.exceptions import BadRequest
 
 # Database
 # We only use AthlCompetitors for information about competitors
@@ -230,10 +231,13 @@ def Convert_Achievements_to_List(q, minimize_results, best_by_ath, units):
 # Out:
 #   A list of dictionaries containing information about each achievement.
 def Get_List_of_Achievements(CompetitorCode, Event_id):
-    THORID_1, _, _ = events.Get_Event_Info_by_ID(Event_id)
+    Event_Info = events.Get_Event_Info_by_ID(Event_id)
 
-    q = AthlAfrek.objects.all().filter(keppandanúmer__iexact=CompetitorCode).filter(tákn_greinar__iexact=THORID_1)
-    Achievements_list = Convert_Achievements_to_List(q)
+    q = AthlAfrek.objects.all().filter(keppandanúmer__iexact=CompetitorCode).filter(tákn_greinar__iexact=Event_Info['THORID_1'])
+    Achievements_list = Convert_Achievements_to_List(q,
+                                                    minimize_results=Event_Info['Minimize'],
+                                                    best_by_ath=0,
+                                                    units=Event_Info['Units'])
 
     return Achievements_list
 
@@ -358,8 +362,15 @@ def Top_100_List(Event_id, fromDate, toDate, IndoorOutDoor, Gender, AgeStart, Ag
     #if (Year > 0):
     #    q = q.filter(dagsetning__gte=datetime.datetime(Year, 1, 1, tzinfo=pytz.UTC),
     #                 dagsetning__lte=datetime.datetime(Year, 12, 31, tzinfo=pytz.UTC))
-    q = q.filter(dagsetning__gte=datetime.datetime.strptime(fromDate, '%Y-%m-%d'),
-                 dagsetning__lte=datetime.datetime.strptime(toDate, '%Y-%m-%d'))
+    # Dagsetningarnar koma beint úr slóðinni. Ógild dagsetning á að skila 400 en ekki 500.
+    try:
+        fromDate_dt = datetime.datetime.strptime(fromDate, '%Y-%m-%d')
+        toDate_dt = datetime.datetime.strptime(toDate, '%Y-%m-%d')
+    except ValueError:
+        raise BadRequest('Ógild dagsetning. Notið sniðið YYYY-MM-DD.')
+
+    q = q.filter(dagsetning__gte=fromDate_dt,
+                 dagsetning__lte=toDate_dt)
 
     # Öll þjóðerni eða ekki. ISL = 0 þýðir bara íslendingar.
     if (ISL == 0):

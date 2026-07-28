@@ -50,19 +50,22 @@ def Find_Distance(event_name_isl_str):
 
 def Get_Event_Info_by_Name(EventName):
     NameofEvent = EventName.replace(',', '.').replace('(f)', '(flögutímar)')
+    # ATH: Alltaf afrita færsluna úr event_dict. Annars er skilað tilvísun í
+    # sameiginlega dictið og allar breytingar hjá kallaranum lifa áfram á milli
+    # fyrirspurna (t.d. ' (BL)' sem hleðst upp aftur og aftur).
     try:
-        event_info = event_dict[NameofEvent]
+        event_info = dict(event_dict[NameofEvent])
         event_info['NAME_THOR'] = NameofEvent
         event_info['EVENT_ID'] = event_list.index(NameofEvent)
         event_info['DISTANCE'] = Find_Distance(NameofEvent)
-    except:
+    except (KeyError, ValueError): # KeyError úr event_dict, ValueError úr event_list.index
         print('VILLA: Fann ekki grein "{}"'.format(NameofEvent))
-        print(NameofEvent)
-        event_info = event_dict['Óþekkt grein']
+        event_info = dict(event_dict['Óþekkt grein'])
+        event_info['NAME_THOR'] = NameofEvent
         event_info['NAME_SHORT'] = NameofEvent
         event_info['EVENT_ID'] = 1
         event_info['DISTANCE'] = -1
-    
+
     return event_info
 
 def Get_Event_Info_by_ID_New(EventID):
@@ -91,7 +94,8 @@ def Get_Event_Info_by_ThordID(ThorID_2, ThorID_1, AgeGroup=''):
             print(Event_id_list)
             if (len(Event_id_list) > 1):
                 print('Get_Event_Info_by_ThordID: VARÚÐ leit skilaði fleiri en einni grein!!')
-                print(ThordID)
+                print(ThorID_2)
+                print(ThorID_1)
                 print(AgeGroup)
                 print(Event_id_list)
 
@@ -103,14 +107,7 @@ def Get_Event_Info_by_ThordID(ThorID_2, ThorID_1, AgeGroup=''):
         raise Http404
         #return None
     
-    try:
-        Event_id = Event_id_list[0]
-    except:
-        print('')
-        print(ThorID_2)
-        print(ThorID_1)
-        print(AgeGroup)
-        print('')
+    Event_id = Event_id_list[0] # Listinn er aldrei tómur hér, sjá athugunina að ofan.
     Event_Info = Get_Event_Info_by_ID(Event_id)
     
     #print('Get Event info end')
@@ -118,6 +115,9 @@ def Get_Event_Info_by_ThordID(ThorID_2, ThorID_1, AgeGroup=''):
     return Event_Info
 
 def Get_Event_Info_by_ID(Event_id):
+    if (Event_id < 0 or Event_id >= len(df_event_list)): # Neikvæð vísitala telst líka villa (myndi telja aftan frá)
+        raise Http404('Gat ekki fundið grein.')
+
     try:
         Units = df_event_list['Units'].values[Event_id]
         #0, # No units!
@@ -150,8 +150,8 @@ def Get_Event_Info_by_ID(Event_id):
                       'Name_ISL': df_event_list['Name_ISL'].values[Event_id],
                       'HasWind': df_event_list['Wind'].values[Event_id],
                       'Distance': distance}
-    except:
-        print(Event_id)
+    except (IndexError, KeyError):
+        print('Get_Event_Info_by_ID: Fann ekki grein með id {}'.format(Event_id))
         raise Http404('Gat ekki fundið grein.')
 
     return Event_Info

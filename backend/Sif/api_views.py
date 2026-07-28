@@ -8,7 +8,7 @@ from django.views.decorators.cache import never_cache
 #from django.db.models import Q
 from django.views.decorators.cache import cache_page
 
-#from Sif import settings
+from Sif import settings
 from Sif import data
 from Sif import records
 from Sif import competitor
@@ -16,7 +16,6 @@ from Sif import events
 
 # Other
 import os
-import urllib
 from PIL import Image
 from babel.dates import format_date #, format_datetime, format_time
 
@@ -146,30 +145,34 @@ def competitor_img_action(request, CompetitorCode):
 
     raise Http404() # Ættum ekki að koma hingað
 
+CLUB_LOGO_DIR = os.path.realpath(os.path.join(settings.BASE_DIR, 'images/clubs'))
+CLUB_LOGO_TYPES = [('.png', 'image/png'),
+                   ('.svg', 'image/svg+xml'),
+                   ('.jpg', 'image/jpeg')]
+
 @cache_page(60 * 60 * 24 * 0)
 def club_logo(request, ClubName):
-    # Decode the club name
-    ClubName_decode = urllib.parse.unquote(ClubName).lower()
+    # ATH: Django er þegar búið að afkóða slóðina. Ef við köllum á unquote hér
+    # aftur þá er hægt að lauma '../' inn með tvöfaldri kóðun (%252e%252e%252f).
+    ClubName_decode = ClubName.lower()
     # Split the string at - and take the first part
     # This is for cases where the club name is for example "FH-A", "ÍR-B" etc.
     ClubName_decode = ClubName_decode.split('-')[0]
 
-    try: # Reyna png
-        filename = './images/clubs/{}.png'.format(ClubName_decode)
-        with open(filename, "rb") as f:
-            return HttpResponse(f.read(), content_type="image/png")
-    except:
-        try: # Reyna svg
-            filename = './images/clubs/{}.svg'.format(ClubName_decode)
+    for extension, content_type in CLUB_LOGO_TYPES:
+        filename = os.path.realpath(os.path.join(CLUB_LOGO_DIR, ClubName_decode + extension))
+        # Skráin verður að vera inni í images/clubs, annars er verið að reyna að
+        # brjótast út úr möppunni.
+        if (os.path.commonpath([CLUB_LOGO_DIR, filename]) != CLUB_LOGO_DIR):
+            raise Http404()
+
+        try:
             with open(filename, "rb") as f:
-                return HttpResponse(f.read(), content_type="image/svg+xml")
-        except:
-            try: # Reyna jpg
-                filename = './images/clubs/{}.jpg'.format(ClubName_decode)
-                with open(filename, "rb") as f:
-                    return HttpResponse(f.read(), content_type="image/jpeg")
-            except: # Ekkert virkar skila þá 404
-                raise Http404()
+                return HttpResponse(f.read(), content_type=content_type)
+        except OSError:
+            continue
+
+    raise Http404() # Ekkert virkar skila þá 404
 
 @cache_page(60 * 60 * 24)
 def competitor_records(request, CompetitorCode):
@@ -205,16 +208,15 @@ def national_records(request):
         if (row['Nafn'] != None): # Aðgerðin í gagnagrunninum virðist skila út NULL á milli aldursflokka
             try:
                 Event_Info = events.Get_Event_Info_by_Name(row['HeitiGreinar'])
-                if row['Ky'] == 3: # Blandað
-                    Event_Info['NAME_SHORT'] = Event_Info['NAME_SHORT'] + ' (BL)' # Bæti við (BL) fyrir blandaða kyn
-                #    print(Event_Info['NAME_SHORT'])
-                #if Event_Info['NAME_SHORT'] == '4x400 m bh.':
-                #    print('4x400 m bh', row['HeitiGreinar'])
-                #    print(row['Ky'])
-                #    print(row['AldursflFRÍ'])
-            except:
+            except Exception:
+                # ATH: Ekki halda áfram hér. Áður var Event_Info frá fyrri línu
+                # notað áfram og metið skráðist þá á ranga grein.
                 print('[national_records] Event not found:', row['HeitiGreinar'])
-                print(row)
+                continue
+
+            if row['Ky'] == 3: # Blandað
+                Event_Info['NAME_SHORT'] = Event_Info['NAME_SHORT'] + ' (BL)' # Bæti við (BL) fyrir blandaða kyn
+
             List_of_Records.append({
                 'Event': Event_Info['NAME_SHORT'],
                 'Results': row['Arangur'],
@@ -248,6 +250,10 @@ def national_records_masters(request):
         #if "maraþon" in row['HeitiGr'].lower() and row['Aldursflokkuröldunga'] == 'KO040-44':
         #    print("Found master record:", row)
         if (row['Nafn'] != None):
+            if (row['HeitiGr'] == None): # Vantar heiti greinar á sum met í töflunni
+                print('[national_records_masters] Missing event name for:', row['Nafn'])
+                continue
+
             Event_Info = events.Get_Event_Info_by_Name(row['HeitiGr'])
             List_of_Records.append({
                 'Event': Event_Info['NAME_SHORT'],

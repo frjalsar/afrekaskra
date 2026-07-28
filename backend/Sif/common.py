@@ -165,5 +165,7 @@ def Get_Hand_buffer(distance):
 # frá 1. Jan 1970.
 def float_to_datetime(in_f):
     #date_str = datetime.datetime.fromtimestamp(in_f).strftime('%Y-%m-%d %H:%M:%S.%f')
-    date_str = datetime.datetime.utcfromtimestamp(in_f)
+    # ATH: utcfromtimestamp er úrelt. fromtimestamp með datetime.UTC skilar sama
+    # tíma en með tímabelti. Við hendum tímabeltinu til að halda óbreyttri hegðun.
+    date_str = datetime.datetime.fromtimestamp(in_f, datetime.UTC).replace(tzinfo=None)
     return date_str

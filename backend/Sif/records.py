@@ -20,7 +20,12 @@ from django.db import connection
 import threading
 
 import warnings
-warnings.filterwarnings('ignore')
+# ATH: Ekki þagga niður í öllum viðvörunum. Það slekkur á þeim fyrir allt ferlið
+# (Django, pandas, numpy) og felur úreldingarviðvaranir. Þöggum eingöngu niður í
+# viðvöruninni frá pandas um að við notum Django tenginguna en ekki SQLAlchemy.
+warnings.filterwarnings('ignore',
+                        message='pandas only supports SQLAlchemy connectable',
+                        category=UserWarning)
 
 # Return all Icelandic records in all agegroups.
 #['KA', 'PI22', 'PI19', 'PI17', 'PI15', 'PI14', 'PI13', 'PI12']
@@ -170,7 +175,9 @@ def Get_Competitor_Records(CompetitorCode):
     Competitor_info = competitor.Get_Competitor_Info(CompetitorCode)
 
     now = dt.datetime.now()
-    df = pd.read_sql_query("EXEC CompetitorsRecords @CompetitorNo = '{:d}', @YearFrom = 1800, @YearTo = {:d}, @OutdoorsIndoorsFilter = '%'".format(CompetitorCode, now.year), connection)
+    df = pd.read_sql_query("EXEC CompetitorsRecords @CompetitorNo = %s, @YearFrom = 1800, @YearTo = %s, @OutdoorsIndoorsFilter = '%%'",
+                           connection,
+                           params=(str(int(CompetitorCode)), now.year))
     df['AchievementDate'] = pd.to_datetime(df['AchievementDate'], yearfirst=True)
 
     record_list = []
@@ -222,8 +229,12 @@ def Get_Competitor_Records(CompetitorCode):
     if (dt.datetime.now().year - Competitor_info['YOB']  >= 30):
         # Ná í 30+ met
         # Það þarf að kalla á SQL procedure fyrir kyn og fyrir innan og utan hús.
-        df_master_in = pd.read_sql_query("EXEC OldungametKeppanda @CompetitorCode = {:d}, @OutdoorsIndoors = 1, @Gendr = {:d}".format(CompetitorCode, Competitor_info['Sex']), connection)
-        df_master_out = pd.read_sql_query("EXEC OldungametKeppanda @CompetitorCode = {:d}, @OutdoorsIndoors = 0, @Gendr = {:d}".format(CompetitorCode, Competitor_info['Sex']), connection)
+        df_master_in = pd.read_sql_query("EXEC OldungametKeppanda @CompetitorCode = %s, @OutdoorsIndoors = 1, @Gendr = %s",
+                                         connection,
+                                         params=(int(CompetitorCode), int(Competitor_info['Sex'])))
+        df_master_out = pd.read_sql_query("EXEC OldungametKeppanda @CompetitorCode = %s, @OutdoorsIndoors = 0, @Gendr = %s",
+                                          connection,
+                                          params=(int(CompetitorCode), int(Competitor_info['Sex'])))
 
         df_master = pd.concat([df_master_in, df_master_out])
         df_master['Dags'] = pd.to_datetime(df_master['Dags'], yearfirst=True)
